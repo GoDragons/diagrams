@@ -1,0 +1,4 @@
+.terraform
+*.zip
+.node_modules
+*secret*
