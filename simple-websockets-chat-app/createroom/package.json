@@ -1,0 +1,11 @@
+{
+  "name": "on-create-room",
+  "version": "1.0.0",
+  "description": "oncreateroom example for WebSockets on API Gateway",
+  "main": "src/app.js",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.655.0"
+  }
+}
