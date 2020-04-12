@@ -24,22 +24,6 @@ Parameters:
     MaxLength: 50
     AllowedPattern: ^[A-Za-z_]+$
     ConstraintDescription: "Required. Can be characters and underscore only. No numbers or special characters allowed."
-  TableNameRooms:
-    Type: String
-    Default: "simplechat_rooms"
-    Description: (Required) The name of the new DynamoDB table to store chat room names. Minimum 3 characters
-    MinLength: 3
-    MaxLength: 50
-    AllowedPattern: ^[A-Za-z_]+$
-    ConstraintDescription: "Required. Can be characters and underscore only. No numbers or special characters allowed."
-  TableNameRoomMembers:
-    Type: String
-    Default: "simplechat_room_members"
-    Description: (Required) The name of the new DynamoDB table to store chat room members. Minimum 3 characters
-    MinLength: 3
-    MaxLength: 50
-    AllowedPattern: ^[A-Za-z_]+$
-    ConstraintDescription: "Required. Can be characters and underscore only. No numbers or special characters allowed."
 
 Resources:
   # API
@@ -50,7 +34,7 @@ Resources:
       ProtocolType: WEBSOCKET
       RouteSelectionExpression: "$request.body.message"
 
-  # Routes
+  # connect
   ConnectRoute:
     Type: AWS::ApiGatewayV2::Route
     Properties:
@@ -63,56 +47,6 @@ Resources:
         - - "integrations"
           - !Ref ConnectInteg
 
-  DisconnectRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      RouteKey: $disconnect
-      AuthorizationType: NONE
-      OperationName: DisconnectRoute
-      Target: !Join
-        - "/"
-        - - "integrations"
-          - !Ref DisconnectInteg
-
-  SendRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      RouteKey: sendmessage
-      AuthorizationType: NONE
-      OperationName: SendRoute
-      Target: !Join
-        - "/"
-        - - "integrations"
-          - !Ref SendInteg
-
-  JoinRoomRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      RouteKey: joinroom
-      AuthorizationType: NONE
-      OperationName: JoinRoomRoute
-      Target: !Join
-        - "/"
-        - - "integrations"
-          - !Ref JoinRoomInteg
-
-  CreateRoomRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      RouteKey: createroom
-      AuthorizationType: NONE
-      OperationName: CreateRoomRoute
-      Target: !Join
-        - "/"
-        - - "integrations"
-          - !Ref CreateRoomInteg
-
-  # Integrations
-
   ConnectInteg:
     Type: AWS::ApiGatewayV2::Integration
     Properties:
@@ -121,63 +55,6 @@ Resources:
       IntegrationType: AWS_PROXY
       IntegrationUri:
         Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnConnectFunction.Arn}/invocations
-
-  DisconnectInteg:
-    Type: AWS::ApiGatewayV2::Integration
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      Description: Disconnect Integration
-      IntegrationType: AWS_PROXY
-      IntegrationUri:
-        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnDisconnectFunction.Arn}/invocations
-
-  SendInteg:
-    Type: AWS::ApiGatewayV2::Integration
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      Description: Send Integration
-      IntegrationType: AWS_PROXY
-      IntegrationUri:
-        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SendMessageFunction.Arn}/invocations
-
-  JoinRoomInteg:
-    Type: AWS::ApiGatewayV2::Integration
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      Description: Join Room Integration
-      IntegrationType: AWS_PROXY
-      IntegrationUri:
-        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${JoinRoomFunction.Arn}/invocations
-
-  CreateRoomInteg:
-    Type: AWS::ApiGatewayV2::Integration
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-      Description: Create Room Integration
-      IntegrationType: AWS_PROXY
-      IntegrationUri:
-        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateRoomFunction.Arn}/invocations
-
-  # Deployment
-  Deployment:
-    Type: AWS::ApiGatewayV2::Deployment
-    DependsOn:
-      - ConnectRoute
-      - SendRoute
-      - DisconnectRoute
-    Properties:
-      ApiId: !Ref SimpleChatWebSocket
-
-  # Stages
-  Stage:
-    Type: AWS::ApiGatewayV2::Stage
-    Properties:
-      StageName: Prod
-      Description: Prod Stage
-      DeploymentId: !Ref Deployment
-      ApiId: !Ref SimpleChatWebSocket
-
-  # DynamoDB Tables
 
   ConnectionsTable:
     Type: AWS::DynamoDB::Table
@@ -195,39 +72,6 @@ Resources:
         SSEEnabled: True
       TableName: !Ref TableName
 
-  RoomsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: "roomId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "roomId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      SSESpecification:
-        SSEEnabled: True
-      TableName: !Ref TableNameRooms
-
-  RoomMembersTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: "roomId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "roomId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      SSESpecification:
-        SSEEnabled: True
-      TableName: !Ref TableNameRoomMembers
-
-  # Lambda Functions
   OnConnectFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -242,33 +86,46 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref TableName
 
-  JoinRoomFunction:
-    Type: AWS::Serverless::Function
+  OnConnectPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - SimpleChatWebSocket
     Properties:
-      CodeUri: joinroom/
-      Handler: app.handler
-      MemorySize: 128
-      Runtime: nodejs12.x
-      Environment:
-        Variables:
-          ROOMS_TABLE_NAME: !Ref TableNameRoomMembers
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref TableNameRoomMembers
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref OnConnectFunction
+      Principal: apigateway.amazonaws.com
 
-  CreateRoomFunction:
-    Type: AWS::Serverless::Function
+  # disconnect
+
+  DisconnectRoute:
+    Type: AWS::ApiGatewayV2::Route
     Properties:
-      CodeUri: createroom/
-      Handler: app.handler
-      MemorySize: 128
-      Runtime: nodejs12.x
-      Environment:
-        Variables:
-          ROOMS_TABLE_NAME: !Ref TableNameRooms
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref TableNameRooms
+      ApiId: !Ref SimpleChatWebSocket
+      RouteKey: $disconnect
+      AuthorizationType: NONE
+      OperationName: DisconnectRoute
+      Target: !Join
+        - "/"
+        - - "integrations"
+          - !Ref DisconnectInteg
+
+  DisconnectInteg:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref SimpleChatWebSocket
+      Description: Disconnect Integration
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OnDisconnectFunction.Arn}/invocations
+
+  OnDisconnectPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - SimpleChatWebSocket
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref OnDisconnectFunction
+      Principal: apigateway.amazonaws.com
 
   OnDisconnectFunction:
     Type: AWS::Serverless::Function
@@ -283,6 +140,28 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TableName
+
+  # sendmessage
+  SendRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref SimpleChatWebSocket
+      RouteKey: sendmessage
+      AuthorizationType: NONE
+      OperationName: SendRoute
+      Target: !Join
+        - "/"
+        - - "integrations"
+          - !Ref SendInteg
+
+  SendInteg:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref SimpleChatWebSocket
+      Description: Send Integration
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SendMessageFunction.Arn}/invocations
 
   SendMessageFunction:
     Type: AWS::Serverless::Function
@@ -303,26 +182,51 @@ Resources:
                 - "execute-api:ManageConnections"
               Resource:
                 - !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${SimpleChatWebSocket}/*"
-
-  # Lambda Function Permissions
-
-  OnConnectPermission:
+  SendMessagePermission:
     Type: AWS::Lambda::Permission
     DependsOn:
       - SimpleChatWebSocket
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: !Ref OnConnectFunction
+      FunctionName: !Ref SendMessageFunction
       Principal: apigateway.amazonaws.com
 
-  JoinRoomPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn:
-      - SimpleChatWebSocket
+  # create room
+
+  CreateRoomRoute:
+    Type: AWS::ApiGatewayV2::Route
     Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref JoinRoomFunction
-      Principal: apigateway.amazonaws.com
+      ApiId: !Ref SimpleChatWebSocket
+      RouteKey: createroom
+      AuthorizationType: NONE
+      OperationName: CreateRoomRoute
+      Target: !Join
+        - "/"
+        - - "integrations"
+          - !Ref CreateRoomInteg
+
+  CreateRoomInteg:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref SimpleChatWebSocket
+      Description: Create Room Integration
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateRoomFunction.Arn}/invocations
+
+  CreateRoomFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: createroom/
+      Handler: app.handler
+      MemorySize: 128
+      Runtime: nodejs12.x
+      # Environment:
+      #   Variables:
+      #     ROOMS_TABLE_NAME: !Ref TableNameRooms
+      # Policies:
+      #   - DynamoDBCrudPolicy:
+      #       TableName: !Ref TableNameRooms
 
   CreateRoomPermission:
     Type: AWS::Lambda::Permission
@@ -333,23 +237,41 @@ Resources:
       FunctionName: !Ref CreateRoomFunction
       Principal: apigateway.amazonaws.com
 
-  OnDisconnectPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn:
-      - SimpleChatWebSocket
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref OnDisconnectFunction
-      Principal: apigateway.amazonaws.com
+  # RoomsTable:
+  #   Type: AWS::DynamoDB::Table
+  #   Properties:
+  #     AttributeDefinitions:
+  #       - AttributeName: "roomId"
+  #         AttributeType: "S"
+  #     KeySchema:
+  #       - AttributeName: "roomId"
+  #         KeyType: "HASH"
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
+  #     SSESpecification:
+  #       SSEEnabled: True
+  #     TableName: !Ref TableNameRooms
 
-  SendMessagePermission:
-    Type: AWS::Lambda::Permission
+  # Deployment
+  Deployment:
+    Type: AWS::ApiGatewayV2::Deployment
     DependsOn:
-      - SimpleChatWebSocket
+      - ConnectRoute
+      - SendRoute
+      - DisconnectRoute
+      - CreateRoomRoute
     Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref SendMessageFunction
-      Principal: apigateway.amazonaws.com
+      ApiId: !Ref SimpleChatWebSocket
+
+  # Stages
+  Stage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      StageName: Prod
+      Description: Prod Stage
+      DeploymentId: !Ref Deployment
+      ApiId: !Ref SimpleChatWebSocket
 
 # Outputs
 
@@ -358,17 +280,17 @@ Outputs:
     Description: "Connections table ARN"
     Value: !GetAtt ConnectionsTable.Arn
 
-  RoomsTableArn:
-    Description: "Rooms table ARN"
-    Value: !GetAtt RoomsTable.Arn
+  # RoomsTableArn:
+  #   Description: "Rooms table ARN"
+  #   Value: !GetAtt RoomsTable.Arn
 
   OnConnectFunctionArn:
     Description: "OnConnect function ARN"
     Value: !GetAtt OnConnectFunction.Arn
 
-  JoinRoomFunctionArn:
-    Description: "JoinRoom function ARN"
-    Value: !GetAtt JoinRoomFunction.Arn
+  CreateRoomFunctionArn:
+    Description: "CreateRoom function ARN"
+    Value: !GetAtt CreateRoomFunction.Arn
 
   OnDisconnectFunctionArn:
     Description: "OnDisconnect function ARN"
