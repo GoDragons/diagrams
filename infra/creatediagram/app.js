@@ -15,8 +15,6 @@ exports.handler = async (event) => {
       diagramId: JSON.parse(event.body).data,
     },
   };
-  console.log("creatediagram function called, event:", event);
-  console.log("putParams:", putParams);
 
   try {
     await ddb.put(putParams).promise();

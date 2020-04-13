@@ -27,6 +27,7 @@ exports.handler = async (event) => {
   }
 
   const postData = {
+    type: "diagramList",
     diagrams,
   };
 

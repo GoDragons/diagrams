@@ -6,9 +6,8 @@ const API_ID = "rvl2rhoje8";
 export default class App extends React.Component {
   socket = undefined;
   state = {
-    message: "",
     diagramName: "",
-    messageList: [],
+    diagrams: null,
   };
 
   componentDidMount() {
@@ -19,8 +18,9 @@ export default class App extends React.Component {
     this.socket = newSocket;
 
     // Connection opened
-    newSocket.addEventListener("open", function (event) {
+    newSocket.addEventListener("open", (event) => {
       console.log("connection open");
+      this.getDiagrams();
     });
 
     // Listen for messages
@@ -28,31 +28,43 @@ export default class App extends React.Component {
   }
 
   onMessageReceived = (event) => {
-    this.setState({ messageList: [...this.state.messageList, event.data] });
-  };
-
-  displayMessageList = () => {
-    if (!this.state.messageList || this.state.messageList.length === 0) {
-      return <p>No messages yet. Send one now!</p>;
+    console.log("event:", event);
+    const messageData = JSON.parse(event.data);
+    console.log("messageData:", messageData);
+    switch (messageData.type) {
+      case "diagramList":
+        this.handleDiagramList(messageData);
+        break;
+      default:
+        console.log("unknown message:", messageData);
+        break;
     }
-
-    return this.state.messageList.map((message, index) => (
-      <p key={index}>Server: {message}</p>
-    ));
   };
 
-  sendMessage = () => {
-    this.socket.send(
-      JSON.stringify({ message: "sendmessage", data: this.state.message })
-    );
-    this.setState({ message: "" });
+  handleDiagramList = (messageData) => {
+    this.setState({ diagrams: messageData.diagrams });
   };
 
   createDiagram = () => {
     this.socket.send(
       JSON.stringify({ message: "creatediagram", data: this.state.diagramName })
     );
-    this.setState({ diagramName: "" });
+    this.setState({
+      diagramName: "",
+      diagrams: [...this.state.diagrams, this.state.diagramName],
+    });
+  };
+
+  displayDiagrams = () => {
+    const { diagrams } = this.state;
+    if (!diagrams) {
+      return <p>Loading diagrams...</p>;
+    }
+    if (diagrams.length === 0) {
+      return <p>There are no diagrams. Create one now!</p>;
+    }
+
+    return diagrams.map((diagramId) => <p key={diagramId}>{diagramId}</p>);
   };
 
   getDiagrams = () => {
@@ -60,22 +72,9 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { message, diagramName } = this.state;
+    const { diagramName } = this.state;
     return (
       <div className="App">
-        <div>
-          <label>Send message</label>
-          <br />
-          <input
-            value={message}
-            onChange={(e) => this.setState({ message: e.target.value })}
-          />
-          <br />
-          <button onClick={this.sendMessage}>Send</button>
-        </div>
-        <br />
-        <br />
-        <br />
         <div>
           <label>Create diagram</label>
           <br />
@@ -90,10 +89,9 @@ export default class App extends React.Component {
         <br />
         <br />
         <div>
-          <p>Messages received so far: </p>
-          {this.displayMessageList()}
+          <p>Diagrams:</p>
+          {this.displayDiagrams()}
         </div>
-        <button onClick={this.getDiagrams}>Get Diagrams</button>
       </div>
     );
   }

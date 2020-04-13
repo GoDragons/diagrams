@@ -224,7 +224,7 @@
         "GetDiagramsFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/762f10606b653316fe3bef9feeab6373",
+                "CodeUri": "s3://godragons-chat/12e2dd77a036a4000c9f0af2d52cd5e8",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
