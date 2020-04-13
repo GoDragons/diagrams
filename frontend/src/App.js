@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 
-const API_ID = "q3uarp8sva";
+const API_ID = "s4d2a8kdpi";
 
 export default class App extends React.Component {
   socket = undefined;
@@ -55,6 +55,10 @@ export default class App extends React.Component {
     this.setState({ roomName: "" });
   };
 
+  getRooms = () => {
+    this.socket.send(JSON.stringify({ message: "getrooms", data: "" }));
+  };
+
   render() {
     const { message, roomName } = this.state;
     return (
@@ -89,6 +93,7 @@ export default class App extends React.Component {
           <p>Messages received so far: </p>
           {this.displayMessageList()}
         </div>
+        <button onClick={this.getRooms}>Get Rooms</button>
       </div>
     );
   }

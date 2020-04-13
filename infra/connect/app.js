@@ -10,23 +10,22 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 
 exports.handler = async (event) => {
   const putParams = {
-    TableName: process.env.ROOMS_TABLE_NAME,
+    TableName: process.env.TABLE_NAME,
     Item: {
-      roomId: JSON.parse(event).data,
+      connectionId: event.requestContext.connectionId,
     },
   };
-  console.log("createroom function called, event:", event);
-  console.log("putParams:", putParams);
+  console.log("putParams: ", putParams);
 
   try {
     await ddb.put(putParams).promise();
   } catch (err) {
-    console.log("error:", err);
+    console.log("Error:", err);
     return {
       statusCode: 500,
-      body: "Failed to create room: " + JSON.stringify(err),
+      body: "Failed to connect: " + JSON.stringify(err),
     };
   }
 
-  return { statusCode: 200, body: "Room created." };
+  return { statusCode: 200, body: "Connected." };
 };

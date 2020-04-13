@@ -1,0 +1,485 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Transform": "AWS::Serverless-2016-10-31",
+    "Description": "API for an online collaboration tool used to build system design diagrams",
+    "Parameters": {
+        "TableName": {
+            "Type": "String",
+            "Default": "diagrams_connections",
+            "Description": "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
+            "MinLength": 3,
+            "MaxLength": 50,
+            "AllowedPattern": "^[A-Za-z_]+$",
+            "ConstraintDescription": "Required. Can be characters and underscore only. No numbers or special characters allowed."
+        },
+        "TableNameRooms": {
+            "Type": "String",
+            "Default": "diagrams_rooms",
+            "Description": "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
+            "MinLength": 3,
+            "MaxLength": 50,
+            "AllowedPattern": "^[A-Za-z_]+$",
+            "ConstraintDescription": "Required. Can be characters and underscore only. No numbers or special characters allowed."
+        }
+    },
+    "Resources": {
+        "Diagrams": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+                "Name": "Diagrams",
+                "ProtocolType": "WEBSOCKET",
+                "RouteSelectionExpression": "$request.body.message"
+            }
+        },
+        "ConnectionsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "connectionId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "connectionId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 1,
+                    "WriteCapacityUnits": 1
+                },
+                "SSESpecification": {
+                    "SSEEnabled": true
+                },
+                "TableName": {
+                    "Ref": "TableName"
+                }
+            }
+        },
+        "Deployment": {
+            "Type": "AWS::ApiGatewayV2::Deployment",
+            "DependsOn": [
+                "CreateRoomRoute",
+                "GetRoomsRoute",
+                "SendMessageRoute",
+                "DisconnectRoute",
+                "ConnectRoute"
+            ],
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                }
+            }
+        },
+        "Stage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+                "StageName": "Prod",
+                "Description": "Prod Stage",
+                "DeploymentId": {
+                    "Ref": "Deployment"
+                },
+                "ApiId": {
+                    "Ref": "Diagrams"
+                }
+            }
+        },
+        "CreateRoomRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "RouteKey": "createroom",
+                "AuthorizationType": "NONE",
+                "OperationName": "CreateRoomRoute",
+                "Target": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref": "CreateRoomInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "CreateRoomInteg": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "Description": "create room Integration",
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateRoomFunction.Arn}/invocations"
+                }
+            }
+        },
+        "CreateRoomFunction": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "CodeUri": "s3://godragons-chat/5d3c86e8ecf033130370aab815211cae",
+                "Handler": "app.handler",
+                "MemorySize": 128,
+                "Runtime": "nodejs12.x",
+                "Environment": {
+                    "Variables": {
+                        "ROOMS_TABLE_NAME": {
+                            "Ref": "TableNameRooms"
+                        }
+                    }
+                },
+                "Policies": [
+                    {
+                        "DynamoDBCrudPolicy": {
+                            "TableName": {
+                                "Ref": "TableNameRooms"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "CreateRoomPermission": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+                "Diagrams"
+            ],
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "CreateRoomFunction"
+                },
+                "Principal": "apigateway.amazonaws.com"
+            }
+        },
+        "GetRoomsRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "RouteKey": "getrooms",
+                "AuthorizationType": "NONE",
+                "OperationName": "GetRoomsRoute",
+                "Target": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref": "GetRoomsInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "GetRoomsInteg": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "Description": "get rooms Integration",
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetRoomsFunction.Arn}/invocations"
+                }
+            }
+        },
+        "GetRoomsFunction": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "CodeUri": "s3://godragons-chat/821415c49c8b1c272a1adebfb15cca33",
+                "Handler": "app.handler",
+                "MemorySize": 128,
+                "Runtime": "nodejs12.x",
+                "Environment": {
+                    "Variables": {
+                        "ROOMS_TABLE_NAME": {
+                            "Ref": "TableNameRooms"
+                        }
+                    }
+                },
+                "Policies": [
+                    {
+                        "DynamoDBCrudPolicy": {
+                            "TableName": {
+                                "Ref": "TableNameRooms"
+                            }
+                        }
+                    },
+                    {
+                        "Statement": [
+                            {
+                                "Effect": "Allow",
+                                "Action": [
+                                    "execute-api:ManageConnections"
+                                ],
+                                "Resource": [
+                                    {
+                                        "Fn::Sub": "arn:aws:execute-api:*"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "GetRoomsPermission": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+                "Diagrams"
+            ],
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "GetRoomsFunction"
+                },
+                "Principal": "apigateway.amazonaws.com"
+            }
+        },
+        "SendMessageRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "RouteKey": "sendmessage",
+                "AuthorizationType": "NONE",
+                "OperationName": "SendMessageRoute",
+                "Target": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref": "SendMessageInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "SendMessageInteg": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "Description": "send message Integration",
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SendMessageFunction.Arn}/invocations"
+                }
+            }
+        },
+        "SendMessageFunction": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "CodeUri": "s3://godragons-chat/25807e8778cd870c2f57a56cd79ed651",
+                "Handler": "app.handler",
+                "MemorySize": 128,
+                "Runtime": "nodejs12.x",
+                "Environment": {
+                    "Variables": {
+                        "TABLE_NAME": {
+                            "Ref": "TableName"
+                        }
+                    }
+                },
+                "Policies": [
+                    {
+                        "DynamoDBCrudPolicy": {
+                            "TableName": {
+                                "Ref": "TableName"
+                            }
+                        }
+                    },
+                    {
+                        "Statement": [
+                            {
+                                "Effect": "Allow",
+                                "Action": [
+                                    "execute-api:ManageConnections"
+                                ],
+                                "Resource": [
+                                    {
+                                        "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${Diagrams}/*"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "SendMessagePermission": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+                "Diagrams"
+            ],
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "SendMessageFunction"
+                },
+                "Principal": "apigateway.amazonaws.com"
+            }
+        },
+        "DisconnectRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "RouteKey": "$disconnect",
+                "AuthorizationType": "NONE",
+                "OperationName": "DisconnectRoute",
+                "Target": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref": "DisconnectInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "DisconnectInteg": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "Description": "disconnect Integration",
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DisconnectFunction.Arn}/invocations"
+                }
+            }
+        },
+        "DisconnectFunction": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "CodeUri": "s3://godragons-chat/65df22b543e8d1d7d7cc0a631df57fc1",
+                "Handler": "app.handler",
+                "MemorySize": 128,
+                "Runtime": "nodejs12.x",
+                "Environment": {
+                    "Variables": {
+                        "TABLE_NAME": {
+                            "Ref": "TableName"
+                        }
+                    }
+                },
+                "Policies": [
+                    {
+                        "DynamoDBCrudPolicy": {
+                            "TableName": {
+                                "Ref": "TableName"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "DisconnectPermission": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+                "Diagrams"
+            ],
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "DisconnectFunction"
+                },
+                "Principal": "apigateway.amazonaws.com"
+            }
+        },
+        "ConnectRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "RouteKey": "$connect",
+                "AuthorizationType": "NONE",
+                "OperationName": "ConnectRoute",
+                "Target": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref": "ConnectInteg"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        "ConnectInteg": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "Diagrams"
+                },
+                "Description": "connect Integration",
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ConnectFunction.Arn}/invocations"
+                }
+            }
+        },
+        "ConnectFunction": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "CodeUri": "s3://godragons-chat/1a33c85d8aab40fed157ce67ac1c5165",
+                "Handler": "app.handler",
+                "MemorySize": 128,
+                "Runtime": "nodejs12.x",
+                "Environment": {
+                    "Variables": {
+                        "TABLE_NAME": {
+                            "Ref": "TableName"
+                        }
+                    }
+                },
+                "Policies": [
+                    {
+                        "DynamoDBCrudPolicy": {
+                            "TableName": {
+                                "Ref": "TableName"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "ConnectPermission": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+                "Diagrams"
+            ],
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "ConnectFunction"
+                },
+                "Principal": "apigateway.amazonaws.com"
+            }
+        }
+    }
+}
