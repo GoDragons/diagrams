@@ -81,7 +81,7 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TABLE_NAME: !Ref TableName
+          CONNECTIONS_TABLE_NAME: !Ref TableName
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TableName
@@ -136,7 +136,7 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TABLE_NAME: !Ref TableName
+          CONNECTIONS_TABLE_NAME: !Ref TableName
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TableName
@@ -172,7 +172,7 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TABLE_NAME: !Ref TableName
+          CONNECTIONS_TABLE_NAME: !Ref TableName
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TableName
@@ -223,7 +223,7 @@ Resources:
       Runtime: nodejs12.x
       # Environment:
       #   Variables:
-      #     ROOMS_TABLE_NAME: !Ref TableNameRooms
+      #     DIAGRAMS_TABLE_NAME: !Ref TableNameRooms
       # Policies:
       #   - DynamoDBCrudPolicy:
       #       TableName: !Ref TableNameRooms

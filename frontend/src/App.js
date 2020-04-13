@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 
-const API_ID = "s5fb5vb8c3";
+const API_ID = "rvl2rhoje8";
 
 export default class App extends React.Component {
   socket = undefined;
   state = {
     message: "",
-    roomName: "",
+    diagramName: "",
     messageList: [],
   };
 
@@ -48,19 +48,19 @@ export default class App extends React.Component {
     this.setState({ message: "" });
   };
 
-  createRoom = () => {
+  createDiagram = () => {
     this.socket.send(
-      JSON.stringify({ message: "createroom", data: this.state.roomName })
+      JSON.stringify({ message: "creatediagram", data: this.state.diagramName })
     );
-    this.setState({ roomName: "" });
+    this.setState({ diagramName: "" });
   };
 
-  getRooms = () => {
-    this.socket.send(JSON.stringify({ message: "getrooms", data: "" }));
+  getDiagrams = () => {
+    this.socket.send(JSON.stringify({ message: "getdiagrams", data: "" }));
   };
 
   render() {
-    const { message, roomName } = this.state;
+    const { message, diagramName } = this.state;
     return (
       <div className="App">
         <div>
@@ -77,14 +77,14 @@ export default class App extends React.Component {
         <br />
         <br />
         <div>
-          <label>Create room</label>
+          <label>Create diagram</label>
           <br />
           <input
-            value={roomName}
-            onChange={(e) => this.setState({ roomName: e.target.value })}
+            value={diagramName}
+            onChange={(e) => this.setState({ diagramName: e.target.value })}
           />
           <br />
-          <button onClick={this.createRoom}>Create</button>
+          <button onClick={this.createDiagram}>Create</button>
         </div>
         <br />
         <br />
@@ -93,7 +93,7 @@ export default class App extends React.Component {
           <p>Messages received so far: </p>
           {this.displayMessageList()}
         </div>
-        <button onClick={this.getRooms}>Get Rooms</button>
+        <button onClick={this.getDiagrams}>Get Diagrams</button>
       </div>
     );
   }

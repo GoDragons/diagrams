@@ -10,12 +10,12 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 
 exports.handler = async (event) => {
   const putParams = {
-    TableName: process.env.ROOMS_TABLE_NAME,
+    TableName: process.env.DIAGRAMS_TABLE_NAME,
     Item: {
-      roomId: JSON.parse(event.body).data,
+      diagramId: JSON.parse(event.body).data,
     },
   };
-  console.log("createroom function called, event:", event);
+  console.log("creatediagram function called, event:", event);
   console.log("putParams:", putParams);
 
   try {
@@ -24,9 +24,9 @@ exports.handler = async (event) => {
     console.log("error:", err);
     return {
       statusCode: 500,
-      body: "Failed to create room: " + JSON.stringify(err),
+      body: "Failed to create iagram: " + JSON.stringify(err),
     };
   }
 
-  return { statusCode: 200, body: "Room created." };
+  return { statusCode: 200, body: "iagram created." };
 };

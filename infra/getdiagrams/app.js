@@ -3,7 +3,7 @@
 
 const AWS = require("aws-sdk");
 
-const { ROOMS_TABLE_NAME } = process.env;
+const { DIAGRAMS_TABLE_NAME } = process.env;
 
 const ddb = new AWS.DynamoDB.DocumentClient({
   apiVersion: "2012-08-10",
@@ -11,20 +11,23 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
-  let rooms;
+  let diagrams;
 
   try {
-    const roomsResult = await ddb
-      .scan({ TableName: ROOMS_TABLE_NAME, ProjectionExpression: "roomId" })
+    const diagramsResult = await ddb
+      .scan({
+        TableName: DIAGRAMS_TABLE_NAME,
+        ProjectionExpression: "diagramId",
+      })
       .promise();
-    rooms = roomsResult.Items.map(({ roomId }) => roomId);
+    diagrams = diagramsResult.Items.map(({ diagramId }) => diagramId);
   } catch (e) {
-    console.log("Error when reading rooms: ", e);
+    console.log("Error when reading iagrams: ", e);
     return { statusCode: 500, body: e.stack };
   }
 
   const postData = {
-    rooms,
+    diagrams,
   };
 
   const apigwManagementApi = new AWS.ApiGatewayManagementApi({
@@ -41,11 +44,11 @@ exports.handler = async (event) => {
       })
       .promise();
   } catch (e) {
-    console.log("Error when trying to post the room list: ", e);
+    console.log("Error when trying to post the diagram list: ", e);
     if (e.statusCode === 410) {
       console.log(`Found stale connection, deleting ${connectionId}`);
       await ddb
-        .delete({ TableName: TABLE_NAME, Key: { connectionId } })
+        .delete({ TableName: CONNECTIONS_TABLE_NAME, Key: { connectionId } })
         .promise();
     } else {
       throw e;

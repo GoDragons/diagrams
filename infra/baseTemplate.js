@@ -6,9 +6,9 @@ let template = {
   Description:
     "API for an online collaboration tool used to build system design diagrams",
   Parameters: {
-    TableName: {
+    ConnectionsTable: {
       Type: "String",
-      Default: "diagrams_connections",
+      Default: "diagrams_app_connections",
       Description:
         "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
       MinLength: 3,
@@ -17,9 +17,9 @@ let template = {
       ConstraintDescription:
         "Required. Can be characters and underscore only. No numbers or special characters allowed.",
     },
-    TableNameRooms: {
+    DiagramsTable: {
       Type: "String",
-      Default: "diagrams_rooms",
+      Default: "diagrams_app_diagrams",
       Description:
         "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
       MinLength: 3,
@@ -39,7 +39,7 @@ let template = {
       },
     },
 
-    ConnectionsTable: {
+    ConnectionsDBTable: {
       Type: "AWS::DynamoDB::Table",
       Properties: {
         AttributeDefinitions: [
@@ -62,23 +62,23 @@ let template = {
           SSEEnabled: true,
         },
         TableName: {
-          Ref: "TableName",
+          Ref: "ConnectionsTable",
         },
       },
     },
 
-    RoomsTable: {
+    DiagramsDBTable: {
       Type: "AWS::DynamoDB::Table",
       Properties: {
         AttributeDefinitions: [
           {
-            AttributeName: "roomId",
+            AttributeName: "diagramId",
             AttributeType: "S",
           },
         ],
         KeySchema: [
           {
-            AttributeName: "roomId",
+            AttributeName: "diagramId",
             KeyType: "HASH",
           },
         ],
@@ -90,7 +90,7 @@ let template = {
           SSEEnabled: true,
         },
         TableName: {
-          Ref: "TableNameRooms",
+          Ref: "DiagramsTable",
         },
       },
     },
@@ -122,31 +122,31 @@ let template = {
 
 const functions = [
   {
-    name: "create-room",
+    name: "create-diagram",
     Policies: [
       {
         DynamoDBCrudPolicy: {
           TableName: {
-            Ref: "TableNameRooms",
+            Ref: "DiagramsTable",
           },
         },
       },
     ],
     Environment: {
       Variables: {
-        ROOMS_TABLE_NAME: {
-          Ref: "TableNameRooms",
+        DIAGRAMS_TABLE_NAME: {
+          Ref: "DiagramsTable",
         },
       },
     },
   },
   {
-    name: "get-rooms",
+    name: "get-diagrams",
     Policies: [
       {
         DynamoDBCrudPolicy: {
           TableName: {
-            Ref: "TableNameRooms",
+            Ref: "DiagramsTable",
           },
         },
       },
@@ -166,8 +166,8 @@ const functions = [
     ],
     Environment: {
       Variables: {
-        ROOMS_TABLE_NAME: {
-          Ref: "TableNameRooms",
+        DIAGRAMS_TABLE_NAME: {
+          Ref: "DiagramsTable",
         },
       },
     },
@@ -176,8 +176,8 @@ const functions = [
     name: "send-message",
     Environment: {
       Variables: {
-        TABLE_NAME: {
-          Ref: "TableName",
+        CONNECTIONS_TABLE_NAME: {
+          Ref: "ConnectionsTable",
         },
       },
     },
@@ -185,7 +185,7 @@ const functions = [
       {
         DynamoDBCrudPolicy: {
           TableName: {
-            Ref: "TableName",
+            Ref: "ConnectionsTable",
           },
         },
       },
@@ -209,8 +209,8 @@ const functions = [
     routeKey: "$disconnect",
     Environment: {
       Variables: {
-        TABLE_NAME: {
-          Ref: "TableName",
+        CONNECTIONS_TABLE_NAME: {
+          Ref: "ConnectionsTable",
         },
       },
     },
@@ -218,7 +218,7 @@ const functions = [
       {
         DynamoDBCrudPolicy: {
           TableName: {
-            Ref: "TableName",
+            Ref: "ConnectionsTable",
           },
         },
       },
@@ -229,8 +229,8 @@ const functions = [
     routeKey: "$connect",
     Environment: {
       Variables: {
-        TABLE_NAME: {
-          Ref: "TableName",
+        CONNECTIONS_TABLE_NAME: {
+          Ref: "ConnectionsTable",
         },
       },
     },
@@ -238,7 +238,7 @@ const functions = [
       {
         DynamoDBCrudPolicy: {
           TableName: {
-            Ref: "TableName",
+            Ref: "ConnectionsTable",
           },
         },
       },

@@ -3,18 +3,18 @@
     "Transform": "AWS::Serverless-2016-10-31",
     "Description": "API for an online collaboration tool used to build system design diagrams",
     "Parameters": {
-        "TableName": {
+        "ConnectionsTable": {
             "Type": "String",
-            "Default": "diagrams_connections",
+            "Default": "diagrams_app_connections",
             "Description": "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
             "MinLength": 3,
             "MaxLength": 50,
             "AllowedPattern": "^[A-Za-z_]+$",
             "ConstraintDescription": "Required. Can be characters and underscore only. No numbers or special characters allowed."
         },
-        "TableNameRooms": {
+        "DiagramsTable": {
             "Type": "String",
-            "Default": "diagrams_rooms",
+            "Default": "diagrams_app_diagrams",
             "Description": "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
             "MinLength": 3,
             "MaxLength": 50,
@@ -31,7 +31,7 @@
                 "RouteSelectionExpression": "$request.body.message"
             }
         },
-        "ConnectionsTable": {
+        "ConnectionsDBTable": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
                 "AttributeDefinitions": [
@@ -54,22 +54,22 @@
                     "SSEEnabled": true
                 },
                 "TableName": {
-                    "Ref": "TableName"
+                    "Ref": "ConnectionsTable"
                 }
             }
         },
-        "RoomsTable": {
+        "DiagramsDBTable": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
                 "AttributeDefinitions": [
                     {
-                        "AttributeName": "roomId",
+                        "AttributeName": "diagramId",
                         "AttributeType": "S"
                     }
                 ],
                 "KeySchema": [
                     {
-                        "AttributeName": "roomId",
+                        "AttributeName": "diagramId",
                         "KeyType": "HASH"
                     }
                 ],
@@ -81,15 +81,15 @@
                     "SSEEnabled": true
                 },
                 "TableName": {
-                    "Ref": "TableNameRooms"
+                    "Ref": "DiagramsTable"
                 }
             }
         },
         "Deployment": {
             "Type": "AWS::ApiGatewayV2::Deployment",
             "DependsOn": [
-                "CreateRoomRoute",
-                "GetRoomsRoute",
+                "CreateDiagramRoute",
+                "GetDiagramsRoute",
                 "SendMessageRoute",
                 "DisconnectRoute",
                 "ConnectRoute"
@@ -113,52 +113,52 @@
                 }
             }
         },
-        "CreateRoomRoute": {
+        "CreateDiagramRoute": {
             "Type": "AWS::ApiGatewayV2::Route",
             "Properties": {
                 "ApiId": {
                     "Ref": "Diagrams"
                 },
-                "RouteKey": "createroom",
+                "RouteKey": "creatediagram",
                 "AuthorizationType": "NONE",
-                "OperationName": "CreateRoomRoute",
+                "OperationName": "CreateDiagramRoute",
                 "Target": {
                     "Fn::Join": [
                         "/",
                         [
                             "integrations",
                             {
-                                "Ref": "CreateRoomInteg"
+                                "Ref": "CreateDiagramInteg"
                             }
                         ]
                     ]
                 }
             }
         },
-        "CreateRoomInteg": {
+        "CreateDiagramInteg": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
                 "ApiId": {
                     "Ref": "Diagrams"
                 },
-                "Description": "create room Integration",
+                "Description": "create diagram Integration",
                 "IntegrationType": "AWS_PROXY",
                 "IntegrationUri": {
-                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateRoomFunction.Arn}/invocations"
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateDiagramFunction.Arn}/invocations"
                 }
             }
         },
-        "CreateRoomFunction": {
+        "CreateDiagramFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/e7b574c51f409b9c637734ab84344d32",
+                "CodeUri": "s3://godragons-chat/214c2930eefb7d34ab1b223f086d4c32",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
                 "Environment": {
                     "Variables": {
-                        "ROOMS_TABLE_NAME": {
-                            "Ref": "TableNameRooms"
+                        "DIAGRAMS_TABLE_NAME": {
+                            "Ref": "DiagramsTable"
                         }
                     }
                 },
@@ -166,14 +166,14 @@
                     {
                         "DynamoDBCrudPolicy": {
                             "TableName": {
-                                "Ref": "TableNameRooms"
+                                "Ref": "DiagramsTable"
                             }
                         }
                     }
                 ]
             }
         },
-        "CreateRoomPermission": {
+        "CreateDiagramPermission": {
             "Type": "AWS::Lambda::Permission",
             "DependsOn": [
                 "Diagrams"
@@ -181,57 +181,57 @@
             "Properties": {
                 "Action": "lambda:InvokeFunction",
                 "FunctionName": {
-                    "Ref": "CreateRoomFunction"
+                    "Ref": "CreateDiagramFunction"
                 },
                 "Principal": "apigateway.amazonaws.com"
             }
         },
-        "GetRoomsRoute": {
+        "GetDiagramsRoute": {
             "Type": "AWS::ApiGatewayV2::Route",
             "Properties": {
                 "ApiId": {
                     "Ref": "Diagrams"
                 },
-                "RouteKey": "getrooms",
+                "RouteKey": "getdiagrams",
                 "AuthorizationType": "NONE",
-                "OperationName": "GetRoomsRoute",
+                "OperationName": "GetDiagramsRoute",
                 "Target": {
                     "Fn::Join": [
                         "/",
                         [
                             "integrations",
                             {
-                                "Ref": "GetRoomsInteg"
+                                "Ref": "GetDiagramsInteg"
                             }
                         ]
                     ]
                 }
             }
         },
-        "GetRoomsInteg": {
+        "GetDiagramsInteg": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
                 "ApiId": {
                     "Ref": "Diagrams"
                 },
-                "Description": "get rooms Integration",
+                "Description": "get diagrams Integration",
                 "IntegrationType": "AWS_PROXY",
                 "IntegrationUri": {
-                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetRoomsFunction.Arn}/invocations"
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetDiagramsFunction.Arn}/invocations"
                 }
             }
         },
-        "GetRoomsFunction": {
+        "GetDiagramsFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/5dd0ca3b3042096751fbf26fd5b3d810",
+                "CodeUri": "s3://godragons-chat/762f10606b653316fe3bef9feeab6373",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
                 "Environment": {
                     "Variables": {
-                        "ROOMS_TABLE_NAME": {
-                            "Ref": "TableNameRooms"
+                        "DIAGRAMS_TABLE_NAME": {
+                            "Ref": "DiagramsTable"
                         }
                     }
                 },
@@ -239,7 +239,7 @@
                     {
                         "DynamoDBCrudPolicy": {
                             "TableName": {
-                                "Ref": "TableNameRooms"
+                                "Ref": "DiagramsTable"
                             }
                         }
                     },
@@ -261,7 +261,7 @@
                 ]
             }
         },
-        "GetRoomsPermission": {
+        "GetDiagramsPermission": {
             "Type": "AWS::Lambda::Permission",
             "DependsOn": [
                 "Diagrams"
@@ -269,7 +269,7 @@
             "Properties": {
                 "Action": "lambda:InvokeFunction",
                 "FunctionName": {
-                    "Ref": "GetRoomsFunction"
+                    "Ref": "GetDiagramsFunction"
                 },
                 "Principal": "apigateway.amazonaws.com"
             }
@@ -312,14 +312,14 @@
         "SendMessageFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/25807e8778cd870c2f57a56cd79ed651",
+                "CodeUri": "s3://godragons-chat/e0be3973d9f7f38a193f9f27f75770e0",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
                 "Environment": {
                     "Variables": {
-                        "TABLE_NAME": {
-                            "Ref": "TableName"
+                        "CONNECTIONS_TABLE_NAME": {
+                            "Ref": "ConnectionsTable"
                         }
                     }
                 },
@@ -327,7 +327,7 @@
                     {
                         "DynamoDBCrudPolicy": {
                             "TableName": {
-                                "Ref": "TableName"
+                                "Ref": "ConnectionsTable"
                             }
                         }
                     },
@@ -400,14 +400,14 @@
         "DisconnectFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/65df22b543e8d1d7d7cc0a631df57fc1",
+                "CodeUri": "s3://godragons-chat/a3793b189b3cf8f8b24b00afa5870636",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
                 "Environment": {
                     "Variables": {
-                        "TABLE_NAME": {
-                            "Ref": "TableName"
+                        "CONNECTIONS_TABLE_NAME": {
+                            "Ref": "ConnectionsTable"
                         }
                     }
                 },
@@ -415,7 +415,7 @@
                     {
                         "DynamoDBCrudPolicy": {
                             "TableName": {
-                                "Ref": "TableName"
+                                "Ref": "ConnectionsTable"
                             }
                         }
                     }
@@ -473,14 +473,14 @@
         "ConnectFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/1a33c85d8aab40fed157ce67ac1c5165",
+                "CodeUri": "s3://godragons-chat/afc879d7f31529e98bee886bd4324334",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
                 "Environment": {
                     "Variables": {
-                        "TABLE_NAME": {
-                            "Ref": "TableName"
+                        "CONNECTIONS_TABLE_NAME": {
+                            "Ref": "ConnectionsTable"
                         }
                     }
                 },
@@ -488,7 +488,7 @@
                     {
                         "DynamoDBCrudPolicy": {
                             "TableName": {
-                                "Ref": "TableName"
+                                "Ref": "ConnectionsTable"
                             }
                         }
                     }
