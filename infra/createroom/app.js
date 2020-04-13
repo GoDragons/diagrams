@@ -12,7 +12,7 @@ exports.handler = async (event) => {
   const putParams = {
     TableName: process.env.ROOMS_TABLE_NAME,
     Item: {
-      roomId: JSON.parse(event).data,
+      roomId: JSON.parse(event.body).data,
     },
   };
   console.log("createroom function called, event:", event);

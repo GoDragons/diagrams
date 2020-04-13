@@ -27,11 +27,17 @@ exports.handler = async (event) => {
     rooms,
   };
 
+  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+    apiVersion: "2018-11-29",
+    endpoint:
+      event.requestContext.domainName + "/" + event.requestContext.stage,
+  });
+
   try {
     await apigwManagementApi
       .postToConnection({
         ConnectionId: event.requestContext.connectionId,
-        Data: postData,
+        Data: JSON.stringify(postData),
       })
       .promise();
   } catch (e) {

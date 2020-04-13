@@ -67,6 +67,34 @@ let template = {
       },
     },
 
+    RoomsTable: {
+      Type: "AWS::DynamoDB::Table",
+      Properties: {
+        AttributeDefinitions: [
+          {
+            AttributeName: "roomId",
+            AttributeType: "S",
+          },
+        ],
+        KeySchema: [
+          {
+            AttributeName: "roomId",
+            KeyType: "HASH",
+          },
+        ],
+        ProvisionedThroughput: {
+          ReadCapacityUnits: 1,
+          WriteCapacityUnits: 1,
+        },
+        SSESpecification: {
+          SSEEnabled: true,
+        },
+        TableName: {
+          Ref: "TableNameRooms",
+        },
+      },
+    },
+
     Deployment: {
       Type: "AWS::ApiGatewayV2::Deployment",
       DependsOn: [],

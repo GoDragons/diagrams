@@ -58,6 +58,33 @@
                 }
             }
         },
+        "RoomsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "roomId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "roomId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 1,
+                    "WriteCapacityUnits": 1
+                },
+                "SSESpecification": {
+                    "SSEEnabled": true
+                },
+                "TableName": {
+                    "Ref": "TableNameRooms"
+                }
+            }
+        },
         "Deployment": {
             "Type": "AWS::ApiGatewayV2::Deployment",
             "DependsOn": [
@@ -124,7 +151,7 @@
         "CreateRoomFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/5d3c86e8ecf033130370aab815211cae",
+                "CodeUri": "s3://godragons-chat/e7b574c51f409b9c637734ab84344d32",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
@@ -197,7 +224,7 @@
         "GetRoomsFunction": {
             "Type": "AWS::Serverless::Function",
             "Properties": {
-                "CodeUri": "s3://godragons-chat/821415c49c8b1c272a1adebfb15cca33",
+                "CodeUri": "s3://godragons-chat/5dd0ca3b3042096751fbf26fd5b3d810",
                 "Handler": "app.handler",
                 "MemorySize": 128,
                 "Runtime": "nodejs12.x",
