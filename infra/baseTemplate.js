@@ -28,6 +28,17 @@ let template = {
       ConstraintDescription:
         "Required. Can be characters and underscore only. No numbers or special characters allowed.",
     },
+    OpenDiagramsTable: {
+      Type: "String",
+      Default: "diagrams_app_open_diagrams",
+      Description:
+        "(Required) The name of the new DynamoDB to store connection identifiers for each open diagram. Minimum 3 characters",
+      MinLength: 3,
+      MaxLength: 50,
+      AllowedPattern: "^[A-Za-z_]+$",
+      ConstraintDescription:
+        "Required. Can be characters and underscore only. No numbers or special characters allowed.",
+    },
   },
   Resources: {
     [apiName]: {
@@ -85,6 +96,31 @@ let template = {
         },
         TableName: {
           Ref: "DiagramsTable",
+        },
+      },
+    },
+
+    OpenDiagramsDBTable: {
+      Type: "AWS::DynamoDB::Table",
+      Properties: {
+        BillingMode: "PAY_PER_REQUEST",
+        AttributeDefinitions: [
+          {
+            AttributeName: "diagramId",
+            AttributeType: "S",
+          },
+        ],
+        KeySchema: [
+          {
+            AttributeName: "diagramId",
+            KeyType: "HASH",
+          },
+        ],
+        SSESpecification: {
+          SSEEnabled: true,
+        },
+        TableName: {
+          Ref: "OpenDiagramsTable",
         },
       },
     },
@@ -160,6 +196,48 @@ const functions = [
     ],
     Environment: {
       Variables: {
+        DIAGRAMS_TABLE_NAME: {
+          Ref: "DiagramsTable",
+        },
+      },
+    },
+  },
+  {
+    name: "join-diagram",
+    Policies: [
+      {
+        DynamoDBCrudPolicy: {
+          TableName: {
+            Ref: "DiagramsTable",
+          },
+        },
+      },
+      {
+        DynamoDBCrudPolicy: {
+          TableName: {
+            Ref: "OpenDiagramsTable",
+          },
+        },
+      },
+      {
+        Statement: [
+          {
+            Effect: "Allow",
+            Action: ["execute-api:ManageConnections"],
+            Resource: [
+              {
+                "Fn::Sub": `arn:aws:execute-api:*`,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    Environment: {
+      Variables: {
+        OPEN_DIAGRAMS_TABLE_NAME: {
+          Ref: "OpenDiagramsTable",
+        },
         DIAGRAMS_TABLE_NAME: {
           Ref: "DiagramsTable",
         },

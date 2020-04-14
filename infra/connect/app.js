@@ -9,6 +9,7 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
+  console.log("aaa");
   const putParams = {
     TableName: process.env.CONNECTIONS_TABLE_NAME,
     Item: {

@@ -13,6 +13,9 @@ exports.handler = async (event) => {
     TableName: process.env.DIAGRAMS_TABLE_NAME,
     Item: {
       diagramId: JSON.parse(event.body).data,
+      components: [],
+      connections: [],
+      groups: [],
     },
   };
 

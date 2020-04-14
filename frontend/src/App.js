@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 
-const API_ID = "rvl2rhoje8";
+const API_ID = "spnbbdel7g";
 
 export default class App extends React.Component {
   socket = undefined;
@@ -35,6 +35,9 @@ export default class App extends React.Component {
       case "diagramList":
         this.handleDiagramList(messageData);
         break;
+      case "diagramData":
+        console.log("received diagramData:", messageData);
+        break;
       default:
         console.log("unknown message:", messageData);
         break;
@@ -55,7 +58,13 @@ export default class App extends React.Component {
     });
   };
 
-  displayDiagrams = () => {
+  joinDiagram = (diagramId) => {
+    this.socket.send(
+      JSON.stringify({ message: "joindiagram", diagramId: diagramId })
+    );
+  };
+
+  displayDiagramList = () => {
     const { diagrams } = this.state;
     if (!diagrams) {
       return <p>Loading diagrams...</p>;
@@ -64,7 +73,15 @@ export default class App extends React.Component {
       return <p>There are no diagrams. Create one now!</p>;
     }
 
-    return diagrams.map((diagramId) => <p key={diagramId}>{diagramId}</p>);
+    return diagrams.map((diagramId) => (
+      <button
+        key={diagramId}
+        className="diagram-item"
+        onClick={(e) => this.joinDiagram(diagramId)}
+      >
+        {diagramId}
+      </button>
+    ));
   };
 
   getDiagrams = () => {
@@ -74,7 +91,7 @@ export default class App extends React.Component {
   render() {
     const { diagramName } = this.state;
     return (
-      <div className="App">
+      <div className="app">
         <div>
           <label>Create diagram</label>
           <br />
@@ -90,7 +107,7 @@ export default class App extends React.Component {
         <br />
         <div>
           <p>Diagrams:</p>
-          {this.displayDiagrams()}
+          <div className="diagram-list">{this.displayDiagramList()}</div>
         </div>
       </div>
     );
