@@ -42,6 +42,7 @@ let template = {
     ConnectionsDBTable: {
       Type: "AWS::DynamoDB::Table",
       Properties: {
+        BillingMode: "PAY_PER_REQUEST",
         AttributeDefinitions: [
           {
             AttributeName: "connectionId",
@@ -54,10 +55,6 @@ let template = {
             KeyType: "HASH",
           },
         ],
-        ProvisionedThroughput: {
-          ReadCapacityUnits: 1,
-          WriteCapacityUnits: 1,
-        },
         SSESpecification: {
           SSEEnabled: true,
         },
@@ -70,6 +67,7 @@ let template = {
     DiagramsDBTable: {
       Type: "AWS::DynamoDB::Table",
       Properties: {
+        BillingMode: "PAY_PER_REQUEST",
         AttributeDefinitions: [
           {
             AttributeName: "diagramId",
@@ -82,10 +80,6 @@ let template = {
             KeyType: "HASH",
           },
         ],
-        ProvisionedThroughput: {
-          ReadCapacityUnits: 1,
-          WriteCapacityUnits: 1,
-        },
         SSESpecification: {
           SSEEnabled: true,
         },
