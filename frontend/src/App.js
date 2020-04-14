@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
-const API_ID = "sf779zf729";
+const API_ID = "b0v6zzdcbe";
 
 export default class App extends React.Component {
   socket = undefined;

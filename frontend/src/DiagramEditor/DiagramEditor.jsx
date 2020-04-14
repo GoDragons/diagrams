@@ -44,6 +44,8 @@ export default class DiagramEditor extends React.Component {
       case "ArrowLeft":
         deltaX = -10;
         break;
+      default:
+        return;
     }
 
     console.log("deltaX:", deltaX);

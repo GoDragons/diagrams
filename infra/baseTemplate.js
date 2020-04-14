@@ -109,11 +109,19 @@ let template = {
             AttributeName: "diagramId",
             AttributeType: "S",
           },
+          {
+            AttributeName: "connectionId",
+            AttributeType: "S",
+          },
         ],
         KeySchema: [
           {
             AttributeName: "diagramId",
             KeyType: "HASH",
+          },
+          {
+            AttributeName: "connectionId",
+            KeyType: "RANGE",
           },
         ],
         SSESpecification: {
