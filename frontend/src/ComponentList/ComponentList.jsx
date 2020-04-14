@@ -4,12 +4,12 @@ import "./ComponentList.scss";
 
 import componentList from "../data/componentList.json";
 
-export default function ComponentList(onSelect) {
+export default function ComponentList({ onSelect }) {
   const [filterValue, setFilterValue] = useState("");
 
   function displayIconColumn(list) {
     return list.map((item) => (
-      <div className="item" key={item.type}>
+      <div className="item" key={item.type} onClick={(e) => onSelect(item)}>
         <img src={item.icon} />
         <p className="label">{item.type}</p>
       </div>

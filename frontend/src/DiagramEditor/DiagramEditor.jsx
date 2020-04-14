@@ -126,12 +126,13 @@ export default class DiagramEditor extends React.Component {
     });
   };
 
-  addComponent = () => {
+  addComponent = (componentDetails) => {
     this.props.sendChange({
       operation: "addElement",
       data: {
-        type: "lambda",
-        label: `Function ${Math.floor(Math.random() * 10000)}`,
+        type: componentDetails.type,
+        label: componentDetails.type,
+        icon: componentDetails.icon,
         x: 0,
         y: 0,
         id: `lambda_${RandomWords({ exactly: 3, join: "-" })}`,
@@ -156,22 +157,20 @@ export default class DiagramEditor extends React.Component {
         onMouseDown={(e) => this.onMouseDown(e, component.id)}
         style={{ left: component.x + "px", top: component.y + "px" }}
       >
-        <label>
+        <img src={component.icon} className="component-icon" />
+        <p className="label">
           {component.type} - {component.label}
-        </label>
+        </p>
       </div>
     ));
   };
   render() {
     return (
       <div className="diagram-editor">
-        <button onClick={this.addComponent} className="add-component">
-          Add component
-        </button>
         <button onClick={this.save} className="save">
           Save
         </button>
-        <ComponentList />
+        <ComponentList onSelect={this.addComponent} />
         <div className="editor">{this.displayComponents()}</div>
       </div>
     );

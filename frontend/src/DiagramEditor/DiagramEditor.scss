@@ -3,18 +3,31 @@
   height: 60vh;
   width: calc(100vw - 1.5rem);
 
-  .add-component {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    z-index: 1;
+  * {
+    user-select: none;
   }
 
   .save {
     position: absolute;
-    top: 3rem;
-    left: 1rem;
+    top: 3px;
+    right: 201px;
     z-index: 1;
+    background-color: #000;
+    border: unset;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 400ms;
+
+    &:hover {
+      transform: scale(0.9);
+      background-color: #333;
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
   }
 
   .editor {
@@ -32,9 +45,18 @@
       background-color: #888;
       color: #fff;
 
-      label {
+      .label {
         font-size: 0.8rem;
         user-select: none;
+        color: #444;
+        margin: 0;
+        font-size: 0.6rem;
+        font-weight: bold;
+      }
+
+      img {
+        user-select: none;
+        pointer-events: none;
       }
 
       &.selected {
