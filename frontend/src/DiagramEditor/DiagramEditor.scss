@@ -5,12 +5,14 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
+    z-index: 1;
   }
 
   .save {
     position: absolute;
     top: 3rem;
     left: 1rem;
+    z-index: 1;
   }
 
   .editor {
@@ -18,5 +20,23 @@
     height: 90vh;
     background-color: #eee;
     border: 2px solid #444;
+    position: relative;
+
+    .component {
+      position: absolute;
+      width: 5rem;
+      height: 5rem;
+      border: 2px solid #888;
+      background-color: #888;
+      color: #fff;
+
+      label {
+        font-size: 0.8rem;
+      }
+
+      &.selected {
+        border: 2px solid red;
+      }
+    }
   }
 }

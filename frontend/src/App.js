@@ -61,8 +61,8 @@ export default class App extends React.Component {
       case "addElement":
         this.addElementToDiagram(change.data);
         break;
-      case "moveElement":
-        this.moveElementInDiagram(change.data);
+      case "moveComponent":
+        this.moveComponentInDiagram(change.data);
         break;
       case "deleteElement":
         this.deleteElementFromDiagram(change.data);
@@ -79,7 +79,32 @@ export default class App extends React.Component {
     });
   };
 
-  moveElementInDiagram = (moveDetails) => {};
+  moveComponentInDiagram = (moveDetails) => {
+    const { components } = this.state.diagramData;
+    const targetIndex = components.findIndex(
+      (element) => element.id === moveDetails.id
+    );
+
+    console.log("move:: moveDetails = ", moveDetails);
+    console.log("old:: old component = ", components[targetIndex]);
+
+    let updatedElement = {
+      ...components[targetIndex],
+      x: moveDetails.x,
+      y: moveDetails.y,
+    };
+
+    this.setState({
+      diagramData: {
+        ...this.state.diagramData,
+        components: [
+          ...components.slice(0, targetIndex),
+          updatedElement,
+          ...components.slice(targetIndex + 1),
+        ],
+      },
+    });
+  };
 
   deleteElementFromDiagram = (deleteDetails) => {};
 

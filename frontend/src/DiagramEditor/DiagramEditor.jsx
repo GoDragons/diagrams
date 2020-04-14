@@ -1,9 +1,68 @@
 import React from "react";
 import "./DiagramEditor.scss";
 
+import cx from "classnames";
 import RandomWords from "random-words";
 
 export default class DiagramEditor extends React.Component {
+  state = {
+    selectedComponentId: null,
+    isDragging: false,
+  };
+
+  componentDidMount() {
+    window.addEventListener("keyup", this.onKeyUp);
+    window.addEventListener("keydown", this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keyup", this.onKeyUp);
+    window.removeEventListener("keydown", this.onKeyDown);
+  }
+
+  onKeyDown = (e) => {
+    if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  onKeyUp = (e) => {
+    const { selectedComponentId } = this.state;
+    let deltaX = 0;
+    let deltaY = 0;
+
+    switch (e.key) {
+      case "ArrowUp":
+        deltaY = -10;
+        break;
+      case "ArrowDown":
+        deltaY = 10;
+        break;
+      case "ArrowRight":
+        deltaX = 10;
+        break;
+      case "ArrowLeft":
+        deltaX = -10;
+        break;
+    }
+
+    console.log("deltaX:", deltaX);
+    console.log("deltaY:", deltaY);
+
+    const selectedComponent = this.props.data.components.find(
+      ({ id }) => id === selectedComponentId
+    );
+
+    this.props.sendChange({
+      operation: "moveComponent",
+      data: {
+        x: selectedComponent.x + deltaX,
+        y: selectedComponent.y + deltaY,
+        id: selectedComponent.id,
+      },
+    });
+  };
+
   addComponent = () => {
     this.props.sendChange({
       operation: "addElement",
@@ -23,10 +82,20 @@ export default class DiagramEditor extends React.Component {
 
   displayComponents = () => {
     const { components } = this.props.data;
+    const { selectedComponentId } = this.state;
     return components.map((component) => (
-      <p key={component.id} className="component">
-        {component.type} - {component.label}
-      </p>
+      <div
+        key={component.id}
+        className={cx("component", {
+          selected: component.id === selectedComponentId,
+        })}
+        onClick={(e) => this.setState({ selectedComponentId: component.id })}
+        style={{ left: component.x + "px", top: component.y + "px" }}
+      >
+        <label>
+          {component.type} - {component.label}
+        </label>
+      </div>
     ));
   };
   render() {
