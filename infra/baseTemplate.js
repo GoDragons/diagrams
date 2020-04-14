@@ -245,6 +245,32 @@ const functions = [
     },
   },
   {
+    name: "save",
+    Policies: [
+      {
+        DynamoDBCrudPolicy: {
+          TableName: {
+            Ref: "DiagramsTable",
+          },
+        },
+      },
+      {
+        DynamoDBCrudPolicy: {
+          TableName: {
+            Ref: "OpenDiagramsTable",
+          },
+        },
+      },
+    ],
+    Environment: {
+      Variables: {
+        DIAGRAMS_TABLE_NAME: {
+          Ref: "DiagramsTable",
+        },
+      },
+    },
+  },
+  {
     name: "send-message",
     Environment: {
       Variables: {

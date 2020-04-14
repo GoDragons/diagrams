@@ -16,6 +16,11 @@ export default class DiagramEditor extends React.Component {
       },
     });
   };
+
+  save = () => {
+    this.props.save();
+  };
+
   displayComponents = () => {
     const { components } = this.props.data;
     return components.map((component) => (
@@ -29,6 +34,9 @@ export default class DiagramEditor extends React.Component {
       <div className="diagram-editor">
         <button onClick={this.addComponent} className="add-component">
           Add component
+        </button>
+        <button onClick={this.save} className="save">
+          Save
         </button>
         <div className="editor">{this.displayComponents()}</div>
       </div>

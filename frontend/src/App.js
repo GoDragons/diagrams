@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
-const API_ID = "st42cjn373";
+const API_ID = "sf779zf729";
 
 export default class App extends React.Component {
   socket = undefined;
@@ -57,7 +57,31 @@ export default class App extends React.Component {
 
   handleChange = (change) => {
     console.log("handling change:", change);
+    switch (change.operation) {
+      case "addElement":
+        this.addElementToDiagram(change.data);
+        break;
+      case "moveElement":
+        this.moveElementInDiagram(change.data);
+        break;
+      case "deleteElement":
+        this.deleteElementFromDiagram(change.data);
+        break;
+    }
   };
+
+  addElementToDiagram = (elementDetails) => {
+    this.setState({
+      diagramData: {
+        ...this.state.diagramData,
+        components: [...this.state.diagramData.components, elementDetails],
+      },
+    });
+  };
+
+  moveElementInDiagram = (moveDetails) => {};
+
+  deleteElementFromDiagram = (deleteDetails) => {};
 
   createDiagram = () => {
     this.socket.send(
@@ -82,6 +106,15 @@ export default class App extends React.Component {
         message: "sendchange",
         diagramId: this.state.diagramData.diagramId,
         change: changeData,
+      })
+    );
+  };
+
+  save = () => {
+    this.socket.send(
+      JSON.stringify({
+        message: "save",
+        diagramData: this.state.diagramData,
       })
     );
   };
@@ -112,7 +145,13 @@ export default class App extends React.Component {
       return <p>No diagram is open</p>;
     }
 
-    return <DiagramEditor data={diagramData} sendChange={this.sendChange} />;
+    return (
+      <DiagramEditor
+        data={diagramData}
+        sendChange={this.sendChange}
+        save={this.save}
+      />
+    );
   };
   render() {
     const { diagramName } = this.state;
