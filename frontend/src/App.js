@@ -1,13 +1,15 @@
 import React from "react";
 import "./App.css";
+import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
-const API_ID = "spnbbdel7g";
+const API_ID = "st42cjn373";
 
 export default class App extends React.Component {
   socket = undefined;
   state = {
     diagramName: "",
     diagrams: null,
+    diagramData: null,
   };
 
   componentDidMount() {
@@ -20,7 +22,7 @@ export default class App extends React.Component {
     // Connection opened
     newSocket.addEventListener("open", (event) => {
       console.log("connection open");
-      this.getDiagrams();
+      this.socket.send(JSON.stringify({ message: "getdiagrams", data: "" }));
     });
 
     // Listen for messages
@@ -33,10 +35,15 @@ export default class App extends React.Component {
     console.log("messageData:", messageData);
     switch (messageData.type) {
       case "diagramList":
-        this.handleDiagramList(messageData);
+        this.handleDiagramList(messageData.diagrams);
         break;
       case "diagramData":
         console.log("received diagramData:", messageData);
+        this.setState({ diagramData: messageData.diagramData });
+        break;
+      case "change":
+        console.log("received change:", messageData);
+        this.handleChange(messageData.change);
         break;
       default:
         console.log("unknown message:", messageData);
@@ -44,8 +51,12 @@ export default class App extends React.Component {
     }
   };
 
-  handleDiagramList = (messageData) => {
-    this.setState({ diagrams: messageData.diagrams });
+  handleDiagramList = (diagrams) => {
+    this.setState({ diagrams: diagrams });
+  };
+
+  handleChange = (change) => {
+    console.log("handling change:", change);
   };
 
   createDiagram = () => {
@@ -61,6 +72,17 @@ export default class App extends React.Component {
   joinDiagram = (diagramId) => {
     this.socket.send(
       JSON.stringify({ message: "joindiagram", diagramId: diagramId })
+    );
+  };
+
+  sendChange = (changeData) => {
+    console.log("sendChange() changeData = ", changeData);
+    this.socket.send(
+      JSON.stringify({
+        message: "sendchange",
+        diagramId: this.state.diagramData.diagramId,
+        change: changeData,
+      })
     );
   };
 
@@ -84,10 +106,14 @@ export default class App extends React.Component {
     ));
   };
 
-  getDiagrams = () => {
-    this.socket.send(JSON.stringify({ message: "getdiagrams", data: "" }));
-  };
+  displayDiagramData = () => {
+    const { diagramData } = this.state;
+    if (!diagramData) {
+      return <p>No diagram is open</p>;
+    }
 
+    return <DiagramEditor data={diagramData} sendChange={this.sendChange} />;
+  };
   render() {
     const { diagramName } = this.state;
     return (
@@ -108,6 +134,10 @@ export default class App extends React.Component {
         <div>
           <p>Diagrams:</p>
           <div className="diagram-list">{this.displayDiagramList()}</div>
+        </div>
+        <div>
+          <p>Current diagram:</p>
+          {this.displayDiagramData()}
         </div>
       </div>
     );

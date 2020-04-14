@@ -1,0 +1,16 @@
+.diagram-editor {
+  position: relative;
+
+  .add-component {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .editor {
+    width: calc(100vw - 1.5rem);
+    height: 90vh;
+    background-color: #eee;
+    border: 2px solid #444;
+  }
+}

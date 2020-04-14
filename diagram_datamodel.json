@@ -1,0 +1,89 @@
+{
+  "diagramId": "godragons-collaboration-tool",
+  "components": [
+    {
+      "type": "lambda",
+      "label": "Create Diagram",
+      "x": 100,
+      "y": 0,
+      "id": "lambda_black-helmet-done"
+    },
+    {
+      "type": "lambda",
+      "label": "List Diagrams",
+      "x": 100,
+      "y": 100,
+      "id": "lambda_cheesy-wood-night"
+    },
+    {
+      "type": "lambda",
+      "label": "Get Diagram Details",
+      "x": 100,
+      "y": 200,
+      "id": "lambda_almost-five-no"
+    },
+    {
+      "type": "apigateway",
+      "x": 0,
+      "y": 100,
+      "id": "api-gateway_never-green-tall"
+    },
+    {
+      "type": "dynamodb-table",
+      "label": "Connections",
+      "x": 200,
+      "y": 66,
+      "id": "dynamodb-table_giant_egg_taste"
+    },
+    {
+      "type": "dynamodb-table",
+      "label": "Diagrams",
+      "x": 200,
+      "y": 133,
+      "id": "dynamodb-table_great-super-forest"
+    }
+  ],
+  "connections": [
+    {
+      "from": "api-gateway_never-green-tall",
+      "to": "lambda_black-helmet-done",
+      "label": "creatediagram route"
+    },
+    {
+      "from": "api-gateway_never-green-tall",
+      "to": "lambda_cheesy-wood-night",
+      "label": "listdiagrams route"
+    },
+    {
+      "from": "api-gateway_never-green-tall",
+      "to": "lambda_almost-five-no",
+      "label": "getdiagram route"
+    },
+    {
+      "from": "lambda_black-helmet-done",
+      "to": "dynamodb-table_great-super-forest"
+    },
+    {
+      "from": "lambda_cheesy-wood-night",
+      "to": "dynamodb-table_great-super-forest"
+    },
+    {
+      "from": "lambda_almost-five-no",
+      "to": "dynamodb-table_great-super-forest"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group_crazy-green-boat",
+      "type": "lambda",
+      "label": "Lambda Functions",
+      "components": [
+        "lambda_black-helmet-done",
+        "lambda_cheesy-wood-night",
+        "lambda_almost-five-no"
+      ],
+      "minZoom": 4,
+      "maxZoom": 1000
+    }
+  ]
+}

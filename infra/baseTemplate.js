@@ -277,6 +277,38 @@ const functions = [
     ],
   },
   {
+    name: "send-change",
+    Environment: {
+      Variables: {
+        OPEN_DIAGRAMS_TABLE_NAME: {
+          Ref: "OpenDiagramsTable",
+        },
+      },
+    },
+    Policies: [
+      {
+        DynamoDBCrudPolicy: {
+          TableName: {
+            Ref: "OpenDiagramsTable",
+          },
+        },
+      },
+      {
+        Statement: [
+          {
+            Effect: "Allow",
+            Action: ["execute-api:ManageConnections"],
+            Resource: [
+              {
+                "Fn::Sub": `arn:aws:execute-api:\${AWS::Region}:\${AWS::AccountId}:\${${apiName}}/*`,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     name: "disconnect",
     routeKey: "$disconnect",
     Environment: {
