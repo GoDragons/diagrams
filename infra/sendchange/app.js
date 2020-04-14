@@ -11,6 +11,7 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 const { OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 
 exports.handler = async (event) => {
+  console.log("Called");
   const body = JSON.parse(event.body);
   let usersOnDiagramResult;
   console.log("event:", event);
@@ -52,12 +53,16 @@ exports.handler = async (event) => {
     } catch (e) {
       if (e.statusCode === 410) {
         console.log(`Found stale connection, deleting ${connectionId}`);
-        await ddb
-          .delete({
-            TableName: OPEN_DIAGRAMS_TABLE_NAME,
-            Key: { connectionId },
-          })
-          .promise();
+        try {
+          await ddb
+            .delete({
+              TableName: OPEN_DIAGRAMS_TABLE_NAME,
+              Key: { connectionId },
+            })
+            .promise();
+        } catch (e) {
+          console.log("Error while trying to delete connection:", e);
+        }
       } else {
         throw e;
       }

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
-const API_ID = "b0v6zzdcbe";
+const API_ID = "s12siw8nxa";
 
 export default class App extends React.Component {
   socket = undefined;
@@ -84,9 +84,6 @@ export default class App extends React.Component {
     const targetIndex = components.findIndex(
       (element) => element.id === moveDetails.id
     );
-
-    console.log("move:: moveDetails = ", moveDetails);
-    console.log("old:: old component = ", components[targetIndex]);
 
     let updatedElement = {
       ...components[targetIndex],
@@ -175,6 +172,7 @@ export default class App extends React.Component {
         data={diagramData}
         sendChange={this.sendChange}
         save={this.save}
+        moveComponentInDiagram={this.moveComponentInDiagram}
       />
     );
   };

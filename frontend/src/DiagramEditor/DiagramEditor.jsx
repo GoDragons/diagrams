@@ -4,26 +4,90 @@ import "./DiagramEditor.scss";
 import cx from "classnames";
 import RandomWords from "random-words";
 
+import ComponentList from "../ComponentList/ComponentList";
+
 export default class DiagramEditor extends React.Component {
   state = {
     selectedComponentId: null,
     isDragging: false,
+    initialMouseX: null,
+    initialMouseY: null,
   };
 
   componentDidMount() {
     window.addEventListener("keyup", this.onKeyUp);
     window.addEventListener("keydown", this.onKeyDown);
+    window.addEventListener("mouseup", this.onMouseUp);
+    window.addEventListener("mousemove", this.onMouseMove);
   }
 
   componentWillUnmount() {
     window.removeEventListener("keyup", this.onKeyUp);
     window.removeEventListener("keydown", this.onKeyDown);
+    window.removeEventListener("mouseup", this.onMouseUp);
+    window.removeEventListener("mousemove", this.onMouseMove);
   }
 
   onKeyDown = (e) => {
     if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
       e.preventDefault();
     }
+  };
+
+  onMouseUp = (e) => {
+    if (!this.state.isDragging) {
+      return;
+    }
+
+    this.setState({ isDragging: false });
+    const { selectedComponentId } = this.state;
+
+    const selectedComponent = this.props.data.components.find(
+      ({ id }) => id === selectedComponentId
+    );
+
+    this.props.sendChange({
+      operation: "moveComponent",
+      data: {
+        x: selectedComponent.x,
+        y: selectedComponent.y,
+        id: selectedComponent.id,
+      },
+    });
+  };
+
+  onMouseDown = (e, selectedComponentId) => {
+    this.setState({
+      isDragging: true,
+      selectedComponentId,
+      initialMouseX: e.clientX,
+      initialMouseY: e.clientY,
+    });
+  };
+
+  onMouseMove = (e) => {
+    if (!this.state.isDragging) {
+      return;
+    }
+    const { initialMouseX, initialMouseY, selectedComponentId } = this.state;
+
+    const deltaX = e.clientX - initialMouseX;
+    const deltaY = e.clientY - initialMouseY;
+
+    const selectedComponent = this.props.data.components.find(
+      ({ id }) => id === selectedComponentId
+    );
+
+    this.props.moveComponentInDiagram({
+      x: selectedComponent.x + deltaX,
+      y: selectedComponent.y + deltaY,
+      id: selectedComponent.id,
+    });
+
+    this.setState({
+      initialMouseX: e.clientX,
+      initialMouseY: e.clientY,
+    });
   };
 
   onKeyUp = (e) => {
@@ -47,9 +111,6 @@ export default class DiagramEditor extends React.Component {
       default:
         return;
     }
-
-    console.log("deltaX:", deltaX);
-    console.log("deltaY:", deltaY);
 
     const selectedComponent = this.props.data.components.find(
       ({ id }) => id === selectedComponentId
@@ -92,6 +153,7 @@ export default class DiagramEditor extends React.Component {
           selected: component.id === selectedComponentId,
         })}
         onClick={(e) => this.setState({ selectedComponentId: component.id })}
+        onMouseDown={(e) => this.onMouseDown(e, component.id)}
         style={{ left: component.x + "px", top: component.y + "px" }}
       >
         <label>
@@ -109,6 +171,7 @@ export default class DiagramEditor extends React.Component {
         <button onClick={this.save} className="save">
           Save
         </button>
+        <ComponentList />
         <div className="editor">{this.displayComponents()}</div>
       </div>
     );
