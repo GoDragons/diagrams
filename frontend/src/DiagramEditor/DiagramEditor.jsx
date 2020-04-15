@@ -18,7 +18,8 @@ export default class DiagramEditor extends React.Component {
     initialMouseY: null,
     deltaX: null,
     deltaY: null,
-
+    canvasX: 500,
+    canvasY: 300,
     isContextMenuShowing: false,
   };
 
@@ -55,6 +56,7 @@ export default class DiagramEditor extends React.Component {
     const oldIsDraggingComponent = this.state.isDraggingComponent;
     this.setState({
       isDraggingComponent: false,
+      isPanning: false,
     });
     if (isContextMenuShowing) {
       this.setState({
@@ -122,6 +124,16 @@ export default class DiagramEditor extends React.Component {
     });
   };
 
+  onPanStart = (e) => {
+    this.setState({
+      isPanning: true,
+      previousMouseX: e.clientX,
+      previousMouseY: e.clientY,
+      initialMouseX: e.clientX,
+      initialMouseY: e.clientY,
+    });
+  };
+
   onComponentMouseDown = (e, selectedComponentId) => {
     this.setState({
       isDraggingComponent: true,
@@ -134,22 +146,29 @@ export default class DiagramEditor extends React.Component {
   };
 
   onMouseMove = (e) => {
-    const { isContextMenuShowing, isDraggingComponent } = this.state;
-    if (isContextMenuShowing || !isDraggingComponent) {
+    const { isContextMenuShowing, isDraggingComponent, isPanning } = this.state;
+    if (isContextMenuShowing || (!isDraggingComponent && !isPanning)) {
       return;
     }
-    const { previousMouseX, previousMouseY } = this.state;
+    const { previousMouseX, previousMouseY, canvasX, canvasY } = this.state;
 
     const deltaX = e.clientX - previousMouseX;
     const deltaY = e.clientY - previousMouseY;
 
-    const selectedComponent = this.getSelectedComponent();
+    if (isDraggingComponent) {
+      const selectedComponent = this.getSelectedComponent();
 
-    this.props.moveComponent({
-      x: selectedComponent.x + deltaX,
-      y: selectedComponent.y + deltaY,
-      id: selectedComponent.id,
-    });
+      this.props.moveComponent({
+        x: selectedComponent.x + deltaX,
+        y: selectedComponent.y + deltaY,
+        id: selectedComponent.id,
+      });
+    } else if (isPanning) {
+      this.setState({
+        canvasX: canvasX + deltaX,
+        canvasY: canvasY + deltaY,
+      });
+    }
 
     this.setState({
       previousMouseX: e.clientX,
@@ -252,6 +271,7 @@ export default class DiagramEditor extends React.Component {
   };
 
   render() {
+    const { canvasX, canvasY } = this.state;
     return (
       <div className="diagram-editor">
         <button onClick={this.save} className="save">
@@ -262,6 +282,8 @@ export default class DiagramEditor extends React.Component {
         <div className="editor">
           <div
             className="canvas"
+            style={{ top: canvasY + "px", left: canvasX + "px" }}
+            onMouseDown={this.onPanStart}
             onClick={(e) => this.setState({ selectedComponentId: null })}
           >
             {this.displayContextMenu()}
