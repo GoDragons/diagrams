@@ -14,16 +14,12 @@ export default function ComponentItem({
   selectedComponentId,
   onMouseDown,
   onClick,
+  onContextMenu,
 }) {
-  function onContextMenu(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
   return (
     <div
       key={id}
-      onContextMenu={onContextMenu}
+      onContextMenu={(e) => onContextMenu(e, id)}
       className={cx("component", {
         selected: id === selectedComponentId,
       })}

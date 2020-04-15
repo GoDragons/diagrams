@@ -1,0 +1,27 @@
+.context-menu {
+  position: absolute;
+  background-color: #fff;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  width: 10rem;
+
+  li {
+    padding: 0.4rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.6rem;
+    font-weight: bold;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+}

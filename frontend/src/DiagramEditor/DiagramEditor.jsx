@@ -5,6 +5,7 @@ import RandomWords from "random-words";
 
 import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
+import ContextMenu from "./ContextMenu/ContextMenu";
 
 export default class DiagramEditor extends React.Component {
   state = {
@@ -13,6 +14,10 @@ export default class DiagramEditor extends React.Component {
     isPanning: false,
     initialMouseX: null,
     initialMouseY: null,
+    deltaX: null,
+    deltaY: null,
+
+    isContextMenuShowing: false,
   };
 
   componentDidMount() {
@@ -29,6 +34,14 @@ export default class DiagramEditor extends React.Component {
     window.removeEventListener("mousemove", this.onMouseMove);
   }
 
+  getSelectedComponent = () => {
+    const { selectedComponentId } = this.state;
+
+    return this.props.data.components.find(
+      ({ id }) => id === selectedComponentId
+    );
+  };
+
   onKeyDown = (e) => {
     if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
       e.preventDefault();
@@ -36,16 +49,28 @@ export default class DiagramEditor extends React.Component {
   };
 
   onMouseUp = (e) => {
-    if (!this.state.isDraggingComponent) {
+    const { isDraggingComponent, isContextMenuShowing } = this.state;
+    this.setState({
+      isDraggingComponent: false,
+    });
+    if (isContextMenuShowing) {
+      this.setState({
+        isContextMenuShowing: false,
+        selectedComponentId: null,
+      });
       return;
     }
 
-    this.setState({ isDraggingComponent: false });
-    const { selectedComponentId } = this.state;
+    if (!this.state.isDraggingComponent) {
+      return;
+    }
+    if (!this.state.deltaX && !this.state.deltaY) {
+      return;
+    }
 
-    const selectedComponent = this.props.data.components.find(
-      ({ id }) => id === selectedComponentId
-    );
+    this.setState({ isDraggingComponent: false, deltaX: null, deltaY: null });
+
+    const selectedComponent = this.getSelectedComponent();
 
     this.props.sendChange({
       operation: "moveComponent",
@@ -67,17 +92,16 @@ export default class DiagramEditor extends React.Component {
   };
 
   onMouseMove = (e) => {
-    if (!this.state.isDraggingComponent) {
+    const { isContextMenuShowing, isDraggingComponent } = this.state;
+    if (isContextMenuShowing || !isDraggingComponent) {
       return;
     }
-    const { initialMouseX, initialMouseY, selectedComponentId } = this.state;
+    const { initialMouseX, initialMouseY } = this.state;
 
     const deltaX = e.clientX - initialMouseX;
     const deltaY = e.clientY - initialMouseY;
 
-    const selectedComponent = this.props.data.components.find(
-      ({ id }) => id === selectedComponentId
-    );
+    const selectedComponent = this.getSelectedComponent();
 
     this.props.moveComponentInDiagram({
       x: selectedComponent.x + deltaX,
@@ -88,11 +112,12 @@ export default class DiagramEditor extends React.Component {
     this.setState({
       initialMouseX: e.clientX,
       initialMouseY: e.clientY,
+      deltaX,
+      deltaY,
     });
   };
 
   onKeyUp = (e) => {
-    const { selectedComponentId } = this.state;
     let deltaX = 0;
     let deltaY = 0;
 
@@ -113,9 +138,7 @@ export default class DiagramEditor extends React.Component {
         return;
     }
 
-    const selectedComponent = this.props.data.components.find(
-      ({ id }) => id === selectedComponentId
-    );
+    const selectedComponent = this.getSelectedComponent();
 
     this.props.sendChange({
       operation: "moveComponent",
@@ -145,6 +168,14 @@ export default class DiagramEditor extends React.Component {
     this.props.save();
   };
 
+  onComponentContextMenu = (e, componentId) => {
+    e.preventDefault();
+    this.setState({
+      selectedComponentId: componentId,
+      isContextMenuShowing: true,
+    });
+  };
+
   displayComponents = () => {
     const { components } = this.props.data;
     const { selectedComponentId } = this.state;
@@ -153,11 +184,24 @@ export default class DiagramEditor extends React.Component {
         {...component}
         onMouseDown={this.onComponentMouseDown}
         onClick={(e, id) => this.setState({ selectedComponentId: id })}
+        onContextMenu={this.onComponentContextMenu}
         selectedComponentId={selectedComponentId}
         key={component.id}
       />
     ));
   };
+
+  displayContextMenu = () => {
+    const { isContextMenuShowing } = this.state;
+    if (!isContextMenuShowing) {
+      return null;
+    }
+
+    const selectedComponent = this.getSelectedComponent();
+
+    return <ContextMenu target={selectedComponent} />;
+  };
+
   render() {
     return (
       <div className="diagram-editor">
@@ -165,6 +209,7 @@ export default class DiagramEditor extends React.Component {
           Save
         </button>
         <ComponentList onSelect={this.addComponent} />
+        {this.displayContextMenu()}
         <div className="editor">{this.displayComponents()}</div>
       </div>
     );
