@@ -12,6 +12,8 @@ export default class DiagramEditor extends React.Component {
     selectedComponentId: null,
     isDraggingComponent: false,
     isPanning: false,
+    previousMouseX: null,
+    previousMouseY: null,
     initialMouseX: null,
     initialMouseY: null,
     deltaX: null,
@@ -50,6 +52,7 @@ export default class DiagramEditor extends React.Component {
 
   onMouseUp = (e) => {
     const { isDraggingComponent, isContextMenuShowing } = this.state;
+    const oldIsDraggingComponent = this.state.isDraggingComponent;
     this.setState({
       isDraggingComponent: false,
     });
@@ -61,14 +64,24 @@ export default class DiagramEditor extends React.Component {
       return;
     }
 
-    if (!this.state.isDraggingComponent) {
-      return;
-    }
-    if (!this.state.deltaX && !this.state.deltaY) {
+    if (!oldIsDraggingComponent) {
       return;
     }
 
-    this.setState({ isDraggingComponent: false, deltaX: null, deltaY: null });
+    const wholeDeltaX = e.clientX - (this.state.initialMouseX || 0);
+    const wholeDeltaY = e.clientY - (this.state.initialMouseY || 0);
+
+    if (!wholeDeltaX && !wholeDeltaY) {
+      console.log("we have no delta");
+      return;
+    }
+
+    this.setState({
+      deltaX: null,
+      deltaY: null,
+      initialMouseX: null,
+      initialMouseY: null,
+    });
 
     const selectedComponent = this.getSelectedComponent();
 
@@ -82,10 +95,13 @@ export default class DiagramEditor extends React.Component {
     });
   };
 
-  renameSelectedItem = () => {};
+  renameSelectedItem = () => {
+    this.setState({ isContextMenuShowing: false });
+  };
 
   cloneSelectedItem = () => {
     console.log("cloneSelectedItem");
+    this.setState({ isContextMenuShowing: false });
     const selectedComponent = this.getSelectedComponent();
     this.addComponent({
       ...selectedComponent,
@@ -95,6 +111,7 @@ export default class DiagramEditor extends React.Component {
   };
 
   deleteSelectedItem = () => {
+    this.setState({ isContextMenuShowing: false });
     const selectedComponent = this.getSelectedComponent();
 
     this.props.sendChange({
@@ -109,6 +126,8 @@ export default class DiagramEditor extends React.Component {
     this.setState({
       isDraggingComponent: true,
       selectedComponentId,
+      previousMouseX: e.clientX,
+      previousMouseY: e.clientY,
       initialMouseX: e.clientX,
       initialMouseY: e.clientY,
     });
@@ -119,10 +138,10 @@ export default class DiagramEditor extends React.Component {
     if (isContextMenuShowing || !isDraggingComponent) {
       return;
     }
-    const { initialMouseX, initialMouseY } = this.state;
+    const { previousMouseX, previousMouseY } = this.state;
 
-    const deltaX = e.clientX - initialMouseX;
-    const deltaY = e.clientY - initialMouseY;
+    const deltaX = e.clientX - previousMouseX;
+    const deltaY = e.clientY - previousMouseY;
 
     const selectedComponent = this.getSelectedComponent();
 
@@ -133,8 +152,8 @@ export default class DiagramEditor extends React.Component {
     });
 
     this.setState({
-      initialMouseX: e.clientX,
-      initialMouseY: e.clientY,
+      previousMouseX: e.clientX,
+      previousMouseY: e.clientY,
       deltaX,
       deltaY,
     });

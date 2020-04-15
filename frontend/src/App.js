@@ -30,23 +30,18 @@ export default class App extends React.Component {
   }
 
   onMessageReceived = (event) => {
-    console.log("event:", event);
     const messageData = JSON.parse(event.data);
-    console.log("messageData:", messageData);
     switch (messageData.type) {
       case "diagramList":
         this.handleDiagramList(messageData.diagrams);
         break;
       case "diagramData":
-        console.log("received diagramData:", messageData);
         this.setState({ diagramData: messageData.diagramData });
         break;
       case "change":
-        console.log("received change:", messageData);
         this.handleChange(messageData.change);
         break;
       default:
-        console.log("unknown message:", messageData);
         break;
     }
   };
@@ -56,7 +51,6 @@ export default class App extends React.Component {
   };
 
   handleChange = (change) => {
-    console.log("handling change:", change);
     switch (change.operation) {
       case "addElement":
         this.addElement(change.data);
@@ -107,7 +101,6 @@ export default class App extends React.Component {
   };
 
   deleteComponent = (deleteDetails) => {
-    console.log("deleteComponent() details:", deleteDetails);
     const { components } = this.state.diagramData;
     const targetIndex = components.findIndex(
       (element) => element.id === deleteDetails.id
@@ -141,7 +134,6 @@ export default class App extends React.Component {
   };
 
   sendChange = (changeData) => {
-    console.log("sendChange() changeData = ", changeData);
     this.socket.send(
       JSON.stringify({
         message: "sendchange",
