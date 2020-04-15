@@ -180,8 +180,8 @@ export default class DiagramEditor extends React.Component {
         type: componentDetails.type,
         label: componentDetails.type,
         iconPath: componentDetails.iconPath,
-        x: componentDetails.x || 0,
-        y: componentDetails.y || 0,
+        x: componentDetails.x || 5000,
+        y: componentDetails.y || 5000,
         id: `lambda_${RandomWords({ exactly: 3, join: "-" })}`,
       },
     });
@@ -239,12 +239,15 @@ export default class DiagramEditor extends React.Component {
           Save
         </button>
         <ComponentList onSelect={this.addComponent} />
-        {this.displayContextMenu()}
-        <div
-          className="editor"
-          onClick={(e) => this.setState({ selectedComponentId: null })}
-        >
-          {this.displayComponents()}
+
+        <div className="editor">
+          <div
+            className="canvas"
+            onClick={(e) => this.setState({ selectedComponentId: null })}
+          >
+            {this.displayContextMenu()}
+            {this.displayComponents()}
+          </div>
         </div>
       </div>
     );

@@ -7,7 +7,7 @@ export default function ContextMenu({ target, onClone, onDelete, onRename }) {
     return null;
   }
 
-  const style = { top: target.y + "px", left: target.x + 100 + "px" };
+  const style = { top: target.y - 50 + "px", left: target.x + 50 + "px" };
 
   return (
     <ul
