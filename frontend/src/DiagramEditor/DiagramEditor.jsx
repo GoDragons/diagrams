@@ -210,7 +210,12 @@ export default class DiagramEditor extends React.Component {
         </button>
         <ComponentList onSelect={this.addComponent} />
         {this.displayContextMenu()}
-        <div className="editor">{this.displayComponents()}</div>
+        <div
+          className="editor"
+          onClick={(e) => this.setState({ selectedComponentId: null })}
+        >
+          {this.displayComponents()}
+        </div>
       </div>
     );
   }

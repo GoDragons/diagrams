@@ -7,9 +7,18 @@ export default function ContextMenu({ target }) {
 
   return (
     <ul className="context-menu" style={style}>
-      <li>Delete</li>
-      <li>Clone</li>
-      <li>Rename</li>
+      <li>
+        <i className="icon clone far fa-clone"></i>
+        <span className="label">Clone</span>
+      </li>
+      <li>
+        <i className="icon rename fas fa-pencil-alt"></i>
+        <span className="label">Rename</span>
+      </li>
+      <li>
+        <i className="icon delete fas fa-trash"></i>
+        <span className="label">Delete</span>
+      </li>
     </ul>
   );
 }

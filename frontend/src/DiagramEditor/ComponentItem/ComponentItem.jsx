@@ -16,6 +16,11 @@ export default function ComponentItem({
   onClick,
   onContextMenu,
 }) {
+  function onComponentClick(e) {
+    e.stopPropagation();
+    onClick(e, id);
+  }
+
   return (
     <div
       key={id}
@@ -23,7 +28,7 @@ export default function ComponentItem({
       className={cx("component", {
         selected: id === selectedComponentId,
       })}
-      onClick={(e) => onClick(e, id)}
+      onClick={onComponentClick}
       onMouseDown={(e) => onMouseDown(e, id)}
       style={{ left: x + "px", top: y + "px" }}
     >
