@@ -14,20 +14,71 @@ const ddb = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
 });
 
+const { CONNECTIONS_TABLE_NAME, OPEN_DIAGRAMS_TABLE_NAME } = process.env;
+
 exports.handler = async (event) => {
-  const deleteParams = {
-    TableName: process.env.CONNECTIONS_TABLE_NAME,
+  const deleteParamsConnection = {
+    TableName: CONNECTIONS_TABLE_NAME,
     Key: {
       connectionId: event.requestContext.connectionId,
     },
   };
 
   try {
-    await ddb.delete(deleteParams).promise();
-  } catch (err) {
+    await ddb.delete(deleteParamsConnection).promise();
+  } catch (e) {
+    console.log("Error when deleting connection:", e);
     return {
       statusCode: 500,
       body: "Failed to disconnect: " + JSON.stringify(err),
+    };
+  }
+  const openDiagramsScanParams = {
+    TableName: OPEN_DIAGRAMS_TABLE_NAME,
+    ProjectionExpression: "connectionId, diagramId",
+    FilterExpression: "connectionId = :target",
+
+    ExpressionAttributeValues: {
+      ":target": event.requestContext.connectionId,
+    },
+  };
+
+  console.log("openDiagramsScanParams:", openDiagramsScanParams);
+
+  try {
+    const connectionsToRemove = await ddb
+      .scan(openDiagramsScanParams)
+      .promise();
+    console.log("connectionsToRemove: ", connectionsToRemove);
+
+    const connectionToRemove = connectionsToRemove.Items[0];
+    if (!connectionToRemove) {
+      console.log("No connection to remove from open diagrams table");
+    } else {
+      console.log("Attempting to remove connection:", connectionToRemove);
+      const deleteParamsOpenDiagramConnection = {
+        TableName: OPEN_DIAGRAMS_TABLE_NAME,
+        Key: {
+          connectionId: connectionToRemove.connectionId,
+          diagramId: connectionToRemove.diagramId,
+        },
+      };
+      try {
+        console.log(
+          "deleteParamsConnection:",
+          deleteParamsOpenDiagramConnection
+        );
+        await ddb.delete(deleteParamsOpenDiagramConnection).promise();
+        console.log("Successfully deleted connection:", connectionToRemove);
+      } catch (e) {
+        console.log("Error when deleting connection: ", e);
+      }
+    }
+  } catch (e) {
+    console.log("Error when deleting connection: ", e);
+    return {
+      statusCode: 500,
+      body: "Failed to disconnect: " + JSON.stringify(e),
     };
   }
 

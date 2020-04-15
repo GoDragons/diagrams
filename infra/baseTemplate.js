@@ -350,6 +350,9 @@ const functions = [
         CONNECTIONS_TABLE_NAME: {
           Ref: "ConnectionsTable",
         },
+        OPEN_DIAGRAMS_TABLE_NAME: {
+          Ref: "OpenDiagramsTable",
+        },
       },
     },
     Policies: [
@@ -357,6 +360,13 @@ const functions = [
         DynamoDBCrudPolicy: {
           TableName: {
             Ref: "ConnectionsTable",
+          },
+        },
+      },
+      {
+        DynamoDBCrudPolicy: {
+          TableName: {
+            Ref: "OpenDiagramsTable",
           },
         },
       },
