@@ -21,10 +21,10 @@
     $gridColorDark: #f0f0f0;
 
     .canvas {
+      // the 'transform' property is set in the jsx code for the canvas, since it's together with the scale
       width: 10000px;
       height: 10000px;
       position: absolute;
-      transform: translate(-50%, -50%);
       transform-origin: 50% 50%;
       cursor: grab;
 

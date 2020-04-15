@@ -7,6 +7,10 @@ import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 
+const CANVAS_SIZE = 10000;
+const VIEWPORT_WIDTH = 1000;
+const VIEWPORT_HEIGHT = 600;
+
 export default class DiagramEditor extends React.Component {
   state = {
     selectedComponentId: null,
@@ -18,8 +22,9 @@ export default class DiagramEditor extends React.Component {
     initialMouseY: null,
     deltaX: null,
     deltaY: null,
-    canvasX: 500,
-    canvasY: 300,
+    canvasX: -5000,
+    canvasY: -5000,
+    canvasScale: 1,
     isContextMenuShowing: false,
   };
 
@@ -121,6 +126,30 @@ export default class DiagramEditor extends React.Component {
       data: {
         id: selectedComponent.id,
       },
+    });
+  };
+
+  onMouseWheel = (e) => {
+    console.log("wheel");
+
+    const { canvasX, canvasY, canvasScale } = this.state;
+    const deltaScale = -e.deltaY / 30000;
+
+    const targetXPercent = e.nativeEvent.offsetX / VIEWPORT_WIDTH;
+    const targetYPercent = e.nativeEvent.offsetY / VIEWPORT_HEIGHT;
+
+    console.log(targetXPercent, targetYPercent);
+
+    const offsetX = targetXPercent - 0.5;
+    const offsetY = targetYPercent - 0.5;
+
+    const newCanvasX = canvasX + targetXPercent * offsetX;
+    const newCanvasY = canvasY + targetYPercent * offsetY;
+
+    this.setState({
+      canvasScale: canvasScale + deltaScale,
+      // canvasX: newCanvasX,
+      // canvasY: newCanvasY,
     });
   };
 
@@ -271,7 +300,8 @@ export default class DiagramEditor extends React.Component {
   };
 
   render() {
-    const { canvasX, canvasY } = this.state;
+    const { canvasX, canvasY, canvasScale } = this.state;
+
     return (
       <div className="diagram-editor">
         <button onClick={this.save} className="save">
@@ -282,7 +312,12 @@ export default class DiagramEditor extends React.Component {
         <div className="editor">
           <div
             className="canvas"
-            style={{ top: canvasY + "px", left: canvasX + "px" }}
+            style={{
+              top: canvasY + "px",
+              left: canvasX + "px",
+              transform: `scale(${canvasScale})`,
+            }}
+            onWheel={this.onMouseWheel}
             onMouseDown={this.onPanStart}
             onClick={(e) => this.setState({ selectedComponentId: null })}
           >

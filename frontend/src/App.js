@@ -31,6 +31,7 @@ export default class App extends React.Component {
 
   onMessageReceived = (event) => {
     const messageData = JSON.parse(event.data);
+    console.log("mesage:", messageData);
     switch (messageData.type) {
       case "diagramList":
         this.handleDiagramList(messageData.diagrams);
