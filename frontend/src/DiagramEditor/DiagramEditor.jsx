@@ -1,15 +1,16 @@
 import React from "react";
 import "./DiagramEditor.scss";
 
-import cx from "classnames";
 import RandomWords from "random-words";
 
 import ComponentList from "../ComponentList/ComponentList";
+import ComponentItem from "./ComponentItem/ComponentItem";
 
 export default class DiagramEditor extends React.Component {
   state = {
     selectedComponentId: null,
-    isDragging: false,
+    isDraggingComponent: false,
+    isPanning: false,
     initialMouseX: null,
     initialMouseY: null,
   };
@@ -35,11 +36,11 @@ export default class DiagramEditor extends React.Component {
   };
 
   onMouseUp = (e) => {
-    if (!this.state.isDragging) {
+    if (!this.state.isDraggingComponent) {
       return;
     }
 
-    this.setState({ isDragging: false });
+    this.setState({ isDraggingComponent: false });
     const { selectedComponentId } = this.state;
 
     const selectedComponent = this.props.data.components.find(
@@ -56,9 +57,9 @@ export default class DiagramEditor extends React.Component {
     });
   };
 
-  onMouseDown = (e, selectedComponentId) => {
+  onComponentMouseDown = (e, selectedComponentId) => {
     this.setState({
-      isDragging: true,
+      isDraggingComponent: true,
       selectedComponentId,
       initialMouseX: e.clientX,
       initialMouseY: e.clientY,
@@ -66,7 +67,7 @@ export default class DiagramEditor extends React.Component {
   };
 
   onMouseMove = (e) => {
-    if (!this.state.isDragging) {
+    if (!this.state.isDraggingComponent) {
       return;
     }
     const { initialMouseX, initialMouseY, selectedComponentId } = this.state;
@@ -148,20 +149,13 @@ export default class DiagramEditor extends React.Component {
     const { components } = this.props.data;
     const { selectedComponentId } = this.state;
     return components.map((component) => (
-      <div
+      <ComponentItem
+        {...component}
+        onMouseDown={this.onComponentMouseDown}
+        onClick={(e, id) => this.setState({ selectedComponentId: id })}
+        selectedComponentId={selectedComponentId}
         key={component.id}
-        className={cx("component", {
-          selected: component.id === selectedComponentId,
-        })}
-        onClick={(e) => this.setState({ selectedComponentId: component.id })}
-        onMouseDown={(e) => this.onMouseDown(e, component.id)}
-        style={{ left: component.x + "px", top: component.y + "px" }}
-      >
-        <img src={component.icon} className="component-icon" />
-        <p className="label">
-          {component.type} - {component.label}
-        </p>
-      </div>
+      />
     ));
   };
   render() {
