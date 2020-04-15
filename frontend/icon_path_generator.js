@@ -64,7 +64,7 @@ const dataOutput = filteredIconsNoDuplicates.map((iconFileName) => {
     componentNameBasic[0].toUpperCase() + componentNameBasic.substring(1);
   return {
     iconImport: `---${componentNameRightCasing}---`,
-    iconPath: `/static/media/${iconFileName}`,
+    iconPath: `/aws_icons/${iconFileName}`,
     type: iconFileName
       .split(".svg")[0]
       .split("-")

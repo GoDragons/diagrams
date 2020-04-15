@@ -82,6 +82,29 @@ export default class DiagramEditor extends React.Component {
     });
   };
 
+  renameSelectedItem = () => {};
+
+  cloneSelectedItem = () => {
+    console.log("cloneSelectedItem");
+    const selectedComponent = this.getSelectedComponent();
+    this.addComponent({
+      ...selectedComponent,
+      x: selectedComponent.x + 30,
+      y: selectedComponent.y + 30,
+    });
+  };
+
+  deleteSelectedItem = () => {
+    const selectedComponent = this.getSelectedComponent();
+
+    this.props.sendChange({
+      operation: "deleteComponent",
+      data: {
+        id: selectedComponent.id,
+      },
+    });
+  };
+
   onComponentMouseDown = (e, selectedComponentId) => {
     this.setState({
       isDraggingComponent: true,
@@ -103,7 +126,7 @@ export default class DiagramEditor extends React.Component {
 
     const selectedComponent = this.getSelectedComponent();
 
-    this.props.moveComponentInDiagram({
+    this.props.moveComponent({
       x: selectedComponent.x + deltaX,
       y: selectedComponent.y + deltaY,
       id: selectedComponent.id,
@@ -156,9 +179,9 @@ export default class DiagramEditor extends React.Component {
       data: {
         type: componentDetails.type,
         label: componentDetails.type,
-        icon: componentDetails.icon,
-        x: 0,
-        y: 0,
+        iconPath: componentDetails.iconPath,
+        x: componentDetails.x || 0,
+        y: componentDetails.y || 0,
         id: `lambda_${RandomWords({ exactly: 3, join: "-" })}`,
       },
     });
@@ -199,7 +222,14 @@ export default class DiagramEditor extends React.Component {
 
     const selectedComponent = this.getSelectedComponent();
 
-    return <ContextMenu target={selectedComponent} />;
+    return (
+      <ContextMenu
+        target={selectedComponent}
+        onRename={this.renameSelectedItem}
+        onDelete={this.deleteSelectedItem}
+        onClone={this.cloneSelectedItem}
+      />
+    );
   };
 
   render() {

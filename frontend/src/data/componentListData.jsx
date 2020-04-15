@@ -745,3707 +745,3707 @@ import VirtualprivatecloudVPClightbg from '../aws_icons/Virtual-private-cloud-VP
 const data = [
   {
     "iconImport": ADConnectorlightbg,
-    "iconPath": "/static/media/AD-Connector_light-bg.svg",
+    "iconPath": "/aws_icons/AD-Connector_light-bg.svg",
     "type": "AD Connector light bg"
   },
   {
     "iconImport": ARVR,
-    "iconPath": "/static/media/AR-VR.svg",
+    "iconPath": "/aws_icons/AR-VR.svg",
     "type": "AR VR"
   },
   {
     "iconImport": ARVRlightbg,
-    "iconPath": "/static/media/AR-VR_light-bg.svg",
+    "iconPath": "/aws_icons/AR-VR_light-bg.svg",
     "type": "AR VR light bg"
   },
   {
     "iconImport": AWSAmplify,
-    "iconPath": "/static/media/AWS-Amplify.svg",
+    "iconPath": "/aws_icons/AWS-Amplify.svg",
     "type": "AWS Amplify"
   },
   {
     "iconImport": AWSAmplifylightbg,
-    "iconPath": "/static/media/AWS-Amplify_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Amplify_light-bg.svg",
     "type": "AWS Amplify light bg"
   },
   {
     "iconImport": AWSAppMesh,
-    "iconPath": "/static/media/AWS-App-Mesh.svg",
+    "iconPath": "/aws_icons/AWS-App-Mesh.svg",
     "type": "AWS App Mesh"
   },
   {
     "iconImport": AWSAppMeshlightbg,
-    "iconPath": "/static/media/AWS-App-Mesh_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-App-Mesh_light-bg.svg",
     "type": "AWS App Mesh light bg"
   },
   {
     "iconImport": AWSAppSync,
-    "iconPath": "/static/media/AWS-AppSync.svg",
+    "iconPath": "/aws_icons/AWS-AppSync.svg",
     "type": "AWS AppSync"
   },
   {
     "iconImport": AWSAppSynclightbg,
-    "iconPath": "/static/media/AWS-AppSync_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-AppSync_light-bg.svg",
     "type": "AWS AppSync light bg"
   },
   {
     "iconImport": AWSApplicationDiscoveryService,
-    "iconPath": "/static/media/AWS-Application-Discovery-Service.svg",
+    "iconPath": "/aws_icons/AWS-Application-Discovery-Service.svg",
     "type": "AWS Application Discovery Service"
   },
   {
     "iconImport": AWSApplicationDiscoveryServicelightbg,
-    "iconPath": "/static/media/AWS-Application-Discovery-Service_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Application-Discovery-Service_light-bg.svg",
     "type": "AWS Application Discovery Service light bg"
   },
   {
     "iconImport": AWSArtifact,
-    "iconPath": "/static/media/AWS-Artifact.svg",
+    "iconPath": "/aws_icons/AWS-Artifact.svg",
     "type": "AWS Artifact"
   },
   {
     "iconImport": AWSArtifactlightbg,
-    "iconPath": "/static/media/AWS-Artifact_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Artifact_light-bg.svg",
     "type": "AWS Artifact light bg"
   },
   {
     "iconImport": AWSAutoScaling,
-    "iconPath": "/static/media/AWS-Auto-Scaling.svg",
+    "iconPath": "/aws_icons/AWS-Auto-Scaling.svg",
     "type": "AWS Auto Scaling"
   },
   {
     "iconImport": AWSAutoScalinglightbg,
-    "iconPath": "/static/media/AWS-Auto-Scaling_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Auto-Scaling_light-bg.svg",
     "type": "AWS Auto Scaling light bg"
   },
   {
     "iconImport": AWSBackup,
-    "iconPath": "/static/media/AWS-Backup.svg",
+    "iconPath": "/aws_icons/AWS-Backup.svg",
     "type": "AWS Backup"
   },
   {
     "iconImport": AWSBackuplightbg,
-    "iconPath": "/static/media/AWS-Backup_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Backup_light-bg.svg",
     "type": "AWS Backup light bg"
   },
   {
     "iconImport": AWSBatch,
-    "iconPath": "/static/media/AWS-Batch.svg",
+    "iconPath": "/aws_icons/AWS-Batch.svg",
     "type": "AWS Batch"
   },
   {
     "iconImport": AWSBatchlightbg,
-    "iconPath": "/static/media/AWS-Batch_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Batch_light-bg.svg",
     "type": "AWS Batch light bg"
   },
   {
     "iconImport": AWSBraket,
-    "iconPath": "/static/media/AWS-Braket.svg",
+    "iconPath": "/aws_icons/AWS-Braket.svg",
     "type": "AWS Braket"
   },
   {
     "iconImport": AWSBraketlightbg,
-    "iconPath": "/static/media/AWS-Braket_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Braket_light-bg.svg",
     "type": "AWS Braket light bg"
   },
   {
     "iconImport": AWSBudgets,
-    "iconPath": "/static/media/AWS-Budgets.svg",
+    "iconPath": "/aws_icons/AWS-Budgets.svg",
     "type": "AWS Budgets"
   },
   {
     "iconImport": AWSBudgetslightbg,
-    "iconPath": "/static/media/AWS-Budgets_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Budgets_light-bg.svg",
     "type": "AWS Budgets light bg"
   },
   {
     "iconImport": AWSCertificateAuthoritylightbg,
-    "iconPath": "/static/media/AWS-Certificate-Authority_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Certificate-Authority_light-bg.svg",
     "type": "AWS Certificate Authority light bg"
   },
   {
     "iconImport": AWSCertificateManager,
-    "iconPath": "/static/media/AWS-Certificate-Manager.svg",
+    "iconPath": "/aws_icons/AWS-Certificate-Manager.svg",
     "type": "AWS Certificate Manager"
   },
   {
     "iconImport": AWSCertificateManagerlightbg,
-    "iconPath": "/static/media/AWS-Certificate-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Certificate-Manager_light-bg.svg",
     "type": "AWS Certificate Manager light bg"
   },
   {
     "iconImport": AWSClientVPN,
-    "iconPath": "/static/media/AWS-Client-VPN.svg",
+    "iconPath": "/aws_icons/AWS-Client-VPN.svg",
     "type": "AWS Client VPN"
   },
   {
     "iconImport": AWSClientVPNlightbg,
-    "iconPath": "/static/media/AWS-Client-VPN_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Client-VPN_light-bg.svg",
     "type": "AWS Client VPN light bg"
   },
   {
     "iconImport": AWSCloudDevelopmentKit,
-    "iconPath": "/static/media/AWS-Cloud-Development-Kit.svg",
+    "iconPath": "/aws_icons/AWS-Cloud-Development-Kit.svg",
     "type": "AWS Cloud Development Kit"
   },
   {
     "iconImport": AWSCloudDevelopmentKitlightbg,
-    "iconPath": "/static/media/AWS-Cloud-Development-Kit_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cloud-Development-Kit_light-bg.svg",
     "type": "AWS Cloud Development Kit light bg"
   },
   {
     "iconImport": AWSCloudMap,
-    "iconPath": "/static/media/AWS-Cloud-Map.svg",
+    "iconPath": "/aws_icons/AWS-Cloud-Map.svg",
     "type": "AWS Cloud Map"
   },
   {
     "iconImport": AWSCloudMaplightbg,
-    "iconPath": "/static/media/AWS-Cloud-Map_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cloud-Map_light-bg.svg",
     "type": "AWS Cloud Map light bg"
   },
   {
     "iconImport": AWSCloudaltlightbg,
-    "iconPath": "/static/media/AWS-Cloud-alt_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cloud-alt_light-bg.svg",
     "type": "AWS Cloud alt light bg"
   },
   {
     "iconImport": AWSCloud9,
-    "iconPath": "/static/media/AWS-Cloud9.svg",
+    "iconPath": "/aws_icons/AWS-Cloud9.svg",
     "type": "AWS Cloud9"
   },
   {
     "iconImport": AWSCloud9lightbg,
-    "iconPath": "/static/media/AWS-Cloud9_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cloud9_light-bg.svg",
     "type": "AWS Cloud9 light bg"
   },
   {
     "iconImport": AWSCloudFormation,
-    "iconPath": "/static/media/AWS-CloudFormation.svg",
+    "iconPath": "/aws_icons/AWS-CloudFormation.svg",
     "type": "AWS CloudFormation"
   },
   {
     "iconImport": AWSCloudFormationChangeSetlightbg,
-    "iconPath": "/static/media/AWS-CloudFormation_Change-Set_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CloudFormation_Change-Set_light-bg.svg",
     "type": "AWS CloudFormation Change Set light bg"
   },
   {
     "iconImport": AWSCloudFormationStacklightbg,
-    "iconPath": "/static/media/AWS-CloudFormation_Stack_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CloudFormation_Stack_light-bg.svg",
     "type": "AWS CloudFormation Stack light bg"
   },
   {
     "iconImport": AWSCloudFormationTemplatelightbg,
-    "iconPath": "/static/media/AWS-CloudFormation_Template_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CloudFormation_Template_light-bg.svg",
     "type": "AWS CloudFormation Template light bg"
   },
   {
     "iconImport": AWSCloudFormationlightbg,
-    "iconPath": "/static/media/AWS-CloudFormation_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CloudFormation_light-bg.svg",
     "type": "AWS CloudFormation light bg"
   },
   {
     "iconImport": AWSCloudHSM,
-    "iconPath": "/static/media/AWS-CloudHSM.svg",
+    "iconPath": "/aws_icons/AWS-CloudHSM.svg",
     "type": "AWS CloudHSM"
   },
   {
     "iconImport": AWSCloudHSMlightbg,
-    "iconPath": "/static/media/AWS-CloudHSM_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CloudHSM_light-bg.svg",
     "type": "AWS CloudHSM light bg"
   },
   {
     "iconImport": AWSCloudTrail,
-    "iconPath": "/static/media/AWS-CloudTrail.svg",
+    "iconPath": "/aws_icons/AWS-CloudTrail.svg",
     "type": "AWS CloudTrail"
   },
   {
     "iconImport": AWSCloudTraillightbg,
-    "iconPath": "/static/media/AWS-CloudTrail_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CloudTrail_light-bg.svg",
     "type": "AWS CloudTrail light bg"
   },
   {
     "iconImport": AWSCloudlightbg,
-    "iconPath": "/static/media/AWS-Cloud_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cloud_light-bg.svg",
     "type": "AWS Cloud light bg"
   },
   {
     "iconImport": AWSCodeBuild,
-    "iconPath": "/static/media/AWS-CodeBuild.svg",
+    "iconPath": "/aws_icons/AWS-CodeBuild.svg",
     "type": "AWS CodeBuild"
   },
   {
     "iconImport": AWSCodeBuildlightbg,
-    "iconPath": "/static/media/AWS-CodeBuild_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CodeBuild_light-bg.svg",
     "type": "AWS CodeBuild light bg"
   },
   {
     "iconImport": AWSCodeCommit,
-    "iconPath": "/static/media/AWS-CodeCommit.svg",
+    "iconPath": "/aws_icons/AWS-CodeCommit.svg",
     "type": "AWS CodeCommit"
   },
   {
     "iconImport": AWSCodeCommitlightbg,
-    "iconPath": "/static/media/AWS-CodeCommit_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CodeCommit_light-bg.svg",
     "type": "AWS CodeCommit light bg"
   },
   {
     "iconImport": AWSCodeDeploy,
-    "iconPath": "/static/media/AWS-CodeDeploy.svg",
+    "iconPath": "/aws_icons/AWS-CodeDeploy.svg",
     "type": "AWS CodeDeploy"
   },
   {
     "iconImport": AWSCodeDeploylightbg,
-    "iconPath": "/static/media/AWS-CodeDeploy_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CodeDeploy_light-bg.svg",
     "type": "AWS CodeDeploy light bg"
   },
   {
     "iconImport": AWSCodePipeline,
-    "iconPath": "/static/media/AWS-CodePipeline.svg",
+    "iconPath": "/aws_icons/AWS-CodePipeline.svg",
     "type": "AWS CodePipeline"
   },
   {
     "iconImport": AWSCodePipelinelightbg,
-    "iconPath": "/static/media/AWS-CodePipeline_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CodePipeline_light-bg.svg",
     "type": "AWS CodePipeline light bg"
   },
   {
     "iconImport": AWSCodeStar,
-    "iconPath": "/static/media/AWS-CodeStar.svg",
+    "iconPath": "/aws_icons/AWS-CodeStar.svg",
     "type": "AWS CodeStar"
   },
   {
     "iconImport": AWSCodeStarlightbg,
-    "iconPath": "/static/media/AWS-CodeStar_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-CodeStar_light-bg.svg",
     "type": "AWS CodeStar light bg"
   },
   {
     "iconImport": AWSCommandLineInterface,
-    "iconPath": "/static/media/AWS-Command-Line-Interface.svg",
+    "iconPath": "/aws_icons/AWS-Command-Line-Interface.svg",
     "type": "AWS Command Line Interface"
   },
   {
     "iconImport": AWSCommandLineInterfacelightbg,
-    "iconPath": "/static/media/AWS-Command-Line-Interface_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Command-Line-Interface_light-bg.svg",
     "type": "AWS Command Line Interface light bg"
   },
   {
     "iconImport": AWSComputeOptimizer,
-    "iconPath": "/static/media/AWS-Compute-Optimizer.svg",
+    "iconPath": "/aws_icons/AWS-Compute-Optimizer.svg",
     "type": "AWS Compute Optimizer"
   },
   {
     "iconImport": AWSComputeOptimizerlightbg,
-    "iconPath": "/static/media/AWS-Compute-Optimizer_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Compute-Optimizer_light-bg.svg",
     "type": "AWS Compute Optimizer light bg"
   },
   {
     "iconImport": AWSConfig,
-    "iconPath": "/static/media/AWS-Config.svg",
+    "iconPath": "/aws_icons/AWS-Config.svg",
     "type": "AWS Config"
   },
   {
     "iconImport": AWSConfiglightbg,
-    "iconPath": "/static/media/AWS-Config_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Config_light-bg.svg",
     "type": "AWS Config light bg"
   },
   {
     "iconImport": AWSConsoleMobileApplication,
-    "iconPath": "/static/media/AWS-Console-Mobile-Application.svg",
+    "iconPath": "/aws_icons/AWS-Console-Mobile-Application.svg",
     "type": "AWS Console Mobile Application"
   },
   {
     "iconImport": AWSConsoleMobileApplicationlightbg,
-    "iconPath": "/static/media/AWS-Console-Mobile-Application_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Console-Mobile-Application_light-bg.svg",
     "type": "AWS Console Mobile Application light bg"
   },
   {
     "iconImport": AWSControlTower,
-    "iconPath": "/static/media/AWS-Control-Tower.svg",
+    "iconPath": "/aws_icons/AWS-Control-Tower.svg",
     "type": "AWS Control Tower"
   },
   {
     "iconImport": AWSControlTowerlightbg,
-    "iconPath": "/static/media/AWS-Control-Tower_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Control-Tower_light-bg.svg",
     "type": "AWS Control Tower light bg"
   },
   {
     "iconImport": AWSCostExplorer,
-    "iconPath": "/static/media/AWS-Cost-Explorer.svg",
+    "iconPath": "/aws_icons/AWS-Cost-Explorer.svg",
     "type": "AWS Cost Explorer"
   },
   {
     "iconImport": AWSCostExplorerlightbg,
-    "iconPath": "/static/media/AWS-Cost-Explorer_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cost-Explorer_light-bg.svg",
     "type": "AWS Cost Explorer light bg"
   },
   {
     "iconImport": AWSCostManagement,
-    "iconPath": "/static/media/AWS-Cost-Management.svg",
+    "iconPath": "/aws_icons/AWS-Cost-Management.svg",
     "type": "AWS Cost Management"
   },
   {
     "iconImport": AWSCostManagementlightbg,
-    "iconPath": "/static/media/AWS-Cost-Management_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cost-Management_light-bg.svg",
     "type": "AWS Cost Management light bg"
   },
   {
     "iconImport": AWSCostandUsageReport,
-    "iconPath": "/static/media/AWS-Cost-and-Usage-Report.svg",
+    "iconPath": "/aws_icons/AWS-Cost-and-Usage-Report.svg",
     "type": "AWS Cost and Usage Report"
   },
   {
     "iconImport": AWSCostandUsageReportlightbg,
-    "iconPath": "/static/media/AWS-Cost-and-Usage-Report_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Cost-and-Usage-Report_light-bg.svg",
     "type": "AWS Cost and Usage Report light bg"
   },
   {
     "iconImport": AWSDataPipeline,
-    "iconPath": "/static/media/AWS-Data-Pipeline.svg",
+    "iconPath": "/aws_icons/AWS-Data-Pipeline.svg",
     "type": "AWS Data Pipeline"
   },
   {
     "iconImport": AWSDataPipelinelightbg,
-    "iconPath": "/static/media/AWS-Data-Pipeline_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Data-Pipeline_light-bg.svg",
     "type": "AWS Data Pipeline light bg"
   },
   {
     "iconImport": AWSDatalakeResourceiconlightbg,
-    "iconPath": "/static/media/AWS-Data-lake_Resource-icon_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Data-lake_Resource-icon_light-bg.svg",
     "type": "AWS Data lake Resource icon light bg"
   },
   {
     "iconImport": AWSDataSync,
-    "iconPath": "/static/media/AWS-DataSync.svg",
+    "iconPath": "/aws_icons/AWS-DataSync.svg",
     "type": "AWS DataSync"
   },
   {
     "iconImport": AWSDataSyncAgentlightbg,
-    "iconPath": "/static/media/AWS-DataSync_Agent_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-DataSync_Agent_light-bg.svg",
     "type": "AWS DataSync Agent light bg"
   },
   {
     "iconImport": AWSDataSynclightbg,
-    "iconPath": "/static/media/AWS-DataSync_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-DataSync_light-bg.svg",
     "type": "AWS DataSync light bg"
   },
   {
     "iconImport": AWSDatabaseMigrationService,
-    "iconPath": "/static/media/AWS-Database-Migration-Service.svg",
+    "iconPath": "/aws_icons/AWS-Database-Migration-Service.svg",
     "type": "AWS Database Migration Service"
   },
   {
     "iconImport": AWSDatabaseMigrationServiceDatabaseMigrationWorkflowlightbg,
-    "iconPath": "/static/media/AWS-Database-Migration-Service_Database-Migration-Workflow_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Database-Migration-Service_Database-Migration-Workflow_light-bg.svg",
     "type": "AWS Database Migration Service Database Migration Workflow light bg"
   },
   {
     "iconImport": AWSDatabaseMigrationServicelightbg,
-    "iconPath": "/static/media/AWS-Database-Migration-Service_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Database-Migration-Service_light-bg.svg",
     "type": "AWS Database Migration Service light bg"
   },
   {
     "iconImport": AWSDeepLearningAMIs,
-    "iconPath": "/static/media/AWS-Deep-Learning-AMIs.svg",
+    "iconPath": "/aws_icons/AWS-Deep-Learning-AMIs.svg",
     "type": "AWS Deep Learning AMIs"
   },
   {
     "iconImport": AWSDeepLearningAMIslightbg,
-    "iconPath": "/static/media/AWS-Deep-Learning-AMIs_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Deep-Learning-AMIs_light-bg.svg",
     "type": "AWS Deep Learning AMIs light bg"
   },
   {
     "iconImport": AWSDeepLearningContainers,
-    "iconPath": "/static/media/AWS-Deep-Learning-Containers.svg",
+    "iconPath": "/aws_icons/AWS-Deep-Learning-Containers.svg",
     "type": "AWS Deep Learning Containers"
   },
   {
     "iconImport": AWSDeepLearningContainerslightbg,
-    "iconPath": "/static/media/AWS-Deep-Learning-Containers_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Deep-Learning-Containers_light-bg.svg",
     "type": "AWS Deep Learning Containers light bg"
   },
   {
     "iconImport": AWSDeepComposerlightbg,
-    "iconPath": "/static/media/AWS-DeepComposer_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-DeepComposer_light-bg.svg",
     "type": "AWS DeepComposer light bg"
   },
   {
     "iconImport": AWSDeepComposerprimarybg,
-    "iconPath": "/static/media/AWS-DeepComposer_primary-bg.svg",
+    "iconPath": "/aws_icons/AWS-DeepComposer_primary-bg.svg",
     "type": "AWS DeepComposer primary bg"
   },
   {
     "iconImport": AWSDeepLens,
-    "iconPath": "/static/media/AWS-DeepLens.svg",
+    "iconPath": "/aws_icons/AWS-DeepLens.svg",
     "type": "AWS DeepLens"
   },
   {
     "iconImport": AWSDeepLenslightbg,
-    "iconPath": "/static/media/AWS-DeepLens_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-DeepLens_light-bg.svg",
     "type": "AWS DeepLens light bg"
   },
   {
     "iconImport": AWSDeepRacer,
-    "iconPath": "/static/media/AWS-DeepRacer.svg",
+    "iconPath": "/aws_icons/AWS-DeepRacer.svg",
     "type": "AWS DeepRacer"
   },
   {
     "iconImport": AWSDeepRacerlightbg,
-    "iconPath": "/static/media/AWS-DeepRacer_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-DeepRacer_light-bg.svg",
     "type": "AWS DeepRacer light bg"
   },
   {
     "iconImport": AWSDeviceFarm,
-    "iconPath": "/static/media/AWS-Device-Farm.svg",
+    "iconPath": "/aws_icons/AWS-Device-Farm.svg",
     "type": "AWS Device Farm"
   },
   {
     "iconImport": AWSDeviceFarmlightbg,
-    "iconPath": "/static/media/AWS-Device-Farm_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Device-Farm_light-bg.svg",
     "type": "AWS Device Farm light bg"
   },
   {
     "iconImport": AWSDirectConnect,
-    "iconPath": "/static/media/AWS-Direct-Connect.svg",
+    "iconPath": "/aws_icons/AWS-Direct-Connect.svg",
     "type": "AWS Direct Connect"
   },
   {
     "iconImport": AWSDirectConnectlightbg,
-    "iconPath": "/static/media/AWS-Direct-Connect_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Direct-Connect_light-bg.svg",
     "type": "AWS Direct Connect light bg"
   },
   {
     "iconImport": AWSDirectoryService,
-    "iconPath": "/static/media/AWS-Directory-Service.svg",
+    "iconPath": "/aws_icons/AWS-Directory-Service.svg",
     "type": "AWS Directory Service"
   },
   {
     "iconImport": AWSDirectoryServicelightbg,
-    "iconPath": "/static/media/AWS-Directory-Service_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Directory-Service_light-bg.svg",
     "type": "AWS Directory Service light bg"
   },
   {
     "iconImport": AWSElasticBeanstalk,
-    "iconPath": "/static/media/AWS-Elastic-Beanstalk.svg",
+    "iconPath": "/aws_icons/AWS-Elastic-Beanstalk.svg",
     "type": "AWS Elastic Beanstalk"
   },
   {
     "iconImport": AWSElasticBeanstalkApplicationlightbg,
-    "iconPath": "/static/media/AWS-Elastic-Beanstalk_Application_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elastic-Beanstalk_Application_light-bg.svg",
     "type": "AWS Elastic Beanstalk Application light bg"
   },
   {
     "iconImport": AWSElasticBeanstalkDeploymentlightbg,
-    "iconPath": "/static/media/AWS-Elastic-Beanstalk_Deployment_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elastic-Beanstalk_Deployment_light-bg.svg",
     "type": "AWS Elastic Beanstalk Deployment light bg"
   },
   {
     "iconImport": AWSElasticBeanstalklightbg,
-    "iconPath": "/static/media/AWS-Elastic-Beanstalk_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elastic-Beanstalk_light-bg.svg",
     "type": "AWS Elastic Beanstalk light bg"
   },
   {
     "iconImport": AWSElementalConductor,
-    "iconPath": "/static/media/AWS-Elemental-Conductor.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Conductor.svg",
     "type": "AWS Elemental Conductor"
   },
   {
     "iconImport": AWSElementalConductorlightbg,
-    "iconPath": "/static/media/AWS-Elemental-Conductor_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Conductor_light-bg.svg",
     "type": "AWS Elemental Conductor light bg"
   },
   {
     "iconImport": AWSElementalDelta,
-    "iconPath": "/static/media/AWS-Elemental-Delta.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Delta.svg",
     "type": "AWS Elemental Delta"
   },
   {
     "iconImport": AWSElementalDeltalightbg,
-    "iconPath": "/static/media/AWS-Elemental-Delta_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Delta_light-bg.svg",
     "type": "AWS Elemental Delta light bg"
   },
   {
     "iconImport": AWSElementalLive,
-    "iconPath": "/static/media/AWS-Elemental-Live.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Live.svg",
     "type": "AWS Elemental Live"
   },
   {
     "iconImport": AWSElementalLivelightbg,
-    "iconPath": "/static/media/AWS-Elemental-Live_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Live_light-bg.svg",
     "type": "AWS Elemental Live light bg"
   },
   {
     "iconImport": AWSElementalMediaConnect,
-    "iconPath": "/static/media/AWS-Elemental-MediaConnect.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-MediaConnect.svg",
     "type": "AWS Elemental MediaConnect"
   },
   {
     "iconImport": AWSElementalMediaConnectlightbg,
-    "iconPath": "/static/media/AWS-Elemental-MediaConnect_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-MediaConnect_light-bg.svg",
     "type": "AWS Elemental MediaConnect light bg"
   },
   {
     "iconImport": AWSElementalMediaLive,
-    "iconPath": "/static/media/AWS-Elemental-MediaLive.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-MediaLive.svg",
     "type": "AWS Elemental MediaLive"
   },
   {
     "iconImport": AWSElementalMediaLivelightbg,
-    "iconPath": "/static/media/AWS-Elemental-MediaLive_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-MediaLive_light-bg.svg",
     "type": "AWS Elemental MediaLive light bg"
   },
   {
     "iconImport": AWSElementalServer,
-    "iconPath": "/static/media/AWS-Elemental-Server.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Server.svg",
     "type": "AWS Elemental Server"
   },
   {
     "iconImport": AWSElementalServerlightbg,
-    "iconPath": "/static/media/AWS-Elemental-Server_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-Server_light-bg.svg",
     "type": "AWS Elemental Server light bg"
   },
   {
     "iconImport": AWSElementalMediaPackage,
-    "iconPath": "/static/media/AWS-Elemental-_MediaPackage.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-_MediaPackage.svg",
     "type": "AWS Elemental  MediaPackage"
   },
   {
     "iconImport": AWSElementalMediaPackagelightbg,
-    "iconPath": "/static/media/AWS-Elemental-_MediaPackage_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-_MediaPackage_light-bg.svg",
     "type": "AWS Elemental  MediaPackage light bg"
   },
   {
     "iconImport": AWSElementalMediaStore,
-    "iconPath": "/static/media/AWS-Elemental-_MediaStore.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-_MediaStore.svg",
     "type": "AWS Elemental  MediaStore"
   },
   {
     "iconImport": AWSElementalMediaStorelightbg,
-    "iconPath": "/static/media/AWS-Elemental-_MediaStore_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-_MediaStore_light-bg.svg",
     "type": "AWS Elemental  MediaStore light bg"
   },
   {
     "iconImport": AWSElementalMediaTailor,
-    "iconPath": "/static/media/AWS-Elemental-_MediaTailor.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-_MediaTailor.svg",
     "type": "AWS Elemental  MediaTailor"
   },
   {
     "iconImport": AWSElementalMediaTailorlightbg,
-    "iconPath": "/static/media/AWS-Elemental-_MediaTailor_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Elemental-_MediaTailor_light-bg.svg",
     "type": "AWS Elemental  MediaTailor light bg"
   },
   {
     "iconImport": AWSExpressWorkflows,
-    "iconPath": "/static/media/AWS-Express-Workflows.svg",
+    "iconPath": "/aws_icons/AWS-Express-Workflows.svg",
     "type": "AWS Express Workflows"
   },
   {
     "iconImport": AWSExpressWorkflowslightbg,
-    "iconPath": "/static/media/AWS-Express-Workflows_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Express-Workflows_light-bg.svg",
     "type": "AWS Express Workflows light bg"
   },
   {
     "iconImport": AWSFargate,
-    "iconPath": "/static/media/AWS-Fargate.svg",
+    "iconPath": "/aws_icons/AWS-Fargate.svg",
     "type": "AWS Fargate"
   },
   {
     "iconImport": AWSFargatelightbg,
-    "iconPath": "/static/media/AWS-Fargate_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Fargate_light-bg.svg",
     "type": "AWS Fargate light bg"
   },
   {
     "iconImport": AWSFirewallManager,
-    "iconPath": "/static/media/AWS-Firewall-Manager.svg",
+    "iconPath": "/aws_icons/AWS-Firewall-Manager.svg",
     "type": "AWS Firewall Manager"
   },
   {
     "iconImport": AWSFirewallManagerlightbg,
-    "iconPath": "/static/media/AWS-Firewall-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Firewall-Manager_light-bg.svg",
     "type": "AWS Firewall Manager light bg"
   },
   {
     "iconImport": AWSGlobalAccelerator,
-    "iconPath": "/static/media/AWS-Global-Accelerator.svg",
+    "iconPath": "/aws_icons/AWS-Global-Accelerator.svg",
     "type": "AWS Global Accelerator"
   },
   {
     "iconImport": AWSGlobalAcceleratorlightbg,
-    "iconPath": "/static/media/AWS-Global-Accelerator_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Global-Accelerator_light-bg.svg",
     "type": "AWS Global Accelerator light bg"
   },
   {
     "iconImport": AWSGlue,
-    "iconPath": "/static/media/AWS-Glue.svg",
+    "iconPath": "/aws_icons/AWS-Glue.svg",
     "type": "AWS Glue"
   },
   {
     "iconImport": AWSGlueCrawlerslightbg,
-    "iconPath": "/static/media/AWS-Glue_Crawlers_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Glue_Crawlers_light-bg.svg",
     "type": "AWS Glue Crawlers light bg"
   },
   {
     "iconImport": AWSGlueDatacataloglightbg,
-    "iconPath": "/static/media/AWS-Glue_Data-catalog_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Glue_Data-catalog_light-bg.svg",
     "type": "AWS Glue Data catalog light bg"
   },
   {
     "iconImport": AWSGluelightbg,
-    "iconPath": "/static/media/AWS-Glue_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Glue_light-bg.svg",
     "type": "AWS Glue light bg"
   },
   {
     "iconImport": AWSGroundStation,
-    "iconPath": "/static/media/AWS-Ground-Station.svg",
+    "iconPath": "/aws_icons/AWS-Ground-Station.svg",
     "type": "AWS Ground Station"
   },
   {
     "iconImport": AWSGroundStationlightbg,
-    "iconPath": "/static/media/AWS-Ground-Station_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Ground-Station_light-bg.svg",
     "type": "AWS Ground Station light bg"
   },
   {
     "iconImport": AWSIQ,
-    "iconPath": "/static/media/AWS-IQ.svg",
+    "iconPath": "/aws_icons/AWS-IQ.svg",
     "type": "AWS IQ"
   },
   {
     "iconImport": AWSIQlightbg,
-    "iconPath": "/static/media/AWS-IQ_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IQ_light-bg.svg",
     "type": "AWS IQ light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMAWSSTSAlternatelightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_AWS-STS-Alternate_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_AWS-STS-Alternate_light-bg.svg",
     "type": "AWS Identity and Access Management IAM AWS STS Alternate light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMAWSSTSlightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_AWS-STS_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_AWS-STS_light-bg.svg",
     "type": "AWS Identity and Access Management IAM AWS STS light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMAddonlightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_Add-on_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_Add-on_light-bg.svg",
     "type": "AWS Identity and Access Management IAM Add on light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMDataEncryptionKeylightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_Data-Encryption-Key_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_Data-Encryption-Key_light-bg.svg",
     "type": "AWS Identity and Access Management IAM Data Encryption Key light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMEncryptedDatalightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_Encrypted-Data_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_Encrypted-Data_light-bg.svg",
     "type": "AWS Identity and Access Management IAM Encrypted Data light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMMFATokenlightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_MFA-Token_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_MFA-Token_light-bg.svg",
     "type": "AWS Identity and Access Management IAM MFA Token light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMPermissionslightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_Permissions_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_Permissions_light-bg.svg",
     "type": "AWS Identity and Access Management IAM Permissions light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMRolelightbg,
-    "iconPath": "/static/media/AWS-Identity-and-Access-Management-IAM_Role_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-Access-Management-IAM_Role_light-bg.svg",
     "type": "AWS Identity and Access Management IAM Role light bg"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAM,
-    "iconPath": "/static/media/AWS-Identity-and-_Access-Management_IAM.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-_Access-Management_IAM.svg",
     "type": "AWS Identity and  Access Management IAM"
   },
   {
     "iconImport": AWSIdentityandAccessManagementIAMlightbg,
-    "iconPath": "/static/media/AWS-Identity-and-_Access-Management_IAM_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Identity-and-_Access-Management_IAM_light-bg.svg",
     "type": "AWS Identity and  Access Management IAM light bg"
   },
   {
     "iconImport": AWSIoT1Click,
-    "iconPath": "/static/media/AWS-IoT-1-Click.svg",
+    "iconPath": "/aws_icons/AWS-IoT-1-Click.svg",
     "type": "AWS IoT 1 Click"
   },
   {
     "iconImport": AWSIoT1Clicklightbg,
-    "iconPath": "/static/media/AWS-IoT-1-Click_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-1-Click_light-bg.svg",
     "type": "AWS IoT 1 Click light bg"
   },
   {
     "iconImport": AWSIoTAnalytics,
-    "iconPath": "/static/media/AWS-IoT-Analytics.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics.svg",
     "type": "AWS IoT Analytics"
   },
   {
     "iconImport": AWSIoTAnalyticsChannellightbg,
-    "iconPath": "/static/media/AWS-IoT-Analytics_Channel_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics_Channel_light-bg.svg",
     "type": "AWS IoT Analytics Channel light bg"
   },
   {
     "iconImport": AWSIoTAnalyticsDataSetlightbg,
-    "iconPath": "/static/media/AWS-IoT-Analytics_Data-Set_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics_Data-Set_light-bg.svg",
     "type": "AWS IoT Analytics Data Set light bg"
   },
   {
     "iconImport": AWSIoTAnalyticsDataStorelightbg,
-    "iconPath": "/static/media/AWS-IoT-Analytics_Data-Store_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics_Data-Store_light-bg.svg",
     "type": "AWS IoT Analytics Data Store light bg"
   },
   {
     "iconImport": AWSIoTAnalyticsNotebooklightbg,
-    "iconPath": "/static/media/AWS-IoT-Analytics_Notebook_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics_Notebook_light-bg.svg",
     "type": "AWS IoT Analytics Notebook light bg"
   },
   {
     "iconImport": AWSIoTAnalyticsPipelinelightbg,
-    "iconPath": "/static/media/AWS-IoT-Analytics_Pipeline_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics_Pipeline_light-bg.svg",
     "type": "AWS IoT Analytics Pipeline light bg"
   },
   {
     "iconImport": AWSIoTAnalyticslightbg,
-    "iconPath": "/static/media/AWS-IoT-Analytics_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Analytics_light-bg.svg",
     "type": "AWS IoT Analytics light bg"
   },
   {
     "iconImport": AWSIoTButton,
-    "iconPath": "/static/media/AWS-IoT-Button.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Button.svg",
     "type": "AWS IoT Button"
   },
   {
     "iconImport": AWSIoTButtonlightbg,
-    "iconPath": "/static/media/AWS-IoT-Button_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Button_light-bg.svg",
     "type": "AWS IoT Button light bg"
   },
   {
     "iconImport": AWSIoTCore,
-    "iconPath": "/static/media/AWS-IoT-Core.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Core.svg",
     "type": "AWS IoT Core"
   },
   {
     "iconImport": AWSIoTCorelightbg,
-    "iconPath": "/static/media/AWS-IoT-Core_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Core_light-bg.svg",
     "type": "AWS IoT Core light bg"
   },
   {
     "iconImport": AWSIoTDeviceDefender,
-    "iconPath": "/static/media/AWS-IoT-Device-Defender.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Device-Defender.svg",
     "type": "AWS IoT Device Defender"
   },
   {
     "iconImport": AWSIoTDeviceDefenderlightbg,
-    "iconPath": "/static/media/AWS-IoT-Device-Defender_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Device-Defender_light-bg.svg",
     "type": "AWS IoT Device Defender light bg"
   },
   {
     "iconImport": AWSIoTEvents,
-    "iconPath": "/static/media/AWS-IoT-Events.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Events.svg",
     "type": "AWS IoT Events"
   },
   {
     "iconImport": AWSIoTEventslightbg,
-    "iconPath": "/static/media/AWS-IoT-Events_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Events_light-bg.svg",
     "type": "AWS IoT Events light bg"
   },
   {
     "iconImport": AWSIoTGreengrass,
-    "iconPath": "/static/media/AWS-IoT-Greengrass.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Greengrass.svg",
     "type": "AWS IoT Greengrass"
   },
   {
     "iconImport": AWSIoTGreengrassConnectorlightbg,
-    "iconPath": "/static/media/AWS-IoT-Greengrass_Connector_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Greengrass_Connector_light-bg.svg",
     "type": "AWS IoT Greengrass Connector light bg"
   },
   {
     "iconImport": AWSIoTGreengrasslightbg,
-    "iconPath": "/static/media/AWS-IoT-Greengrass_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Greengrass_light-bg.svg",
     "type": "AWS IoT Greengrass light bg"
   },
   {
     "iconImport": AWSIoTSiteWise,
-    "iconPath": "/static/media/AWS-IoT-SiteWise.svg",
+    "iconPath": "/aws_icons/AWS-IoT-SiteWise.svg",
     "type": "AWS IoT SiteWise"
   },
   {
     "iconImport": AWSIoTSiteWiselightbg,
-    "iconPath": "/static/media/AWS-IoT-SiteWise_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-SiteWise_light-bg.svg",
     "type": "AWS IoT SiteWise light bg"
   },
   {
     "iconImport": AWSIoTThingsGraph,
-    "iconPath": "/static/media/AWS-IoT-Things-Graph.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Things-Graph.svg",
     "type": "AWS IoT Things Graph"
   },
   {
     "iconImport": AWSIoTThingsGraphlightbg,
-    "iconPath": "/static/media/AWS-IoT-Things-Graph_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-Things-Graph_light-bg.svg",
     "type": "AWS IoT Things Graph light bg"
   },
   {
     "iconImport": AWSIoTDeviceManagement,
-    "iconPath": "/static/media/AWS-IoT-_Device-Management.svg",
+    "iconPath": "/aws_icons/AWS-IoT-_Device-Management.svg",
     "type": "AWS IoT  Device Management"
   },
   {
     "iconImport": AWSIoTDeviceManagementlightbg,
-    "iconPath": "/static/media/AWS-IoT-_Device-Management_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-IoT-_Device-Management_light-bg.svg",
     "type": "AWS IoT  Device Management light bg"
   },
   {
     "iconImport": AWSKeyManagementService,
-    "iconPath": "/static/media/AWS-Key-Management-Service.svg",
+    "iconPath": "/aws_icons/AWS-Key-Management-Service.svg",
     "type": "AWS Key Management Service"
   },
   {
     "iconImport": AWSKeyManagementServicelightbg,
-    "iconPath": "/static/media/AWS-Key-Management-Service_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Key-Management-Service_light-bg.svg",
     "type": "AWS Key Management Service light bg"
   },
   {
     "iconImport": AWSLakeFormation,
-    "iconPath": "/static/media/AWS-Lake-Formation.svg",
+    "iconPath": "/aws_icons/AWS-Lake-Formation.svg",
     "type": "AWS Lake Formation"
   },
   {
     "iconImport": AWSLakeFormationlightbg,
-    "iconPath": "/static/media/AWS-Lake-Formation_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Lake-Formation_light-bg.svg",
     "type": "AWS Lake Formation light bg"
   },
   {
     "iconImport": AWSLambda,
-    "iconPath": "/static/media/AWS-Lambda.svg",
+    "iconPath": "/aws_icons/AWS-Lambda.svg",
     "type": "AWS Lambda"
   },
   {
     "iconImport": AWSLambdaLambdaFunctionlightbg,
-    "iconPath": "/static/media/AWS-Lambda_Lambda-Function_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Lambda_Lambda-Function_light-bg.svg",
     "type": "AWS Lambda Lambda Function light bg"
   },
   {
     "iconImport": AWSLambdalightbg,
-    "iconPath": "/static/media/AWS-Lambda_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Lambda_light-bg.svg",
     "type": "AWS Lambda light bg"
   },
   {
     "iconImport": AWSLicenseManager,
-    "iconPath": "/static/media/AWS-License-Manager.svg",
+    "iconPath": "/aws_icons/AWS-License-Manager.svg",
     "type": "AWS License Manager"
   },
   {
     "iconImport": AWSLicenseManagerlightbg,
-    "iconPath": "/static/media/AWS-License-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-License-Manager_light-bg.svg",
     "type": "AWS License Manager light bg"
   },
   {
     "iconImport": AWSLocalZones,
-    "iconPath": "/static/media/AWS-Local-Zones.svg",
+    "iconPath": "/aws_icons/AWS-Local-Zones.svg",
     "type": "AWS Local Zones"
   },
   {
     "iconImport": AWSLocalZoneslightbg,
-    "iconPath": "/static/media/AWS-Local-Zones_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Local-Zones_light-bg.svg",
     "type": "AWS Local Zones light bg"
   },
   {
     "iconImport": AWSManagedMicrosoftADlightbg,
-    "iconPath": "/static/media/AWS-Managed-Microsoft-AD_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Managed-Microsoft-AD_light-bg.svg",
     "type": "AWS Managed Microsoft AD light bg"
   },
   {
     "iconImport": AWSManagedServices,
-    "iconPath": "/static/media/AWS-Managed-Services.svg",
+    "iconPath": "/aws_icons/AWS-Managed-Services.svg",
     "type": "AWS Managed Services"
   },
   {
     "iconImport": AWSManagedServiceslightbg,
-    "iconPath": "/static/media/AWS-Managed-Services_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Managed-Services_light-bg.svg",
     "type": "AWS Managed Services light bg"
   },
   {
     "iconImport": AWSManagementConsole,
-    "iconPath": "/static/media/AWS-Management-Console.svg",
+    "iconPath": "/aws_icons/AWS-Management-Console.svg",
     "type": "AWS Management Console"
   },
   {
     "iconImport": AWSManagementConsolelightbg,
-    "iconPath": "/static/media/AWS-Management-Console_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Management-Console_light-bg.svg",
     "type": "AWS Management Console light bg"
   },
   {
     "iconImport": AWSMarketplace,
-    "iconPath": "/static/media/AWS-Marketplace.svg",
+    "iconPath": "/aws_icons/AWS-Marketplace.svg",
     "type": "AWS Marketplace"
   },
   {
     "iconImport": AWSMarketplacelightbg,
-    "iconPath": "/static/media/AWS-Marketplace_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Marketplace_light-bg.svg",
     "type": "AWS Marketplace light bg"
   },
   {
     "iconImport": AWSMigrationHub,
-    "iconPath": "/static/media/AWS-Migration-Hub.svg",
+    "iconPath": "/aws_icons/AWS-Migration-Hub.svg",
     "type": "AWS Migration Hub"
   },
   {
     "iconImport": AWSMigrationHublightbg,
-    "iconPath": "/static/media/AWS-Migration-Hub_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Migration-Hub_light-bg.svg",
     "type": "AWS Migration Hub light bg"
   },
   {
     "iconImport": AWSOpsWorks,
-    "iconPath": "/static/media/AWS-OpsWorks.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks.svg",
     "type": "AWS OpsWorks"
   },
   {
     "iconImport": AWSOpsWorksAppslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Apps_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Apps_light-bg.svg",
     "type": "AWS OpsWorks Apps light bg"
   },
   {
     "iconImport": AWSOpsWorksDeploymentslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Deployments_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Deployments_light-bg.svg",
     "type": "AWS OpsWorks Deployments light bg"
   },
   {
     "iconImport": AWSOpsWorksInstanceslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Instances_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Instances_light-bg.svg",
     "type": "AWS OpsWorks Instances light bg"
   },
   {
     "iconImport": AWSOpsWorksLayerslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Layers_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Layers_light-bg.svg",
     "type": "AWS OpsWorks Layers light bg"
   },
   {
     "iconImport": AWSOpsWorksMonitoringlightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Monitoring_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Monitoring_light-bg.svg",
     "type": "AWS OpsWorks Monitoring light bg"
   },
   {
     "iconImport": AWSOpsWorksPermissionslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Permissions_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Permissions_light-bg.svg",
     "type": "AWS OpsWorks Permissions light bg"
   },
   {
     "iconImport": AWSOpsWorksResourceslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Resources_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Resources_light-bg.svg",
     "type": "AWS OpsWorks Resources light bg"
   },
   {
     "iconImport": AWSOpsWorksStack2lightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_Stack2_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_Stack2_light-bg.svg",
     "type": "AWS OpsWorks Stack2 light bg"
   },
   {
     "iconImport": AWSOpsWorkslightbg,
-    "iconPath": "/static/media/AWS-OpsWorks_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-OpsWorks_light-bg.svg",
     "type": "AWS OpsWorks light bg"
   },
   {
     "iconImport": AWSOrganizations,
-    "iconPath": "/static/media/AWS-Organizations.svg",
+    "iconPath": "/aws_icons/AWS-Organizations.svg",
     "type": "AWS Organizations"
   },
   {
     "iconImport": AWSOrganizationsAccountlightbg,
-    "iconPath": "/static/media/AWS-Organizations_Account_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Organizations_Account_light-bg.svg",
     "type": "AWS Organizations Account light bg"
   },
   {
     "iconImport": AWSOrganizationsOrganizationalunitlightbg,
-    "iconPath": "/static/media/AWS-Organizations_Organizational-unit_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Organizations_Organizational-unit_light-bg.svg",
     "type": "AWS Organizations Organizational unit light bg"
   },
   {
     "iconImport": AWSOrganizationslightbg,
-    "iconPath": "/static/media/AWS-Organizations_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Organizations_light-bg.svg",
     "type": "AWS Organizations light bg"
   },
   {
     "iconImport": AWSOutposts,
-    "iconPath": "/static/media/AWS-Outposts.svg",
+    "iconPath": "/aws_icons/AWS-Outposts.svg",
     "type": "AWS Outposts"
   },
   {
     "iconImport": AWSOutpostslightbg,
-    "iconPath": "/static/media/AWS-Outposts_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Outposts_light-bg.svg",
     "type": "AWS Outposts light bg"
   },
   {
     "iconImport": AWSPersonalHealthDashboard,
-    "iconPath": "/static/media/AWS-Personal-Health-Dashboard.svg",
+    "iconPath": "/aws_icons/AWS-Personal-Health-Dashboard.svg",
     "type": "AWS Personal Health Dashboard"
   },
   {
     "iconImport": AWSPersonalHealthDashboardlightbg,
-    "iconPath": "/static/media/AWS-Personal-Health-Dashboard_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Personal-Health-Dashboard_light-bg.svg",
     "type": "AWS Personal Health Dashboard light bg"
   },
   {
     "iconImport": AWSPrivateLink,
-    "iconPath": "/static/media/AWS-PrivateLink.svg",
+    "iconPath": "/aws_icons/AWS-PrivateLink.svg",
     "type": "AWS PrivateLink"
   },
   {
     "iconImport": AWSPrivateLinklightbg,
-    "iconPath": "/static/media/AWS-PrivateLink_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-PrivateLink_light-bg.svg",
     "type": "AWS PrivateLink light bg"
   },
   {
     "iconImport": AWSProfessionalServices,
-    "iconPath": "/static/media/AWS-Professional-Services.svg",
+    "iconPath": "/aws_icons/AWS-Professional-Services.svg",
     "type": "AWS Professional Services"
   },
   {
     "iconImport": AWSProfessionalServiceslightbg,
-    "iconPath": "/static/media/AWS-Professional-Services_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Professional-Services_light-bg.svg",
     "type": "AWS Professional Services light bg"
   },
   {
     "iconImport": AWSResourceAccessManager,
-    "iconPath": "/static/media/AWS-Resource-Access-Manager.svg",
+    "iconPath": "/aws_icons/AWS-Resource-Access-Manager.svg",
     "type": "AWS Resource Access Manager"
   },
   {
     "iconImport": AWSResourceAccessManagerlightbg,
-    "iconPath": "/static/media/AWS-Resource-Access-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Resource-Access-Manager_light-bg.svg",
     "type": "AWS Resource Access Manager light bg"
   },
   {
     "iconImport": AWSRoboMaker,
-    "iconPath": "/static/media/AWS-RoboMaker.svg",
+    "iconPath": "/aws_icons/AWS-RoboMaker.svg",
     "type": "AWS RoboMaker"
   },
   {
     "iconImport": AWSRoboMakerCloudExtensionROSlightbg,
-    "iconPath": "/static/media/AWS-RoboMaker_Cloud-Extension-ROS_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-RoboMaker_Cloud-Extension-ROS_light-bg.svg",
     "type": "AWS RoboMaker Cloud Extension ROS light bg"
   },
   {
     "iconImport": AWSRoboMakerDevelopmentEnvironmentlightbg,
-    "iconPath": "/static/media/AWS-RoboMaker_Development-Environment_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-RoboMaker_Development-Environment_light-bg.svg",
     "type": "AWS RoboMaker Development Environment light bg"
   },
   {
     "iconImport": AWSRoboMakerFleetManagementlightbg,
-    "iconPath": "/static/media/AWS-RoboMaker_Fleet-Management_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-RoboMaker_Fleet-Management_light-bg.svg",
     "type": "AWS RoboMaker Fleet Management light bg"
   },
   {
     "iconImport": AWSRoboMakerSimulationlightbg,
-    "iconPath": "/static/media/AWS-RoboMaker_Simulation_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-RoboMaker_Simulation_light-bg.svg",
     "type": "AWS RoboMaker Simulation light bg"
   },
   {
     "iconImport": AWSRoboMakerlightbg,
-    "iconPath": "/static/media/AWS-RoboMaker_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-RoboMaker_light-bg.svg",
     "type": "AWS RoboMaker light bg"
   },
   {
     "iconImport": AWSSecretsManager,
-    "iconPath": "/static/media/AWS-Secrets-Manager.svg",
+    "iconPath": "/aws_icons/AWS-Secrets-Manager.svg",
     "type": "AWS Secrets Manager"
   },
   {
     "iconImport": AWSSecretsManagerlightbg,
-    "iconPath": "/static/media/AWS-Secrets-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Secrets-Manager_light-bg.svg",
     "type": "AWS Secrets Manager light bg"
   },
   {
     "iconImport": AWSSecurityHub,
-    "iconPath": "/static/media/AWS-Security-Hub.svg",
+    "iconPath": "/aws_icons/AWS-Security-Hub.svg",
     "type": "AWS Security Hub"
   },
   {
     "iconImport": AWSSecurityHublightbg,
-    "iconPath": "/static/media/AWS-Security-Hub_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Security-Hub_light-bg.svg",
     "type": "AWS Security Hub light bg"
   },
   {
     "iconImport": AWSServerMigrationService,
-    "iconPath": "/static/media/AWS-Server-Migration-Service.svg",
+    "iconPath": "/aws_icons/AWS-Server-Migration-Service.svg",
     "type": "AWS Server Migration Service"
   },
   {
     "iconImport": AWSServerMigrationServicelightbg,
-    "iconPath": "/static/media/AWS-Server-Migration-Service_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Server-Migration-Service_light-bg.svg",
     "type": "AWS Server Migration Service light bg"
   },
   {
     "iconImport": AWSServerlessApplicationRepository,
-    "iconPath": "/static/media/AWS-Serverless-Application-Repository.svg",
+    "iconPath": "/aws_icons/AWS-Serverless-Application-Repository.svg",
     "type": "AWS Serverless Application Repository"
   },
   {
     "iconImport": AWSServerlessApplicationRepositorylightbg,
-    "iconPath": "/static/media/AWS-Serverless-Application-Repository_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Serverless-Application-Repository_light-bg.svg",
     "type": "AWS Serverless Application Repository light bg"
   },
   {
     "iconImport": AWSServiceCatalog,
-    "iconPath": "/static/media/AWS-Service-Catalog.svg",
+    "iconPath": "/aws_icons/AWS-Service-Catalog.svg",
     "type": "AWS Service Catalog"
   },
   {
     "iconImport": AWSServiceCataloglightbg,
-    "iconPath": "/static/media/AWS-Service-Catalog_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Service-Catalog_light-bg.svg",
     "type": "AWS Service Catalog light bg"
   },
   {
     "iconImport": AWSShield,
-    "iconPath": "/static/media/AWS-Shield.svg",
+    "iconPath": "/aws_icons/AWS-Shield.svg",
     "type": "AWS Shield"
   },
   {
     "iconImport": AWSShieldShieldAdvancedlightbg,
-    "iconPath": "/static/media/AWS-Shield_Shield-Advanced_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Shield_Shield-Advanced_light-bg.svg",
     "type": "AWS Shield Shield Advanced light bg"
   },
   {
     "iconImport": AWSShieldlightbg,
-    "iconPath": "/static/media/AWS-Shield_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Shield_light-bg.svg",
     "type": "AWS Shield light bg"
   },
   {
     "iconImport": AWSSingleSignOn,
-    "iconPath": "/static/media/AWS-Single-Sign-On.svg",
+    "iconPath": "/aws_icons/AWS-Single-Sign-On.svg",
     "type": "AWS Single Sign On"
   },
   {
     "iconImport": AWSSingleSignOnlightbg,
-    "iconPath": "/static/media/AWS-Single-Sign-On_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Single-Sign-On_light-bg.svg",
     "type": "AWS Single Sign On light bg"
   },
   {
     "iconImport": AWSSitetoSiteVPN,
-    "iconPath": "/static/media/AWS-Site-to-Site-VPN.svg",
+    "iconPath": "/aws_icons/AWS-Site-to-Site-VPN.svg",
     "type": "AWS Site to Site VPN"
   },
   {
     "iconImport": AWSSitetoSiteVPNlightbg,
-    "iconPath": "/static/media/AWS-Site-to-Site-VPN_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Site-to-Site-VPN_light-bg.svg",
     "type": "AWS Site to Site VPN light bg"
   },
   {
     "iconImport": AWSSnowFamilySnowballImportExportlightbg,
-    "iconPath": "/static/media/AWS-Snow-Family_Snowball-Import-Export_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Snow-Family_Snowball-Import-Export_light-bg.svg",
     "type": "AWS Snow Family Snowball Import Export light bg"
   },
   {
     "iconImport": AWSSnowballEdge,
-    "iconPath": "/static/media/AWS-Snowball-Edge.svg",
+    "iconPath": "/aws_icons/AWS-Snowball-Edge.svg",
     "type": "AWS Snowball Edge"
   },
   {
     "iconImport": AWSSnowballEdgelightbg,
-    "iconPath": "/static/media/AWS-Snowball-Edge_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Snowball-Edge_light-bg.svg",
     "type": "AWS Snowball Edge light bg"
   },
   {
     "iconImport": AWSSnowball,
-    "iconPath": "/static/media/AWS-Snowball.svg",
+    "iconPath": "/aws_icons/AWS-Snowball.svg",
     "type": "AWS Snowball"
   },
   {
     "iconImport": AWSSnowballlightbg,
-    "iconPath": "/static/media/AWS-Snowball_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Snowball_light-bg.svg",
     "type": "AWS Snowball light bg"
   },
   {
     "iconImport": AWSSnowmobile,
-    "iconPath": "/static/media/AWS-Snowmobile.svg",
+    "iconPath": "/aws_icons/AWS-Snowmobile.svg",
     "type": "AWS Snowmobile"
   },
   {
     "iconImport": AWSSnowmobilelightbg,
-    "iconPath": "/static/media/AWS-Snowmobile_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Snowmobile_light-bg.svg",
     "type": "AWS Snowmobile light bg"
   },
   {
     "iconImport": AWSStepFunctionlightbg,
-    "iconPath": "/static/media/AWS-Step-Function_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Step-Function_light-bg.svg",
     "type": "AWS Step Function light bg"
   },
   {
     "iconImport": AWSStepFunctions,
-    "iconPath": "/static/media/AWS-Step-Functions.svg",
+    "iconPath": "/aws_icons/AWS-Step-Functions.svg",
     "type": "AWS Step Functions"
   },
   {
     "iconImport": AWSStepFunctionslightbg,
-    "iconPath": "/static/media/AWS-Step-Functions_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Step-Functions_light-bg.svg",
     "type": "AWS Step Functions light bg"
   },
   {
     "iconImport": AWSStorageGateway,
-    "iconPath": "/static/media/AWS-Storage-Gateway.svg",
+    "iconPath": "/aws_icons/AWS-Storage-Gateway.svg",
     "type": "AWS Storage Gateway"
   },
   {
     "iconImport": AWSStorageGatewayCachedVolumelightbg,
-    "iconPath": "/static/media/AWS-Storage-Gateway_Cached-Volume_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Storage-Gateway_Cached-Volume_light-bg.svg",
     "type": "AWS Storage Gateway Cached Volume light bg"
   },
   {
     "iconImport": AWSStorageGatewayNonCachedVolumelightbg,
-    "iconPath": "/static/media/AWS-Storage-Gateway_Non-Cached-Volume_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Storage-Gateway_Non-Cached-Volume_light-bg.svg",
     "type": "AWS Storage Gateway Non Cached Volume light bg"
   },
   {
     "iconImport": AWSStorageGatewayVirtualTapeLibrarylightbg,
-    "iconPath": "/static/media/AWS-Storage-Gateway_Virtual-Tape-Library_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Storage-Gateway_Virtual-Tape-Library_light-bg.svg",
     "type": "AWS Storage Gateway Virtual Tape Library light bg"
   },
   {
     "iconImport": AWSStorageGatewaylightbg,
-    "iconPath": "/static/media/AWS-Storage-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Storage-Gateway_light-bg.svg",
     "type": "AWS Storage Gateway light bg"
   },
   {
     "iconImport": AWSSupport,
-    "iconPath": "/static/media/AWS-Support.svg",
+    "iconPath": "/aws_icons/AWS-Support.svg",
     "type": "AWS Support"
   },
   {
     "iconImport": AWSSupportlightbg,
-    "iconPath": "/static/media/AWS-Support_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Support_light-bg.svg",
     "type": "AWS Support light bg"
   },
   {
     "iconImport": AWSSystemsManager,
-    "iconPath": "/static/media/AWS-Systems-Manager.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager.svg",
     "type": "AWS Systems Manager"
   },
   {
     "iconImport": AWSSystemsManagerAutomationlightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Automation_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Automation_light-bg.svg",
     "type": "AWS Systems Manager Automation light bg"
   },
   {
     "iconImport": AWSSystemsManagerDocumentslightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Documents_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Documents_light-bg.svg",
     "type": "AWS Systems Manager Documents light bg"
   },
   {
     "iconImport": AWSSystemsManagerInventorylightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Inventory_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Inventory_light-bg.svg",
     "type": "AWS Systems Manager Inventory light bg"
   },
   {
     "iconImport": AWSSystemsManagerMaintenanceWindowslightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Maintenance-Windows_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Maintenance-Windows_light-bg.svg",
     "type": "AWS Systems Manager Maintenance Windows light bg"
   },
   {
     "iconImport": AWSSystemsManagerParameterStorelightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Parameter-Store_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Parameter-Store_light-bg.svg",
     "type": "AWS Systems Manager Parameter Store light bg"
   },
   {
     "iconImport": AWSSystemsManagerPatchManagerlightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Patch-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Patch-Manager_light-bg.svg",
     "type": "AWS Systems Manager Patch Manager light bg"
   },
   {
     "iconImport": AWSSystemsManagerRunCommandlightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_Run-Command_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_Run-Command_light-bg.svg",
     "type": "AWS Systems Manager Run Command light bg"
   },
   {
     "iconImport": AWSSystemsManagerStateManagerlightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_State-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_State-Manager_light-bg.svg",
     "type": "AWS Systems Manager State Manager light bg"
   },
   {
     "iconImport": AWSSystemsManagerlightbg,
-    "iconPath": "/static/media/AWS-Systems-Manager_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Systems-Manager_light-bg.svg",
     "type": "AWS Systems Manager light bg"
   },
   {
     "iconImport": AWSThinkboxDeadline,
-    "iconPath": "/static/media/AWS-Thinkbox-Deadline.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Deadline.svg",
     "type": "AWS Thinkbox Deadline"
   },
   {
     "iconImport": AWSThinkboxDeadlinelightbg,
-    "iconPath": "/static/media/AWS-Thinkbox-Deadline_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Deadline_light-bg.svg",
     "type": "AWS Thinkbox Deadline light bg"
   },
   {
     "iconImport": AWSThinkboxDraft,
-    "iconPath": "/static/media/AWS-Thinkbox-Draft.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Draft.svg",
     "type": "AWS Thinkbox Draft"
   },
   {
     "iconImport": AWSThinkboxDraftlightbg,
-    "iconPath": "/static/media/AWS-Thinkbox-Draft_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Draft_light-bg.svg",
     "type": "AWS Thinkbox Draft light bg"
   },
   {
     "iconImport": AWSThinkboxFrost,
-    "iconPath": "/static/media/AWS-Thinkbox-Frost.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Frost.svg",
     "type": "AWS Thinkbox Frost"
   },
   {
     "iconImport": AWSThinkboxFrostlightbg,
-    "iconPath": "/static/media/AWS-Thinkbox-Frost_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Frost_light-bg.svg",
     "type": "AWS Thinkbox Frost light bg"
   },
   {
     "iconImport": AWSThinkboxKrakatoa,
-    "iconPath": "/static/media/AWS-Thinkbox-Krakatoa.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Krakatoa.svg",
     "type": "AWS Thinkbox Krakatoa"
   },
   {
     "iconImport": AWSThinkboxKrakatoalightbg,
-    "iconPath": "/static/media/AWS-Thinkbox-Krakatoa_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Krakatoa_light-bg.svg",
     "type": "AWS Thinkbox Krakatoa light bg"
   },
   {
     "iconImport": AWSThinkboxSequoia,
-    "iconPath": "/static/media/AWS-Thinkbox-Sequoia.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Sequoia.svg",
     "type": "AWS Thinkbox Sequoia"
   },
   {
     "iconImport": AWSThinkboxSequoialightbg,
-    "iconPath": "/static/media/AWS-Thinkbox-Sequoia_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Sequoia_light-bg.svg",
     "type": "AWS Thinkbox Sequoia light bg"
   },
   {
     "iconImport": AWSThinkboxStoke,
-    "iconPath": "/static/media/AWS-Thinkbox-Stoke.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Stoke.svg",
     "type": "AWS Thinkbox Stoke"
   },
   {
     "iconImport": AWSThinkboxStokelightbg,
-    "iconPath": "/static/media/AWS-Thinkbox-Stoke_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox-Stoke_light-bg.svg",
     "type": "AWS Thinkbox Stoke light bg"
   },
   {
     "iconImport": AWSThinkboxXMesh,
-    "iconPath": "/static/media/AWS-Thinkbox_XMesh.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox_XMesh.svg",
     "type": "AWS Thinkbox XMesh"
   },
   {
     "iconImport": AWSThinkboxXMeshlightbg,
-    "iconPath": "/static/media/AWS-Thinkbox_XMesh_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Thinkbox_XMesh_light-bg.svg",
     "type": "AWS Thinkbox XMesh light bg"
   },
   {
     "iconImport": AWSToolsAndSDKs,
-    "iconPath": "/static/media/AWS-Tools-And-SDKs.svg",
+    "iconPath": "/aws_icons/AWS-Tools-And-SDKs.svg",
     "type": "AWS Tools And SDKs"
   },
   {
     "iconImport": AWSToolsAndSDKslightbg,
-    "iconPath": "/static/media/AWS-Tools-And-SDKs_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Tools-And-SDKs_light-bg.svg",
     "type": "AWS Tools And SDKs light bg"
   },
   {
     "iconImport": AWSTransferforSFTP,
-    "iconPath": "/static/media/AWS-Transfer-for-SFTP.svg",
+    "iconPath": "/aws_icons/AWS-Transfer-for-SFTP.svg",
     "type": "AWS Transfer for SFTP"
   },
   {
     "iconImport": AWSTransferforSFTPlightbg,
-    "iconPath": "/static/media/AWS-Transfer-for-SFTP_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Transfer-for-SFTP_light-bg.svg",
     "type": "AWS Transfer for SFTP light bg"
   },
   {
     "iconImport": AWSTransitGateway,
-    "iconPath": "/static/media/AWS-Transit-Gateway.svg",
+    "iconPath": "/aws_icons/AWS-Transit-Gateway.svg",
     "type": "AWS Transit Gateway"
   },
   {
     "iconImport": AWSTransitGatewaylightbg,
-    "iconPath": "/static/media/AWS-Transit-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Transit-Gateway_light-bg.svg",
     "type": "AWS Transit Gateway light bg"
   },
   {
     "iconImport": AWSTrustedAdvisor,
-    "iconPath": "/static/media/AWS-Trusted-Advisor.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor.svg",
     "type": "AWS Trusted Advisor"
   },
   {
     "iconImport": AWSTrustedAdvisorChecklistCostlightbg,
-    "iconPath": "/static/media/AWS-Trusted-Advisor_Checklist-Cost_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor_Checklist-Cost_light-bg.svg",
     "type": "AWS Trusted Advisor Checklist Cost light bg"
   },
   {
     "iconImport": AWSTrustedAdvisorChecklistFaultTolerantlightbg,
-    "iconPath": "/static/media/AWS-Trusted-Advisor_Checklist-Fault-Tolerant_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor_Checklist-Fault-Tolerant_light-bg.svg",
     "type": "AWS Trusted Advisor Checklist Fault Tolerant light bg"
   },
   {
     "iconImport": AWSTrustedAdvisorChecklistPerformancelightbg,
-    "iconPath": "/static/media/AWS-Trusted-Advisor_Checklist-Performance_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor_Checklist-Performance_light-bg.svg",
     "type": "AWS Trusted Advisor Checklist Performance light bg"
   },
   {
     "iconImport": AWSTrustedAdvisorChecklistSecuritylightbg,
-    "iconPath": "/static/media/AWS-Trusted-Advisor_Checklist-Security_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor_Checklist-Security_light-bg.svg",
     "type": "AWS Trusted Advisor Checklist Security light bg"
   },
   {
     "iconImport": AWSTrustedAdvisorChecklistlightbg,
-    "iconPath": "/static/media/AWS-Trusted-Advisor_Checklist_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor_Checklist_light-bg.svg",
     "type": "AWS Trusted Advisor Checklist light bg"
   },
   {
     "iconImport": AWSTrustedAdvisorlightbg,
-    "iconPath": "/static/media/AWS-Trusted-Advisor_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Trusted-Advisor_light-bg.svg",
     "type": "AWS Trusted Advisor light bg"
   },
   {
     "iconImport": AWSWAF,
-    "iconPath": "/static/media/AWS-WAF.svg",
+    "iconPath": "/aws_icons/AWS-WAF.svg",
     "type": "AWS WAF"
   },
   {
     "iconImport": AWSWAFFilteringrulelightbg,
-    "iconPath": "/static/media/AWS-WAF_Filtering-rule_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-WAF_Filtering-rule_light-bg.svg",
     "type": "AWS WAF Filtering rule light bg"
   },
   {
     "iconImport": AWSWAFlightbg,
-    "iconPath": "/static/media/AWS-WAF_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-WAF_light-bg.svg",
     "type": "AWS WAF light bg"
   },
   {
     "iconImport": AWSWavelength,
-    "iconPath": "/static/media/AWS-Wavelength.svg",
+    "iconPath": "/aws_icons/AWS-Wavelength.svg",
     "type": "AWS Wavelength"
   },
   {
     "iconImport": AWSWavelengthlightbg,
-    "iconPath": "/static/media/AWS-Wavelength_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Wavelength_light-bg.svg",
     "type": "AWS Wavelength light bg"
   },
   {
     "iconImport": AWSWellArchitectedTool,
-    "iconPath": "/static/media/AWS-Well-Architected-Tool.svg",
+    "iconPath": "/aws_icons/AWS-Well-Architected-Tool.svg",
     "type": "AWS Well Architected Tool"
   },
   {
     "iconImport": AWSWellArchitectedToollightbg,
-    "iconPath": "/static/media/AWS-Well-Architected-Tool_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-Well-Architected-Tool_light-bg.svg",
     "type": "AWS Well Architected Tool light bg"
   },
   {
     "iconImport": AWSXRay,
-    "iconPath": "/static/media/AWS-X-Ray.svg",
+    "iconPath": "/aws_icons/AWS-X-Ray.svg",
     "type": "AWS X Ray"
   },
   {
     "iconImport": AWSXRaylightbg,
-    "iconPath": "/static/media/AWS-X-Ray_light-bg.svg",
+    "iconPath": "/aws_icons/AWS-X-Ray_light-bg.svg",
     "type": "AWS X Ray light bg"
   },
   {
     "iconImport": AlexaForBusiness,
-    "iconPath": "/static/media/Alexa-For-Business.svg",
+    "iconPath": "/aws_icons/Alexa-For-Business.svg",
     "type": "Alexa For Business"
   },
   {
     "iconImport": AlexaForBusinesslightbg,
-    "iconPath": "/static/media/Alexa-For-Business_light-bg.svg",
+    "iconPath": "/aws_icons/Alexa-For-Business_light-bg.svg",
     "type": "Alexa For Business light bg"
   },
   {
     "iconImport": AmazonAPIGateway,
-    "iconPath": "/static/media/Amazon-API-Gateway.svg",
+    "iconPath": "/aws_icons/Amazon-API-Gateway.svg",
     "type": "Amazon API Gateway"
   },
   {
     "iconImport": AmazonAPIGatewayEndpointlightbg,
-    "iconPath": "/static/media/Amazon-API-Gateway_Endpoint_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-API-Gateway_Endpoint_light-bg.svg",
     "type": "Amazon API Gateway Endpoint light bg"
   },
   {
     "iconImport": AmazonAPIGatewaylightbg,
-    "iconPath": "/static/media/Amazon-API-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-API-Gateway_light-bg.svg",
     "type": "Amazon API Gateway light bg"
   },
   {
     "iconImport": AmazonAppSync,
-    "iconPath": "/static/media/Amazon-AppSync.svg",
+    "iconPath": "/aws_icons/Amazon-AppSync.svg",
     "type": "Amazon AppSync"
   },
   {
     "iconImport": AmazonAppSynclightbg,
-    "iconPath": "/static/media/Amazon-AppSync_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-AppSync_light-bg.svg",
     "type": "Amazon AppSync light bg"
   },
   {
     "iconImport": AmazonApplicationAutoScaling,
-    "iconPath": "/static/media/Amazon-Application-Auto-Scaling.svg",
+    "iconPath": "/aws_icons/Amazon-Application-Auto-Scaling.svg",
     "type": "Amazon Application Auto Scaling"
   },
   {
     "iconImport": AmazonApplicationAutoScalinglightbg,
-    "iconPath": "/static/media/Amazon-Application-Auto-Scaling_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Application-Auto-Scaling_light-bg.svg",
     "type": "Amazon Application Auto Scaling light bg"
   },
   {
     "iconImport": AmazonAppstream20,
-    "iconPath": "/static/media/Amazon-Appstream-2.0.svg",
+    "iconPath": "/aws_icons/Amazon-Appstream-2.0.svg",
     "type": "Amazon Appstream 2.0"
   },
   {
     "iconImport": AmazonAppstream20lightbg,
-    "iconPath": "/static/media/Amazon-Appstream-2.0_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Appstream-2.0_light-bg.svg",
     "type": "Amazon Appstream 2.0 light bg"
   },
   {
     "iconImport": AmazonAthena,
-    "iconPath": "/static/media/Amazon-Athena.svg",
+    "iconPath": "/aws_icons/Amazon-Athena.svg",
     "type": "Amazon Athena"
   },
   {
     "iconImport": AmazonAthenalightbg,
-    "iconPath": "/static/media/Amazon-Athena_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Athena_light-bg.svg",
     "type": "Amazon Athena light bg"
   },
   {
     "iconImport": AmazonAugmentedAI,
-    "iconPath": "/static/media/Amazon-Augmented-AI.svg",
+    "iconPath": "/aws_icons/Amazon-Augmented-AI.svg",
     "type": "Amazon Augmented AI"
   },
   {
     "iconImport": AmazonAugmentedAIlightbg,
-    "iconPath": "/static/media/Amazon-Augmented-AI_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Augmented-AI_light-bg.svg",
     "type": "Amazon Augmented AI light bg"
   },
   {
     "iconImport": AmazonAurora,
-    "iconPath": "/static/media/Amazon-Aurora.svg",
+    "iconPath": "/aws_icons/Amazon-Aurora.svg",
     "type": "Amazon Aurora"
   },
   {
     "iconImport": AmazonAuroralightbg,
-    "iconPath": "/static/media/Amazon-Aurora_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Aurora_light-bg.svg",
     "type": "Amazon Aurora light bg"
   },
   {
     "iconImport": AmazonChime,
-    "iconPath": "/static/media/Amazon-Chime.svg",
+    "iconPath": "/aws_icons/Amazon-Chime.svg",
     "type": "Amazon Chime"
   },
   {
     "iconImport": AmazonChimelightbg,
-    "iconPath": "/static/media/Amazon-Chime_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Chime_light-bg.svg",
     "type": "Amazon Chime light bg"
   },
   {
     "iconImport": AmazonCloudDirectory,
-    "iconPath": "/static/media/Amazon-Cloud-Directory.svg",
+    "iconPath": "/aws_icons/Amazon-Cloud-Directory.svg",
     "type": "Amazon Cloud Directory"
   },
   {
     "iconImport": AmazonCloudDirectorylightbg,
-    "iconPath": "/static/media/Amazon-Cloud-Directory_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Cloud-Directory_light-bg.svg",
     "type": "Amazon Cloud Directory light bg"
   },
   {
     "iconImport": AmazonCloudFront,
-    "iconPath": "/static/media/Amazon-CloudFront.svg",
+    "iconPath": "/aws_icons/Amazon-CloudFront.svg",
     "type": "Amazon CloudFront"
   },
   {
     "iconImport": AmazonCloudFrontDownloadDistributionlightbg,
-    "iconPath": "/static/media/Amazon-CloudFront_Download-Distribution_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudFront_Download-Distribution_light-bg.svg",
     "type": "Amazon CloudFront Download Distribution light bg"
   },
   {
     "iconImport": AmazonCloudFrontEdgeLocationlightbg,
-    "iconPath": "/static/media/Amazon-CloudFront_Edge-Location_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudFront_Edge-Location_light-bg.svg",
     "type": "Amazon CloudFront Edge Location light bg"
   },
   {
     "iconImport": AmazonCloudFrontStreamingDistributionlightbg,
-    "iconPath": "/static/media/Amazon-CloudFront_Streaming-Distribution_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudFront_Streaming-Distribution_light-bg.svg",
     "type": "Amazon CloudFront Streaming Distribution light bg"
   },
   {
     "iconImport": AmazonCloudFrontlightbg,
-    "iconPath": "/static/media/Amazon-CloudFront_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudFront_light-bg.svg",
     "type": "Amazon CloudFront light bg"
   },
   {
     "iconImport": AmazonCloudSearch,
-    "iconPath": "/static/media/Amazon-CloudSearch.svg",
+    "iconPath": "/aws_icons/Amazon-CloudSearch.svg",
     "type": "Amazon CloudSearch"
   },
   {
     "iconImport": AmazonCloudSearchSearchdocumentslightbg,
-    "iconPath": "/static/media/Amazon-CloudSearch_Search-documents_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudSearch_Search-documents_light-bg.svg",
     "type": "Amazon CloudSearch Search documents light bg"
   },
   {
     "iconImport": AmazonCloudSearchlightbg,
-    "iconPath": "/static/media/Amazon-CloudSearch_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudSearch_light-bg.svg",
     "type": "Amazon CloudSearch light bg"
   },
   {
     "iconImport": AmazonCloudWatch,
-    "iconPath": "/static/media/Amazon-CloudWatch.svg",
+    "iconPath": "/aws_icons/Amazon-CloudWatch.svg",
     "type": "Amazon CloudWatch"
   },
   {
     "iconImport": AmazonCloudWatchAlarmlightbg,
-    "iconPath": "/static/media/Amazon-CloudWatch_Alarm_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudWatch_Alarm_light-bg.svg",
     "type": "Amazon CloudWatch Alarm light bg"
   },
   {
     "iconImport": AmazonCloudWatchEventEventBasedlightbg,
-    "iconPath": "/static/media/Amazon-CloudWatch_Event-Event-Based_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudWatch_Event-Event-Based_light-bg.svg",
     "type": "Amazon CloudWatch Event Event Based light bg"
   },
   {
     "iconImport": AmazonCloudWatchEventTimeBasedlightbg,
-    "iconPath": "/static/media/Amazon-CloudWatch_Event-Time-Based_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudWatch_Event-Time-Based_light-bg.svg",
     "type": "Amazon CloudWatch Event Time Based light bg"
   },
   {
     "iconImport": AmazonCloudWatchRulelightbg,
-    "iconPath": "/static/media/Amazon-CloudWatch_Rule_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudWatch_Rule_light-bg.svg",
     "type": "Amazon CloudWatch Rule light bg"
   },
   {
     "iconImport": AmazonCloudWatchlightbg,
-    "iconPath": "/static/media/Amazon-CloudWatch_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CloudWatch_light-bg.svg",
     "type": "Amazon CloudWatch light bg"
   },
   {
     "iconImport": AmazonCodeGuru,
-    "iconPath": "/static/media/Amazon-CodeGuru.svg",
+    "iconPath": "/aws_icons/Amazon-CodeGuru.svg",
     "type": "Amazon CodeGuru"
   },
   {
     "iconImport": AmazonCodeGurulightbg,
-    "iconPath": "/static/media/Amazon-CodeGuru_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-CodeGuru_light-bg.svg",
     "type": "Amazon CodeGuru light bg"
   },
   {
     "iconImport": AmazonCognito,
-    "iconPath": "/static/media/Amazon-Cognito.svg",
+    "iconPath": "/aws_icons/Amazon-Cognito.svg",
     "type": "Amazon Cognito"
   },
   {
     "iconImport": AmazonCognitolightbg,
-    "iconPath": "/static/media/Amazon-Cognito_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Cognito_light-bg.svg",
     "type": "Amazon Cognito light bg"
   },
   {
     "iconImport": AmazonComprehend,
-    "iconPath": "/static/media/Amazon-Comprehend.svg",
+    "iconPath": "/aws_icons/Amazon-Comprehend.svg",
     "type": "Amazon Comprehend"
   },
   {
     "iconImport": AmazonComprehendlightbg,
-    "iconPath": "/static/media/Amazon-Comprehend_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Comprehend_light-bg.svg",
     "type": "Amazon Comprehend light bg"
   },
   {
     "iconImport": AmazonConnect,
-    "iconPath": "/static/media/Amazon-Connect.svg",
+    "iconPath": "/aws_icons/Amazon-Connect.svg",
     "type": "Amazon Connect"
   },
   {
     "iconImport": AmazonConnectlightbg,
-    "iconPath": "/static/media/Amazon-Connect_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Connect_light-bg.svg",
     "type": "Amazon Connect light bg"
   },
   {
     "iconImport": AmazonDetective,
-    "iconPath": "/static/media/Amazon-Detective.svg",
+    "iconPath": "/aws_icons/Amazon-Detective.svg",
     "type": "Amazon Detective"
   },
   {
     "iconImport": AmazonDetectivelightbg,
-    "iconPath": "/static/media/Amazon-Detective_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Detective_light-bg.svg",
     "type": "Amazon Detective light bg"
   },
   {
     "iconImport": AmazonDocumentDBwithMongoDBcompatibility,
-    "iconPath": "/static/media/Amazon-DocumentDB-_with-MongoDB-compatibility.svg",
+    "iconPath": "/aws_icons/Amazon-DocumentDB-_with-MongoDB-compatibility.svg",
     "type": "Amazon DocumentDB  with MongoDB compatibility"
   },
   {
     "iconImport": AmazonDocumentDBwithMongoDBcompatibilitylightbg,
-    "iconPath": "/static/media/Amazon-DocumentDB-_with-MongoDB-compatibility_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DocumentDB-_with-MongoDB-compatibility_light-bg.svg",
     "type": "Amazon DocumentDB  with MongoDB compatibility light bg"
   },
   {
     "iconImport": AmazonDynamoDB,
-    "iconPath": "/static/media/Amazon-DynamoDB.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB.svg",
     "type": "Amazon DynamoDB"
   },
   {
     "iconImport": AmazonDynamoDBAttributelightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_Attribute_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_Attribute_light-bg.svg",
     "type": "Amazon DynamoDB Attribute light bg"
   },
   {
     "iconImport": AmazonDynamoDBAttributeslightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_Attributes_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_Attributes_light-bg.svg",
     "type": "Amazon DynamoDB Attributes light bg"
   },
   {
     "iconImport": AmazonDynamoDBDAXlightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_DAX_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_DAX_light-bg.svg",
     "type": "Amazon DynamoDB DAX light bg"
   },
   {
     "iconImport": AmazonDynamoDBGlobalSecondaryIndexlightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_Global-Secondary-Index_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_Global-Secondary-Index_light-bg.svg",
     "type": "Amazon DynamoDB Global Secondary Index light bg"
   },
   {
     "iconImport": AmazonDynamoDBItemlightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_Item_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_Item_light-bg.svg",
     "type": "Amazon DynamoDB Item light bg"
   },
   {
     "iconImport": AmazonDynamoDBItemslightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_Items_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_Items_light-bg.svg",
     "type": "Amazon DynamoDB Items light bg"
   },
   {
     "iconImport": AmazonDynamoDBTablelightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_Table_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_Table_light-bg.svg",
     "type": "Amazon DynamoDB Table light bg"
   },
   {
     "iconImport": AmazonDynamoDBlightbg,
-    "iconPath": "/static/media/Amazon-DynamoDB_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-DynamoDB_light-bg.svg",
     "type": "Amazon DynamoDB light bg"
   },
   {
     "iconImport": AmazonEC2AutoScaling,
-    "iconPath": "/static/media/Amazon-EC2-Auto-Scaling.svg",
+    "iconPath": "/aws_icons/Amazon-EC2-Auto-Scaling.svg",
     "type": "Amazon EC2 Auto Scaling"
   },
   {
     "iconImport": AmazonEC2AutoScalinglightbg,
-    "iconPath": "/static/media/Amazon-EC2-Auto-Scaling_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2-Auto-Scaling_light-bg.svg",
     "type": "Amazon EC2 Auto Scaling light bg"
   },
   {
     "iconImport": AmazonEC2ContainerRegistry,
-    "iconPath": "/static/media/Amazon-EC2-Container-Registry.svg",
+    "iconPath": "/aws_icons/Amazon-EC2-Container-Registry.svg",
     "type": "Amazon EC2 Container Registry"
   },
   {
     "iconImport": AmazonEC2ContainerRegistryImagelightbg,
-    "iconPath": "/static/media/Amazon-EC2-Container-Registry_Image_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2-Container-Registry_Image_light-bg.svg",
     "type": "Amazon EC2 Container Registry Image light bg"
   },
   {
     "iconImport": AmazonEC2ContainerRegistryRegistrylightbg,
-    "iconPath": "/static/media/Amazon-EC2-Container-Registry_Registry_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2-Container-Registry_Registry_light-bg.svg",
     "type": "Amazon EC2 Container Registry Registry light bg"
   },
   {
     "iconImport": AmazonEC2ContainerRegistrylightbg,
-    "iconPath": "/static/media/Amazon-EC2-Container-Registry_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2-Container-Registry_light-bg.svg",
     "type": "Amazon EC2 Container Registry light bg"
   },
   {
     "iconImport": AmazonEC2,
-    "iconPath": "/static/media/Amazon-EC2.svg",
+    "iconPath": "/aws_icons/Amazon-EC2.svg",
     "type": "Amazon EC2"
   },
   {
     "iconImport": AmazonEC2A1Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_A1-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_A1-Instance_light-bg.svg",
     "type": "Amazon EC2 A1 Instance light bg"
   },
   {
     "iconImport": AmazonEC2AMIlightbg,
-    "iconPath": "/static/media/Amazon-EC2_AMI_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_AMI_light-bg.svg",
     "type": "Amazon EC2 AMI light bg"
   },
   {
     "iconImport": AmazonEC2C4Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_C4-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_C4-Instance_light-bg.svg",
     "type": "Amazon EC2 C4 Instance light bg"
   },
   {
     "iconImport": AmazonEC2C5Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_C5-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_C5-Instance_light-bg.svg",
     "type": "Amazon EC2 C5 Instance light bg"
   },
   {
     "iconImport": AmazonEC2C5nInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_C5n-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_C5n-Instance_light-bg.svg",
     "type": "Amazon EC2 C5n Instance light bg"
   },
   {
     "iconImport": AmazonEC2D2Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_D2-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_D2-Instance_light-bg.svg",
     "type": "Amazon EC2 D2 Instance light bg"
   },
   {
     "iconImport": AmazonEC2DBonInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_DB-on-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_DB-on-Instance_light-bg.svg",
     "type": "Amazon EC2 DB on Instance light bg"
   },
   {
     "iconImport": AmazonEC2ElasticIPAddresslightbg,
-    "iconPath": "/static/media/Amazon-EC2_Elastic-IP-Address_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Elastic-IP-Address_light-bg.svg",
     "type": "Amazon EC2 Elastic IP Address light bg"
   },
   {
     "iconImport": AmazonEC2F1Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_F1-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_F1-Instance_light-bg.svg",
     "type": "Amazon EC2 F1 Instance light bg"
   },
   {
     "iconImport": AmazonEC2G3Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_G3-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_G3-Instance_light-bg.svg",
     "type": "Amazon EC2 G3 Instance light bg"
   },
   {
     "iconImport": AmazonEC2H1Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_H1-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_H1-Instance_light-bg.svg",
     "type": "Amazon EC2 H1 Instance light bg"
   },
   {
     "iconImport": AmazonEC2HighMemoryInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_High-Memory-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_High-Memory-Instance_light-bg.svg",
     "type": "Amazon EC2 High Memory Instance light bg"
   },
   {
     "iconImport": AmazonEC2I3Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_I3-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_I3-Instance_light-bg.svg",
     "type": "Amazon EC2 I3 Instance light bg"
   },
   {
     "iconImport": AmazonEC2InstancewithCloudWatchlightbg,
-    "iconPath": "/static/media/Amazon-EC2_Instance-with-CloudWatch_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Instance-with-CloudWatch_light-bg.svg",
     "type": "Amazon EC2 Instance with CloudWatch light bg"
   },
   {
     "iconImport": AmazonEC2Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Instance_light-bg.svg",
     "type": "Amazon EC2 Instance light bg"
   },
   {
     "iconImport": AmazonEC2Instanceslightbg,
-    "iconPath": "/static/media/Amazon-EC2_Instances_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Instances_light-bg.svg",
     "type": "Amazon EC2 Instances light bg"
   },
   {
     "iconImport": AmazonEC2M4Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_M4-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_M4-Instance_light-bg.svg",
     "type": "Amazon EC2 M4 Instance light bg"
   },
   {
     "iconImport": AmazonEC2M5Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_M5-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_M5-Instance_light-bg.svg",
     "type": "Amazon EC2 M5 Instance light bg"
   },
   {
     "iconImport": AmazonEC2M5aInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_M5a-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_M5a-Instance_light-bg.svg",
     "type": "Amazon EC2 M5a Instance light bg"
   },
   {
     "iconImport": AmazonEC2OptimizedInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_Optimized-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Optimized-Instance_light-bg.svg",
     "type": "Amazon EC2 Optimized Instance light bg"
   },
   {
     "iconImport": AmazonEC2P2Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_P2-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_P2-Instance_light-bg.svg",
     "type": "Amazon EC2 P2 Instance light bg"
   },
   {
     "iconImport": AmazonEC2P3Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_P3-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_P3-Instance_light-bg.svg",
     "type": "Amazon EC2 P3 Instance light bg"
   },
   {
     "iconImport": AmazonEC2R4Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_R4-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_R4-Instance_light-bg.svg",
     "type": "Amazon EC2 R4 Instance light bg"
   },
   {
     "iconImport": AmazonEC2R5Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_R5-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_R5-Instance_light-bg.svg",
     "type": "Amazon EC2 R5 Instance light bg"
   },
   {
     "iconImport": AmazonEC2R5aInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_R5a-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_R5a-Instance_light-bg.svg",
     "type": "Amazon EC2 R5a Instance light bg"
   },
   {
     "iconImport": AmazonEC2Rescuelightbg,
-    "iconPath": "/static/media/Amazon-EC2_Rescue_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Rescue_light-bg.svg",
     "type": "Amazon EC2 Rescue light bg"
   },
   {
     "iconImport": AmazonEC2Spotinstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_Spot-instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_Spot-instance_light-bg.svg",
     "type": "Amazon EC2 Spot instance light bg"
   },
   {
     "iconImport": AmazonEC2T3Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_T3-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_T3-Instance_light-bg.svg",
     "type": "Amazon EC2 T3 Instance light bg"
   },
   {
     "iconImport": AmazonEC2T3aInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_T3a-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_T3a-Instance_light-bg.svg",
     "type": "Amazon EC2 T3a Instance light bg"
   },
   {
     "iconImport": AmazonEC2X1Instancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_X1-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_X1-Instance_light-bg.svg",
     "type": "Amazon EC2 X1 Instance light bg"
   },
   {
     "iconImport": AmazonEC2X1eInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_X1e-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_X1e-Instance_light-bg.svg",
     "type": "Amazon EC2 X1e Instance light bg"
   },
   {
     "iconImport": AmazonEC2lightbg,
-    "iconPath": "/static/media/Amazon-EC2_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_light-bg.svg",
     "type": "Amazon EC2 light bg"
   },
   {
     "iconImport": AmazonEC2z1dInstancelightbg,
-    "iconPath": "/static/media/Amazon-EC2_z1d-Instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EC2_z1d-Instance_light-bg.svg",
     "type": "Amazon EC2 z1d Instance light bg"
   },
   {
     "iconImport": AmazonEMR,
-    "iconPath": "/static/media/Amazon-EMR.svg",
+    "iconPath": "/aws_icons/Amazon-EMR.svg",
     "type": "Amazon EMR"
   },
   {
     "iconImport": AmazonEMRClusterlightbg,
-    "iconPath": "/static/media/Amazon-EMR_Cluster_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_Cluster_light-bg.svg",
     "type": "Amazon EMR Cluster light bg"
   },
   {
     "iconImport": AmazonEMREMRengineMapRM3lightbg,
-    "iconPath": "/static/media/Amazon-EMR_EMR-engine-MapR-M3_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_EMR-engine-MapR-M3_light-bg.svg",
     "type": "Amazon EMR EMR engine MapR M3 light bg"
   },
   {
     "iconImport": AmazonEMREMRengineMapRM5lightbg,
-    "iconPath": "/static/media/Amazon-EMR_EMR-engine-MapR-M5_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_EMR-engine-MapR-M5_light-bg.svg",
     "type": "Amazon EMR EMR engine MapR M5 light bg"
   },
   {
     "iconImport": AmazonEMREMRengineMapRM7lightbg,
-    "iconPath": "/static/media/Amazon-EMR_EMR-engine-MapR-M7_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_EMR-engine-MapR-M7_light-bg.svg",
     "type": "Amazon EMR EMR engine MapR M7 light bg"
   },
   {
     "iconImport": AmazonEMREMRenginelightbg,
-    "iconPath": "/static/media/Amazon-EMR_EMR-engine_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_EMR-engine_light-bg.svg",
     "type": "Amazon EMR EMR engine light bg"
   },
   {
     "iconImport": AmazonEMRHDFSclusterlightbg,
-    "iconPath": "/static/media/Amazon-EMR_HDFS-cluster_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_HDFS-cluster_light-bg.svg",
     "type": "Amazon EMR HDFS cluster light bg"
   },
   {
     "iconImport": AmazonEMRlightbg,
-    "iconPath": "/static/media/Amazon-EMR_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EMR_light-bg.svg",
     "type": "Amazon EMR light bg"
   },
   {
     "iconImport": AmazonElastiCache,
-    "iconPath": "/static/media/Amazon-ElastiCache.svg",
+    "iconPath": "/aws_icons/Amazon-ElastiCache.svg",
     "type": "Amazon ElastiCache"
   },
   {
     "iconImport": AmazonElastiCacheCacheNodelightbg,
-    "iconPath": "/static/media/Amazon-ElastiCache_Cache-Node_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-ElastiCache_Cache-Node_light-bg.svg",
     "type": "Amazon ElastiCache Cache Node light bg"
   },
   {
     "iconImport": AmazonElastiCacheForMemcachedlightbg,
-    "iconPath": "/static/media/Amazon-ElastiCache_For-Memcached_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-ElastiCache_For-Memcached_light-bg.svg",
     "type": "Amazon ElastiCache For Memcached light bg"
   },
   {
     "iconImport": AmazonElastiCacheForRedislightbg,
-    "iconPath": "/static/media/Amazon-ElastiCache_For-Redis_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-ElastiCache_For-Redis_light-bg.svg",
     "type": "Amazon ElastiCache For Redis light bg"
   },
   {
     "iconImport": AmazonElastiCachelightbg,
-    "iconPath": "/static/media/Amazon-ElastiCache_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-ElastiCache_light-bg.svg",
     "type": "Amazon ElastiCache light bg"
   },
   {
     "iconImport": AmazonElasticBlockStoreEBS,
-    "iconPath": "/static/media/Amazon-Elastic-Block-Store-EBS.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Block-Store-EBS.svg",
     "type": "Amazon Elastic Block Store EBS"
   },
   {
     "iconImport": AmazonElasticBlockStoreEBSSnapshotlightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Block-Store-EBS_Snapshot_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Block-Store-EBS_Snapshot_light-bg.svg",
     "type": "Amazon Elastic Block Store EBS Snapshot light bg"
   },
   {
     "iconImport": AmazonElasticBlockStoreEBSVolumelightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Block-Store-EBS_Volume_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Block-Store-EBS_Volume_light-bg.svg",
     "type": "Amazon Elastic Block Store EBS Volume light bg"
   },
   {
     "iconImport": AmazonElasticBlockStoreEBSlightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Block-Store-EBS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Block-Store-EBS_light-bg.svg",
     "type": "Amazon Elastic Block Store EBS light bg"
   },
   {
     "iconImport": AmazonElasticContainerService,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service.svg",
     "type": "Amazon Elastic Container Service"
   },
   {
     "iconImport": AmazonElasticContainerServiceContainer1lightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service_Container1_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service_Container1_light-bg.svg",
     "type": "Amazon Elastic Container Service Container1 light bg"
   },
   {
     "iconImport": AmazonElasticContainerServiceContainer2lightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service_Container2_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service_Container2_light-bg.svg",
     "type": "Amazon Elastic Container Service Container2 light bg"
   },
   {
     "iconImport": AmazonElasticContainerServiceContainer3lightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service_Container3_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service_Container3_light-bg.svg",
     "type": "Amazon Elastic Container Service Container3 light bg"
   },
   {
     "iconImport": AmazonElasticContainerServiceServicelightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service_Service_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service_Service_light-bg.svg",
     "type": "Amazon Elastic Container Service Service light bg"
   },
   {
     "iconImport": AmazonElasticContainerServiceTasklightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service_Task_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service_Task_light-bg.svg",
     "type": "Amazon Elastic Container Service Task light bg"
   },
   {
     "iconImport": AmazonElasticContainerServicelightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Container-Service_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Container-Service_light-bg.svg",
     "type": "Amazon Elastic Container Service light bg"
   },
   {
     "iconImport": AmazonElasticFileSystemEFS,
-    "iconPath": "/static/media/Amazon-Elastic-File-System_EFS.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-File-System_EFS.svg",
     "type": "Amazon Elastic File System EFS"
   },
   {
     "iconImport": AmazonElasticFileSystemEFSFilesystemlightbg,
-    "iconPath": "/static/media/Amazon-Elastic-File-System_EFS_File-system_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-File-System_EFS_File-system_light-bg.svg",
     "type": "Amazon Elastic File System EFS File system light bg"
   },
   {
     "iconImport": AmazonElasticFileSystemEFSlightbg,
-    "iconPath": "/static/media/Amazon-Elastic-File-System_EFS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-File-System_EFS_light-bg.svg",
     "type": "Amazon Elastic File System EFS light bg"
   },
   {
     "iconImport": AmazonElasticInference,
-    "iconPath": "/static/media/Amazon-Elastic-Inference.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Inference.svg",
     "type": "Amazon Elastic Inference"
   },
   {
     "iconImport": AmazonElasticInferencelightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Inference_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Inference_light-bg.svg",
     "type": "Amazon Elastic Inference light bg"
   },
   {
     "iconImport": AmazonElasticKubernetesService,
-    "iconPath": "/static/media/Amazon-Elastic-Kubernetes-Service.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Kubernetes-Service.svg",
     "type": "Amazon Elastic Kubernetes Service"
   },
   {
     "iconImport": AmazonElasticKubernetesServicelightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Kubernetes-Service_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Kubernetes-Service_light-bg.svg",
     "type": "Amazon Elastic Kubernetes Service light bg"
   },
   {
     "iconImport": AmazonElasticTranscoder,
-    "iconPath": "/static/media/Amazon-Elastic-Transcoder.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Transcoder.svg",
     "type": "Amazon Elastic Transcoder"
   },
   {
     "iconImport": AmazonElasticTranscoderlightbg,
-    "iconPath": "/static/media/Amazon-Elastic-Transcoder_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elastic-Transcoder_light-bg.svg",
     "type": "Amazon Elastic Transcoder light bg"
   },
   {
     "iconImport": AmazonElasticsearchService,
-    "iconPath": "/static/media/Amazon-Elasticsearch-Service.svg",
+    "iconPath": "/aws_icons/Amazon-Elasticsearch-Service.svg",
     "type": "Amazon Elasticsearch Service"
   },
   {
     "iconImport": AmazonElasticsearchServicelightbg,
-    "iconPath": "/static/media/Amazon-Elasticsearch-Service_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Elasticsearch-Service_light-bg.svg",
     "type": "Amazon Elasticsearch Service light bg"
   },
   {
     "iconImport": AmazonEventBridge,
-    "iconPath": "/static/media/Amazon-EventBridge.svg",
+    "iconPath": "/aws_icons/Amazon-EventBridge.svg",
     "type": "Amazon EventBridge"
   },
   {
     "iconImport": AmazonEventBridgeCustomeventbusresourceiconlightbg,
-    "iconPath": "/static/media/Amazon-EventBridge_Custom-event-bus_resource-icon_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EventBridge_Custom-event-bus_resource-icon_light-bg.svg",
     "type": "Amazon EventBridge Custom event bus resource icon light bg"
   },
   {
     "iconImport": AmazonEventBridgeDefaulteventbusresourceiconlightbg,
-    "iconPath": "/static/media/Amazon-EventBridge_Default-event-bus_resource-icon_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EventBridge_Default-event-bus_resource-icon_light-bg.svg",
     "type": "Amazon EventBridge Default event bus resource icon light bg"
   },
   {
     "iconImport": AmazonEventBridgeSaasPartnereventbusresourceiconlightbg,
-    "iconPath": "/static/media/Amazon-EventBridge_Saas-Partner-event-bus_resource-icon_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EventBridge_Saas-Partner-event-bus_resource-icon_light-bg.svg",
     "type": "Amazon EventBridge Saas Partner event bus resource icon light bg"
   },
   {
     "iconImport": AmazonEventBridgelightbg,
-    "iconPath": "/static/media/Amazon-EventBridge_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-EventBridge_light-bg.svg",
     "type": "Amazon EventBridge light bg"
   },
   {
     "iconImport": AmazonFSxforLustre,
-    "iconPath": "/static/media/Amazon-FSx-for-Lustre.svg",
+    "iconPath": "/aws_icons/Amazon-FSx-for-Lustre.svg",
     "type": "Amazon FSx for Lustre"
   },
   {
     "iconImport": AmazonFSxforLustrelightbg,
-    "iconPath": "/static/media/Amazon-FSx-for-Lustre_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-FSx-for-Lustre_light-bg.svg",
     "type": "Amazon FSx for Lustre light bg"
   },
   {
     "iconImport": AmazonFSxforWindowsFileServer,
-    "iconPath": "/static/media/Amazon-FSx-for-Windows-File-Server.svg",
+    "iconPath": "/aws_icons/Amazon-FSx-for-Windows-File-Server.svg",
     "type": "Amazon FSx for Windows File Server"
   },
   {
     "iconImport": AmazonFSxforWindowsFileServerlightbg,
-    "iconPath": "/static/media/Amazon-FSx-for-Windows-File-Server_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-FSx-for-Windows-File-Server_light-bg.svg",
     "type": "Amazon FSx for Windows File Server light bg"
   },
   {
     "iconImport": AmazonFSx,
-    "iconPath": "/static/media/Amazon-FSx.svg",
+    "iconPath": "/aws_icons/Amazon-FSx.svg",
     "type": "Amazon FSx"
   },
   {
     "iconImport": AmazonFSxlightbg,
-    "iconPath": "/static/media/Amazon-FSx_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-FSx_light-bg.svg",
     "type": "Amazon FSx light bg"
   },
   {
     "iconImport": AmazonForecast,
-    "iconPath": "/static/media/Amazon-Forecast.svg",
+    "iconPath": "/aws_icons/Amazon-Forecast.svg",
     "type": "Amazon Forecast"
   },
   {
     "iconImport": AmazonForecastlightbg,
-    "iconPath": "/static/media/Amazon-Forecast_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Forecast_light-bg.svg",
     "type": "Amazon Forecast light bg"
   },
   {
     "iconImport": AmazonFraudDetector,
-    "iconPath": "/static/media/Amazon-Fraud-Detector.svg",
+    "iconPath": "/aws_icons/Amazon-Fraud-Detector.svg",
     "type": "Amazon Fraud Detector"
   },
   {
     "iconImport": AmazonFraudDetectorlightbg,
-    "iconPath": "/static/media/Amazon-Fraud-Detector_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Fraud-Detector_light-bg.svg",
     "type": "Amazon Fraud Detector light bg"
   },
   {
     "iconImport": AmazonFreeRTOS,
-    "iconPath": "/static/media/Amazon-FreeRTOS.svg",
+    "iconPath": "/aws_icons/Amazon-FreeRTOS.svg",
     "type": "Amazon FreeRTOS"
   },
   {
     "iconImport": AmazonFreeRTOSlightbg,
-    "iconPath": "/static/media/Amazon-FreeRTOS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-FreeRTOS_light-bg.svg",
     "type": "Amazon FreeRTOS light bg"
   },
   {
     "iconImport": AmazonGameLift,
-    "iconPath": "/static/media/Amazon-GameLift.svg",
+    "iconPath": "/aws_icons/Amazon-GameLift.svg",
     "type": "Amazon GameLift"
   },
   {
     "iconImport": AmazonGameLiftlightbg,
-    "iconPath": "/static/media/Amazon-GameLift_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-GameLift_light-bg.svg",
     "type": "Amazon GameLift light bg"
   },
   {
     "iconImport": AmazonGuardDuty,
-    "iconPath": "/static/media/Amazon-GuardDuty.svg",
+    "iconPath": "/aws_icons/Amazon-GuardDuty.svg",
     "type": "Amazon GuardDuty"
   },
   {
     "iconImport": AmazonGuardDutylightbg,
-    "iconPath": "/static/media/Amazon-GuardDuty_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-GuardDuty_light-bg.svg",
     "type": "Amazon GuardDuty light bg"
   },
   {
     "iconImport": AmazonInspector,
-    "iconPath": "/static/media/Amazon-Inspector.svg",
+    "iconPath": "/aws_icons/Amazon-Inspector.svg",
     "type": "Amazon Inspector"
   },
   {
     "iconImport": AmazonInspectorAgentlightbg,
-    "iconPath": "/static/media/Amazon-Inspector_Agent_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Inspector_Agent_light-bg.svg",
     "type": "Amazon Inspector Agent light bg"
   },
   {
     "iconImport": AmazonInspectorlightbg,
-    "iconPath": "/static/media/Amazon-Inspector_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Inspector_light-bg.svg",
     "type": "Amazon Inspector light bg"
   },
   {
     "iconImport": AmazonKendra,
-    "iconPath": "/static/media/Amazon-Kendra.svg",
+    "iconPath": "/aws_icons/Amazon-Kendra.svg",
     "type": "Amazon Kendra"
   },
   {
     "iconImport": AmazonKendralightbg,
-    "iconPath": "/static/media/Amazon-Kendra_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Kendra_light-bg.svg",
     "type": "Amazon Kendra light bg"
   },
   {
     "iconImport": AmazonKinesisDataAnalytics,
-    "iconPath": "/static/media/Amazon-Kinesis-Data-Analytics.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Data-Analytics.svg",
     "type": "Amazon Kinesis Data Analytics"
   },
   {
     "iconImport": AmazonKinesisDataAnalyticslightbg,
-    "iconPath": "/static/media/Amazon-Kinesis-Data-Analytics_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Data-Analytics_light-bg.svg",
     "type": "Amazon Kinesis Data Analytics light bg"
   },
   {
     "iconImport": AmazonKinesisDataFirehose,
-    "iconPath": "/static/media/Amazon-Kinesis-Data-Firehose.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Data-Firehose.svg",
     "type": "Amazon Kinesis Data Firehose"
   },
   {
     "iconImport": AmazonKinesisDataFirehoselightbg,
-    "iconPath": "/static/media/Amazon-Kinesis-Data-Firehose_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Data-Firehose_light-bg.svg",
     "type": "Amazon Kinesis Data Firehose light bg"
   },
   {
     "iconImport": AmazonKinesisDataStreams,
-    "iconPath": "/static/media/Amazon-Kinesis-Data-Streams.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Data-Streams.svg",
     "type": "Amazon Kinesis Data Streams"
   },
   {
     "iconImport": AmazonKinesisDataStreamslightbg,
-    "iconPath": "/static/media/Amazon-Kinesis-Data-Streams_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Data-Streams_light-bg.svg",
     "type": "Amazon Kinesis Data Streams light bg"
   },
   {
     "iconImport": AmazonKinesisVideoStreams,
-    "iconPath": "/static/media/Amazon-Kinesis-Video-Streams.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Video-Streams.svg",
     "type": "Amazon Kinesis Video Streams"
   },
   {
     "iconImport": AmazonKinesisVideoStreamslightbg,
-    "iconPath": "/static/media/Amazon-Kinesis-Video-Streams_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis-Video-Streams_light-bg.svg",
     "type": "Amazon Kinesis Video Streams light bg"
   },
   {
     "iconImport": AmazonKinesis,
-    "iconPath": "/static/media/Amazon-Kinesis.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis.svg",
     "type": "Amazon Kinesis"
   },
   {
     "iconImport": AmazonKinesislightbg,
-    "iconPath": "/static/media/Amazon-Kinesis_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Kinesis_light-bg.svg",
     "type": "Amazon Kinesis light bg"
   },
   {
     "iconImport": AmazonLex,
-    "iconPath": "/static/media/Amazon-Lex.svg",
+    "iconPath": "/aws_icons/Amazon-Lex.svg",
     "type": "Amazon Lex"
   },
   {
     "iconImport": AmazonLexlightbg,
-    "iconPath": "/static/media/Amazon-Lex_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Lex_light-bg.svg",
     "type": "Amazon Lex light bg"
   },
   {
     "iconImport": AmazonLightsail,
-    "iconPath": "/static/media/Amazon-Lightsail.svg",
+    "iconPath": "/aws_icons/Amazon-Lightsail.svg",
     "type": "Amazon Lightsail"
   },
   {
     "iconImport": AmazonLightsaillightbg,
-    "iconPath": "/static/media/Amazon-Lightsail_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Lightsail_light-bg.svg",
     "type": "Amazon Lightsail light bg"
   },
   {
     "iconImport": AmazonMQ,
-    "iconPath": "/static/media/Amazon-MQ.svg",
+    "iconPath": "/aws_icons/Amazon-MQ.svg",
     "type": "Amazon MQ"
   },
   {
     "iconImport": AmazonMQlightbg,
-    "iconPath": "/static/media/Amazon-MQ_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-MQ_light-bg.svg",
     "type": "Amazon MQ light bg"
   },
   {
     "iconImport": AmazonMacie,
-    "iconPath": "/static/media/Amazon-Macie.svg",
+    "iconPath": "/aws_icons/Amazon-Macie.svg",
     "type": "Amazon Macie"
   },
   {
     "iconImport": AmazonMacielightbg,
-    "iconPath": "/static/media/Amazon-Macie_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Macie_light-bg.svg",
     "type": "Amazon Macie light bg"
   },
   {
     "iconImport": AmazonManagedApacheCassandraService,
-    "iconPath": "/static/media/Amazon-Managed-Apache-Cassandra-Service.svg",
+    "iconPath": "/aws_icons/Amazon-Managed-Apache-Cassandra-Service.svg",
     "type": "Amazon Managed Apache Cassandra Service"
   },
   {
     "iconImport": AmazonManagedApacheCassandraServicelightbg,
-    "iconPath": "/static/media/Amazon-Managed-Apache-Cassandra-Service_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Managed-Apache-Cassandra-Service_light-bg.svg",
     "type": "Amazon Managed Apache Cassandra Service light bg"
   },
   {
     "iconImport": AmazonManagedBlockchain,
-    "iconPath": "/static/media/Amazon-Managed-Blockchain.svg",
+    "iconPath": "/aws_icons/Amazon-Managed-Blockchain.svg",
     "type": "Amazon Managed Blockchain"
   },
   {
     "iconImport": AmazonManagedBlockchainlightbg,
-    "iconPath": "/static/media/Amazon-Managed-Blockchain_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Managed-Blockchain_light-bg.svg",
     "type": "Amazon Managed Blockchain light bg"
   },
   {
     "iconImport": AmazonManagedStreamingforKafka,
-    "iconPath": "/static/media/Amazon-Managed-Streaming-for-Kafka.svg",
+    "iconPath": "/aws_icons/Amazon-Managed-Streaming-for-Kafka.svg",
     "type": "Amazon Managed Streaming for Kafka"
   },
   {
     "iconImport": AmazonManagedStreamingforKafkalightbg,
-    "iconPath": "/static/media/Amazon-Managed-Streaming-for-Kafka_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Managed-Streaming-for-Kafka_light-bg.svg",
     "type": "Amazon Managed Streaming for Kafka light bg"
   },
   {
     "iconImport": AmazonNeptune,
-    "iconPath": "/static/media/Amazon-Neptune.svg",
+    "iconPath": "/aws_icons/Amazon-Neptune.svg",
     "type": "Amazon Neptune"
   },
   {
     "iconImport": AmazonNeptunelightbg,
-    "iconPath": "/static/media/Amazon-Neptune_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Neptune_light-bg.svg",
     "type": "Amazon Neptune light bg"
   },
   {
     "iconImport": AmazonPersonalize,
-    "iconPath": "/static/media/Amazon-Personalize.svg",
+    "iconPath": "/aws_icons/Amazon-Personalize.svg",
     "type": "Amazon Personalize"
   },
   {
     "iconImport": AmazonPersonalizelightbg,
-    "iconPath": "/static/media/Amazon-Personalize_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Personalize_light-bg.svg",
     "type": "Amazon Personalize light bg"
   },
   {
     "iconImport": AmazonPinpoint,
-    "iconPath": "/static/media/Amazon-Pinpoint.svg",
+    "iconPath": "/aws_icons/Amazon-Pinpoint.svg",
     "type": "Amazon Pinpoint"
   },
   {
     "iconImport": AmazonPinpointlightbg,
-    "iconPath": "/static/media/Amazon-Pinpoint_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Pinpoint_light-bg.svg",
     "type": "Amazon Pinpoint light bg"
   },
   {
     "iconImport": AmazonPolly,
-    "iconPath": "/static/media/Amazon-Polly.svg",
+    "iconPath": "/aws_icons/Amazon-Polly.svg",
     "type": "Amazon Polly"
   },
   {
     "iconImport": AmazonPollylightbg,
-    "iconPath": "/static/media/Amazon-Polly_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Polly_light-bg.svg",
     "type": "Amazon Polly light bg"
   },
   {
     "iconImport": AmazonQuantumLedgerDatabaseQLDB,
-    "iconPath": "/static/media/Amazon-Quantum-Ledger-Database-QLDB.svg",
+    "iconPath": "/aws_icons/Amazon-Quantum-Ledger-Database-QLDB.svg",
     "type": "Amazon Quantum Ledger Database QLDB"
   },
   {
     "iconImport": AmazonQuantumLedgerDatabaseQLDBlightbg,
-    "iconPath": "/static/media/Amazon-Quantum-Ledger-Database-QLDB_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Quantum-Ledger-Database-QLDB_light-bg.svg",
     "type": "Amazon Quantum Ledger Database QLDB light bg"
   },
   {
     "iconImport": AmazonQuicksight,
-    "iconPath": "/static/media/Amazon-Quicksight.svg",
+    "iconPath": "/aws_icons/Amazon-Quicksight.svg",
     "type": "Amazon Quicksight"
   },
   {
     "iconImport": AmazonQuicksightlightbg,
-    "iconPath": "/static/media/Amazon-Quicksight_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Quicksight_light-bg.svg",
     "type": "Amazon Quicksight light bg"
   },
   {
     "iconImport": AmazonRDSonVMware,
-    "iconPath": "/static/media/Amazon-RDS-on-VMware.svg",
+    "iconPath": "/aws_icons/Amazon-RDS-on-VMware.svg",
     "type": "Amazon RDS on VMware"
   },
   {
     "iconImport": AmazonRDSonVMwarelightbg,
-    "iconPath": "/static/media/Amazon-RDS-on-VMware_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS-on-VMware_light-bg.svg",
     "type": "Amazon RDS on VMware light bg"
   },
   {
     "iconImport": AmazonRDS,
-    "iconPath": "/static/media/Amazon-RDS.svg",
+    "iconPath": "/aws_icons/Amazon-RDS.svg",
     "type": "Amazon RDS"
   },
   {
     "iconImport": AmazonRDSAmazonAurorainstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_Amazon-Aurora_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_Amazon-Aurora_instance-alt_light-bg.svg",
     "type": "Amazon RDS Amazon Aurora instance alt light bg"
   },
   {
     "iconImport": AmazonRDSAmazonAurorainstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_Amazon-Aurora_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_Amazon-Aurora_instance_light-bg.svg",
     "type": "Amazon RDS Amazon Aurora instance light bg"
   },
   {
     "iconImport": AmazonRDSAmazonRDSinstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_Amazon-RDS_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_Amazon-RDS_instance-alt_light-bg.svg",
     "type": "Amazon RDS Amazon RDS instance alt light bg"
   },
   {
     "iconImport": AmazonRDSAmazonRDSinstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_Amazon-RDS_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_Amazon-RDS_instance_light-bg.svg",
     "type": "Amazon RDS Amazon RDS instance light bg"
   },
   {
     "iconImport": AmazonRDSMariaDBinstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_MariaDB_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_MariaDB_instance-alt_light-bg.svg",
     "type": "Amazon RDS MariaDB instance alt light bg"
   },
   {
     "iconImport": AmazonRDSMariaDBinstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_MariaDB_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_MariaDB_instance_light-bg.svg",
     "type": "Amazon RDS MariaDB instance light bg"
   },
   {
     "iconImport": AmazonRDSMySQLinstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_MySQL_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_MySQL_instance-alt_light-bg.svg",
     "type": "Amazon RDS MySQL instance alt light bg"
   },
   {
     "iconImport": AmazonRDSMySQLinstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_MySQL_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_MySQL_instance_light-bg.svg",
     "type": "Amazon RDS MySQL instance light bg"
   },
   {
     "iconImport": AmazonRDSOracleinstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_Oracle_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_Oracle_instance-alt_light-bg.svg",
     "type": "Amazon RDS Oracle instance alt light bg"
   },
   {
     "iconImport": AmazonRDSOracleinstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_Oracle_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_Oracle_instance_light-bg.svg",
     "type": "Amazon RDS Oracle instance light bg"
   },
   {
     "iconImport": AmazonRDSPIOPSlightbg,
-    "iconPath": "/static/media/Amazon-RDS_PIOPS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_PIOPS_light-bg.svg",
     "type": "Amazon RDS PIOPS light bg"
   },
   {
     "iconImport": AmazonRDSPIOPlightbg,
-    "iconPath": "/static/media/Amazon-RDS_PIOP_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_PIOP_light-bg.svg",
     "type": "Amazon RDS PIOP light bg"
   },
   {
     "iconImport": AmazonRDSPostgreSQLinstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_PostgreSQL_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_PostgreSQL_instance-alt_light-bg.svg",
     "type": "Amazon RDS PostgreSQL instance alt light bg"
   },
   {
     "iconImport": AmazonRDSPostgreSQLinstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_PostgreSQL_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_PostgreSQL_instance_light-bg.svg",
     "type": "Amazon RDS PostgreSQL instance light bg"
   },
   {
     "iconImport": AmazonRDSSQLServerinstancealtlightbg,
-    "iconPath": "/static/media/Amazon-RDS_SQL-Server_instance-alt_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_SQL-Server_instance-alt_light-bg.svg",
     "type": "Amazon RDS SQL Server instance alt light bg"
   },
   {
     "iconImport": AmazonRDSSQLServerinstancelightbg,
-    "iconPath": "/static/media/Amazon-RDS_SQL-Server_instance_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_SQL-Server_instance_light-bg.svg",
     "type": "Amazon RDS SQL Server instance light bg"
   },
   {
     "iconImport": AmazonRDSlightbg,
-    "iconPath": "/static/media/Amazon-RDS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-RDS_light-bg.svg",
     "type": "Amazon RDS light bg"
   },
   {
     "iconImport": AmazonRedshift,
-    "iconPath": "/static/media/Amazon-Redshift.svg",
+    "iconPath": "/aws_icons/Amazon-Redshift.svg",
     "type": "Amazon Redshift"
   },
   {
     "iconImport": AmazonRedshiftDenseComputeNodelightbg,
-    "iconPath": "/static/media/Amazon-Redshift_Dense-Compute-Node_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Redshift_Dense-Compute-Node_light-bg.svg",
     "type": "Amazon Redshift Dense Compute Node light bg"
   },
   {
     "iconImport": AmazonRedshiftDenseStorageNodelightbg,
-    "iconPath": "/static/media/Amazon-Redshift_Dense-Storage-Node_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Redshift_Dense-Storage-Node_light-bg.svg",
     "type": "Amazon Redshift Dense Storage Node light bg"
   },
   {
     "iconImport": AmazonRedshiftlightbg,
-    "iconPath": "/static/media/Amazon-Redshift_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Redshift_light-bg.svg",
     "type": "Amazon Redshift light bg"
   },
   {
     "iconImport": AmazonRekognition,
-    "iconPath": "/static/media/Amazon-Rekognition.svg",
+    "iconPath": "/aws_icons/Amazon-Rekognition.svg",
     "type": "Amazon Rekognition"
   },
   {
     "iconImport": AmazonRekognitionImagelightbg,
-    "iconPath": "/static/media/Amazon-Rekognition_Image_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Rekognition_Image_light-bg.svg",
     "type": "Amazon Rekognition Image light bg"
   },
   {
     "iconImport": AmazonRekognitionVideolightbg,
-    "iconPath": "/static/media/Amazon-Rekognition_Video_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Rekognition_Video_light-bg.svg",
     "type": "Amazon Rekognition Video light bg"
   },
   {
     "iconImport": AmazonRekognitionlightbg,
-    "iconPath": "/static/media/Amazon-Rekognition_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Rekognition_light-bg.svg",
     "type": "Amazon Rekognition light bg"
   },
   {
     "iconImport": AmazonRoute53,
-    "iconPath": "/static/media/Amazon-Route-53.svg",
+    "iconPath": "/aws_icons/Amazon-Route-53.svg",
     "type": "Amazon Route 53"
   },
   {
     "iconImport": AmazonRoute53HostedZonelightbg,
-    "iconPath": "/static/media/Amazon-Route-53_Hosted-Zone_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Route-53_Hosted-Zone_light-bg.svg",
     "type": "Amazon Route 53 Hosted Zone light bg"
   },
   {
     "iconImport": AmazonRoute53RouteTablelightbg,
-    "iconPath": "/static/media/Amazon-Route-53_Route-Table_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Route-53_Route-Table_light-bg.svg",
     "type": "Amazon Route 53 Route Table light bg"
   },
   {
     "iconImport": AmazonRoute53lightbg,
-    "iconPath": "/static/media/Amazon-Route-53_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Route-53_light-bg.svg",
     "type": "Amazon Route 53 light bg"
   },
   {
     "iconImport": AmazonS3Glacier,
-    "iconPath": "/static/media/Amazon-S3-Glacier.svg",
+    "iconPath": "/aws_icons/Amazon-S3-Glacier.svg",
     "type": "Amazon S3 Glacier"
   },
   {
     "iconImport": AmazonS3GlacierArchivelightbg,
-    "iconPath": "/static/media/Amazon-S3-Glacier_Archive_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-S3-Glacier_Archive_light-bg.svg",
     "type": "Amazon S3 Glacier Archive light bg"
   },
   {
     "iconImport": AmazonS3GlacierVaultlightbg,
-    "iconPath": "/static/media/Amazon-S3-Glacier_Vault_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-S3-Glacier_Vault_light-bg.svg",
     "type": "Amazon S3 Glacier Vault light bg"
   },
   {
     "iconImport": AmazonS3Glacierlightbg,
-    "iconPath": "/static/media/Amazon-S3-Glacier_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-S3-Glacier_light-bg.svg",
     "type": "Amazon S3 Glacier light bg"
   },
   {
     "iconImport": AmazonSageMakerGroundTruth,
-    "iconPath": "/static/media/Amazon-SageMaker-Ground-Truth.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker-Ground-Truth.svg",
     "type": "Amazon SageMaker Ground Truth"
   },
   {
     "iconImport": AmazonSageMakerGroundTruthlightbg,
-    "iconPath": "/static/media/Amazon-SageMaker-Ground-Truth_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker-Ground-Truth_light-bg.svg",
     "type": "Amazon SageMaker Ground Truth light bg"
   },
   {
     "iconImport": AmazonSageMaker,
-    "iconPath": "/static/media/Amazon-SageMaker.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker.svg",
     "type": "Amazon SageMaker"
   },
   {
     "iconImport": AmazonSageMakerModellightbg,
-    "iconPath": "/static/media/Amazon-SageMaker_Model_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker_Model_light-bg.svg",
     "type": "Amazon SageMaker Model light bg"
   },
   {
     "iconImport": AmazonSageMakerNotebooklightbg,
-    "iconPath": "/static/media/Amazon-SageMaker_Notebook_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker_Notebook_light-bg.svg",
     "type": "Amazon SageMaker Notebook light bg"
   },
   {
     "iconImport": AmazonSageMakerTrainlightbg,
-    "iconPath": "/static/media/Amazon-SageMaker_Train_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker_Train_light-bg.svg",
     "type": "Amazon SageMaker Train light bg"
   },
   {
     "iconImport": AmazonSageMakerlightbg,
-    "iconPath": "/static/media/Amazon-SageMaker_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-SageMaker_light-bg.svg",
     "type": "Amazon SageMaker light bg"
   },
   {
     "iconImport": AmazonSimpleEmailServiceSES,
-    "iconPath": "/static/media/Amazon-Simple-Email-Service-SES.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Email-Service-SES.svg",
     "type": "Amazon Simple Email Service SES"
   },
   {
     "iconImport": AmazonSimpleEmailServiceSESEmaillightbg,
-    "iconPath": "/static/media/Amazon-Simple-Email-Service-SES_Email_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Email-Service-SES_Email_light-bg.svg",
     "type": "Amazon Simple Email Service SES Email light bg"
   },
   {
     "iconImport": AmazonSimpleEmailServiceSESlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Email-Service-SES_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Email-Service-SES_light-bg.svg",
     "type": "Amazon Simple Email Service SES light bg"
   },
   {
     "iconImport": AmazonSimpleNotificationServiceSNS,
-    "iconPath": "/static/media/Amazon-Simple-Notification-Service-SNS.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Notification-Service-SNS.svg",
     "type": "Amazon Simple Notification Service SNS"
   },
   {
     "iconImport": AmazonSimpleNotificationServiceSNSEmailNotificationlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Notification-Service-SNS_Email-Notification_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Notification-Service-SNS_Email-Notification_light-bg.svg",
     "type": "Amazon Simple Notification Service SNS Email Notification light bg"
   },
   {
     "iconImport": AmazonSimpleNotificationServiceSNSHTTPNotificationlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Notification-Service-SNS_HTTP-Notification_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Notification-Service-SNS_HTTP-Notification_light-bg.svg",
     "type": "Amazon Simple Notification Service SNS HTTP Notification light bg"
   },
   {
     "iconImport": AmazonSimpleNotificationServiceSNSTopiclightbg,
-    "iconPath": "/static/media/Amazon-Simple-Notification-Service-SNS_Topic_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Notification-Service-SNS_Topic_light-bg.svg",
     "type": "Amazon Simple Notification Service SNS Topic light bg"
   },
   {
     "iconImport": AmazonSimpleNotificationServiceSNSlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Notification-Service-SNS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Notification-Service-SNS_light-bg.svg",
     "type": "Amazon Simple Notification Service SNS light bg"
   },
   {
     "iconImport": AmazonSimpleQueueServiceSQS,
-    "iconPath": "/static/media/Amazon-Simple-Queue-Service-SQS.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Queue-Service-SQS.svg",
     "type": "Amazon Simple Queue Service SQS"
   },
   {
     "iconImport": AmazonSimpleQueueServiceSQSMessagelightbg,
-    "iconPath": "/static/media/Amazon-Simple-Queue-Service-SQS_Message_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Queue-Service-SQS_Message_light-bg.svg",
     "type": "Amazon Simple Queue Service SQS Message light bg"
   },
   {
     "iconImport": AmazonSimpleQueueServiceSQSQueuelightbg,
-    "iconPath": "/static/media/Amazon-Simple-Queue-Service-SQS_Queue_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Queue-Service-SQS_Queue_light-bg.svg",
     "type": "Amazon Simple Queue Service SQS Queue light bg"
   },
   {
     "iconImport": AmazonSimpleQueueServiceSQSlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Queue-Service-SQS_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Queue-Service-SQS_light-bg.svg",
     "type": "Amazon Simple Queue Service SQS light bg"
   },
   {
     "iconImport": AmazonSimpleStorageServiceS3BucketwithObjectslightbg,
-    "iconPath": "/static/media/Amazon-Simple-Storage-Service-S3_Bucket-with-Objects_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Storage-Service-S3_Bucket-with-Objects_light-bg.svg",
     "type": "Amazon Simple Storage Service S3 Bucket with Objects light bg"
   },
   {
     "iconImport": AmazonSimpleStorageServiceS3Bucketlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Storage-Service-S3_Bucket_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Storage-Service-S3_Bucket_light-bg.svg",
     "type": "Amazon Simple Storage Service S3 Bucket light bg"
   },
   {
     "iconImport": AmazonSimpleStorageServiceS3Objectlightbg,
-    "iconPath": "/static/media/Amazon-Simple-Storage-Service-S3_Object_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-Storage-Service-S3_Object_light-bg.svg",
     "type": "Amazon Simple Storage Service S3 Object light bg"
   },
   {
     "iconImport": AmazonSimpleStorageServiceS3,
-    "iconPath": "/static/media/Amazon-Simple-_Storage-Service-S3.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-_Storage-Service-S3.svg",
     "type": "Amazon Simple  Storage Service S3"
   },
   {
     "iconImport": AmazonSimpleStorageServiceS3lightbg,
-    "iconPath": "/static/media/Amazon-Simple-_Storage-Service-S3_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Simple-_Storage-Service-S3_light-bg.svg",
     "type": "Amazon Simple  Storage Service S3 light bg"
   },
   {
     "iconImport": AmazonSumerian,
-    "iconPath": "/static/media/Amazon-Sumerian.svg",
+    "iconPath": "/aws_icons/Amazon-Sumerian.svg",
     "type": "Amazon Sumerian"
   },
   {
     "iconImport": AmazonSumerianlightbg,
-    "iconPath": "/static/media/Amazon-Sumerian_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Sumerian_light-bg.svg",
     "type": "Amazon Sumerian light bg"
   },
   {
     "iconImport": AmazonTextract,
-    "iconPath": "/static/media/Amazon-Textract.svg",
+    "iconPath": "/aws_icons/Amazon-Textract.svg",
     "type": "Amazon Textract"
   },
   {
     "iconImport": AmazonTextractlightbg,
-    "iconPath": "/static/media/Amazon-Textract_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Textract_light-bg.svg",
     "type": "Amazon Textract light bg"
   },
   {
     "iconImport": AmazonTimestream,
-    "iconPath": "/static/media/Amazon-Timestream.svg",
+    "iconPath": "/aws_icons/Amazon-Timestream.svg",
     "type": "Amazon Timestream"
   },
   {
     "iconImport": AmazonTimestreamlightbg,
-    "iconPath": "/static/media/Amazon-Timestream_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Timestream_light-bg.svg",
     "type": "Amazon Timestream light bg"
   },
   {
     "iconImport": AmazonTranscribe,
-    "iconPath": "/static/media/Amazon-Transcribe.svg",
+    "iconPath": "/aws_icons/Amazon-Transcribe.svg",
     "type": "Amazon Transcribe"
   },
   {
     "iconImport": AmazonTranscribelightbg,
-    "iconPath": "/static/media/Amazon-Transcribe_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Transcribe_light-bg.svg",
     "type": "Amazon Transcribe light bg"
   },
   {
     "iconImport": AmazonTranslate,
-    "iconPath": "/static/media/Amazon-Translate.svg",
+    "iconPath": "/aws_icons/Amazon-Translate.svg",
     "type": "Amazon Translate"
   },
   {
     "iconImport": AmazonTranslatelightbg,
-    "iconPath": "/static/media/Amazon-Translate_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Translate_light-bg.svg",
     "type": "Amazon Translate light bg"
   },
   {
     "iconImport": AmazonVPCTrafficMirroringlightbg,
-    "iconPath": "/static/media/Amazon-VPC-Traffic-Mirroring_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC-Traffic-Mirroring_light-bg.svg",
     "type": "Amazon VPC Traffic Mirroring light bg"
   },
   {
     "iconImport": AmazonVPC,
-    "iconPath": "/static/media/Amazon-VPC.svg",
+    "iconPath": "/aws_icons/Amazon-VPC.svg",
     "type": "Amazon VPC"
   },
   {
     "iconImport": AmazonVPCCustomerGatewaylightbg,
-    "iconPath": "/static/media/Amazon-VPC_Customer-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Customer-Gateway_light-bg.svg",
     "type": "Amazon VPC Customer Gateway light bg"
   },
   {
     "iconImport": AmazonVPCElasticNetworkAdapterlightbg,
-    "iconPath": "/static/media/Amazon-VPC_Elastic-Network-Adapter_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Elastic-Network-Adapter_light-bg.svg",
     "type": "Amazon VPC Elastic Network Adapter light bg"
   },
   {
     "iconImport": AmazonVPCElasticNetworkInterfacelightbg,
-    "iconPath": "/static/media/Amazon-VPC_Elastic-Network-Interface_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Elastic-Network-Interface_light-bg.svg",
     "type": "Amazon VPC Elastic Network Interface light bg"
   },
   {
     "iconImport": AmazonVPCEndpointslightbg,
-    "iconPath": "/static/media/Amazon-VPC_Endpoints_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Endpoints_light-bg.svg",
     "type": "Amazon VPC Endpoints light bg"
   },
   {
     "iconImport": AmazonVPCFlowLogslightbg,
-    "iconPath": "/static/media/Amazon-VPC_Flow-Logs_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Flow-Logs_light-bg.svg",
     "type": "Amazon VPC Flow Logs light bg"
   },
   {
     "iconImport": AmazonVPCInternetGatewaylightbg,
-    "iconPath": "/static/media/Amazon-VPC_Internet-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Internet-Gateway_light-bg.svg",
     "type": "Amazon VPC Internet Gateway light bg"
   },
   {
     "iconImport": AmazonVPCNATGatewaylightbg,
-    "iconPath": "/static/media/Amazon-VPC_NAT-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_NAT-Gateway_light-bg.svg",
     "type": "Amazon VPC NAT Gateway light bg"
   },
   {
     "iconImport": AmazonVPCNetworkAccessControlListlightbg,
-    "iconPath": "/static/media/Amazon-VPC_Network-Access-Control-List_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Network-Access-Control-List_light-bg.svg",
     "type": "Amazon VPC Network Access Control List light bg"
   },
   {
     "iconImport": AmazonVPCPeeringlightbg,
-    "iconPath": "/static/media/Amazon-VPC_Peering_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Peering_light-bg.svg",
     "type": "Amazon VPC Peering light bg"
   },
   {
     "iconImport": AmazonVPCRouterlightbg,
-    "iconPath": "/static/media/Amazon-VPC_Router_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_Router_light-bg.svg",
     "type": "Amazon VPC Router light bg"
   },
   {
     "iconImport": AmazonVPCVPNConnectionlightbg,
-    "iconPath": "/static/media/Amazon-VPC_VPN-Connection_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_VPN-Connection_light-bg.svg",
     "type": "Amazon VPC VPN Connection light bg"
   },
   {
     "iconImport": AmazonVPCVPNGatewaylightbg,
-    "iconPath": "/static/media/Amazon-VPC_VPN-Gateway_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_VPN-Gateway_light-bg.svg",
     "type": "Amazon VPC VPN Gateway light bg"
   },
   {
     "iconImport": AmazonVPClightbg,
-    "iconPath": "/static/media/Amazon-VPC_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-VPC_light-bg.svg",
     "type": "Amazon VPC light bg"
   },
   {
     "iconImport": AmazonWorkDocs,
-    "iconPath": "/static/media/Amazon-WorkDocs.svg",
+    "iconPath": "/aws_icons/Amazon-WorkDocs.svg",
     "type": "Amazon WorkDocs"
   },
   {
     "iconImport": AmazonWorkDocslightbg,
-    "iconPath": "/static/media/Amazon-WorkDocs_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-WorkDocs_light-bg.svg",
     "type": "Amazon WorkDocs light bg"
   },
   {
     "iconImport": AmazonWorkLink,
-    "iconPath": "/static/media/Amazon-WorkLink.svg",
+    "iconPath": "/aws_icons/Amazon-WorkLink.svg",
     "type": "Amazon WorkLink"
   },
   {
     "iconImport": AmazonWorkLinklightbg,
-    "iconPath": "/static/media/Amazon-WorkLink_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-WorkLink_light-bg.svg",
     "type": "Amazon WorkLink light bg"
   },
   {
     "iconImport": AmazonWorkMail,
-    "iconPath": "/static/media/Amazon-WorkMail.svg",
+    "iconPath": "/aws_icons/Amazon-WorkMail.svg",
     "type": "Amazon WorkMail"
   },
   {
     "iconImport": AmazonWorkMaillightbg,
-    "iconPath": "/static/media/Amazon-WorkMail_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-WorkMail_light-bg.svg",
     "type": "Amazon WorkMail light bg"
   },
   {
     "iconImport": AmazonWorkspaces,
-    "iconPath": "/static/media/Amazon-Workspaces.svg",
+    "iconPath": "/aws_icons/Amazon-Workspaces.svg",
     "type": "Amazon Workspaces"
   },
   {
     "iconImport": AmazonWorkspaceslightbg,
-    "iconPath": "/static/media/Amazon-Workspaces_light-bg.svg",
+    "iconPath": "/aws_icons/Amazon-Workspaces_light-bg.svg",
     "type": "Amazon Workspaces light bg"
   },
   {
     "iconImport": Analytics,
-    "iconPath": "/static/media/Analytics.svg",
+    "iconPath": "/aws_icons/Analytics.svg",
     "type": "Analytics"
   },
   {
     "iconImport": Analyticslightbg,
-    "iconPath": "/static/media/Analytics_light-bg.svg",
+    "iconPath": "/aws_icons/Analytics_light-bg.svg",
     "type": "Analytics light bg"
   },
   {
     "iconImport": ApacheMXNetonAWS,
-    "iconPath": "/static/media/Apache-MXNet-on-AWS.svg",
+    "iconPath": "/aws_icons/Apache-MXNet-on-AWS.svg",
     "type": "Apache MXNet on AWS"
   },
   {
     "iconImport": ApacheMXNetonAWSlightbg,
-    "iconPath": "/static/media/Apache-MXNet-on-AWS_light-bg.svg",
+    "iconPath": "/aws_icons/Apache-MXNet-on-AWS_light-bg.svg",
     "type": "Apache MXNet on AWS light bg"
   },
   {
     "iconImport": ApplicationIntegration,
-    "iconPath": "/static/media/Application-Integration.svg",
+    "iconPath": "/aws_icons/Application-Integration.svg",
     "type": "Application Integration"
   },
   {
     "iconImport": ApplicationIntegrationEventResourcelightbg,
-    "iconPath": "/static/media/Application-Integration_Event_Resource_light-bg.svg",
+    "iconPath": "/aws_icons/Application-Integration_Event_Resource_light-bg.svg",
     "type": "Application Integration Event Resource light bg"
   },
   {
     "iconImport": ApplicationIntegrationlightbg,
-    "iconPath": "/static/media/Application-Integration_light-bg.svg",
+    "iconPath": "/aws_icons/Application-Integration_light-bg.svg",
     "type": "Application Integration light bg"
   },
   {
     "iconImport": AutoScalinglightbg,
-    "iconPath": "/static/media/Auto-Scaling_light-bg.svg",
+    "iconPath": "/aws_icons/Auto-Scaling_light-bg.svg",
     "type": "Auto Scaling light bg"
   },
   {
     "iconImport": Blockchain,
-    "iconPath": "/static/media/Blockchain.svg",
+    "iconPath": "/aws_icons/Blockchain.svg",
     "type": "Blockchain"
   },
   {
     "iconImport": BlockchainResourceIconlightbg,
-    "iconPath": "/static/media/Blockchain_Resource-Icon_light-bg.svg",
+    "iconPath": "/aws_icons/Blockchain_Resource-Icon_light-bg.svg",
     "type": "Blockchain Resource Icon light bg"
   },
   {
     "iconImport": Blockchainlightbg,
-    "iconPath": "/static/media/Blockchain_light-bg.svg",
+    "iconPath": "/aws_icons/Blockchain_light-bg.svg",
     "type": "Blockchain light bg"
   },
   {
     "iconImport": BusinessApplications,
-    "iconPath": "/static/media/Business-Applications.svg",
+    "iconPath": "/aws_icons/Business-Applications.svg",
     "type": "Business Applications"
   },
   {
     "iconImport": BusinessApplicationslightbg,
-    "iconPath": "/static/media/Business-Applications_light-bg.svg",
+    "iconPath": "/aws_icons/Business-Applications_light-bg.svg",
     "type": "Business Applications light bg"
   },
   {
     "iconImport": Clientlightbg,
-    "iconPath": "/static/media/Client_light-bg.svg",
+    "iconPath": "/aws_icons/Client_light-bg.svg",
     "type": "Client light bg"
   },
   {
     "iconImport": Cloud9Resourcelightbg,
-    "iconPath": "/static/media/Cloud9_Resource_light-bg.svg",
+    "iconPath": "/aws_icons/Cloud9_Resource_light-bg.svg",
     "type": "Cloud9 Resource light bg"
   },
   {
     "iconImport": CloudEndureDisasterRecovery,
-    "iconPath": "/static/media/CloudEndure-Disaster-Recovery.svg",
+    "iconPath": "/aws_icons/CloudEndure-Disaster-Recovery.svg",
     "type": "CloudEndure Disaster Recovery"
   },
   {
     "iconImport": CloudEndureDisasterRecoverylightbg,
-    "iconPath": "/static/media/CloudEndure-Disaster-Recovery_light-bg.svg",
+    "iconPath": "/aws_icons/CloudEndure-Disaster-Recovery_light-bg.svg",
     "type": "CloudEndure Disaster Recovery light bg"
   },
   {
     "iconImport": CloudEndureMigration,
-    "iconPath": "/static/media/CloudEndure-Migration.svg",
+    "iconPath": "/aws_icons/CloudEndure-Migration.svg",
     "type": "CloudEndure Migration"
   },
   {
     "iconImport": CloudEndureMigrationlightbg,
-    "iconPath": "/static/media/CloudEndure-Migration_light-bg.svg",
+    "iconPath": "/aws_icons/CloudEndure-Migration_light-bg.svg",
     "type": "CloudEndure Migration light bg"
   },
   {
     "iconImport": Compute,
-    "iconPath": "/static/media/Compute.svg",
+    "iconPath": "/aws_icons/Compute.svg",
     "type": "Compute"
   },
   {
     "iconImport": Computelightbg,
-    "iconPath": "/static/media/Compute_light-bg.svg",
+    "iconPath": "/aws_icons/Compute_light-bg.svg",
     "type": "Compute light bg"
   },
   {
     "iconImport": Corporatedatacenterlightbg,
-    "iconPath": "/static/media/Corporate-data-center_light-bg.svg",
+    "iconPath": "/aws_icons/Corporate-data-center_light-bg.svg",
     "type": "Corporate data center light bg"
   },
   {
     "iconImport": CustomEventBusResourceIcon64Squid,
-    "iconPath": "/static/media/Custom-Event-Bus_Resource_Icon_64_Squid.svg",
+    "iconPath": "/aws_icons/Custom-Event-Bus_Resource_Icon_64_Squid.svg",
     "type": "Custom Event Bus Resource Icon 64 Squid"
   },
   {
     "iconImport": CustomEventBusResourceIcon64White,
-    "iconPath": "/static/media/Custom-Event-Bus_Resource_Icon_64_White.svg",
+    "iconPath": "/aws_icons/Custom-Event-Bus_Resource_Icon_64_White.svg",
     "type": "Custom Event Bus Resource Icon 64 White"
   },
   {
     "iconImport": CustomerEnablement,
-    "iconPath": "/static/media/Customer-Enablement.svg",
+    "iconPath": "/aws_icons/Customer-Enablement.svg",
     "type": "Customer Enablement"
   },
   {
     "iconImport": CustomerEnablementlightbg,
-    "iconPath": "/static/media/Customer-Enablement_light-bg.svg",
+    "iconPath": "/aws_icons/Customer-Enablement_light-bg.svg",
     "type": "Customer Enablement light bg"
   },
   {
     "iconImport": CustomerEngagement,
-    "iconPath": "/static/media/Customer-Engagement.svg",
+    "iconPath": "/aws_icons/Customer-Engagement.svg",
     "type": "Customer Engagement"
   },
   {
     "iconImport": CustomerEngagementlightbg,
-    "iconPath": "/static/media/Customer-Engagement_light-bg.svg",
+    "iconPath": "/aws_icons/Customer-Engagement_light-bg.svg",
     "type": "Customer Engagement light bg"
   },
   {
     "iconImport": Database,
-    "iconPath": "/static/media/Database.svg",
+    "iconPath": "/aws_icons/Database.svg",
     "type": "Database"
   },
   {
     "iconImport": Databaselightbg,
-    "iconPath": "/static/media/Database_light-bg.svg",
+    "iconPath": "/aws_icons/Database_light-bg.svg",
     "type": "Database light bg"
   },
   {
     "iconImport": DefaultEventBusResourceIcon64Squid,
-    "iconPath": "/static/media/Default-Event-Bus_Resource_Icon_64_Squid.svg",
+    "iconPath": "/aws_icons/Default-Event-Bus_Resource_Icon_64_Squid.svg",
     "type": "Default Event Bus Resource Icon 64 Squid"
   },
   {
     "iconImport": DefaultEventBusResourceIcon64White,
-    "iconPath": "/static/media/Default-Event-Bus_Resource_Icon_64_White.svg",
+    "iconPath": "/aws_icons/Default-Event-Bus_Resource_Icon_64_White.svg",
     "type": "Default Event Bus Resource Icon 64 White"
   },
   {
     "iconImport": DeveloperTools,
-    "iconPath": "/static/media/Developer-Tools.svg",
+    "iconPath": "/aws_icons/Developer-Tools.svg",
     "type": "Developer Tools"
   },
   {
     "iconImport": DeveloperToolslightbg,
-    "iconPath": "/static/media/Developer-Tools_light-bg.svg",
+    "iconPath": "/aws_icons/Developer-Tools_light-bg.svg",
     "type": "Developer Tools light bg"
   },
   {
     "iconImport": Disklightbg,
-    "iconPath": "/static/media/Disk_light-bg.svg",
+    "iconPath": "/aws_icons/Disk_light-bg.svg",
     "type": "Disk light bg"
   },
   {
     "iconImport": EC2ImageBuilder,
-    "iconPath": "/static/media/EC2-Image-Builder.svg",
+    "iconPath": "/aws_icons/EC2-Image-Builder.svg",
     "type": "EC2 Image Builder"
   },
   {
     "iconImport": EC2ImageBuilderlightbg,
-    "iconPath": "/static/media/EC2-Image-Builder_light-bg.svg",
+    "iconPath": "/aws_icons/EC2-Image-Builder_light-bg.svg",
     "type": "EC2 Image Builder light bg"
   },
   {
     "iconImport": EC2instancecontainerlightbg,
-    "iconPath": "/static/media/EC2-instance-container_light-bg.svg",
+    "iconPath": "/aws_icons/EC2-instance-container_light-bg.svg",
     "type": "EC2 instance container light bg"
   },
   {
     "iconImport": EFSInfrequentAccesslightbg,
-    "iconPath": "/static/media/EFS-InfrequentAccess_light-bg.svg",
+    "iconPath": "/aws_icons/EFS-InfrequentAccess_light-bg.svg",
     "type": "EFS InfrequentAccess light bg"
   },
   {
     "iconImport": EFSInfrequentAccessprimarybg,
-    "iconPath": "/static/media/EFS-InfrequentAccess_primary-bg.svg",
+    "iconPath": "/aws_icons/EFS-InfrequentAccess_primary-bg.svg",
     "type": "EFS InfrequentAccess primary bg"
   },
   {
     "iconImport": EFSStandardlightbg,
-    "iconPath": "/static/media/EFS-Standard_light-bg.svg",
+    "iconPath": "/aws_icons/EFS-Standard_light-bg.svg",
     "type": "EFS Standard light bg"
   },
   {
     "iconImport": EFSStandardprimarybg,
-    "iconPath": "/static/media/EFS-Standard_primary-bg.svg",
+    "iconPath": "/aws_icons/EFS-Standard_primary-bg.svg",
     "type": "EFS Standard primary bg"
   },
   {
     "iconImport": ElasticBeanstalkcontainerlightbg,
-    "iconPath": "/static/media/Elastic-Beanstalk-container_light-bg.svg",
+    "iconPath": "/aws_icons/Elastic-Beanstalk-container_light-bg.svg",
     "type": "Elastic Beanstalk container light bg"
   },
   {
     "iconImport": ElasticLoadBalancingELBApplicationloadbalancerlightbg,
-    "iconPath": "/static/media/Elastic-Load-Balancing-ELB_Application-load-balancer_light-bg.svg",
+    "iconPath": "/aws_icons/Elastic-Load-Balancing-ELB_Application-load-balancer_light-bg.svg",
     "type": "Elastic Load Balancing ELB Application load balancer light bg"
   },
   {
     "iconImport": ElasticLoadBalancingELBNetworkloadbalancerlightbg,
-    "iconPath": "/static/media/Elastic-Load-Balancing-ELB_Network-load-balancer_light-bg.svg",
+    "iconPath": "/aws_icons/Elastic-Load-Balancing-ELB_Network-load-balancer_light-bg.svg",
     "type": "Elastic Load Balancing ELB Network load balancer light bg"
   },
   {
     "iconImport": ElasticLoadBalancing,
-    "iconPath": "/static/media/Elastic-Load-Balancing.svg",
+    "iconPath": "/aws_icons/Elastic-Load-Balancing.svg",
     "type": "Elastic Load Balancing"
   },
   {
     "iconImport": ElasticLoadBalancingClassicloadbalancerlightbg,
-    "iconPath": "/static/media/Elastic-Load-Balancing_Classic-load-balancer_light-bg.svg",
+    "iconPath": "/aws_icons/Elastic-Load-Balancing_Classic-load-balancer_light-bg.svg",
     "type": "Elastic Load Balancing Classic load balancer light bg"
   },
   {
     "iconImport": ElasticLoadBalancinglightbg,
-    "iconPath": "/static/media/Elastic-Load-Balancing_light-bg.svg",
+    "iconPath": "/aws_icons/Elastic-Load-Balancing_light-bg.svg",
     "type": "Elastic Load Balancing light bg"
   },
   {
     "iconImport": EndUserComputing,
-    "iconPath": "/static/media/End-User-Computing.svg",
+    "iconPath": "/aws_icons/End-User-Computing.svg",
     "type": "End User Computing"
   },
   {
     "iconImport": EndUserComputinglightbg,
-    "iconPath": "/static/media/End-User-Computing_light-bg.svg",
+    "iconPath": "/aws_icons/End-User-Computing_light-bg.svg",
     "type": "End User Computing light bg"
   },
   {
     "iconImport": Forumslightbg,
-    "iconPath": "/static/media/Forums_light-bg.svg",
+    "iconPath": "/aws_icons/Forums_light-bg.svg",
     "type": "Forums light bg"
   },
   {
     "iconImport": GameTech,
-    "iconPath": "/static/media/Game-Tech.svg",
+    "iconPath": "/aws_icons/Game-Tech.svg",
     "type": "Game Tech"
   },
   {
     "iconImport": GameTechlightbg,
-    "iconPath": "/static/media/Game-Tech_light-bg.svg",
+    "iconPath": "/aws_icons/Game-Tech_light-bg.svg",
     "type": "Game Tech light bg"
   },
   {
     "iconImport": General,
-    "iconPath": "/static/media/General.svg",
+    "iconPath": "/aws_icons/General.svg",
     "type": "General"
   },
   {
     "iconImport": Generallightbg,
-    "iconPath": "/static/media/General_light-bg.svg",
+    "iconPath": "/aws_icons/General_light-bg.svg",
     "type": "General light bg"
   },
   {
     "iconImport": Genericdatabaselightbg,
-    "iconPath": "/static/media/Generic-database_light-bg.svg",
+    "iconPath": "/aws_icons/Generic-database_light-bg.svg",
     "type": "Generic database light bg"
   },
   {
     "iconImport": GenericFirewall,
-    "iconPath": "/static/media/Generic_Firewall.svg",
+    "iconPath": "/aws_icons/Generic_Firewall.svg",
     "type": "Generic Firewall"
   },
   {
     "iconImport": Internetalt1lightbg,
-    "iconPath": "/static/media/Internet-alt1_light-bg.svg",
+    "iconPath": "/aws_icons/Internet-alt1_light-bg.svg",
     "type": "Internet alt1 light bg"
   },
   {
     "iconImport": Internetalt2lightbg,
-    "iconPath": "/static/media/Internet-alt2_light-bg.svg",
+    "iconPath": "/aws_icons/Internet-alt2_light-bg.svg",
     "type": "Internet alt2 light bg"
   },
   {
     "iconImport": Internetgatewaylightbg,
-    "iconPath": "/static/media/Internet-gateway_light-bg.svg",
+    "iconPath": "/aws_icons/Internet-gateway_light-bg.svg",
     "type": "Internet gateway light bg"
   },
   {
     "iconImport": InternetofThings,
-    "iconPath": "/static/media/Internet-of-Things.svg",
+    "iconPath": "/aws_icons/Internet-of-Things.svg",
     "type": "Internet of Things"
   },
   {
     "iconImport": InternetofThingslightbg,
-    "iconPath": "/static/media/Internet-of-Things_light-bg.svg",
+    "iconPath": "/aws_icons/Internet-of-Things_light-bg.svg",
     "type": "Internet of Things light bg"
   },
   {
     "iconImport": IoTActionlightbg,
-    "iconPath": "/static/media/IoT_Action_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Action_light-bg.svg",
     "type": "IoT Action light bg"
   },
   {
     "iconImport": IoTActuatorlightbg,
-    "iconPath": "/static/media/IoT_Actuator_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Actuator_light-bg.svg",
     "type": "IoT Actuator light bg"
   },
   {
     "iconImport": IoTAlexaenableddevicelightbg,
-    "iconPath": "/static/media/IoT_Alexa-enabled-device_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Alexa-enabled-device_light-bg.svg",
     "type": "IoT Alexa enabled device light bg"
   },
   {
     "iconImport": IoTAlexaskilllightbg,
-    "iconPath": "/static/media/IoT_Alexa-skill_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Alexa-skill_light-bg.svg",
     "type": "IoT Alexa skill light bg"
   },
   {
     "iconImport": IoTAlexavoiceservicelightbg,
-    "iconPath": "/static/media/IoT_Alexa-voice-service_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Alexa-voice-service_light-bg.svg",
     "type": "IoT Alexa voice service light bg"
   },
   {
     "iconImport": IoTBanklightbg,
-    "iconPath": "/static/media/IoT_Bank_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Bank_light-bg.svg",
     "type": "IoT Bank light bg"
   },
   {
     "iconImport": IoTBicyclelightbg,
-    "iconPath": "/static/media/IoT_Bicycle_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Bicycle_light-bg.svg",
     "type": "IoT Bicycle light bg"
   },
   {
     "iconImport": IoTCameralightbg,
-    "iconPath": "/static/media/IoT_Camera_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Camera_light-bg.svg",
     "type": "IoT Camera light bg"
   },
   {
     "iconImport": IoTCarlightbg,
-    "iconPath": "/static/media/IoT_Car_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Car_light-bg.svg",
     "type": "IoT Car light bg"
   },
   {
     "iconImport": IoTCartlightbg,
-    "iconPath": "/static/media/IoT_Cart_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Cart_light-bg.svg",
     "type": "IoT Cart light bg"
   },
   {
     "iconImport": IoTCertificatemanagerlightbg,
-    "iconPath": "/static/media/IoT_Certificate-manager_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Certificate-manager_light-bg.svg",
     "type": "IoT Certificate manager light bg"
   },
   {
     "iconImport": IoTCoffeepotlightbg,
-    "iconPath": "/static/media/IoT_Coffee-pot_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Coffee-pot_light-bg.svg",
     "type": "IoT Coffee pot light bg"
   },
   {
     "iconImport": IoTDesiredstatelightbg,
-    "iconPath": "/static/media/IoT_Desired-state_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Desired-state_light-bg.svg",
     "type": "IoT Desired state light bg"
   },
   {
     "iconImport": IoTDevicegatewaylightbg,
-    "iconPath": "/static/media/IoT_Device-gateway_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Device-gateway_light-bg.svg",
     "type": "IoT Device gateway light bg"
   },
   {
     "iconImport": IoTDoorlocklightbg,
-    "iconPath": "/static/media/IoT_Door-lock_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Door-lock_light-bg.svg",
     "type": "IoT Door lock light bg"
   },
   {
     "iconImport": IoTEcholightbg,
-    "iconPath": "/static/media/IoT_Echo_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Echo_light-bg.svg",
     "type": "IoT Echo light bg"
   },
   {
     "iconImport": IoTFactorylightbg,
-    "iconPath": "/static/media/IoT_Factory_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Factory_light-bg.svg",
     "type": "IoT Factory light bg"
   },
   {
     "iconImport": IoTFireTVsticklightbg,
-    "iconPath": "/static/media/IoT_Fire-TV-stick_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Fire-TV-stick_light-bg.svg",
     "type": "IoT Fire TV stick light bg"
   },
   {
     "iconImport": IoTFireTVlightbg,
-    "iconPath": "/static/media/IoT_Fire-TV_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Fire-TV_light-bg.svg",
     "type": "IoT Fire TV light bg"
   },
   {
     "iconImport": IoTGenericlightbg,
-    "iconPath": "/static/media/IoT_Generic_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Generic_light-bg.svg",
     "type": "IoT Generic light bg"
   },
   {
     "iconImport": IoTHTTP2protocollightbg,
-    "iconPath": "/static/media/IoT_HTTP-2-protocol_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_HTTP-2-protocol_light-bg.svg",
     "type": "IoT HTTP 2 protocol light bg"
   },
   {
     "iconImport": IoTHTTPprotocollightbg,
-    "iconPath": "/static/media/IoT_HTTP-protocol_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_HTTP-protocol_light-bg.svg",
     "type": "IoT HTTP protocol light bg"
   },
   {
     "iconImport": IoTHardwareboardlightbg,
-    "iconPath": "/static/media/IoT_Hardware-board_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Hardware-board_light-bg.svg",
     "type": "IoT Hardware board light bg"
   },
   {
     "iconImport": IoTHouselightbg,
-    "iconPath": "/static/media/IoT_House_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_House_light-bg.svg",
     "type": "IoT House light bg"
   },
   {
     "iconImport": IoTLambdafunctionlightbg,
-    "iconPath": "/static/media/IoT_Lambda-function_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Lambda-function_light-bg.svg",
     "type": "IoT Lambda function light bg"
   },
   {
     "iconImport": IoTLightbulblightbg,
-    "iconPath": "/static/media/IoT_Lightbulb_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Lightbulb_light-bg.svg",
     "type": "IoT Lightbulb light bg"
   },
   {
     "iconImport": IoTMQTTprotocollightbg,
-    "iconPath": "/static/media/IoT_MQTT-protocol_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_MQTT-protocol_light-bg.svg",
     "type": "IoT MQTT protocol light bg"
   },
   {
     "iconImport": IoTMedicalemergencylightbg,
-    "iconPath": "/static/media/IoT_Medical-emergency_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Medical-emergency_light-bg.svg",
     "type": "IoT Medical emergency light bg"
   },
   {
     "iconImport": IoTOvertheairupdatelightbg,
-    "iconPath": "/static/media/IoT_Over-the-air-update_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Over-the-air-update_light-bg.svg",
     "type": "IoT Over the air update light bg"
   },
   {
     "iconImport": IoTPoliceemergencylightbg,
-    "iconPath": "/static/media/IoT_Police-emergency_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Police-emergency_light-bg.svg",
     "type": "IoT Police emergency light bg"
   },
   {
     "iconImport": IoTPolicylightbg,
-    "iconPath": "/static/media/IoT_Policy_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Policy_light-bg.svg",
     "type": "IoT Policy light bg"
   },
   {
     "iconImport": IoTReportedstatelightbg,
-    "iconPath": "/static/media/IoT_Reported-state_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Reported-state_light-bg.svg",
     "type": "IoT Reported state light bg"
   },
   {
     "iconImport": IoTRulelightbg,
-    "iconPath": "/static/media/IoT_Rule_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Rule_light-bg.svg",
     "type": "IoT Rule light bg"
   },
   {
     "iconImport": IoTSensorlightbg,
-    "iconPath": "/static/media/IoT_Sensor_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Sensor_light-bg.svg",
     "type": "IoT Sensor light bg"
   },
   {
     "iconImport": IoTServolightbg,
-    "iconPath": "/static/media/IoT_Servo_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Servo_light-bg.svg",
     "type": "IoT Servo light bg"
   },
   {
     "iconImport": IoTShadowlightbg,
-    "iconPath": "/static/media/IoT_Shadow_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Shadow_light-bg.svg",
     "type": "IoT Shadow light bg"
   },
   {
     "iconImport": IoTSimulatorlightbg,
-    "iconPath": "/static/media/IoT_Simulator_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Simulator_light-bg.svg",
     "type": "IoT Simulator light bg"
   },
   {
     "iconImport": IoTThermostatlightbg,
-    "iconPath": "/static/media/IoT_Thermostat_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Thermostat_light-bg.svg",
     "type": "IoT Thermostat light bg"
   },
   {
     "iconImport": IoTTopiclightbg,
-    "iconPath": "/static/media/IoT_Topic_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Topic_light-bg.svg",
     "type": "IoT Topic light bg"
   },
   {
     "iconImport": IoTTravellightbg,
-    "iconPath": "/static/media/IoT_Travel_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Travel_light-bg.svg",
     "type": "IoT Travel light bg"
   },
   {
     "iconImport": IoTUtilitylightbg,
-    "iconPath": "/static/media/IoT_Utility_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Utility_light-bg.svg",
     "type": "IoT Utility light bg"
   },
   {
     "iconImport": IoTWindfarmlightbg,
-    "iconPath": "/static/media/IoT_Windfarm_light-bg.svg",
+    "iconPath": "/aws_icons/IoT_Windfarm_light-bg.svg",
     "type": "IoT Windfarm light bg"
   },
   {
     "iconImport": MachineLearning,
-    "iconPath": "/static/media/Machine-Learning.svg",
+    "iconPath": "/aws_icons/Machine-Learning.svg",
     "type": "Machine Learning"
   },
   {
     "iconImport": MachineLearninglightbg,
-    "iconPath": "/static/media/Machine-Learning_light-bg.svg",
+    "iconPath": "/aws_icons/Machine-Learning_light-bg.svg",
     "type": "Machine Learning light bg"
   },
   {
     "iconImport": ManagementandGovernance,
-    "iconPath": "/static/media/Management-and-Governance.svg",
+    "iconPath": "/aws_icons/Management-and-Governance.svg",
     "type": "Management and Governance"
   },
   {
     "iconImport": ManagementandGovernancelightbg,
-    "iconPath": "/static/media/Management-and-Governance_light-bg.svg",
+    "iconPath": "/aws_icons/Management-and-Governance_light-bg.svg",
     "type": "Management and Governance light bg"
   },
   {
     "iconImport": MediaServices,
-    "iconPath": "/static/media/Media-Services.svg",
+    "iconPath": "/aws_icons/Media-Services.svg",
     "type": "Media Services"
   },
   {
     "iconImport": MediaServiceslightbg,
-    "iconPath": "/static/media/Media-Services_light-bg.svg",
+    "iconPath": "/aws_icons/Media-Services_light-bg.svg",
     "type": "Media Services light bg"
   },
   {
     "iconImport": MigrationandTransfer,
-    "iconPath": "/static/media/Migration-and-Transfer.svg",
+    "iconPath": "/aws_icons/Migration-and-Transfer.svg",
     "type": "Migration and Transfer"
   },
   {
     "iconImport": MigrationandTransferlightbg,
-    "iconPath": "/static/media/Migration-and-Transfer_light-bg.svg",
+    "iconPath": "/aws_icons/Migration-and-Transfer_light-bg.svg",
     "type": "Migration and Transfer light bg"
   },
   {
     "iconImport": Mobileclientlightbg,
-    "iconPath": "/static/media/Mobile-client_light-bg.svg",
+    "iconPath": "/aws_icons/Mobile-client_light-bg.svg",
     "type": "Mobile client light bg"
   },
   {
     "iconImport": Mobile,
-    "iconPath": "/static/media/Mobile.svg",
+    "iconPath": "/aws_icons/Mobile.svg",
     "type": "Mobile"
   },
   {
     "iconImport": Mobilelightbg,
-    "iconPath": "/static/media/Mobile_light-bg.svg",
+    "iconPath": "/aws_icons/Mobile_light-bg.svg",
     "type": "Mobile light bg"
   },
   {
     "iconImport": Multimedialightbg,
-    "iconPath": "/static/media/Multimedia_light-bg.svg",
+    "iconPath": "/aws_icons/Multimedia_light-bg.svg",
     "type": "Multimedia light bg"
   },
   {
     "iconImport": MultiplevolumesResourceIconlightbg,
-    "iconPath": "/static/media/Multiple-volumes_Resource-Icon_light-bg.svg",
+    "iconPath": "/aws_icons/Multiple-volumes_Resource-Icon_light-bg.svg",
     "type": "Multiple volumes Resource Icon light bg"
   },
   {
     "iconImport": NetworkingandContentDelivery,
-    "iconPath": "/static/media/Networking-and-Content-Delivery.svg",
+    "iconPath": "/aws_icons/Networking-and-Content-Delivery.svg",
     "type": "Networking and Content Delivery"
   },
   {
     "iconImport": NetworkingandContentDeliverylightbg,
-    "iconPath": "/static/media/Networking-and-Content-Delivery_light-bg.svg",
+    "iconPath": "/aws_icons/Networking-and-Content-Delivery_light-bg.svg",
     "type": "Networking and Content Delivery light bg"
   },
   {
     "iconImport": Officebuildinglightbg,
-    "iconPath": "/static/media/Office-building_light-bg.svg",
+    "iconPath": "/aws_icons/Office-building_light-bg.svg",
     "type": "Office building light bg"
   },
   {
     "iconImport": QuantumTechnologies,
-    "iconPath": "/static/media/Quantum-Technologies.svg",
+    "iconPath": "/aws_icons/Quantum-Technologies.svg",
     "type": "Quantum Technologies"
   },
   {
     "iconImport": QuantumTechnologieslightbg,
-    "iconPath": "/static/media/Quantum-Technologies_light-bg.svg",
+    "iconPath": "/aws_icons/Quantum-Technologies_light-bg.svg",
     "type": "Quantum Technologies light bg"
   },
   {
     "iconImport": Regionlightbg,
-    "iconPath": "/static/media/Region_light-bg.svg",
+    "iconPath": "/aws_icons/Region_light-bg.svg",
     "type": "Region light bg"
   },
   {
     "iconImport": ReservedInstanceReporting,
-    "iconPath": "/static/media/Reserved-Instance-Reporting.svg",
+    "iconPath": "/aws_icons/Reserved-Instance-Reporting.svg",
     "type": "Reserved Instance Reporting"
   },
   {
     "iconImport": ReservedInstanceReportinglightbg,
-    "iconPath": "/static/media/Reserved-Instance-Reporting_light-bg.svg",
+    "iconPath": "/aws_icons/Reserved-Instance-Reporting_light-bg.svg",
     "type": "Reserved Instance Reporting light bg"
   },
   {
     "iconImport": Robotics,
-    "iconPath": "/static/media/Robotics.svg",
+    "iconPath": "/aws_icons/Robotics.svg",
     "type": "Robotics"
   },
   {
     "iconImport": Roboticslightbg,
-    "iconPath": "/static/media/Robotics_light-bg.svg",
+    "iconPath": "/aws_icons/Robotics_light-bg.svg",
     "type": "Robotics light bg"
   },
   {
     "iconImport": SAMLtokenlightbg,
-    "iconPath": "/static/media/SAML-token_light-bg.svg",
+    "iconPath": "/aws_icons/SAML-token_light-bg.svg",
     "type": "SAML token light bg"
   },
   {
     "iconImport": SDKlightbg,
-    "iconPath": "/static/media/SDK_light-bg.svg",
+    "iconPath": "/aws_icons/SDK_light-bg.svg",
     "type": "SDK light bg"
   },
   {
     "iconImport": SSLpadlocklightbg,
-    "iconPath": "/static/media/SSL-padlock_light-bg.svg",
+    "iconPath": "/aws_icons/SSL-padlock_light-bg.svg",
     "type": "SSL padlock light bg"
   },
   {
     "iconImport": SaaSEventBusResourceIcon64Squid,
-    "iconPath": "/static/media/SaaS-Event-Bus_Resource_Icon_64_Squid.svg",
+    "iconPath": "/aws_icons/SaaS-Event-Bus_Resource_Icon_64_Squid.svg",
     "type": "SaaS Event Bus Resource Icon 64 Squid"
   },
   {
     "iconImport": SaaSEventBusResourceIcon64White,
-    "iconPath": "/static/media/SaaS-Event-Bus_Resource_Icon_64_White.svg",
+    "iconPath": "/aws_icons/SaaS-Event-Bus_Resource_Icon_64_White.svg",
     "type": "SaaS Event Bus Resource Icon 64 White"
   },
   {
     "iconImport": Satellite,
-    "iconPath": "/static/media/Satellite.svg",
+    "iconPath": "/aws_icons/Satellite.svg",
     "type": "Satellite"
   },
   {
     "iconImport": Satellitelightbg,
-    "iconPath": "/static/media/Satellite_light-bg.svg",
+    "iconPath": "/aws_icons/Satellite_light-bg.svg",
     "type": "Satellite light bg"
   },
   {
     "iconImport": SecurityHubFindinglightbg,
-    "iconPath": "/static/media/Security-Hub_Finding_light-bg.svg",
+    "iconPath": "/aws_icons/Security-Hub_Finding_light-bg.svg",
     "type": "Security Hub Finding light bg"
   },
   {
     "iconImport": SecurityIdentityandCompliance,
-    "iconPath": "/static/media/Security-Identity-and-Compliance.svg",
+    "iconPath": "/aws_icons/Security-Identity-and-Compliance.svg",
     "type": "Security Identity and Compliance"
   },
   {
     "iconImport": SecurityIdentityandCompliancelightbg,
-    "iconPath": "/static/media/Security-Identity-and-Compliance_light-bg.svg",
+    "iconPath": "/aws_icons/Security-Identity-and-Compliance_light-bg.svg",
     "type": "Security Identity and Compliance light bg"
   },
   {
     "iconImport": Servercontentslightbg,
-    "iconPath": "/static/media/Server-contents_light-bg.svg",
+    "iconPath": "/aws_icons/Server-contents_light-bg.svg",
     "type": "Server contents light bg"
   },
   {
     "iconImport": SimpleADlightbg,
-    "iconPath": "/static/media/Simple-AD_light-bg.svg",
+    "iconPath": "/aws_icons/Simple-AD_light-bg.svg",
     "type": "Simple AD light bg"
   },
   {
     "iconImport": Spotfleetlightbg,
-    "iconPath": "/static/media/Spot-fleet_light-bg.svg",
+    "iconPath": "/aws_icons/Spot-fleet_light-bg.svg",
     "type": "Spot fleet light bg"
   },
   {
     "iconImport": Storage,
-    "iconPath": "/static/media/Storage.svg",
+    "iconPath": "/aws_icons/Storage.svg",
     "type": "Storage"
   },
   {
     "iconImport": Storagelightbg,
-    "iconPath": "/static/media/Storage_light-bg.svg",
+    "iconPath": "/aws_icons/Storage_light-bg.svg",
     "type": "Storage light bg"
   },
   {
     "iconImport": SystemsManagerOpsCenterlightbg,
-    "iconPath": "/static/media/Systems-Manager_OpsCenter_light-bg.svg",
+    "iconPath": "/aws_icons/Systems-Manager_OpsCenter_light-bg.svg",
     "type": "Systems Manager OpsCenter light bg"
   },
   {
     "iconImport": Tapestoragelightbg,
-    "iconPath": "/static/media/Tape-storage_light-bg.svg",
+    "iconPath": "/aws_icons/Tape-storage_light-bg.svg",
     "type": "Tape storage light bg"
   },
   {
     "iconImport": TensorFlowonAWS,
-    "iconPath": "/static/media/TensorFlow-on-AWS.svg",
+    "iconPath": "/aws_icons/TensorFlow-on-AWS.svg",
     "type": "TensorFlow on AWS"
   },
   {
     "iconImport": TensorFlowonAWSlightbg,
-    "iconPath": "/static/media/TensorFlow-on-AWS_light-bg.svg",
+    "iconPath": "/aws_icons/TensorFlow-on-AWS_light-bg.svg",
     "type": "TensorFlow on AWS light bg"
   },
   {
     "iconImport": Toolkitlightbg,
-    "iconPath": "/static/media/Toolkit_light-bg.svg",
+    "iconPath": "/aws_icons/Toolkit_light-bg.svg",
     "type": "Toolkit light bg"
   },
   {
     "iconImport": Traditionalserverlightbg,
-    "iconPath": "/static/media/Traditional-server_light-bg.svg",
+    "iconPath": "/aws_icons/Traditional-server_light-bg.svg",
     "type": "Traditional server light bg"
   },
   {
     "iconImport": Userlightbg,
-    "iconPath": "/static/media/User_light-bg.svg",
+    "iconPath": "/aws_icons/User_light-bg.svg",
     "type": "User light bg"
   },
   {
     "iconImport": Userslightbg,
-    "iconPath": "/static/media/Users_light-bg.svg",
+    "iconPath": "/aws_icons/Users_light-bg.svg",
     "type": "Users light bg"
   },
   {
     "iconImport": VMwareCloudOnAWS,
-    "iconPath": "/static/media/VMware-Cloud-On-AWS.svg",
+    "iconPath": "/aws_icons/VMware-Cloud-On-AWS.svg",
     "type": "VMware Cloud On AWS"
   },
   {
     "iconImport": VMwareCloudOnAWSlightbg,
-    "iconPath": "/static/media/VMware-Cloud-On-AWS_light-bg.svg",
+    "iconPath": "/aws_icons/VMware-Cloud-On-AWS_light-bg.svg",
     "type": "VMware Cloud On AWS light bg"
   },
   {
     "iconImport": VPCsubnetprivatelightbg,
-    "iconPath": "/static/media/VPC-subnet-private_light-bg.svg",
+    "iconPath": "/aws_icons/VPC-subnet-private_light-bg.svg",
     "type": "VPC subnet private light bg"
   },
   {
     "iconImport": VPCsubnetpubliclightbg,
-    "iconPath": "/static/media/VPC-subnet-public_light-bg.svg",
+    "iconPath": "/aws_icons/VPC-subnet-public_light-bg.svg",
     "type": "VPC subnet public light bg"
   },
   {
     "iconImport": VirtualprivatecloudVPClightbg,
-    "iconPath": "/static/media/Virtual-private-cloud-VPC_light-bg.svg",
+    "iconPath": "/aws_icons/Virtual-private-cloud-VPC_light-bg.svg",
     "type": "Virtual private cloud VPC light bg"
   }
 ];

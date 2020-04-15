@@ -1,14 +1,19 @@
 .component {
   position: absolute;
-  width: 5rem;
-  height: 5rem;
-  border: 2px solid transparent;
+  width: 6rem;
+  border: 1px solid transparent;
   color: #fff;
   cursor: pointer;
   transition: transform 400ms;
+  text-align: center;
+  padding: 0.5rem;
 
   &:hover {
-    transform: scale(0.9);
+    background-color: #fafafa;
+    border: 1px solid #f1f1f1;
+    .component-icon {
+      transform: scale(0.9);
+    }
   }
 
   .label {
@@ -20,12 +25,23 @@
     font-weight: bold;
   }
 
-  img {
-    user-select: none;
-    pointer-events: none;
-  }
+  .component-icon-container {
+    width: 3.8rem;
+    height: 3.8rem;
 
-  &.selected {
-    // border: 2px solid red;
+    background-color: #fafafa;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 0.5rem;
+
+    .component-icon {
+      user-select: none;
+      pointer-events: none;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 400ms;
+    }
   }
 }

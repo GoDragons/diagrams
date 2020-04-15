@@ -59,18 +59,21 @@ export default class App extends React.Component {
     console.log("handling change:", change);
     switch (change.operation) {
       case "addElement":
-        this.addElementToDiagram(change.data);
+        this.addElement(change.data);
         break;
       case "moveComponent":
-        this.moveComponentInDiagram(change.data);
+        this.moveComponent(change.data);
         break;
-      case "deleteElement":
-        this.deleteElementFromDiagram(change.data);
+      case "deleteComponent":
+        this.deleteComponent(change.data);
+        break;
+      default:
+        console.error("unhandled change:", change.data);
         break;
     }
   };
 
-  addElementToDiagram = (elementDetails) => {
+  addElement = (elementDetails) => {
     this.setState({
       diagramData: {
         ...this.state.diagramData,
@@ -79,7 +82,7 @@ export default class App extends React.Component {
     });
   };
 
-  moveComponentInDiagram = (moveDetails) => {
+  moveComponent = (moveDetails) => {
     const { components } = this.state.diagramData;
     const targetIndex = components.findIndex(
       (element) => element.id === moveDetails.id
@@ -103,7 +106,23 @@ export default class App extends React.Component {
     });
   };
 
-  deleteElementFromDiagram = (deleteDetails) => {};
+  deleteComponent = (deleteDetails) => {
+    console.log("deleteComponent() details:", deleteDetails);
+    const { components } = this.state.diagramData;
+    const targetIndex = components.findIndex(
+      (element) => element.id === deleteDetails.id
+    );
+
+    this.setState({
+      diagramData: {
+        ...this.state.diagramData,
+        components: [
+          ...components.slice(0, targetIndex),
+          ...components.slice(targetIndex + 1),
+        ],
+      },
+    });
+  };
 
   createDiagram = () => {
     this.socket.send(
@@ -172,7 +191,7 @@ export default class App extends React.Component {
         data={diagramData}
         sendChange={this.sendChange}
         save={this.save}
-        moveComponentInDiagram={this.moveComponentInDiagram}
+        moveComponent={this.moveComponent}
       />
     );
   };
