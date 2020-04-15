@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 
 import "./ComponentList.scss";
+import componentListData from "../data/componentListData.jsx";
 
-import componentList from "../data/componentList.json";
-
-export default function ComponentList({ onSelect }) {
+function ComponentList({ onSelect }) {
   const [filterValue, setFilterValue] = useState("");
 
   function displayIconColumn(list) {
     return list.map((item) => (
       <div className="item" key={item.type} onClick={(e) => onSelect(item)}>
-        <img src={item.icon} />
+        <img src={item.iconImport} />
         <p className="label">{item.type}</p>
       </div>
     ));
   }
 
-  let filteredComponentList = componentList;
+  let filteredComponentList;
   if (filterValue.length > 0 && filterValue !== " ") {
-    filteredComponentList = componentList.filter((component) =>
+    filteredComponentList = componentListData.filter((component) =>
       component.type.toLowerCase().includes(filterValue.toLowerCase())
     );
+  } else {
+    filteredComponentList = componentListData;
   }
 
   const partitionIndex = Math.floor(filteredComponentList.length / 2) || 1;
@@ -49,3 +50,5 @@ export default function ComponentList({ onSelect }) {
     </div>
   );
 }
+
+export default React.memo(ComponentList);

@@ -16,13 +16,15 @@ exports.handler = async (event) => {
   let usersOnDiagramResult;
   console.log("event:", event);
 
+  const diagramId = body.diagramId;
+
   try {
     usersOnDiagramResult = await ddb
       .query({
         TableName: OPEN_DIAGRAMS_TABLE_NAME,
         KeyConditionExpression: "diagramId = :d",
         ExpressionAttributeValues: {
-          ":d": body.diagramId,
+          ":d": diagramId,
         },
       })
       .promise();
@@ -57,7 +59,7 @@ exports.handler = async (event) => {
           await ddb
             .delete({
               TableName: OPEN_DIAGRAMS_TABLE_NAME,
-              Key: { connectionId },
+              Key: { diagramId, connectionId },
             })
             .promise();
         } catch (e) {

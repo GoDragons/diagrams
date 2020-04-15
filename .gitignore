@@ -3,7 +3,4 @@
 .node_modules
 *secret*
 .sam_package
-
 .vscode
-
-aws_icons
