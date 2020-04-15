@@ -1,16 +1,18 @@
 .component {
   position: absolute;
   width: 6rem;
-  border: 1px solid transparent;
+  border: 1px solid #fff;
   color: #fff;
   cursor: pointer;
-  transition: transform 400ms;
+  transition: background-color 400ms, border-color 400ms;
   text-align: center;
   padding: 0.5rem;
+  background-color: #fff;
 
   &:hover {
     background-color: #fafafa;
-    border: 1px solid #f1f1f1;
+    border-color: #f1f1f1;
+
     .component-icon {
       transform: scale(0.9);
     }
