@@ -9,7 +9,7 @@ function ComponentList({ onSelect }) {
   function displayIconColumn(list) {
     return list.map((item) => (
       <div className="item" key={item.type} onClick={(e) => onSelect(item)}>
-        <img src={item.iconImport} />
+        <img src={item.iconImport} alt={item.type} />
         <p className="label">{item.type}</p>
       </div>
     ));

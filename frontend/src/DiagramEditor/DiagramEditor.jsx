@@ -7,11 +7,14 @@ import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 
-const CANVAS_SIZE = 10000;
+import { withRouter, Link } from "react-router-dom";
+
 const VIEWPORT_WIDTH = 1000;
 const VIEWPORT_HEIGHT = 600;
+const MIN_CANVAS_SCALE = 0.4;
+const MAX_CANVAS_SCALE = 2;
 
-export default class DiagramEditor extends React.Component {
+export class DiagramEditor extends React.Component {
   state = {
     selectedComponentId: null,
     isDraggingComponent: false,
@@ -33,6 +36,8 @@ export default class DiagramEditor extends React.Component {
     window.addEventListener("keydown", this.onKeyDown);
     window.addEventListener("mouseup", this.onMouseUp);
     window.addEventListener("mousemove", this.onMouseMove);
+
+    this.props.joinDiagram(this.props.match.params.diagramId);
   }
 
   componentWillUnmount() {
@@ -57,8 +62,8 @@ export default class DiagramEditor extends React.Component {
   };
 
   onMouseUp = (e) => {
-    const { isDraggingComponent, isContextMenuShowing } = this.state;
-    const oldIsDraggingComponent = this.state.isDraggingComponent;
+    const { oldIsDraggingComponent, isContextMenuShowing } = this.state;
+
     this.setState({
       isDraggingComponent: false,
       isPanning: false,
@@ -129,10 +134,10 @@ export default class DiagramEditor extends React.Component {
     });
   };
 
-  onMouseWheel = (e) => {
+  zoom = (e) => {
     console.log("wheel");
 
-    const { canvasX, canvasY, canvasScale } = this.state;
+    const { canvasScale } = this.state;
     const deltaScale = -e.deltaY / 30000;
 
     const targetXPercent = e.nativeEvent.offsetX / VIEWPORT_WIDTH;
@@ -140,17 +145,27 @@ export default class DiagramEditor extends React.Component {
 
     console.log(targetXPercent, targetYPercent);
 
-    const offsetX = targetXPercent - 0.5;
-    const offsetY = targetYPercent - 0.5;
+    // const offsetX = targetXPercent - 0.5;
+    // const offsetY = targetYPercent - 0.5;
 
-    const newCanvasX = canvasX + targetXPercent * offsetX;
-    const newCanvasY = canvasY + targetYPercent * offsetY;
+    // const newCanvasX = canvasX + targetXPercent * offsetX;
+    // const newCanvasY = canvasY + targetYPercent * offsetY;
 
-    this.setState({
-      canvasScale: canvasScale + deltaScale,
-      // canvasX: newCanvasX,
-      // canvasY: newCanvasY,
-    });
+    let computedScale = canvasScale + deltaScale;
+    let newScale = Math.min(
+      Math.max(computedScale, MIN_CANVAS_SCALE),
+      MAX_CANVAS_SCALE
+    );
+
+    if (newScale !== canvasScale) {
+      this.setState({ canvasScale: newScale });
+    }
+
+    // this.setState({
+    // canvasScale: canvasScale + deltaScale,
+    // canvasX: newCanvasX,
+    // canvasY: newCanvasY,
+    // });
   };
 
   onPanStart = (e) => {
@@ -301,11 +316,17 @@ export default class DiagramEditor extends React.Component {
 
   render() {
     const { canvasX, canvasY, canvasScale } = this.state;
+    if (!this.props.data) {
+      return <p>Loading...</p>;
+    }
 
     return (
       <div className="diagram-editor">
         <button onClick={this.save} className="save">
           Save
+        </button>
+        <button onClick={this.save} className="home">
+          <Link to="/">Home</Link>
         </button>
         <ComponentList onSelect={this.addComponent} />
 
@@ -317,7 +338,7 @@ export default class DiagramEditor extends React.Component {
               left: canvasX + "px",
               transform: `scale(${canvasScale})`,
             }}
-            onWheel={this.onMouseWheel}
+            onWheel={this.zoom}
             onMouseDown={this.onPanStart}
             onClick={(e) => this.setState({ selectedComponentId: null })}
           >
@@ -329,3 +350,5 @@ export default class DiagramEditor extends React.Component {
     );
   }
 }
+
+export default withRouter(DiagramEditor);

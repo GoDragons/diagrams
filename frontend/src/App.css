@@ -1,13 +1,3 @@
 .app {
   text-align: center;
 }
-
-.diagram-item {
-  display: block;
-  margin: 1rem auto;
-  cursor: pointer;
-}
-
-.diagram-list {
-  text-align: center;
-}

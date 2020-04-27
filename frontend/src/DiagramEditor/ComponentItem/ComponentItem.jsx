@@ -4,8 +4,6 @@ import "./ComponentItem.scss";
 
 import cx from "classnames";
 
-import IconImage from "../../aws_icons/Amazon-EC2_G3-Instance_light-bg.svg";
-
 export default function ComponentItem({
   id,
   x,
@@ -36,11 +34,9 @@ export default function ComponentItem({
       style={{ left: x + "px", top: y + "px" }}
     >
       <div className="component-icon-container">
-        <img src={iconPath} className="component-icon" />
+        <img src={iconPath} className="component-icon" alt={label} />
       </div>
-      <p className="label">
-        {type} - {label}
-      </p>
+      <p className="label">{label}</p>
     </div>
   );
 }

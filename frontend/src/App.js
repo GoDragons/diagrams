@@ -2,12 +2,16 @@ import React from "react";
 import "./App.css";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
-const API_ID = "j6mw8j4i6h";
+import { Route, Switch, withRouter } from "react-router-dom";
 
-export default class App extends React.Component {
+import CreateDiagram from "./CreateDiagram/CreateDiagram";
+import DiagramList from "./DiagramList/DiagramList";
+
+const API_ID = "1vt7e367o8";
+
+export class App extends React.Component {
   socket = undefined;
   state = {
-    diagramName: "",
     diagrams: null,
     diagramData: null,
   };
@@ -118,20 +122,28 @@ export default class App extends React.Component {
     });
   };
 
-  createDiagram = () => {
+  createDiagram = ({ diagramName }) => {
+    const { diagrams } = this.state;
     this.socket.send(
-      JSON.stringify({ message: "creatediagram", data: this.state.diagramName })
+      JSON.stringify({ message: "creatediagram", data: diagramName })
     );
     this.setState({
       diagramName: "",
-      diagrams: [...this.state.diagrams, this.state.diagramName],
+      diagrams: [...diagrams, diagramName],
     });
+    this.props.history.push("/");
   };
 
   joinDiagram = (diagramId) => {
-    this.socket.send(
-      JSON.stringify({ message: "joindiagram", diagramId: diagramId })
-    );
+    try {
+      this.socket.send(
+        JSON.stringify({ message: "joindiagram", diagramId: diagramId })
+      );
+    } catch (e) {
+      setTimeout(() => {
+        this.joinDiagram(diagramId);
+      }, 100);
+    }
   };
 
   sendChange = (changeData) => {
@@ -153,67 +165,29 @@ export default class App extends React.Component {
     );
   };
 
-  displayDiagramList = () => {
-    const { diagrams } = this.state;
-    if (!diagrams) {
-      return <p>Loading diagrams...</p>;
-    }
-    if (diagrams.length === 0) {
-      return <p>There are no diagrams. Create one now!</p>;
-    }
-
-    return diagrams.map((diagramId) => (
-      <button
-        key={diagramId}
-        className="diagram-item"
-        onClick={(e) => this.joinDiagram(diagramId)}
-      >
-        {diagramId}
-      </button>
-    ));
-  };
-
-  displayDiagramData = () => {
-    const { diagramData } = this.state;
-    if (!diagramData) {
-      return <p>No diagram is open</p>;
-    }
-
-    return (
-      <DiagramEditor
-        data={diagramData}
-        sendChange={this.sendChange}
-        save={this.save}
-        moveComponent={this.moveComponent}
-      />
-    );
-  };
   render() {
-    const { diagramName } = this.state;
     return (
       <div className="app">
-        <div>
-          <label>Create diagram</label>
-          <br />
-          <input
-            value={diagramName}
-            onChange={(e) => this.setState({ diagramName: e.target.value })}
-          />
-          <br />
-          <button onClick={this.createDiagram}>Create</button>
-        </div>
-        <br />
-        <br />
-        <br />
-        <div>
-          <p>Diagrams:</p>
-          <div className="diagram-list">{this.displayDiagramList()}</div>
-        </div>
-        <div>
-          <p>Current diagram:</p>
-          {this.displayDiagramData()}
-        </div>
+        <Switch>
+          <Route exact path="/create-diagram">
+            <CreateDiagram onSubmit={this.createDiagram} />
+          </Route>
+          <Route exact path="/">
+            <DiagramList diagrams={this.state.diagrams} />
+          </Route>
+          <Route exact path="/diagrams/:diagramId">
+            <DiagramEditor
+              data={this.state.diagramData}
+              sendChange={this.sendChange}
+              save={this.save}
+              moveComponent={this.moveComponent}
+              joinDiagram={this.joinDiagram}
+            />
+          </Route>
+        </Switch>
       </div>
     );
   }
 }
+
+export default withRouter(App);
