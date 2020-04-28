@@ -1,0 +1,24 @@
+.diagram-list-container {
+  text-align: center;
+
+  .diagram-list {
+    display: flex;
+  }
+
+  .diagram-item {
+    display: block;
+    width: 15rem;
+    border: 1px solid #eee;
+    text-decoration: none;
+    margin: 1rem;
+
+    .title {
+      color: #444;
+    }
+
+    .created {
+      color: #888;
+      font-size: 0.8rem;
+    }
+  }
+}

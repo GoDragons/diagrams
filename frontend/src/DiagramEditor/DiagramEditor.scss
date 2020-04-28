@@ -1,8 +1,8 @@
 .diagram-editor {
   position: relative;
   height: 60vh;
-  width: 1000px;
-  height: 600px;
+  width: 100vw;
+  height: 100vh;
   margin: 0 auto;
 
   * {
@@ -44,8 +44,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        // z-index: 0;
-        // background-color: #fff;
         background-size: 100px 100px;
         background-image: linear-gradient(
             to right,
@@ -57,10 +55,9 @@
     }
   }
 
-  .save {
+  .save,
+  .home {
     position: absolute;
-    top: 3px;
-    right: 203px;
     z-index: 1;
     background-color: #eee;
     border: unset;
@@ -80,5 +77,15 @@
     &:active {
       transform: scale(0.8);
     }
+  }
+
+  .save {
+    top: 3px;
+    right: 203px;
+  }
+
+  .home {
+    top: 3px;
+    left: 3px;
   }
 }
