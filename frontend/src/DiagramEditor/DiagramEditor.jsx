@@ -10,8 +10,6 @@ import Connection from "./Connection/Connection";
 
 import { withRouter, Link } from "react-router-dom";
 
-// const VIEWPORT_WIDTH = 1000;
-// const VIEWPORT_HEIGHT = 600;
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
 const TRIM_CONNECTION_END_AMOUNT = 80; // this is so we can see the end of the connection arrow
