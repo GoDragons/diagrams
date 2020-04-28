@@ -9,10 +9,14 @@ import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
 
 import { withRouter, Link } from "react-router-dom";
+import cx from "classnames";
 
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
 const TRIM_CONNECTION_END_AMOUNT = 80; // this is so we can see the end of the connection arrow
+const GRID_CELL_SIZE = 20; // for snapping to the grid when moving components
+const COMPONENT_WIDTH = 100;
+const COMPONENT_HEIGHT = 100;
 
 export class DiagramEditor extends React.Component {
   state = {
@@ -21,6 +25,7 @@ export class DiagramEditor extends React.Component {
     isDraggingComponent: false,
     isPanning: false,
     isConnecting: false,
+    isGridSnapActive: true,
     previousMouseX: null,
     previousMouseY: null,
     mouseCanvasX: null,
@@ -300,6 +305,11 @@ export class DiagramEditor extends React.Component {
       isDraggingComponent,
       isPanning,
       isConnecting,
+      canvasX,
+      canvasY,
+      previousMouseX,
+      previousMouseY,
+      isGridSnapActive,
     } = this.state;
     if (
       isComponentContextMenuShowing ||
@@ -308,17 +318,22 @@ export class DiagramEditor extends React.Component {
     ) {
       return;
     }
-    const { previousMouseX, previousMouseY, canvasX, canvasY } = this.state;
 
     const deltaX = e.clientX - previousMouseX;
     const deltaY = e.clientY - previousMouseY;
+
+    const newX = e.clientX - canvasX - COMPONENT_WIDTH / 2;
+    const newY = e.clientY - canvasY - COMPONENT_HEIGHT / 2;
+
+    const gridSnapNewX = Math.ceil(newX / GRID_CELL_SIZE) * GRID_CELL_SIZE;
+    const gridSnapNewY = Math.ceil(newY / GRID_CELL_SIZE) * GRID_CELL_SIZE;
 
     if (isDraggingComponent) {
       const selectedComponent = this.getSelectedComponent();
 
       this.props.moveComponent({
-        x: selectedComponent.x + deltaX,
-        y: selectedComponent.y + deltaY,
+        x: isGridSnapActive ? gridSnapNewX : newX,
+        y: isGridSnapActive ? gridSnapNewY : newY,
         id: selectedComponent.id,
       });
     } else if (isPanning) {
@@ -443,10 +458,10 @@ export class DiagramEditor extends React.Component {
       }
 
       const style = this.getConnectionStyle(
-        fromComponent.x,
-        fromComponent.y,
-        toComponent.x,
-        toComponent.y,
+        fromComponent.x + COMPONENT_WIDTH / 2,
+        fromComponent.y + COMPONENT_HEIGHT / 2,
+        toComponent.x + COMPONENT_WIDTH / 2,
+        toComponent.y + COMPONENT_HEIGHT / 2,
         TRIM_CONNECTION_END_AMOUNT
       );
       return (
@@ -558,7 +573,7 @@ export class DiagramEditor extends React.Component {
   };
 
   render() {
-    const { canvasX, canvasY, canvasScale } = this.state;
+    const { canvasX, canvasY, canvasScale, isGridSnapActive } = this.state;
     if (!this.props.data) {
       return <p>Loading...</p>;
     }
@@ -567,6 +582,12 @@ export class DiagramEditor extends React.Component {
       <div className="diagram-editor">
         <button onClick={this.save} className="save">
           Save
+        </button>
+        <button
+          onClick={() => this.setState({ isGridSnapActive: !isGridSnapActive })}
+          className={cx("grid-snap", { on: isGridSnapActive })}
+        >
+          Grid Snap: {isGridSnapActive ? "on" : "off"}
         </button>
         <button onClick={this.save} className="home">
           <Link to="/">Home</Link>
