@@ -57,8 +57,8 @@ export class App extends React.Component {
 
   handleChange = (change) => {
     switch (change.operation) {
-      case "addElement":
-        this.addElement(change.data);
+      case "addComponent":
+        this.addComponent(change.data);
         break;
       case "moveComponent":
         this.moveComponent(change.data);
@@ -66,17 +66,55 @@ export class App extends React.Component {
       case "deleteComponent":
         this.deleteComponent(change.data);
         break;
+
+      case "addConnection":
+        this.addConnection(change.data);
+        break;
+      case "updateConnection":
+        this.updateConnection(change.data);
+        break;
+      case "deleteConnection":
+        this.deleteConnection(change.data);
+        break;
       default:
         console.error("unhandled change:", change.data);
         break;
     }
   };
 
-  addElement = (elementDetails) => {
+  addComponent = (componentDetails) => {
     this.setState({
       diagramData: {
         ...this.state.diagramData,
-        components: [...this.state.diagramData.components, elementDetails],
+        components: [...this.state.diagramData.components, componentDetails],
+      },
+    });
+  };
+
+  addConnection = (connectionDetails) => {
+    console.log("connectionDetails:", connectionDetails);
+    this.setState({
+      diagramData: {
+        ...this.state.diagramData,
+        connections: [...this.state.diagramData.connections, connectionDetails],
+      },
+    });
+  };
+
+  updateConnection = (connectionDetails) => {
+    const { connections } = this.state.diagramData;
+    const targetIndex = connections.findIndex(
+      (element) => element.id === connectionDetails.id
+    );
+
+    this.setState({
+      diagramData: {
+        ...this.state.diagramData,
+        connections: [
+          ...connections.slice(0, targetIndex),
+          connectionDetails,
+          ...connections.slice(targetIndex + 1),
+        ],
       },
     });
   };
@@ -117,6 +155,23 @@ export class App extends React.Component {
         components: [
           ...components.slice(0, targetIndex),
           ...components.slice(targetIndex + 1),
+        ],
+      },
+    });
+  };
+
+  deleteConnection = (deleteDetails) => {
+    const { connections } = this.state.diagramData;
+    const targetIndex = connections.findIndex(
+      (element) => element.id === deleteDetails.id
+    );
+
+    this.setState({
+      diagramData: {
+        ...this.state.diagramData,
+        connections: [
+          ...connections.slice(0, targetIndex),
+          ...connections.slice(targetIndex + 1),
         ],
       },
     });
