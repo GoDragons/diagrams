@@ -128,10 +128,12 @@ export class App extends React.Component {
       JSON.stringify({ message: "creatediagram", data: diagramName })
     );
     this.setState({
-      diagramName: "",
       diagrams: [...diagrams, diagramName],
     });
-    this.props.history.push("/");
+    // the delay is to give it time to actually process the request, until we get a proper REST API in place for this kind of calls
+    setTimeout(() => {
+      this.props.history.push(`/diagrams/${diagramName}`);
+    }, 500);
   };
 
   joinDiagram = (diagramId) => {
