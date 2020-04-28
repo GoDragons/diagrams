@@ -41,8 +41,8 @@ export class DiagramEditor extends React.Component {
   componentDidMount() {
     window.addEventListener("keyup", this.onKeyUp);
     window.addEventListener("keydown", this.onKeyDown);
-    window.addEventListener("mouseup", this.onMouseUp);
-    window.addEventListener("mousemove", this.onMouseMove);
+    window.addEventListener("mouseup", this.onWindowMouseUp);
+    window.addEventListener("mousemove", this.onWindowMouseMove);
 
     this.props.joinDiagram(this.props.match.params.diagramId);
   }
@@ -50,8 +50,8 @@ export class DiagramEditor extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("keyup", this.onKeyUp);
     window.removeEventListener("keydown", this.onKeyDown);
-    window.removeEventListener("mouseup", this.onMouseUp);
-    window.removeEventListener("mousemove", this.onMouseMove);
+    window.removeEventListener("mouseup", this.onWindowMouseUp);
+    window.removeEventListener("mousemove", this.onWindowMouseMove);
   }
 
   getSelectedComponent = () => {
@@ -78,7 +78,7 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  onCanvasClick = (e) => {
+  onCanvasMouseUp = (e) => {
     const { isConnecting } = this.state;
 
     if (!isConnecting) {
@@ -86,38 +86,14 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  onMouseUp = (e) => {
-    const {
-      isComponentContextMenuShowing,
-      isConnectionContextMenuShowing,
-      isConnecting,
-      isDraggingComponent,
-    } = this.state;
-
+  onWindowMouseUp = (e) => {
     this.setState({
       isDraggingComponent: false,
       isPanning: false,
       isConnecting: false,
+      isComponentContextMenuShowing: false,
+      isConnectionContextMenuShowing: false,
     });
-
-    if (isComponentContextMenuShowing) {
-      this.setState({
-        isComponentContextMenuShowing: false,
-      });
-      return;
-    }
-    if (isConnectionContextMenuShowing) {
-      this.setState({
-        isConnectionContextMenuShowing: false,
-      });
-      return;
-    }
-
-    if (!isConnecting) {
-      this.setState({
-        selectedComponentId: null,
-      });
-    }
   };
 
   renameSelectedItem = () => {
@@ -242,13 +218,12 @@ export class DiagramEditor extends React.Component {
 
   onComponentMouseDown = (e, componentId) => {
     const { isConnecting } = this.state;
-    if (!isConnecting) {
-      this.setState({
-        selectedComponentId: componentId,
-      });
+    if (isConnecting) {
+      return;
     }
 
     this.setState({
+      selectedComponentId: componentId,
       isDraggingComponent: true,
       previousMouseX: e.clientX,
       previousMouseY: e.clientY,
@@ -258,13 +233,19 @@ export class DiagramEditor extends React.Component {
   };
 
   onComponentMouseUp = (e, componentId) => {
+    e.stopPropagation();
+
     const {
       isConnecting,
       selectedComponentId,
       isDraggingComponent,
     } = this.state;
 
-    this.setState({ isDraggingComponent: false });
+    this.setState({
+      isDraggingComponent: false,
+      isPanning: false,
+      isConnecting: false,
+    });
 
     if (isConnecting) {
       if (selectedComponentId !== componentId) {
@@ -312,7 +293,7 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  onMouseMove = (e) => {
+  onWindowMouseMove = (e) => {
     const {
       isComponentContextMenuShowing,
       isConnectionContextMenuShowing,
@@ -602,7 +583,7 @@ export class DiagramEditor extends React.Component {
             }}
             onWheel={this.zoom}
             onMouseDown={this.onPanStart}
-            onClick={this.onCanvasClick}
+            onMouseUp={this.onCanvasMouseUp}
             onMouseMove={this.onCanvasMouseMove}
           >
             {this.displayComponentContextMenu()}

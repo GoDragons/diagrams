@@ -92,7 +92,6 @@ export class App extends React.Component {
   };
 
   addConnection = (connectionDetails) => {
-    console.log("connectionDetails:", connectionDetails);
     this.setState({
       diagramData: {
         ...this.state.diagramData,

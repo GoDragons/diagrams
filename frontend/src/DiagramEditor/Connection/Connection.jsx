@@ -7,7 +7,9 @@ export default function Connection({ style, id, onContextMenu, onMouseDown }) {
     <div
       className="connection"
       style={style}
-      onMouseDown={(e) => onMouseDown(e, id)}
+      onMouseDown={(e) => {
+        if (typeof onMouseDown === "function") onMouseDown(e, id);
+      }}
       onContextMenu={(e) => onContextMenu(e, id)}
     >
       <i className="end-icon fas fa-angle-right"></i>
