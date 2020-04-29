@@ -29,5 +29,5 @@ exports.handler = async (event) => {
     };
   }
 
-  return { statusCode: 200, body: "iagram created." };
+  return { statusCode: 200, body: "diagram created." };
 };
