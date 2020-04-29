@@ -68,6 +68,7 @@ function addIntegration(functionData) {
 }
 
 function addFunction(functionData) {
+  const { apiName, name, routeKey, ...functionProperties } = functionData;
   const functionNameCamelCase = makeNameCamelCase({
     name: functionData.name,
     firstWordLowerCase: false,
@@ -81,15 +82,10 @@ function addFunction(functionData) {
       Handler: "app.handler",
       MemorySize: 128,
       Runtime: "nodejs12.x",
+      ...functionProperties,
     },
   };
 
-  if (functionData.Environment) {
-    data.Properties.Environment = functionData.Environment;
-  }
-  if (functionData.Policies) {
-    data.Properties.Policies = functionData.Policies;
-  }
   template.Resources[`${functionNameCamelCase}Function`] = data;
 }
 
@@ -107,7 +103,7 @@ function addLogGroup(functionData) {
       LogGroupName: {
         "Fn::Join": [
           "/",
-          ["/aws/lambda", { Ref: `${functionNameCamelCase}Function` }],
+          ["diagrams", { Ref: `${functionNameCamelCase}Function` }],
         ],
       },
       RetentionInDays: 14,
