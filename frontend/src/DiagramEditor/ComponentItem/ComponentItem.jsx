@@ -8,20 +8,13 @@ export default function ComponentItem({
   id,
   x,
   y,
-  icon,
   iconPath,
   label,
-  type,
   selectedComponentId,
   onMouseDown,
-  onClick,
+  onMouseUp,
   onContextMenu,
 }) {
-  function onComponentClick(e) {
-    e.stopPropagation();
-    onClick(e, id);
-  }
-
   return (
     <div
       key={id}
@@ -29,8 +22,8 @@ export default function ComponentItem({
       className={cx("component", {
         selected: id === selectedComponentId,
       })}
-      onClick={onComponentClick}
       onMouseDown={(e) => onMouseDown(e, id)}
+      onMouseUp={(e) => onMouseUp(e, id)}
       style={{ left: x + "px", top: y + "px" }}
     >
       <div className="component-icon-container">
