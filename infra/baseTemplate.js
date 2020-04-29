@@ -301,7 +301,6 @@ function getRESTLambdaFunction({ name, method }) {
     apiName: REST_API_NAME,
     route: {
       RouteKey: `${method} /${name}`,
-      // RouteKey: "$default",
     },
     integration: {
       PayloadFormatVersion: "2.0",
