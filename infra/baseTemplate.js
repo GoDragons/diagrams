@@ -235,6 +235,15 @@ let template = {
         },
       },
     },
+    RESTDeployment: {
+      Type: "AWS::ApiGatewayV2::Deployment",
+      DependsOn: [],
+      Properties: {
+        ApiId: {
+          Ref: REST_API_NAME,
+        },
+      },
+    },
     Stage: {
       Type: "AWS::ApiGatewayV2::Stage",
       Properties: {
@@ -245,6 +254,19 @@ let template = {
         },
         ApiId: {
           Ref: WEBSOCKET_API_NAME,
+        },
+      },
+    },
+    RESTStage: {
+      Type: "AWS::ApiGatewayV2::Stage",
+      Properties: {
+        StageName: "Prod",
+        Description: "Prod Stage",
+        DeploymentId: {
+          Ref: "RESTDeployment",
+        },
+        ApiId: {
+          Ref: REST_API_NAME,
         },
       },
     },
@@ -278,8 +300,8 @@ function getRESTLambdaFunction({ name, method }) {
     name,
     apiName: REST_API_NAME,
     route: {
-      // RouteKey: `${method}/${name}`,
-      RouteKey: "$default",
+      RouteKey: `${method} /${name}`,
+      // RouteKey: "$default",
     },
     integration: {
       PayloadFormatVersion: "2.0",
