@@ -1,0 +1,4 @@
+
+> @ describe /home/superpc/repos/diagrams/infra
+> aws cloudformation --region eu-west-2 describe-stacks --stack-name diagrams "+2"
+

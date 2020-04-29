@@ -24,7 +24,7 @@ function addRoute(functionData) {
       ApiId: {
         Ref: functionData.apiName,
       },
-      RouteKey: functionData.routeKey || functionData.name.split("-").join(""),
+
       AuthorizationType: "NONE",
       OperationName: `${functionNameCamelCase}Route`,
       Target: {
@@ -38,6 +38,7 @@ function addRoute(functionData) {
           ],
         ],
       },
+      ...functionData.route,
     },
   };
 
@@ -61,14 +62,24 @@ function addIntegration(functionData) {
       IntegrationUri: {
         "Fn::Sub": `arn:aws:apigateway:\${AWS::Region}:lambda:path/2015-03-31/functions/\${${functionNameCamelCase}Function.Arn}/invocations`,
       },
+      ...functionData.integration,
     },
   };
+  if (functionData.PayloadFormatVersion) {
+    data.Properties.PayloadFormatVersion = functionData.PayloadFormatVersion;
+  }
 
   template.Resources[`${functionNameCamelCase}Integ`] = data;
 }
 
 function addFunction(functionData) {
-  const { apiName, name, routeKey, ...functionProperties } = functionData;
+  const {
+    apiName,
+    name,
+    route,
+    integration,
+    ...functionProperties
+  } = functionData;
   const functionNameCamelCase = makeNameCamelCase({
     name: functionData.name,
     firstWordLowerCase: false,

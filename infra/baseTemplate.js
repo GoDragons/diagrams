@@ -1,5 +1,5 @@
 const WEBSOCKET_API_NAME = "Diagrams";
-const REST_API_NAME = "Diagrams-REST";
+const REST_API_NAME = "DiagramsREST";
 
 const ENVIRONMENT_VARIABLES_LAMBDA = {
   Variables: {
@@ -135,6 +135,13 @@ let template = {
         RouteSelectionExpression: "$request.body.message",
       },
     },
+    [REST_API_NAME]: {
+      Type: "AWS::ApiGatewayV2::Api",
+      Properties: {
+        Name: REST_API_NAME,
+        ProtocolType: "HTTP",
+      },
+    },
 
     ConnectionsDBTable: {
       Type: "AWS::DynamoDB::Table",
@@ -242,24 +249,51 @@ let template = {
       },
     },
   },
+  Outputs: {
+    WebSocketApiId: {
+      Value: {
+        Ref: WEBSOCKET_API_NAME,
+      },
+    },
+  },
 };
 
 function getWebsocketLambdaFunction({ name, routeKey }) {
   const data = {
     name,
     apiName: WEBSOCKET_API_NAME,
+    route: {
+      RouteKey: routeKey || name.split("-").join(""),
+    },
     Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
     Environment: ENVIRONMENT_VARIABLES_LAMBDA,
     CodeUri: name.split("-").join("").toLowerCase(),
   };
-  if (routeKey) {
-    data.routeKey = routeKey;
-  }
+
+  return data;
+}
+
+function getRESTLambdaFunction({ name, method }) {
+  const data = {
+    name,
+    apiName: REST_API_NAME,
+    route: {
+      // RouteKey: `${method}/${name}`,
+      RouteKey: "$default",
+    },
+    integration: {
+      PayloadFormatVersion: "2.0",
+    },
+    Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
+    Environment: ENVIRONMENT_VARIABLES_LAMBDA,
+    CodeUri: name.split("-").join("").toLowerCase(),
+  };
+
   return data;
 }
 
 const functions = [
-  getWebsocketLambdaFunction({ name: "create-diagram" }),
+  getRESTLambdaFunction({ name: "create-diagram", method: "POST" }),
   getWebsocketLambdaFunction({ name: "get-diagrams" }),
   getWebsocketLambdaFunction({ name: "join-diagram" }),
   getWebsocketLambdaFunction({ name: "save" }),

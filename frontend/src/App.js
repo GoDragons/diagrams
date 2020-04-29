@@ -7,7 +7,9 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import CreateDiagram from "./CreateDiagram/CreateDiagram";
 import DiagramList from "./DiagramList/DiagramList";
 
-const API_ID = "j6ykmh4qbi";
+import STACK_OUTPUT from "./cloudformation_output.json";
+
+const WEBSOCKET_API_ID = STACK_OUTPUT.Stacks[0].Outputs[0].OutputValue;
 
 export class App extends React.Component {
   socket = undefined;
@@ -18,7 +20,7 @@ export class App extends React.Component {
 
   componentDidMount() {
     const newSocket = new WebSocket(
-      `wss://${API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
+      `wss://${WEBSOCKET_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
     );
 
     this.socket = newSocket;
