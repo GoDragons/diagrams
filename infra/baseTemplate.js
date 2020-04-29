@@ -1,4 +1,5 @@
-const apiName = "Diagrams";
+const WEBSOCKET_API_NAME = "Diagrams";
+const REST_API_NAME = "Diagrams-REST";
 
 let template = {
   AWSTemplateFormatVersion: "2010-09-09",
@@ -41,10 +42,49 @@ let template = {
     },
   },
   Resources: {
-    [apiName]: {
+    ManageConnectionsPolicy: {
+      Type: "AWS::IAM::Policy",
+      Properties: {
+        Roles: [{ Ref: "ManageConnectionsRole" }],
+        PolicyDocument: {
+          Statement: [
+            {
+              Effect: "Allow",
+              Action: ["execute-api:ManageConnections"],
+              Resource: [
+                {
+                  "Fn::Sub": `arn:aws:execute-api:*`,
+                },
+              ],
+            },
+          ],
+        },
+        PolicyName: "ManageConnectionsPolicy",
+      },
+    },
+    ManageConnectionsRole: {
+      Type: "AWS::IAM::Role",
+      Properties: {
+        Description: "Manage connections",
+        RoleName: "ManageConnectionsRole",
+        AssumeRolePolicyDocument: {
+          Version: "2012-10-17",
+          Statement: [
+            {
+              Effect: "Allow",
+              Principal: {
+                Service: ["lambda.amazonaws.com"],
+              },
+              Action: ["sts:AssumeRole"],
+            },
+          ],
+        },
+      },
+    },
+    [WEBSOCKET_API_NAME]: {
       Type: "AWS::ApiGatewayV2::Api",
       Properties: {
-        Name: apiName,
+        Name: WEBSOCKET_API_NAME,
         ProtocolType: "WEBSOCKET",
         RouteSelectionExpression: "$request.body.message",
       },
@@ -138,7 +178,7 @@ let template = {
       DependsOn: [],
       Properties: {
         ApiId: {
-          Ref: apiName,
+          Ref: WEBSOCKET_API_NAME,
         },
       },
     },
@@ -151,7 +191,7 @@ let template = {
           Ref: "Deployment",
         },
         ApiId: {
-          Ref: apiName,
+          Ref: WEBSOCKET_API_NAME,
         },
       },
     },
@@ -161,6 +201,7 @@ let template = {
 const functions = [
   {
     name: "create-diagram",
+    apiName: WEBSOCKET_API_NAME,
     Policies: [
       {
         DynamoDBCrudPolicy: {
@@ -180,6 +221,10 @@ const functions = [
   },
   {
     name: "get-diagrams",
+    apiName: WEBSOCKET_API_NAME,
+    Role: {
+      Ref: "ManageConnectionsRole",
+    },
     Policies: [
       {
         DynamoDBCrudPolicy: {
@@ -187,19 +232,6 @@ const functions = [
             Ref: "DiagramsTable",
           },
         },
-      },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:*`,
-              },
-            ],
-          },
-        ],
       },
     ],
     Environment: {
@@ -212,6 +244,10 @@ const functions = [
   },
   {
     name: "join-diagram",
+    apiName: WEBSOCKET_API_NAME,
+    Role: {
+      Ref: "ManageConnectionsRole",
+    },
     Policies: [
       {
         DynamoDBCrudPolicy: {
@@ -227,19 +263,6 @@ const functions = [
           },
         },
       },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:*`,
-              },
-            ],
-          },
-        ],
-      },
     ],
     Environment: {
       Variables: {
@@ -254,6 +277,7 @@ const functions = [
   },
   {
     name: "save",
+    apiName: WEBSOCKET_API_NAME,
     Policies: [
       {
         DynamoDBCrudPolicy: {
@@ -280,6 +304,10 @@ const functions = [
   },
   {
     name: "send-message",
+    apiName: WEBSOCKET_API_NAME,
+    Role: {
+      Ref: "ManageConnectionsRole",
+    },
     Environment: {
       Variables: {
         CONNECTIONS_TABLE_NAME: {
@@ -295,23 +323,14 @@ const functions = [
           },
         },
       },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:\${AWS::Region}:\${AWS::AccountId}:\${${apiName}}/*`,
-              },
-            ],
-          },
-        ],
-      },
     ],
   },
   {
     name: "send-change",
+    apiName: WEBSOCKET_API_NAME,
+    Role: {
+      Ref: "ManageConnectionsRole",
+    },
     Environment: {
       Variables: {
         OPEN_DIAGRAMS_TABLE_NAME: {
@@ -327,23 +346,11 @@ const functions = [
           },
         },
       },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:\${AWS::Region}:\${AWS::AccountId}:\${${apiName}}/*`,
-              },
-            ],
-          },
-        ],
-      },
     ],
   },
   {
     name: "disconnect",
+    apiName: WEBSOCKET_API_NAME,
     routeKey: "$disconnect",
     Environment: {
       Variables: {
@@ -374,6 +381,7 @@ const functions = [
   },
   {
     name: "connect",
+    apiName: WEBSOCKET_API_NAME,
     routeKey: "$connect",
     Environment: {
       Variables: {
@@ -396,6 +404,7 @@ const functions = [
 
 module.exports = {
   template,
-  apiName,
+  WEBSOCKET_API_NAME,
+  REST_API_NAME,
   functions,
 };

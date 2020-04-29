@@ -1,4 +1,4 @@
-const { template, apiName, functions } = require("./baseTemplate");
+const { template, functions } = require("./baseTemplate");
 
 function makeNameCamelCase({ name, firstWordLowerCase = true }) {
   const components = name.split("-");
@@ -22,7 +22,7 @@ function addRoute(functionData) {
     Type: "AWS::ApiGatewayV2::Route",
     Properties: {
       ApiId: {
-        Ref: apiName,
+        Ref: functionData.apiName,
       },
       RouteKey: functionData.routeKey || functionData.name.split("-").join(""),
       AuthorizationType: "NONE",
@@ -54,7 +54,7 @@ function addIntegration(functionData) {
     Type: "AWS::ApiGatewayV2::Integration",
     Properties: {
       ApiId: {
-        Ref: apiName,
+        Ref: functionData.apiName,
       },
       Description: `${functionData.name.split("-").join(" ")} Integration`,
       IntegrationType: "AWS_PROXY",
@@ -76,6 +76,7 @@ function addFunction(functionData) {
   const data = {
     Type: "AWS::Serverless::Function",
     Properties: {
+      FunctionName: functionNameCamelCase,
       CodeUri: `${functionData.name.split("-").join("")}/`,
       Handler: "app.handler",
       MemorySize: 128,
@@ -92,6 +93,29 @@ function addFunction(functionData) {
   template.Resources[`${functionNameCamelCase}Function`] = data;
 }
 
+function addLogGroup(functionData) {
+  const functionNameCamelCase = makeNameCamelCase({
+    name: functionData.name,
+    firstWordLowerCase: false,
+  });
+
+  const data = {
+    Type: "AWS::Logs::LogGroup",
+    DependsOn: `${functionNameCamelCase}Function`,
+
+    Properties: {
+      LogGroupName: {
+        "Fn::Join": [
+          "/",
+          ["/aws/lambda", { Ref: `${functionNameCamelCase}Function` }],
+        ],
+      },
+      RetentionInDays: 14,
+    },
+  };
+  template.Resources[`${functionNameCamelCase}LogGroup`] = data;
+}
+
 function addPermission(functionData) {
   const functionNameCamelCase = makeNameCamelCase({
     name: functionData.name,
@@ -100,7 +124,7 @@ function addPermission(functionData) {
 
   const data = {
     Type: "AWS::Lambda::Permission",
-    DependsOn: [apiName],
+    DependsOn: [functionData.apiName],
     Properties: {
       Action: "lambda:InvokeFunction",
       FunctionName: {
@@ -119,6 +143,7 @@ function addFunctions(functionList) {
     addIntegration(functionData);
     addFunction(functionData);
     addPermission(functionData);
+    addLogGroup(functionData);
   });
 }
 
@@ -128,12 +153,5 @@ addFunctions(functions);
 
 const TEMPLATE_FILE_PATH = "template.json";
 
-// try {
-// execSync(`rm -rf ${OUTPUT_DIRECTORY}`);
-// execSync(`mkdir ${OUTPUT_DIRECTORY}`);
-// console.log("Removed existing template file");
-// } catch (e) {
-// console.log("Template file did not exist, creating for the first time");
-// }
 fs.writeFileSync(TEMPLATE_FILE_PATH, JSON.stringify(template, null, 2));
 console.log("Template file created");
