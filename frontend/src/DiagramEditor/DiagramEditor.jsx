@@ -13,7 +13,7 @@ import cx from "classnames";
 
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
-const TRIM_CONNECTION_END_AMOUNT = 80; // this is so we can see the end of the connection arrow
+const TRIM_CONNECTION_END_AMOUNT = 70; // this is so we can see the end of the connection arrow
 const GRID_CELL_SIZE = 20; // for snapping to the grid when moving components
 const COMPONENT_WIDTH = 100;
 const COMPONENT_HEIGHT = 100;

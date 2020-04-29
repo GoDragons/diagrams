@@ -30,7 +30,7 @@ exports.handler = async (event) => {
     console.log("Error when deleting connection:", e);
     return {
       statusCode: 500,
-      body: "Failed to disconnect: " + JSON.stringify(err),
+      body: "Failed to disconnect: " + JSON.stringify(e),
     };
   }
   const openDiagramsScanParams = {

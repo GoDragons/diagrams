@@ -1,4 +1,19 @@
-const apiName = "Diagrams";
+const WEBSOCKET_API_NAME = "Diagrams";
+const REST_API_NAME = "Diagrams-REST";
+
+const ENVIRONMENT_VARIABLES_LAMBDA = {
+  Variables: {
+    CONNECTIONS_TABLE_NAME: {
+      Ref: "ConnectionsTable",
+    },
+    DIAGRAMS_TABLE_NAME: {
+      Ref: "DiagramsTable",
+    },
+    OPEN_DIAGRAMS_TABLE_NAME: {
+      Ref: "OpenDiagramsTable",
+    },
+  },
+};
 
 let template = {
   AWSTemplateFormatVersion: "2010-09-09",
@@ -41,10 +56,81 @@ let template = {
     },
   },
   Resources: {
-    [apiName]: {
+    ManageConnectionsPolicy: {
+      Type: "AWS::IAM::Policy",
+      Properties: {
+        Roles: [{ Ref: "WebsocketLambdaFunctionRole" }],
+        PolicyDocument: {
+          Statement: [
+            {
+              Effect: "Allow",
+              Action: ["execute-api:ManageConnections"],
+              Resource: [
+                {
+                  "Fn::Sub": `arn:aws:execute-api:*`,
+                },
+              ],
+            },
+          ],
+        },
+        PolicyName: "ManageConnectionsPolicy",
+      },
+    },
+    ManageDynamoDBDiagramTablesPolicy: {
+      Type: "AWS::IAM::Policy",
+      Properties: {
+        Roles: [{ Ref: "WebsocketLambdaFunctionRole" }],
+        PolicyDocument: {
+          Statement: [
+            {
+              Effect: "Allow",
+              Action: [
+                "dynamodb:BatchGetItem",
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem",
+              ],
+              Resource: [
+                { "Fn::GetAtt": ["ConnectionsDBTable", "Arn"] },
+                { "Fn::GetAtt": ["DiagramsDBTable", "Arn"] },
+                { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
+              ],
+            },
+          ],
+        },
+        PolicyName: "ManageDynamoDBDiagramTablesPolicy",
+      },
+    },
+
+    WebsocketLambdaFunctionRole: {
+      Type: "AWS::IAM::Role",
+      Properties: {
+        Description: "Manage connections",
+        RoleName: "WebsocketLambdaFunctionRole",
+        ManagedPolicyArns: [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        ],
+        AssumeRolePolicyDocument: {
+          Version: "2012-10-17",
+          Statement: [
+            {
+              Effect: "Allow",
+              Principal: {
+                Service: ["lambda.amazonaws.com"],
+              },
+              Action: ["sts:AssumeRole"],
+            },
+          ],
+        },
+      },
+    },
+    [WEBSOCKET_API_NAME]: {
       Type: "AWS::ApiGatewayV2::Api",
       Properties: {
-        Name: apiName,
+        Name: WEBSOCKET_API_NAME,
         ProtocolType: "WEBSOCKET",
         RouteSelectionExpression: "$request.body.message",
       },
@@ -138,7 +224,7 @@ let template = {
       DependsOn: [],
       Properties: {
         ApiId: {
-          Ref: apiName,
+          Ref: WEBSOCKET_API_NAME,
         },
       },
     },
@@ -151,251 +237,40 @@ let template = {
           Ref: "Deployment",
         },
         ApiId: {
-          Ref: apiName,
+          Ref: WEBSOCKET_API_NAME,
         },
       },
     },
   },
 };
 
+function getWebsocketLambdaFunction({ name, routeKey }) {
+  const data = {
+    name,
+    apiName: WEBSOCKET_API_NAME,
+    Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
+    Environment: ENVIRONMENT_VARIABLES_LAMBDA,
+    CodeUri: name.split("-").join("").toLowerCase(),
+  };
+  if (routeKey) {
+    data.routeKey = routeKey;
+  }
+  return data;
+}
+
 const functions = [
-  {
-    name: "create-diagram",
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "DiagramsTable",
-          },
-        },
-      },
-    ],
-    Environment: {
-      Variables: {
-        DIAGRAMS_TABLE_NAME: {
-          Ref: "DiagramsTable",
-        },
-      },
-    },
-  },
-  {
-    name: "get-diagrams",
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "DiagramsTable",
-          },
-        },
-      },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:*`,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    Environment: {
-      Variables: {
-        DIAGRAMS_TABLE_NAME: {
-          Ref: "DiagramsTable",
-        },
-      },
-    },
-  },
-  {
-    name: "join-diagram",
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "DiagramsTable",
-          },
-        },
-      },
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "OpenDiagramsTable",
-          },
-        },
-      },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:*`,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    Environment: {
-      Variables: {
-        OPEN_DIAGRAMS_TABLE_NAME: {
-          Ref: "OpenDiagramsTable",
-        },
-        DIAGRAMS_TABLE_NAME: {
-          Ref: "DiagramsTable",
-        },
-      },
-    },
-  },
-  {
-    name: "save",
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "DiagramsTable",
-          },
-        },
-      },
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "OpenDiagramsTable",
-          },
-        },
-      },
-    ],
-    Environment: {
-      Variables: {
-        DIAGRAMS_TABLE_NAME: {
-          Ref: "DiagramsTable",
-        },
-      },
-    },
-  },
-  {
-    name: "send-message",
-    Environment: {
-      Variables: {
-        CONNECTIONS_TABLE_NAME: {
-          Ref: "ConnectionsTable",
-        },
-      },
-    },
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "ConnectionsTable",
-          },
-        },
-      },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:\${AWS::Region}:\${AWS::AccountId}:\${${apiName}}/*`,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "send-change",
-    Environment: {
-      Variables: {
-        OPEN_DIAGRAMS_TABLE_NAME: {
-          Ref: "OpenDiagramsTable",
-        },
-      },
-    },
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "OpenDiagramsTable",
-          },
-        },
-      },
-      {
-        Statement: [
-          {
-            Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:\${AWS::Region}:\${AWS::AccountId}:\${${apiName}}/*`,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "disconnect",
-    routeKey: "$disconnect",
-    Environment: {
-      Variables: {
-        CONNECTIONS_TABLE_NAME: {
-          Ref: "ConnectionsTable",
-        },
-        OPEN_DIAGRAMS_TABLE_NAME: {
-          Ref: "OpenDiagramsTable",
-        },
-      },
-    },
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "ConnectionsTable",
-          },
-        },
-      },
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "OpenDiagramsTable",
-          },
-        },
-      },
-    ],
-  },
-  {
-    name: "connect",
-    routeKey: "$connect",
-    Environment: {
-      Variables: {
-        CONNECTIONS_TABLE_NAME: {
-          Ref: "ConnectionsTable",
-        },
-      },
-    },
-    Policies: [
-      {
-        DynamoDBCrudPolicy: {
-          TableName: {
-            Ref: "ConnectionsTable",
-          },
-        },
-      },
-    ],
-  },
+  getWebsocketLambdaFunction({ name: "create-diagram" }),
+  getWebsocketLambdaFunction({ name: "get-diagrams" }),
+  getWebsocketLambdaFunction({ name: "join-diagram" }),
+  getWebsocketLambdaFunction({ name: "save" }),
+  getWebsocketLambdaFunction({ name: "send-change" }),
+  getWebsocketLambdaFunction({ name: "disconnect", routeKey: "$disconnect" }),
+  getWebsocketLambdaFunction({ name: "connect", routeKey: "$connect" }),
 ];
 
 module.exports = {
   template,
-  apiName,
+  WEBSOCKET_API_NAME,
+  REST_API_NAME,
   functions,
 };
