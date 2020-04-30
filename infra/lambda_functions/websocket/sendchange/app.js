@@ -11,10 +11,8 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 const { OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 
 exports.handler = async (event) => {
-  console.log("Called");
   const body = JSON.parse(event.body);
   let usersOnDiagramResult;
-  console.log("event:", event);
 
   const diagramId = body.diagramId;
 

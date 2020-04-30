@@ -11,6 +11,12 @@ import Connection from "./Connection/Connection";
 import { withRouter, Link } from "react-router-dom";
 import cx from "classnames";
 
+import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
+
+import { getCloudFormationOuputByName } from "common/outputParser.js";
+
+const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
+
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
 const TRIM_CONNECTION_END_AMOUNT = 70; // this is so we can see the end of the connection arrow
@@ -19,7 +25,10 @@ const COMPONENT_WIDTH = 100;
 const COMPONENT_HEIGHT = 100;
 
 export class DiagramEditor extends React.Component {
+  socket = undefined;
+
   state = {
+    diagramData: null,
     selectedComponentId: null,
     selectedConnectionId: null,
     isDraggingComponent: false,
@@ -49,7 +58,9 @@ export class DiagramEditor extends React.Component {
     window.addEventListener("mouseup", this.onWindowMouseUp);
     window.addEventListener("mousemove", this.onWindowMouseMove);
 
-    this.props.joinDiagram(this.props.match.params.diagramId);
+    this.initialiseWebSocket();
+
+    this.joinDiagram(this.props.match.params.diagramId);
   }
 
   componentWillUnmount() {
@@ -59,10 +70,71 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("mousemove", this.onWindowMouseMove);
   }
 
+  initialiseWebSocket = () => {
+    const newSocket = new WebSocket(
+      `wss://${WEBSOCKET_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
+    );
+
+    this.socket = newSocket;
+
+    // Connection opened
+    newSocket.addEventListener("open", (event) => {
+      console.log("connection open");
+    });
+
+    // Listen for messages
+    newSocket.addEventListener("message", this.onMessageReceived);
+  };
+
+  onMessageReceived = (event) => {
+    const messageData = JSON.parse(event.data);
+    console.log("message:", messageData);
+    switch (messageData.type) {
+      case "diagramData":
+        this.setState({ diagramData: messageData.diagramData });
+        break;
+      case "connectionId":
+        this.setState({ connectionId: messageData.connectionId });
+        break;
+      case "change":
+        this.setState({
+          diagramData: applyChangeToDiagramData({
+            change: messageData.change,
+            diagramData: this.state.diagramData,
+          }),
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  joinDiagram = (diagramId) => {
+    try {
+      this.socket.send(
+        JSON.stringify({ message: "joindiagram", diagramId: diagramId })
+      );
+    } catch (e) {
+      setTimeout(() => {
+        this.joinDiagram(diagramId);
+      }, 100);
+    }
+  };
+
+  sendChange = (changeData) => {
+    this.socket.send(
+      JSON.stringify({
+        message: "sendchange",
+        diagramId: this.state.diagramData.diagramId,
+        change: changeData,
+      })
+    );
+  };
+
   getSelectedComponent = () => {
     const { selectedComponentId } = this.state;
 
-    return this.props.data.components.find(
+    return this.state.diagramData.components.find(
       ({ id }) => id === selectedComponentId
     );
   };
@@ -70,7 +142,7 @@ export class DiagramEditor extends React.Component {
   getSelectedConnection = () => {
     const { selectedConnectionId } = this.state;
 
-    return this.props.data.connections.find(
+    return this.state.diagramData.connections.find(
       ({ id }) => id === selectedConnectionId
     );
   };
@@ -122,7 +194,7 @@ export class DiagramEditor extends React.Component {
   deleteSelectedConnection = () => {
     const { selectedConnectionId } = this.state;
     this.setState({ isConnectionContextMenuShowing: false });
-    this.props.sendChange({
+    this.sendChange({
       operation: "deleteConnection",
       data: {
         id: selectedConnectionId,
@@ -135,7 +207,7 @@ export class DiagramEditor extends React.Component {
 
     const selectedConnection = this.getSelectedConnection();
     this.setState({ isConnectionContextMenuShowing: false });
-    this.props.sendChange({
+    this.sendChange({
       operation: "updateConnection",
       data: {
         id: selectedConnectionId,
@@ -149,16 +221,14 @@ export class DiagramEditor extends React.Component {
     this.setState({ isComponentContextMenuShowing: false });
     const selectedComponent = this.getSelectedComponent();
 
-    const { data } = this.props;
+    const { selectedComponentId, diagramData } = this.state;
 
-    const { selectedComponentId } = this.state;
-
-    data.connections.forEach((connection) => {
+    diagramData.connections.forEach((connection) => {
       if (
         connection.from === selectedComponentId ||
         connection.to === selectedComponentId
       ) {
-        this.props.sendChange({
+        this.sendChange({
           operation: "deleteConnection",
           data: {
             id: connection.id,
@@ -167,7 +237,7 @@ export class DiagramEditor extends React.Component {
       }
     });
 
-    this.props.sendChange({
+    this.sendChange({
       operation: "deleteComponent",
       data: {
         id: selectedComponent.id,
@@ -254,7 +324,7 @@ export class DiagramEditor extends React.Component {
 
     if (isConnecting) {
       if (selectedComponentId !== componentId) {
-        this.props.sendChange({
+        this.sendChange({
           operation: "addConnection",
           data: {
             from: selectedComponentId,
@@ -286,7 +356,7 @@ export class DiagramEditor extends React.Component {
           initialMouseY: null,
         });
 
-        this.props.sendChange({
+        this.sendChange({
           operation: "moveComponent",
           data: {
             x: selectedComponent.x,
@@ -331,11 +401,19 @@ export class DiagramEditor extends React.Component {
     if (isDraggingComponent) {
       const selectedComponent = this.getSelectedComponent();
 
-      this.props.moveComponent({
-        x: isGridSnapActive ? gridSnapNewX : newX,
-        y: isGridSnapActive ? gridSnapNewY : newY,
-        id: selectedComponent.id,
+      const newDiagramData = applyChangeToDiagramData({
+        change: {
+          operation: "moveComponent",
+          data: {
+            x: isGridSnapActive ? gridSnapNewX : newX,
+            y: isGridSnapActive ? gridSnapNewY : newY,
+            id: selectedComponent.id,
+          },
+        },
+        diagramData: this.state.diagramData,
       });
+
+      this.setState({ diagramData: newDiagramData });
     } else if (isPanning) {
       this.setState({
         canvasX: canvasX + deltaX,
@@ -374,7 +452,7 @@ export class DiagramEditor extends React.Component {
 
     const selectedComponent = this.getSelectedComponent();
 
-    this.props.sendChange({
+    this.sendChange({
       operation: "moveComponent",
       data: {
         x: selectedComponent.x + deltaX,
@@ -385,7 +463,7 @@ export class DiagramEditor extends React.Component {
   };
 
   addComponent = (componentDetails) => {
-    this.props.sendChange({
+    this.sendChange({
       operation: "addComponent",
       data: {
         type: componentDetails.type,
@@ -419,7 +497,7 @@ export class DiagramEditor extends React.Component {
   };
 
   displayComponents = () => {
-    const { components } = this.props.data;
+    const { components } = this.state.diagramData;
     const { selectedComponentId } = this.state;
     return components.map((component) => (
       <ComponentItem
@@ -434,7 +512,7 @@ export class DiagramEditor extends React.Component {
   };
 
   displayConnections = () => {
-    const { connections, components } = this.props.data;
+    const { connections, components } = this.state.diagramData;
 
     return connections.map((connection) => {
       const fromComponent = components.find(
@@ -569,14 +647,20 @@ export class DiagramEditor extends React.Component {
   };
 
   render() {
-    const { canvasX, canvasY, canvasScale, isGridSnapActive } = this.state;
-    if (!this.props.data) {
+    const {
+      canvasX,
+      canvasY,
+      canvasScale,
+      isGridSnapActive,
+      diagramData,
+    } = this.state;
+    if (!diagramData) {
       return <p>Loading...</p>;
     }
 
     return (
       <div className="diagram-editor">
-        <button onClick={this.props.save} className="save">
+        <button onClick={() => this.props.save(diagramData)} className="save">
           Save
         </button>
         <button
