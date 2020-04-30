@@ -67,6 +67,17 @@ export class App extends React.Component {
       .catch((e) => alert(`Could not create diagram:`, e));
   };
 
+  saveDiagram = () => {
+    console.log("saveDiagram()");
+    const { diagramData } = this.state;
+    axios
+      .post(`${REST_API_URL}/save`, { diagramData })
+      .then(() => {
+        alert("Diagram saved successfully");
+      })
+      .catch((e) => alert(`Could not save diagram:`, e));
+  };
+
   deleteDiagram = (diagramId) => {
     const { diagrams } = this.state;
 
@@ -244,15 +255,6 @@ export class App extends React.Component {
     );
   };
 
-  save = () => {
-    this.socket.send(
-      JSON.stringify({
-        message: "save",
-        diagramData: this.state.diagramData,
-      })
-    );
-  };
-
   render() {
     return (
       <div className="app">
@@ -270,7 +272,7 @@ export class App extends React.Component {
             <DiagramEditor
               data={this.state.diagramData}
               sendChange={this.sendChange}
-              save={this.save}
+              save={this.saveDiagram}
               moveComponent={this.moveComponent}
               joinDiagram={this.joinDiagram}
             />
