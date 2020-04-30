@@ -76,7 +76,7 @@ function getWebsocketLambdaFunction({ name, routeKey }) {
     Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
     Environment: ENVIRONMENT_VARIABLES_LAMBDA,
     CodeUri:
-      "lambda_functions/websocket/" + name.split("-").join("").toLowerCase(),
+      "../lambda_functions/websocket/" + name.split("-").join("").toLowerCase(),
   };
 
   return data;
@@ -94,7 +94,8 @@ function getRESTLambdaFunction({ name, method = "GET" }) {
     },
     Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
     Environment: ENVIRONMENT_VARIABLES_LAMBDA,
-    CodeUri: "lambda_functions/rest/" + name.split("-").join("").toLowerCase(),
+    CodeUri:
+      "../lambda_functions/rest/" + name.split("-").join("").toLowerCase(),
   };
 
   return data;
