@@ -25,7 +25,7 @@ exports.handler = async (event) => {
     console.log("error:", err);
     return {
       statusCode: 500,
-      body: "Failed to create iagram: " + JSON.stringify(err),
+      body: "Failed to create diagram: " + JSON.stringify(err),
     };
   }
 

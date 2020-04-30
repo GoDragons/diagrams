@@ -1,4 +1,4 @@
-const { template, functions } = require("./baseTemplate");
+const { template, functions } = require("./cloudformation_templates/main.js");
 
 function makeNameCamelCase({ name, firstWordLowerCase = true }) {
   const components = name.split("-");
@@ -150,7 +150,7 @@ function addFunctions(functionList) {
     addIntegration(functionData);
     addFunction(functionData);
     addPermission(functionData);
-    addLogGroup(functionData);
+    // addLogGroup(functionData);
   });
 }
 

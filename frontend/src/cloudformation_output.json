@@ -3,7 +3,7 @@
         {
             "StackId": "arn:aws:cloudformation:eu-west-2:994541973446:stack/diagrams/427bf700-8a3d-11ea-90fc-06b0998bdefc",
             "StackName": "diagrams",
-            "ChangeSetId": "arn:aws:cloudformation:eu-west-2:994541973446:changeSet/samcli-deploy1588186541/ae27d744-08ac-41ca-ab36-692f237f60d9",
+            "ChangeSetId": "arn:aws:cloudformation:eu-west-2:994541973446:changeSet/samcli-deploy1588231031/08f029a1-bac0-4068-8736-e29d3858c29d",
             "Description": "API for an online collaboration tool used to build system design diagrams",
             "Parameters": [
                 {
@@ -20,7 +20,7 @@
                 }
             ],
             "CreationTime": "2020-04-29T17:17:10.237Z",
-            "LastUpdatedTime": "2020-04-29T18:55:53.001Z",
+            "LastUpdatedTime": "2020-04-30T07:17:22.528Z",
             "RollbackConfiguration": {},
             "StackStatus": "UPDATE_COMPLETE",
             "DisableRollback": false,
@@ -29,6 +29,10 @@
                 "CAPABILITY_NAMED_IAM"
             ],
             "Outputs": [
+                {
+                    "OutputKey": "RESTSocketApiId",
+                    "OutputValue": "suxlakl167"
+                },
                 {
                     "OutputKey": "WebSocketApiId",
                     "OutputValue": "dwhqo7j734"

@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
+import axios from "axios";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import CreateDiagram from "./CreateDiagram/CreateDiagram";
@@ -9,7 +10,14 @@ import DiagramList from "./DiagramList/DiagramList";
 
 import STACK_OUTPUT from "./cloudformation_output.json";
 
-const WEBSOCKET_API_ID = STACK_OUTPUT.Stacks[0].Outputs[0].OutputValue;
+function getCloudFormationOuputByName(outputKey) {
+  const outputs = STACK_OUTPUT.Stacks[0].Outputs;
+  return outputs.find((output) => output.OutputKey === outputKey).OutputValue;
+}
+
+const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
+const REST_API_ID = getCloudFormationOuputByName("RESTSocketApiId");
+const REST_API_URL = `https://${REST_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`;
 
 export class App extends React.Component {
   socket = undefined;
@@ -19,6 +27,11 @@ export class App extends React.Component {
   };
 
   componentDidMount() {
+    this.initialiseWebSocket();
+    this.getDiagrams();
+  }
+
+  initialiseWebSocket = () => {
     const newSocket = new WebSocket(
       `wss://${WEBSOCKET_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
     );
@@ -28,12 +41,18 @@ export class App extends React.Component {
     // Connection opened
     newSocket.addEventListener("open", (event) => {
       console.log("connection open");
-      this.socket.send(JSON.stringify({ message: "getdiagrams", data: "" }));
     });
 
     // Listen for messages
     newSocket.addEventListener("message", this.onMessageReceived);
-  }
+  };
+
+  getDiagrams = () => {
+    axios
+      .get(`${REST_API_URL}/get-diagrams`)
+      .then((response) => this.setState({ diagrams: response.data }))
+      .catch((e) => alert(`Could not get diagrams:`, e));
+  };
 
   onMessageReceived = (event) => {
     const messageData = JSON.parse(event.data);
