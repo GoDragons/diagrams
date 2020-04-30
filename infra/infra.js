@@ -43,7 +43,6 @@ function addRoute(functionData) {
   };
 
   template.Resources[`${functionNameCamelCase}Route`] = data;
-  template.Resources.Deployment.DependsOn.push(`${functionNameCamelCase}Route`);
 }
 
 function addIntegration(functionData) {
@@ -78,6 +77,7 @@ function addFunction(functionData) {
     name,
     route,
     integration,
+    isWebSocket,
     ...functionProperties
   } = functionData;
   const functionNameCamelCase = makeNameCamelCase({
@@ -89,7 +89,6 @@ function addFunction(functionData) {
     Type: "AWS::Serverless::Function",
     Properties: {
       FunctionName: functionNameCamelCase,
-      CodeUri: `${functionData.name.split("-").join("")}/`,
       Handler: "app.handler",
       MemorySize: 128,
       Runtime: "nodejs12.x",
@@ -98,6 +97,15 @@ function addFunction(functionData) {
   };
 
   template.Resources[`${functionNameCamelCase}Function`] = data;
+  if (isWebSocket && template.Resources.WebsocketDeployment) {
+    template.Resources.WebsocketDeployment.DependsOn.push(
+      `${functionNameCamelCase}Route`
+    );
+  } else if (!isWebSocket && template.Resources.RESTDeployment) {
+    template.Resources.RESTDeployment.DependsOn.push(
+      `${functionNameCamelCase}Route`
+    );
+  }
 }
 
 function addLogGroup(functionData) {

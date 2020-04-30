@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./DiagramList.scss";
 
-export default function DiagramList({ diagrams, joinDiagram }) {
+export default function DiagramList({ diagrams, deleteDiagram }) {
   function displayDiagramList() {
     if (!diagrams) {
       return <p>Loading diagrams...</p>;
@@ -14,14 +14,13 @@ export default function DiagramList({ diagrams, joinDiagram }) {
     }
 
     return diagrams.map((diagramId) => (
-      <Link
-        to={`/diagrams/${diagramId}`}
-        key={diagramId}
-        className="diagram-item"
-      >
-        <h3 className="title">{diagramId}</h3>
+      <div className="diagram-item" key={diagramId}>
+        <Link to={`/diagrams/${diagramId}`}>
+          <h3 className="title">{diagramId}</h3>
+        </Link>
         <p className="created">Created on: 01 Feb 2020</p>
-      </Link>
+        <button onClick={(e) => deleteDiagram(diagramId)}>Delete</button>
+      </div>
     ));
   }
 

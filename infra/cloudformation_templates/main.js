@@ -72,15 +72,17 @@ function getWebsocketLambdaFunction({ name, routeKey }) {
     route: {
       RouteKey: routeKey || name.split("-").join(""),
     },
+    isWebSocket: true,
     Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
     Environment: ENVIRONMENT_VARIABLES_LAMBDA,
-    CodeUri: name.split("-").join("").toLowerCase(),
+    CodeUri:
+      "lambda_functions/websocket/" + name.split("-").join("").toLowerCase(),
   };
 
   return data;
 }
 
-function getRESTLambdaFunction({ name, method }) {
+function getRESTLambdaFunction({ name, method = "GET" }) {
   const data = {
     name,
     apiName: REST_API_NAME,
@@ -92,7 +94,7 @@ function getRESTLambdaFunction({ name, method }) {
     },
     Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
     Environment: ENVIRONMENT_VARIABLES_LAMBDA,
-    CodeUri: name.split("-").join("").toLowerCase(),
+    CodeUri: "lambda_functions/rest/" + name.split("-").join("").toLowerCase(),
   };
 
   return data;
@@ -102,9 +104,10 @@ module.exports = {
   template: getTemplate(),
   functions: [
     getRESTLambdaFunction({ name: "create-diagram", method: "POST" }),
-    getRESTLambdaFunction({ name: "get-diagrams", method: "GET" }),
+    getRESTLambdaFunction({ name: "delete-diagram", method: "POST" }),
+    getRESTLambdaFunction({ name: "get-diagrams" }),
+    getRESTLambdaFunction({ name: "save" }),
     getWebsocketLambdaFunction({ name: "join-diagram" }),
-    getWebsocketLambdaFunction({ name: "save" }),
     getWebsocketLambdaFunction({ name: "send-change" }),
     getWebsocketLambdaFunction({ name: "disconnect", routeKey: "$disconnect" }),
     getWebsocketLambdaFunction({ name: "connect", routeKey: "$connect" }),

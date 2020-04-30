@@ -9,25 +9,22 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
-  const putParams = {
+  const deleteParams = {
     TableName: process.env.DIAGRAMS_TABLE_NAME,
-    Item: {
-      diagramId: JSON.parse(event.body).data,
-      components: [],
-      connections: [],
-      groups: [],
+    Key: {
+      diagramId: JSON.parse(event.body).diagramId,
     },
   };
 
   try {
-    await ddb.put(putParams).promise();
+    await ddb.delete(deleteParams).promise();
   } catch (err) {
     console.log("error:", err);
     return {
       statusCode: 500,
-      body: "Failed to create diagram: " + JSON.stringify(err),
+      body: "Failed to delete diagram: " + JSON.stringify(err),
     };
   }
 
-  return { statusCode: 200, body: "diagram created." };
+  return { statusCode: 200, body: "Diagram deleted." };
 };

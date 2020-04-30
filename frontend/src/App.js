@@ -50,17 +50,46 @@ export class App extends React.Component {
   getDiagrams = () => {
     axios
       .get(`${REST_API_URL}/get-diagrams`)
-      .then((response) => this.setState({ diagrams: response.data }))
+      .then((response) => this.setState({ diagrams: response.data.sort() }))
       .catch((e) => alert(`Could not get diagrams:`, e));
+  };
+
+  createDiagram = ({ diagramName }) => {
+    const { diagrams } = this.state;
+    axios
+      .post(`${REST_API_URL}/create-diagram`, { diagramId: diagramName })
+      .then(() => {
+        this.setState({
+          diagrams: [...diagrams, diagramName],
+        });
+        this.props.history.push(`/diagrams/${diagramName}`);
+      })
+      .catch((e) => alert(`Could not create diagram:`, e));
+  };
+
+  deleteDiagram = (diagramId) => {
+    const { diagrams } = this.state;
+
+    axios
+      .post(`${REST_API_URL}/delete-diagram`, { diagramId: diagramId })
+      .then(() => {
+        const targetIndex = this.state.diagrams.findIndex(
+          (crtDiagramId) => crtDiagramId === diagramId
+        );
+        this.setState({
+          diagrams: [
+            ...diagrams.slice(0, targetIndex),
+            ...diagrams.slice(targetIndex + 1),
+          ],
+        });
+      })
+      .catch((e) => alert(`Could not delete diagram:`, e));
   };
 
   onMessageReceived = (event) => {
     const messageData = JSON.parse(event.data);
     console.log("mesage:", messageData);
     switch (messageData.type) {
-      case "diagramList":
-        this.handleDiagramList(messageData.diagrams);
-        break;
       case "diagramData":
         this.setState({ diagramData: messageData.diagramData });
         break;
@@ -70,10 +99,6 @@ export class App extends React.Component {
       default:
         break;
     }
-  };
-
-  handleDiagramList = (diagrams) => {
-    this.setState({ diagrams: diagrams });
   };
 
   handleChange = (change) => {
@@ -197,20 +222,6 @@ export class App extends React.Component {
     });
   };
 
-  createDiagram = ({ diagramName }) => {
-    const { diagrams } = this.state;
-    this.socket.send(
-      JSON.stringify({ message: "creatediagram", data: diagramName })
-    );
-    this.setState({
-      diagrams: [...diagrams, diagramName],
-    });
-    // the delay is to give it time to actually process the request, until we get a proper REST API in place for this kind of calls
-    setTimeout(() => {
-      this.props.history.push(`/diagrams/${diagramName}`);
-    }, 500);
-  };
-
   joinDiagram = (diagramId) => {
     try {
       this.socket.send(
@@ -250,7 +261,10 @@ export class App extends React.Component {
             <CreateDiagram onSubmit={this.createDiagram} />
           </Route>
           <Route exact path="/">
-            <DiagramList diagrams={this.state.diagrams} />
+            <DiagramList
+              diagrams={this.state.diagrams}
+              deleteDiagram={this.deleteDiagram}
+            />
           </Route>
           <Route exact path="/diagrams/:diagramId">
             <DiagramEditor

@@ -11,11 +11,9 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
-  console.log("This is the new version being called");
   let diagrams;
 
   try {
-    console.log("before db query");
     const diagramsResult = await ddb
       .scan({
         TableName: DIAGRAMS_TABLE_NAME,
@@ -23,12 +21,10 @@ exports.handler = async (event) => {
       })
       .promise();
     diagrams = diagramsResult.Items.map(({ diagramId }) => diagramId);
-    console.log("after db query");
   } catch (e) {
     console.log("Error when reading diagrams: ", e);
     return { statusCode: 500, body: e.stack };
   }
 
-  console.log("these are the diagrams:", diagrams);
-  return { statusCode: 200, body: diagrams };
+  return diagrams;
 };
