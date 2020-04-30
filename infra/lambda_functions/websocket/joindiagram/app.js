@@ -26,6 +26,7 @@ exports.handler = async (event) => {
         Item: {
           diagramId: body.diagramId,
           connectionId: event.requestContext.connectionId,
+          authorId: body.authorId,
         },
       })
       .promise();

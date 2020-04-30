@@ -26,6 +26,7 @@ const COMPONENT_HEIGHT = 100;
 
 export class DiagramEditor extends React.Component {
   socket = undefined;
+  authorId = null;
 
   state = {
     diagramData: null,
@@ -58,6 +59,7 @@ export class DiagramEditor extends React.Component {
     window.addEventListener("mouseup", this.onWindowMouseUp);
     window.addEventListener("mousemove", this.onWindowMouseMove);
 
+    this.generateAuthorId();
     this.initialiseWebSocket();
 
     this.joinDiagram(this.props.match.params.diagramId);
@@ -69,6 +71,10 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("mouseup", this.onWindowMouseUp);
     window.removeEventListener("mousemove", this.onWindowMouseMove);
   }
+
+  generateAuthorId = () => {
+    this.authorId = Math.floor(Math.random() * 1000000000000);
+  };
 
   initialiseWebSocket = () => {
     const newSocket = new WebSocket(
@@ -112,7 +118,11 @@ export class DiagramEditor extends React.Component {
   joinDiagram = (diagramId) => {
     try {
       this.socket.send(
-        JSON.stringify({ message: "joindiagram", diagramId: diagramId })
+        JSON.stringify({
+          message: "joindiagram",
+          diagramId: diagramId,
+          authorId: this.authorId,
+        })
       );
     } catch (e) {
       setTimeout(() => {
