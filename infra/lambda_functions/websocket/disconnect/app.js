@@ -49,19 +49,19 @@ exports.handler = async (event) => {
     console.log("connectionsToRemove: ", connectionsToRemove);
   } catch (e) {
     console.log("Error when deleting connection: ", e);
-    return {
-      statusCode: 500,
-      body: "Failed to disconnect: " + JSON.stringify(e),
-    };
+    // return {
+    //   statusCode: 500,
+    //   body: "Failed to disconnect: " + JSON.stringify(e),
+    // };
   }
 
   const connectionToRemove = connectionsToRemove.Items[0];
   if (!connectionToRemove) {
     console.log("No connection to remove from open diagrams table");
-    return {
-      statusCode: 200,
-      body: "Disconnected",
-    };
+    // return {
+    //   statusCode: 200,
+    //   body: "Disconnected",
+    // };
   }
   console.log("Attempting to remove connection:", connectionToRemove);
 
@@ -79,13 +79,19 @@ exports.handler = async (event) => {
   } catch (e) {
     console.log("Error when deleting connection: ", e);
   }
-
-  if (connectionToRemove && connectionToRemove.isMaster) {
+  if (connectionToRemove.isMaster) {
     console.log("we need to choose a new master");
     await chooseMaster(ddb, connectionToRemove.diagramId);
+  } else {
+    console.log("We do not a new master");
   }
 
-  return { statusCode: 200, body: "Disconnected." };
+  console.log(
+    "We are about to check if we need a new master for:",
+    connectionToRemove
+  );
+
+  // return { statusCode: 200, body: "Disconnected." };
 };
 
 async function chooseMaster(ddb, diagramId) {
@@ -106,7 +112,7 @@ async function chooseMaster(ddb, diagramId) {
       .promise();
   } catch (e) {
     console.log("Error when querying the users on the open diagram: ", e);
-    return { statusCode: 500, body: e.stack };
+    // return { statusCode: 500, body: e.stack };
   }
 
   if (usersOnDiagramResult.Items.length === 0) {
@@ -128,7 +134,7 @@ async function chooseMaster(ddb, diagramId) {
       .promise();
   } catch (e) {
     console.log("Failed to notify user they are master");
-    return { statusCode: 500, body: "User dropped off" };
+    // return { statusCode: 500, body: "User dropped off" };
   }
 
   try {
@@ -143,6 +149,6 @@ async function chooseMaster(ddb, diagramId) {
       .promise();
   } catch (e) {
     console.log("Error when adding user to open diagram: ", e);
-    return { statusCode: 500, body: e.stack };
+    // return { statusCode: 500, body: e.stack };
   }
 }
