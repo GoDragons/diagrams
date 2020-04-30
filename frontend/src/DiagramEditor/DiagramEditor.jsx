@@ -75,6 +75,7 @@ export class DiagramEditor extends React.Component {
 
   generateAuthorId = () => {
     this.authorId = Math.floor(Math.random() * 1000000000000);
+    console.log("authorId:", this.authorId);
   };
 
   initialiseWebSocket = () => {
@@ -100,6 +101,7 @@ export class DiagramEditor extends React.Component {
       case "master":
         this.master = true;
         console.log("we are master");
+
         break;
       case "diagramData":
         this.setState({ diagramData: messageData.diagramData });

@@ -31,7 +31,7 @@ exports.handler = async (event) => {
       })
       .promise();
   } catch (e) {
-    console.log("Error when adding user to open diagram: ", e);
+    console.log("Error when querying the users on the open diagram: ", e);
     return { statusCode: 500, body: e.stack };
   }
 
