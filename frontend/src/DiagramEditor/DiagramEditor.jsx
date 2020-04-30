@@ -27,6 +27,7 @@ const COMPONENT_HEIGHT = 100;
 export class DiagramEditor extends React.Component {
   socket = undefined;
   authorId = null;
+  master = false;
 
   state = {
     diagramData: null,
@@ -96,6 +97,10 @@ export class DiagramEditor extends React.Component {
     const messageData = JSON.parse(event.data);
     console.log("message:", messageData);
     switch (messageData.type) {
+      case "master":
+        this.master = true;
+        console.log("we are master");
+        break;
       case "diagramData":
         this.setState({ diagramData: messageData.diagramData });
         break;
@@ -103,15 +108,24 @@ export class DiagramEditor extends React.Component {
         this.setState({ connectionId: messageData.connectionId });
         break;
       case "change":
-        this.setState({
-          diagramData: applyChangeToDiagramData({
-            change: messageData.change,
-            diagramData: this.state.diagramData,
-          }),
-        });
+        this.handleChange(messageData);
         break;
       default:
         break;
+    }
+  };
+
+  handleChange = (messageData) => {
+    const newDiagramData = applyChangeToDiagramData({
+      change: messageData.change,
+      diagramData: this.state.diagramData,
+    });
+    this.setState({
+      diagramData: newDiagramData,
+    });
+    if (this.master) {
+      console.log("We are master, saving diagram to database");
+      this.props.save(newDiagramData);
     }
   };
 

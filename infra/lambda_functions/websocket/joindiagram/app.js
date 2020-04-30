@@ -19,6 +19,40 @@ exports.handler = async (event) => {
       event.requestContext.domainName + "/" + event.requestContext.stage,
   });
 
+  let usersOnDiagramResult;
+  try {
+    usersOnDiagramResult = await ddb
+      .query({
+        TableName: OPEN_DIAGRAMS_TABLE_NAME,
+        KeyConditionExpression: "diagramId = :d",
+        ExpressionAttributeValues: {
+          ":d": body.diagramId,
+        },
+      })
+      .promise();
+  } catch (e) {
+    console.log("Error when adding user to open diagram: ", e);
+    return { statusCode: 500, body: e.stack };
+  }
+
+  let newUsersIsMaster = false;
+  if (usersOnDiagramResult.Items.length === 0) {
+    newUsersIsMaster = true;
+    try {
+      await apigwManagementApi
+        .postToConnection({
+          ConnectionId: event.requestContext.connectionId,
+          Data: JSON.stringify({
+            type: "master",
+          }),
+        })
+        .promise();
+    } catch (e) {
+      console.log("Failed to notify user they are master");
+      return { statusCode: 500, body: "User dropped off" };
+    }
+  }
+
   try {
     await ddb
       .put({
@@ -27,6 +61,7 @@ exports.handler = async (event) => {
           diagramId: body.diagramId,
           connectionId: event.requestContext.connectionId,
           authorId: body.authorId,
+          isMaster: newUsersIsMaster,
         },
       })
       .promise();
