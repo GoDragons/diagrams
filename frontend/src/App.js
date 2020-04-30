@@ -68,7 +68,6 @@ export class App extends React.Component {
   };
 
   saveDiagram = () => {
-    console.log("saveDiagram()");
     const { diagramData } = this.state;
     axios
       .post(`${REST_API_URL}/save`, { diagramData })
