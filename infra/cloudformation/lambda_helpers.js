@@ -1,5 +1,3 @@
-const { template, functions } = require("./baseTemplate");
-
 function makeNameCamelCase({ name, firstWordLowerCase = true }) {
   const components = name.split("-");
   const componentsCamelCase = components.map((component, i) => {
@@ -12,9 +10,9 @@ function makeNameCamelCase({ name, firstWordLowerCase = true }) {
   return componentsCamelCase.join("");
 }
 
-function addRoute(functionData) {
+function addRoute({ template, functionDetails }) {
   const functionNameCamelCase = makeNameCamelCase({
-    name: functionData.name,
+    name: functionDetails.name,
     firstWordLowerCase: false,
   });
 
@@ -22,9 +20,9 @@ function addRoute(functionData) {
     Type: "AWS::ApiGatewayV2::Route",
     Properties: {
       ApiId: {
-        Ref: functionData.apiName,
+        Ref: functionDetails.apiName,
       },
-      RouteKey: functionData.routeKey || functionData.name.split("-").join(""),
+
       AuthorizationType: "NONE",
       OperationName: `${functionNameCamelCase}Route`,
       Target: {
@@ -38,39 +36,50 @@ function addRoute(functionData) {
           ],
         ],
       },
+      ...functionDetails.route,
     },
   };
 
   template.Resources[`${functionNameCamelCase}Route`] = data;
-  template.Resources.Deployment.DependsOn.push(`${functionNameCamelCase}Route`);
 }
 
-function addIntegration(functionData) {
+function addIntegration({ template, functionDetails }) {
   const functionNameCamelCase = makeNameCamelCase({
-    name: functionData.name,
+    name: functionDetails.name,
     firstWordLowerCase: false,
   });
   const data = {
     Type: "AWS::ApiGatewayV2::Integration",
     Properties: {
       ApiId: {
-        Ref: functionData.apiName,
+        Ref: functionDetails.apiName,
       },
-      Description: `${functionData.name.split("-").join(" ")} Integration`,
+      Description: `${functionDetails.name.split("-").join(" ")} Integration`,
       IntegrationType: "AWS_PROXY",
       IntegrationUri: {
         "Fn::Sub": `arn:aws:apigateway:\${AWS::Region}:lambda:path/2015-03-31/functions/\${${functionNameCamelCase}Function.Arn}/invocations`,
       },
+      ...functionDetails.integration,
     },
   };
+  if (functionDetails.PayloadFormatVersion) {
+    data.Properties.PayloadFormatVersion = functionDetails.PayloadFormatVersion;
+  }
 
   template.Resources[`${functionNameCamelCase}Integ`] = data;
 }
 
-function addFunction(functionData) {
-  const { apiName, name, routeKey, ...functionProperties } = functionData;
+function addFunction({ template, functionDetails }) {
+  const {
+    apiName,
+    name,
+    route,
+    integration,
+    isWebSocket,
+    ...functionProperties
+  } = functionDetails;
   const functionNameCamelCase = makeNameCamelCase({
-    name: functionData.name,
+    name: functionDetails.name,
     firstWordLowerCase: false,
   });
 
@@ -78,7 +87,6 @@ function addFunction(functionData) {
     Type: "AWS::Serverless::Function",
     Properties: {
       FunctionName: functionNameCamelCase,
-      CodeUri: `${functionData.name.split("-").join("")}/`,
       Handler: "app.handler",
       MemorySize: 128,
       Runtime: "nodejs12.x",
@@ -87,11 +95,21 @@ function addFunction(functionData) {
   };
 
   template.Resources[`${functionNameCamelCase}Function`] = data;
+
+  if (isWebSocket && template.Resources.WebsocketDeployment) {
+    template.Resources.WebsocketDeployment.DependsOn.push(
+      `${functionNameCamelCase}Route`
+    );
+  } else if (!isWebSocket && template.Resources.RESTDeployment) {
+    template.Resources.RESTDeployment.DependsOn.push(
+      `${functionNameCamelCase}Route`
+    );
+  }
 }
 
-function addLogGroup(functionData) {
+function addLogGroup({ template, functionDetails }) {
   const functionNameCamelCase = makeNameCamelCase({
-    name: functionData.name,
+    name: functionDetails.name,
     firstWordLowerCase: false,
   });
 
@@ -112,15 +130,15 @@ function addLogGroup(functionData) {
   template.Resources[`${functionNameCamelCase}LogGroup`] = data;
 }
 
-function addPermission(functionData) {
+function addPermission({ template, functionDetails }) {
   const functionNameCamelCase = makeNameCamelCase({
-    name: functionData.name,
+    name: functionDetails.name,
     firstWordLowerCase: false,
   });
 
   const data = {
     Type: "AWS::Lambda::Permission",
-    DependsOn: [functionData.apiName],
+    DependsOn: [functionDetails.apiName],
     Properties: {
       Action: "lambda:InvokeFunction",
       FunctionName: {
@@ -133,21 +151,19 @@ function addPermission(functionData) {
   template.Resources[`${functionNameCamelCase}Permission`] = data;
 }
 
-function addFunctions(functionList) {
-  functionList.forEach((functionData) => {
-    addRoute(functionData);
-    addIntegration(functionData);
-    addFunction(functionData);
-    addPermission(functionData);
-    addLogGroup(functionData);
+function addFunctions({ template, functions }) {
+  functions.forEach((functionDetails) => {
+    addRoute({ template, functionDetails });
+    addIntegration({ template, functionDetails });
+    addFunction({ template, functionDetails });
+    addPermission({ template, functionDetails });
+    // addLogGroup({template, functionDetails});
   });
 }
 
-const fs = require("fs");
+function addLambdaResources({ template, functions }) {
+  addFunctions({ template, functions });
+  return template;
+}
 
-addFunctions(functions);
-
-const TEMPLATE_FILE_PATH = "template.json";
-
-fs.writeFileSync(TEMPLATE_FILE_PATH, JSON.stringify(template, null, 2));
-console.log("Template file created");
+module.exports = { addLambdaResources };

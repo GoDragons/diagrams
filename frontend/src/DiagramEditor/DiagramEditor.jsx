@@ -398,10 +398,6 @@ export class DiagramEditor extends React.Component {
     });
   };
 
-  save = () => {
-    this.props.save();
-  };
-
   onComponentContextMenu = (e, componentId) => {
     e.preventDefault();
     this.setState({
@@ -580,7 +576,7 @@ export class DiagramEditor extends React.Component {
 
     return (
       <div className="diagram-editor">
-        <button onClick={this.save} className="save">
+        <button onClick={this.props.save} className="save">
           Save
         </button>
         <button
@@ -589,7 +585,7 @@ export class DiagramEditor extends React.Component {
         >
           Grid Snap: {isGridSnapActive ? "on" : "off"}
         </button>
-        <button onClick={this.save} className="home">
+        <button className="home">
           <Link to="/">Home</Link>
         </button>
         <ComponentList onSelect={this.addComponent} />

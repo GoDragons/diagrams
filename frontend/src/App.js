@@ -2,12 +2,22 @@ import React from "react";
 import "./App.css";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
+import axios from "axios";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import CreateDiagram from "./CreateDiagram/CreateDiagram";
 import DiagramList from "./DiagramList/DiagramList";
 
-const API_ID = "j6ykmh4qbi";
+import STACK_OUTPUT from "./cloudformation_output.json";
+
+function getCloudFormationOuputByName(outputKey) {
+  const outputs = STACK_OUTPUT.Stacks[0].Outputs;
+  return outputs.find((output) => output.OutputKey === outputKey).OutputValue;
+}
+
+const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
+const REST_API_ID = getCloudFormationOuputByName("RESTSocketApiId");
+const REST_API_URL = `https://${REST_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`;
 
 export class App extends React.Component {
   socket = undefined;
@@ -17,8 +27,13 @@ export class App extends React.Component {
   };
 
   componentDidMount() {
+    this.initialiseWebSocket();
+    this.getDiagrams();
+  }
+
+  initialiseWebSocket = () => {
     const newSocket = new WebSocket(
-      `wss://${API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
+      `wss://${WEBSOCKET_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
     );
 
     this.socket = newSocket;
@@ -26,20 +41,65 @@ export class App extends React.Component {
     // Connection opened
     newSocket.addEventListener("open", (event) => {
       console.log("connection open");
-      this.socket.send(JSON.stringify({ message: "getdiagrams", data: "" }));
     });
 
     // Listen for messages
     newSocket.addEventListener("message", this.onMessageReceived);
-  }
+  };
+
+  getDiagrams = () => {
+    axios
+      .get(`${REST_API_URL}/get-diagrams`)
+      .then((response) => this.setState({ diagrams: response.data.sort() }))
+      .catch((e) => alert(`Could not get diagrams:`, e));
+  };
+
+  createDiagram = ({ diagramName }) => {
+    const { diagrams } = this.state;
+    axios
+      .post(`${REST_API_URL}/create-diagram`, { diagramId: diagramName })
+      .then(() => {
+        this.setState({
+          diagrams: [...diagrams, diagramName],
+        });
+        this.props.history.push(`/diagrams/${diagramName}`);
+      })
+      .catch((e) => alert(`Could not create diagram:`, e));
+  };
+
+  saveDiagram = () => {
+    const { diagramData } = this.state;
+    axios
+      .post(`${REST_API_URL}/save`, { diagramData })
+      .then(() => {
+        alert("Diagram saved successfully");
+      })
+      .catch((e) => alert(`Could not save diagram:`, e));
+  };
+
+  deleteDiagram = (diagramId) => {
+    const { diagrams } = this.state;
+
+    axios
+      .post(`${REST_API_URL}/delete-diagram`, { diagramId: diagramId })
+      .then(() => {
+        const targetIndex = this.state.diagrams.findIndex(
+          (crtDiagramId) => crtDiagramId === diagramId
+        );
+        this.setState({
+          diagrams: [
+            ...diagrams.slice(0, targetIndex),
+            ...diagrams.slice(targetIndex + 1),
+          ],
+        });
+      })
+      .catch((e) => alert(`Could not delete diagram:`, e));
+  };
 
   onMessageReceived = (event) => {
     const messageData = JSON.parse(event.data);
     console.log("mesage:", messageData);
     switch (messageData.type) {
-      case "diagramList":
-        this.handleDiagramList(messageData.diagrams);
-        break;
       case "diagramData":
         this.setState({ diagramData: messageData.diagramData });
         break;
@@ -49,10 +109,6 @@ export class App extends React.Component {
       default:
         break;
     }
-  };
-
-  handleDiagramList = (diagrams) => {
-    this.setState({ diagrams: diagrams });
   };
 
   handleChange = (change) => {
@@ -176,20 +232,6 @@ export class App extends React.Component {
     });
   };
 
-  createDiagram = ({ diagramName }) => {
-    const { diagrams } = this.state;
-    this.socket.send(
-      JSON.stringify({ message: "creatediagram", data: diagramName })
-    );
-    this.setState({
-      diagrams: [...diagrams, diagramName],
-    });
-    // the delay is to give it time to actually process the request, until we get a proper REST API in place for this kind of calls
-    setTimeout(() => {
-      this.props.history.push(`/diagrams/${diagramName}`);
-    }, 500);
-  };
-
   joinDiagram = (diagramId) => {
     try {
       this.socket.send(
@@ -212,15 +254,6 @@ export class App extends React.Component {
     );
   };
 
-  save = () => {
-    this.socket.send(
-      JSON.stringify({
-        message: "save",
-        diagramData: this.state.diagramData,
-      })
-    );
-  };
-
   render() {
     return (
       <div className="app">
@@ -229,13 +262,16 @@ export class App extends React.Component {
             <CreateDiagram onSubmit={this.createDiagram} />
           </Route>
           <Route exact path="/">
-            <DiagramList diagrams={this.state.diagrams} />
+            <DiagramList
+              diagrams={this.state.diagrams}
+              deleteDiagram={this.deleteDiagram}
+            />
           </Route>
           <Route exact path="/diagrams/:diagramId">
             <DiagramEditor
               data={this.state.diagramData}
               sendChange={this.sendChange}
-              save={this.save}
+              save={this.saveDiagram}
               moveComponent={this.moveComponent}
               joinDiagram={this.joinDiagram}
             />

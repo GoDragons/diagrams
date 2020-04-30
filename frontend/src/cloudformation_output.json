@@ -1,0 +1,45 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:eu-west-2:994541973446:stack/diagrams/406c2860-8ac2-11ea-9ac5-060e4e394d84",
+            "StackName": "diagrams",
+            "ChangeSetId": "arn:aws:cloudformation:eu-west-2:994541973446:changeSet/samcli-deploy1588245350/19d5d496-7d90-4936-8dcf-65552ab8156f",
+            "Description": "API for an online collaboration tool used to build system design diagrams",
+            "Parameters": [
+                {
+                    "ParameterKey": "OpenDiagramsTable",
+                    "ParameterValue": "diagrams_app_open_diagrams"
+                },
+                {
+                    "ParameterKey": "DiagramsTable",
+                    "ParameterValue": "diagrams_app_diagrams"
+                },
+                {
+                    "ParameterKey": "ConnectionsTable",
+                    "ParameterValue": "diagrams_app_connections"
+                }
+            ],
+            "CreationTime": "2020-04-30T09:09:09.861Z",
+            "LastUpdatedTime": "2020-04-30T11:16:00.485Z",
+            "RollbackConfiguration": {},
+            "StackStatus": "UPDATE_COMPLETE",
+            "DisableRollback": false,
+            "NotificationARNs": [],
+            "Capabilities": [
+                "CAPABILITY_NAMED_IAM"
+            ],
+            "Outputs": [
+                {
+                    "OutputKey": "RESTSocketApiId",
+                    "OutputValue": "t8utpcyab7"
+                },
+                {
+                    "OutputKey": "WebSocketApiId",
+                    "OutputValue": "7yjmov8r5k"
+                }
+            ],
+            "Tags": [],
+            "EnableTerminationProtection": false
+        }
+    ]
+}

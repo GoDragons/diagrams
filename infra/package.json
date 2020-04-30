@@ -1,11 +1,14 @@
 {
   "scripts": {
-    "sam_package": "sam package --use-json --template-file template.json --s3-bucket godragons-chat --output-template-file .sam_package/packaged.json",
-    "sam_deploy": "sam deploy --use-json  --stack-name diagrams --template-file .sam_package/packaged.json --s3-bucket godragons-chat --region eu-west-2 --capabilities CAPABILITY_IAM --capabilities CAPABILITY_NAMED_IAM",
-    "compute_template": "node infra.js ",
-    "cleanup_pre": "rm -rf .sam_package && mkdir .sam_package",
-    "cleanup_post": "rm template.json",
-    "deploy": "npm run cleanup_pre && npm run compute_template && npm run sam_package && npm run cleanup_post && npm run sam_deploy",
+    "sam_package": "sam package --use-json --template-file .sam_package/pre_packaged.json --s3-bucket godragons-chat --output-template-file .sam_package/packaged.json",
+    "sam_deploy": "sam deploy --use-json  --stack-name diagrams --template-file .sam_package/packaged.json --s3-bucket godragons-chat --region eu-west-2 --capabilities CAPABILITY_IAM --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset",
+    "compute_template": "node cloudformation/main.js ",
+    "cleanup_pre": "rm -rf .sam_package && mkdir .sam_package ",
+    "cleanup_post": "",
+    "describe-and-save": "aws cloudformation --region eu-west-2 describe-stacks --stack-name diagrams > output.json && npm run move-output-to-src",
+    "describe": "aws cloudformation --region eu-west-2 describe-stacks --stack-name diagrams",
+    "move-output-to-src": "mv output.json ../frontend/src/cloudformation_output.json",
+    "deploy": "clear && npm run cleanup_pre && npm run compute_template && npm run sam_package && npm run cleanup_post && npm run sam_deploy && npm run describe-and-save > /dev/null",
     "destroy": "aws cloudformation delete-stack --stack-name diagrams"
   }
 }
