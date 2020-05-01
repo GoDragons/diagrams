@@ -19,6 +19,8 @@ exports.handler = async (event) => {
       event.requestContext.domainName + "/" + event.requestContext.stage,
   });
 
+  console.log("event body:", body);
+
   let usersOnDiagramResult;
   try {
     usersOnDiagramResult = await ddb
@@ -82,12 +84,14 @@ exports.handler = async (event) => {
       })
       .promise();
     diagramData = diagramResult.Item;
+    console.log("diagramData:", diagramData);
   } catch (e) {
     console.log("Error when reading diagram: ", e);
     return { statusCode: 500, body: e.stack };
   }
 
   try {
+    console.log("Sending the diagram data to the user");
     await apigwManagementApi
       .postToConnection({
         ConnectionId: event.requestContext.connectionId,

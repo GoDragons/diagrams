@@ -13,13 +13,15 @@ export default function DiagramList({ diagrams, deleteDiagram }) {
       return <p>There are no diagrams. Create one now!</p>;
     }
 
-    return diagrams.map((diagramId) => (
+    return diagrams.map(({ diagramId, lastModified, revisionName }) => (
       <div className="diagram-item" key={diagramId}>
         <Link to={`/diagrams/${diagramId}`}>
           <h3 className="title">{diagramId}</h3>
         </Link>
-        <p className="created">Created on: 01 Feb 2020</p>
-        <button onClick={(e) => deleteDiagram(diagramId)}>Delete</button>
+        <p className="created">Last modified: {lastModified}</p>
+        <p className="revision-id">Revision ID: {0}</p>
+        <p className="revision-id">Revision Name: {revisionName}</p>
+        <button onClick={(e) => deleteDiagram({ diagramId })}>Delete</button>
       </div>
     ));
   }

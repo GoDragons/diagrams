@@ -10,8 +10,7 @@ import DiagramList from "DiagramList/DiagramList";
 
 import { getCloudFormationOuputByName } from "common/outputParser.js";
 
-const REST_API_ID = getCloudFormationOuputByName("RESTSocketApiId");
-const REST_API_URL = `https://${REST_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`;
+import { REST_API_URL } from "common/constants";
 
 export class App extends React.Component {
   state = {
@@ -42,20 +41,11 @@ export class App extends React.Component {
       .catch((e) => alert(`Could not create diagram:`, e));
   };
 
-  saveDiagram = (diagramData) => {
-    axios
-      .post(`${REST_API_URL}/save`, { diagramData })
-      .then(() => {
-        // alert("Diagram saved successfully");
-      })
-      .catch((e) => alert(`Could not save diagram:`, e));
-  };
-
-  deleteDiagram = (diagramId) => {
+  deleteDiagram = ({ diagramId }) => {
     const { diagrams } = this.state;
 
     axios
-      .post(`${REST_API_URL}/delete-diagram`, { diagramId: diagramId })
+      .post(`${REST_API_URL}/delete-diagram`, { diagramId })
       .then(() => {
         const targetIndex = this.state.diagrams.findIndex(
           (crtDiagramId) => crtDiagramId === diagramId
@@ -84,7 +74,7 @@ export class App extends React.Component {
             />
           </Route>
           <Route exact path="/diagrams/:diagramId">
-            <DiagramEditor save={this.saveDiagram} />
+            <DiagramEditor />
           </Route>
         </Switch>
       </div>

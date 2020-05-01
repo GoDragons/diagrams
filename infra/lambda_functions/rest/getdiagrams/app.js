@@ -17,10 +17,10 @@ exports.handler = async (event) => {
     const diagramsResult = await ddb
       .scan({
         TableName: DIAGRAMS_TABLE_NAME,
-        ProjectionExpression: "diagramId",
+        ProjectionExpression: "diagramId, lastModified, revisionName",
       })
       .promise();
-    diagrams = diagramsResult.Items.map(({ diagramId }) => diagramId);
+    diagrams = diagramsResult.Items;
   } catch (e) {
     console.log("Error when reading diagrams: ", e);
     return { statusCode: 500, body: e.stack };

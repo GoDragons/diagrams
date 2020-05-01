@@ -1,8 +1,14 @@
 .diagram-list-container {
   text-align: center;
+  padding-top: 2rem;
 
   .diagram-list {
     display: flex;
+
+    & > p {
+      width: 100%;
+      text-align: center;
+    }
   }
 
   .diagram-item {

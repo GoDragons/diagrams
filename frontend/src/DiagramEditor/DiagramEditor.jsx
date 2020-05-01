@@ -7,13 +7,17 @@ import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
+import RevisionModal from "./RevisionModal/RevisionModal";
 
 import { withRouter, Link } from "react-router-dom";
 import cx from "classnames";
+import axios from "axios";
 
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
 
 import { getCloudFormationOuputByName } from "common/outputParser.js";
+
+import { REST_API_URL } from "common/constants";
 
 const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
 
@@ -30,6 +34,7 @@ export class DiagramEditor extends React.Component {
 
   state = {
     isMaster: false,
+    isRevisionModalOpen: false,
     diagramData: null,
     selectedComponentId: null,
     selectedConnectionId: null,
@@ -124,8 +129,27 @@ export class DiagramEditor extends React.Component {
       diagramData: newDiagramData,
     });
     if (this.state.isMaster) {
-      this.props.save(newDiagramData);
+      this.saveDiagram(newDiagramData);
     }
+  };
+
+  createRevision = ({ revisionName }) => {
+    const { diagramData } = this.state;
+    this.setState({ isRevisionModalOpen: false });
+
+    axios
+      .post(`${REST_API_URL}/create-revision`, { diagramData, revisionName })
+      .then((response) => {
+        console.log("Revision created:", response.data);
+      })
+      .catch((e) => alert(`Could not create revision:`, e));
+  };
+
+  saveDiagram = (diagramData) => {
+    axios
+      .post(`${REST_API_URL}/save`, { diagramData })
+      .then(() => {})
+      .catch((e) => alert(`Could not save diagram:`, e));
   };
 
   joinDiagram = (diagramId) => {
@@ -133,14 +157,14 @@ export class DiagramEditor extends React.Component {
       this.socket.send(
         JSON.stringify({
           message: "joindiagram",
-          diagramId: diagramId,
+          diagramId,
           authorId: this.authorId,
         })
       );
     } catch (e) {
       setTimeout(() => {
         this.joinDiagram(diagramId);
-      }, 100);
+      }, 300);
     }
   };
 
@@ -669,6 +693,14 @@ export class DiagramEditor extends React.Component {
     return <Connection key="new-connection" style={style} />;
   };
 
+  displayRevisionModal = () => {
+    if (!this.state.isRevisionModalOpen) {
+      return null;
+    }
+
+    return <RevisionModal onSubmit={this.createRevision} />;
+  };
+
   render() {
     const {
       canvasX,
@@ -684,8 +716,12 @@ export class DiagramEditor extends React.Component {
 
     return (
       <div className="diagram-editor">
-        <button onClick={() => this.props.save(diagramData)} className="save">
-          Save
+        {this.displayRevisionModal()}
+        <button
+          onClick={(e) => this.setState({ isRevisionModalOpen: true })}
+          className="create-revision"
+        >
+          Create Revision
         </button>
         {isMaster ? <span className="is-master">master</span> : null}
         <button

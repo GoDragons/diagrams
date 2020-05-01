@@ -12,7 +12,8 @@ exports.handler = async (event) => {
   const putParams = {
     TableName: process.env.DIAGRAMS_TABLE_NAME,
     Item: {
-      diagramId: JSON.parse(event.body).diagramId,
+      diagramId: `${JSON.parse(event.body).diagramId}-${Date.now()}`,
+      lastModified: Date.now(),
       components: [],
       connections: [],
       groups: [],
