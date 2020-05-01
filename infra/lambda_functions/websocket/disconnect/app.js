@@ -17,6 +17,12 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 const { CONNECTIONS_TABLE_NAME, OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 
 exports.handler = async (event) => {
+  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+    apiVersion: "2018-11-29",
+    endpoint:
+      event.requestContext.domainName + "/" + event.requestContext.stage,
+  });
+
   // delete item from connections data
   const deleteParamsConnection = {
     TableName: CONNECTIONS_TABLE_NAME,
@@ -79,22 +85,23 @@ exports.handler = async (event) => {
   } catch (e) {
     console.log("Error when deleting connection: ", e);
   }
-  if (connectionToRemove.isMaster) {
-    console.log("we need to choose a new master");
-    await chooseMaster(ddb, connectionToRemove.diagramId);
-  } else {
-    console.log("We do not a new master");
-  }
 
   console.log(
     "We are about to check if we need a new master for:",
     connectionToRemove
   );
 
+  if (connectionToRemove.isMaster) {
+    console.log("we need to choose a new master");
+    await chooseMaster(ddb, connectionToRemove.diagramId, apigwManagementApi);
+  } else {
+    console.log("We do not a new master");
+  }
+
   // return { statusCode: 200, body: "Disconnected." };
 };
 
-async function chooseMaster(ddb, diagramId) {
+async function chooseMaster(ddb, diagramId, apigwManagementApi) {
   /* 
   TODO: if the newly-chosen master can't be reached, 
    it needs to be deleted and this function should retry

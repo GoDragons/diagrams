@@ -27,9 +27,9 @@ const COMPONENT_HEIGHT = 100;
 export class DiagramEditor extends React.Component {
   socket = undefined;
   authorId = null;
-  master = false;
 
   state = {
+    isMaster: false,
     diagramData: null,
     selectedComponentId: null,
     selectedConnectionId: null,
@@ -99,7 +99,7 @@ export class DiagramEditor extends React.Component {
     console.log("message:", messageData);
     switch (messageData.type) {
       case "master":
-        this.master = true;
+        this.setState({ isMaster: true });
         console.log("we are master");
 
         break;
@@ -679,6 +679,7 @@ export class DiagramEditor extends React.Component {
       canvasScale,
       isGridSnapActive,
       diagramData,
+      isMaster,
     } = this.state;
     if (!diagramData) {
       return <p>Loading...</p>;
@@ -689,6 +690,7 @@ export class DiagramEditor extends React.Component {
         <button onClick={() => this.props.save(diagramData)} className="save">
           Save
         </button>
+        {isMaster ? <span className="is-master">master</span> : null}
         <button
           onClick={() => this.setState({ isGridSnapActive: !isGridSnapActive })}
           className={cx("grid-snap", { on: isGridSnapActive })}
