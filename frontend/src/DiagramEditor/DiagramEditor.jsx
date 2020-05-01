@@ -113,16 +113,16 @@ export class DiagramEditor extends React.Component {
         this.setState({ connectionId: messageData.connectionId });
         break;
       case "change":
-        this.handleChange(messageData);
+        this.handleChange(messageData.change);
         break;
       default:
         break;
     }
   };
 
-  handleChange = (messageData) => {
+  handleChange = (change) => {
     const newDiagramData = applyChangeToDiagramData({
-      change: messageData.change,
+      change,
       diagramData: this.state.diagramData,
     });
     this.setState({
@@ -169,12 +169,14 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  sendChange = (changeData) => {
+  sendChange = (change) => {
+    this.handleChange(change);
+
     this.socket.send(
       JSON.stringify({
         message: "sendchange",
         diagramId: this.state.diagramData.diagramId,
-        change: changeData,
+        change: { ...change, authorId: this.authorId },
       })
     );
   };
