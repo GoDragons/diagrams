@@ -76,6 +76,8 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("keydown", this.onKeyDown);
     window.removeEventListener("mouseup", this.onWindowMouseUp);
     window.removeEventListener("mousemove", this.onWindowMouseMove);
+
+    this.socket.close();
   }
 
   generateAuthorId = () => {
