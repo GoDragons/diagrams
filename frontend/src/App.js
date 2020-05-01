@@ -1,5 +1,5 @@
 import React from "react";
-import "App.css";
+import "App.scss";
 import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
 
 import axios from "axios";
@@ -7,8 +7,6 @@ import { Route, Switch, withRouter } from "react-router-dom";
 
 import CreateDiagram from "CreateDiagram/CreateDiagram";
 import DiagramList from "DiagramList/DiagramList";
-
-import { getCloudFormationOuputByName } from "common/outputParser.js";
 
 import { REST_API_URL } from "common/constants";
 
@@ -32,11 +30,9 @@ export class App extends React.Component {
     const { diagrams } = this.state;
     axios
       .post(`${REST_API_URL}/create-diagram`, { diagramId: diagramName })
-      .then(() => {
-        this.setState({
-          diagrams: [...diagrams, diagramName],
-        });
-        this.props.history.push(`/diagrams/${diagramName}`);
+      .then((response) => {
+        this.getDiagrams();
+        this.props.history.push(`/diagrams/${response.data.diagramId}`);
       })
       .catch((e) => alert(`Could not create diagram:`, e));
   };

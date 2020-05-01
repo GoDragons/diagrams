@@ -9,11 +9,13 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
+  const newDiagramId = `${JSON.parse(event.body).diagramId}-${Date.now()}`;
   const putParams = {
     TableName: process.env.DIAGRAMS_TABLE_NAME,
     Item: {
-      diagramId: `${JSON.parse(event.body).diagramId}-${Date.now()}`,
+      diagramId: newDiagramId,
       lastModified: Date.now(),
+      revisionName: "Initial Version",
       components: [],
       connections: [],
       groups: [],
@@ -30,5 +32,5 @@ exports.handler = async (event) => {
     };
   }
 
-  return { statusCode: 200, body: "Diagram created." };
+  return { diagramId: newDiagramId };
 };

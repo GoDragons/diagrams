@@ -31,5 +31,41 @@
       color: #888;
       font-size: 0.8rem;
     }
+
+    .revisions {
+      list-style-type: none;
+      padding-left: 0;
+
+      .revision-item {
+        font-size: 0.9rem;
+        font-weight: bold;
+        padding: 0.5rem;
+
+        border: 1px solid transparent;
+
+        &:not(:last-child) {
+          border-bottom-color: #f1f1f1;
+        }
+
+        &:hover {
+          background-color: #f6f6f6;
+        }
+
+        a {
+          color: #444;
+        }
+
+        .revision-name {
+          display: block;
+        }
+
+        .last-modified {
+          display: block;
+          // font-weight: regular;
+          // color: #999;
+          font-weight: 400;
+        }
+      }
+    }
   }
 }

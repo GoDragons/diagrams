@@ -140,6 +140,7 @@ export class DiagramEditor extends React.Component {
     axios
       .post(`${REST_API_URL}/create-revision`, { diagramData, revisionName })
       .then((response) => {
+        window.location = `/diagrams/${response.data.diagramId}`;
         console.log("Revision created:", response.data);
       })
       .catch((e) => alert(`Could not create revision:`, e));
@@ -698,7 +699,12 @@ export class DiagramEditor extends React.Component {
       return null;
     }
 
-    return <RevisionModal onSubmit={this.createRevision} />;
+    return (
+      <RevisionModal
+        onSubmit={this.createRevision}
+        onClose={() => this.setState({ isRevisionModalOpen: false })}
+      />
+    );
   };
 
   render() {

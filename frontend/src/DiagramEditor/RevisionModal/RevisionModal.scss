@@ -15,5 +15,27 @@
     max-width: 400px;
     background-color: white;
     padding: 2rem;
+
+    input {
+      display: block;
+      width: 100%;
+      margin-top: 1rem;
+      text-align: center;
+
+      &::placeholder {
+        color: #ccc;
+      }
+    }
+
+    .label {
+      margin: 0;
+
+      .explanation {
+        font-size: 0.9rem;
+        display: block;
+        color: #999;
+        margin-bottom: 0;
+      }
+    }
   }
 }
