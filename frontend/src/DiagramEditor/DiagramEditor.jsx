@@ -67,7 +67,6 @@ export class DiagramEditor extends React.Component {
 
     this.generateAuthorId();
     this.initialiseWebSocket();
-
     this.joinDiagram(this.props.match.params.diagramId);
   }
 
@@ -77,6 +76,7 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("mouseup", this.onWindowMouseUp);
     window.removeEventListener("mousemove", this.onWindowMouseMove);
 
+    this.socket.removeEventListener("close", this.onSocketClosed);
     this.socket.close();
   }
 
@@ -96,9 +96,16 @@ export class DiagramEditor extends React.Component {
     newSocket.addEventListener("open", (event) => {
       console.log("connection open");
     });
+    newSocket.addEventListener("close", this.onSocketClosed);
 
     // Listen for messages
     newSocket.addEventListener("message", this.onMessageReceived);
+  };
+
+  onSocketClosed = () => {
+    console.log("connection has been closed, reopening");
+    this.initialiseWebSocket();
+    this.joinDiagram(this.props.match.params.diagramId);
   };
 
   onMessageReceived = (event) => {
