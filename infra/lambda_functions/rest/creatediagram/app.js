@@ -19,6 +19,7 @@ exports.handler = async (event) => {
       components: [],
       connections: [],
       groups: [],
+      messages: [],
     },
   };
 

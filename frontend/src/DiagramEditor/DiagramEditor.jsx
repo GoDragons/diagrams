@@ -8,6 +8,7 @@ import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
 import RevisionModal from "./RevisionModal/RevisionModal";
+import ChatBox from "./ChatBox/ChatBox";
 
 import { withRouter, Link } from "react-router-dom";
 import cx from "classnames";
@@ -130,21 +131,35 @@ export class DiagramEditor extends React.Component {
   };
 
   handleChange = (change) => {
+    const { diagramData } = this.state;
+    let newDiagramData = diagramData;
     switch (change.operation) {
       case "newVersion":
         window.location = `/diagrams/${change.data.diagramId}`;
         return;
+      case "chatMessage":
+        console.log("chatMessage change = ", change, this.state.isMaster);
+        newDiagramData = {
+          ...diagramData,
+          messages: !diagramData.messages
+            ? [change.message]
+            : [...diagramData.messages, change.message],
+        };
+        break;
+
       default:
-        // nothing, let the change handler deal with it
+        newDiagramData = applyChangeToDiagramData({
+          change,
+          diagramData: this.state.diagramData,
+        });
+
         break;
     }
-    const newDiagramData = applyChangeToDiagramData({
-      change,
-      diagramData: this.state.diagramData,
-    });
+
     this.setState({
       diagramData: newDiagramData,
     });
+
     if (this.state.isMaster) {
       this.saveDiagram(newDiagramData);
     }
@@ -202,6 +217,15 @@ export class DiagramEditor extends React.Component {
         change: { ...change, authorId: this.authorId },
       })
     );
+  };
+
+  sendChatMessage = (messageContent) => {
+    this.sendChange({
+      operation: "chatMessage",
+      message: {
+        content: messageContent,
+      },
+    });
   };
 
   getSelectedComponent = () => {
@@ -775,6 +799,10 @@ export class DiagramEditor extends React.Component {
             </button>
           </div>
         </div>
+        <ChatBox
+          messages={diagramData.messages}
+          onSend={this.sendChatMessage}
+        />
 
         <ComponentList onSelect={this.addComponent} />
 
