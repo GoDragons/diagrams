@@ -748,22 +748,34 @@ export class DiagramEditor extends React.Component {
     return (
       <div className="diagram-editor">
         {this.displayRevisionModal()}
-        <button
-          onClick={(e) => this.setState({ isRevisionModalOpen: true })}
-          className="create-revision"
-        >
-          Create Version
-        </button>
+
         {isMaster ? <span className="is-master">master</span> : null}
-        <button
-          onClick={() => this.setState({ isGridSnapActive: !isGridSnapActive })}
-          className={cx("grid-snap", { on: isGridSnapActive })}
-        >
-          Grid Snap: {isGridSnapActive ? "on" : "off"}
-        </button>
-        <button className="home">
-          <Link to="/">Home</Link>
-        </button>
+
+        <div className="diagram-details">
+          <h3 className="diagram-name">
+            {diagramData.diagramId.split("-")[0]}
+          </h3>
+          <div className="toolbar">
+            <button
+              onClick={() =>
+                this.setState({ isGridSnapActive: !isGridSnapActive })
+              }
+              className={cx("grid-snap", { on: isGridSnapActive })}
+            >
+              Grid Snap: {isGridSnapActive ? "on" : "off"}
+            </button>
+            <button className="home">
+              <Link to="/">Home</Link>
+            </button>
+            <button
+              onClick={(e) => this.setState({ isRevisionModalOpen: true })}
+              className="create-revision"
+            >
+              Create Version
+            </button>
+          </div>
+        </div>
+
         <ComponentList onSelect={this.addComponent} />
 
         <div className="editor">
