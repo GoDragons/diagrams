@@ -46,7 +46,7 @@ export class App extends React.Component {
     axios
       .post(`${REST_API_URL}/save`, { diagramData })
       .then(() => {
-        alert("Diagram saved successfully");
+        // alert("Diagram saved successfully");
       })
       .catch((e) => alert(`Could not save diagram:`, e));
   };

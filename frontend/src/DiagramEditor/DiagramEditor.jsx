@@ -100,8 +100,6 @@ export class DiagramEditor extends React.Component {
     switch (messageData.type) {
       case "master":
         this.setState({ isMaster: true });
-        console.log("we are master");
-
         break;
       case "diagramData":
         this.setState({ diagramData: messageData.diagramData });
@@ -125,8 +123,7 @@ export class DiagramEditor extends React.Component {
     this.setState({
       diagramData: newDiagramData,
     });
-    if (this.master) {
-      console.log("We are master, saving diagram to database");
+    if (this.state.isMaster) {
       this.props.save(newDiagramData);
     }
   };
