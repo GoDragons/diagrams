@@ -123,6 +123,14 @@ export class DiagramEditor extends React.Component {
   };
 
   handleChange = (change) => {
+    switch (change.operation) {
+      case "newVersion":
+        window.location = `/diagrams/${change.data.diagramId}`;
+        return;
+      default:
+        // nothing, let the change handler deal with it
+        break;
+    }
     const newDiagramData = applyChangeToDiagramData({
       change,
       diagramData: this.state.diagramData,
@@ -144,8 +152,14 @@ export class DiagramEditor extends React.Component {
       .then((response) => {
         window.location = `/diagrams/${response.data.diagramId}`;
         console.log("Revision created:", response.data);
+        this.sendChange({
+          operation: "newVersion",
+          data: {
+            diagramId: response.data.diagramId,
+          },
+        });
       })
-      .catch((e) => alert(`Could not create revision:`, e));
+      .catch((e) => alert(`Could not create version:`, e));
   };
 
   saveDiagram = (diagramData) => {
@@ -731,7 +745,7 @@ export class DiagramEditor extends React.Component {
           onClick={(e) => this.setState({ isRevisionModalOpen: true })}
           className="create-revision"
         >
-          Create Revision
+          Create Version
         </button>
         {isMaster ? <span className="is-master">master</span> : null}
         <button
