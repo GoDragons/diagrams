@@ -6,16 +6,33 @@ import "./DiagramDetails.scss";
 
 export default function DiagramDetails({
   diagramData,
+  isLatestVersion,
   isGridSnapActive,
   toggleGridSnap,
   openVersionModal,
 }) {
+  function displayVersionLabel() {
+    if (isLatestVersion) {
+      return <span className="version latest-version">(latest version)</span>;
+    } else {
+      return (
+        <span className="version old-version">
+          (old version - read-only mode)
+        </span>
+      );
+    }
+  }
+
   if (!diagramData) {
     return null;
   }
+
   return (
     <div className="diagram-details">
-      <h3 className="diagram-name">{diagramData.diagramName}</h3>
+      <h3 className="diagram-name">
+        {diagramData.diagramName}
+        {displayVersionLabel()}
+      </h3>
       <div className="toolbar">
         <button
           onClick={toggleGridSnap}

@@ -38,6 +38,8 @@ export class DiagramEditor extends React.Component {
     isMaster: false,
     isVersionModalOpen: false,
     diagramData: null,
+    isReadOnlyMode: false,
+    isLatestVersion: false,
     error: null,
     selectedComponentId: null,
     selectedConnectionId: null,
@@ -119,7 +121,7 @@ export class DiagramEditor extends React.Component {
         this.setState({ isMaster: true });
         break;
       case "diagramData":
-        this.setState({ diagramData: messageData.diagramData });
+        this.handleNewDiagramData(messageData.diagramData);
         break;
       case "diagramDataError":
         this.setState({ error: messageData.message });
@@ -134,6 +136,12 @@ export class DiagramEditor extends React.Component {
         break;
     }
   };
+
+  handleNewDiagramData(diagramData) {
+    let isLatestVersion = diagramData.latestVersionId === diagramData.versionId;
+    let isReadOnlyMode = !isLatestVersion;
+    this.setState({ diagramData, isLatestVersion, isReadOnlyMode });
+  }
 
   handleChange = (change) => {
     const { diagramData } = this.state;
@@ -213,6 +221,10 @@ export class DiagramEditor extends React.Component {
   };
 
   sendChange = (change) => {
+    const { isReadOnlyMode } = this.state;
+    if (isReadOnlyMode) {
+      return;
+    }
     this.handleChange(change);
 
     this.socket.send(
@@ -553,7 +565,6 @@ export class DiagramEditor extends React.Component {
     }
 
     const selectedComponent = this.getSelectedComponent();
-
     this.sendChange({
       operation: "moveComponent",
       data: {
@@ -599,11 +610,12 @@ export class DiagramEditor extends React.Component {
   };
 
   displayComponents = () => {
-    const { components } = this.state.diagramData;
+    const { components, isReadOnlyMode } = this.state.diagramData;
     const { selectedComponentId } = this.state;
     return components.map((component) => (
       <ComponentItem
         {...component}
+        isReadOnlyMode={isReadOnlyMode}
         onMouseDown={this.onComponentMouseDown}
         onMouseUp={this.onComponentMouseUp}
         onContextMenu={this.onComponentContextMenu}
@@ -614,7 +626,7 @@ export class DiagramEditor extends React.Component {
   };
 
   displayConnections = () => {
-    const { connections, components } = this.state.diagramData;
+    const { connections, components, isReadOnlyMode } = this.state.diagramData;
 
     return connections.map((connection) => {
       const fromComponent = components.find(
@@ -647,6 +659,7 @@ export class DiagramEditor extends React.Component {
           style={style}
           onMouseDown={this.onConnectionMouseDown}
           onContextMenu={this.onConnectionContextMenu}
+          isReadOnlyMode={isReadOnlyMode}
         />
       );
     });
@@ -761,6 +774,25 @@ export class DiagramEditor extends React.Component {
     );
   };
 
+  displayChatBox = () => {
+    const { isReadOnlyMode } = this.state;
+    if (isReadOnlyMode) {
+      return null;
+    }
+
+    return <ComponentList onSelect={this.addComponent} />;
+  };
+  displayComponentList = () => {
+    const { isReadOnlyMode, diagramData } = this.state;
+    if (isReadOnlyMode) {
+      return null;
+    }
+
+    return (
+      <ChatBox messages={diagramData.messages} onSend={this.sendChatMessage} />
+    );
+  };
+
   render() {
     const {
       canvasX,
@@ -798,12 +830,9 @@ export class DiagramEditor extends React.Component {
             this.setState({ isGridSnapActive: !isGridSnapActive })
           }
         />
-        <ChatBox
-          messages={diagramData.messages}
-          onSend={this.sendChatMessage}
-        />
 
-        <ComponentList onSelect={this.addComponent} />
+        {this.displayComponentList()}
+        {this.displayChatBox()}
 
         <div className="editor">
           <div

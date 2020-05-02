@@ -14,17 +14,38 @@ export function ComponentItem({
   onMouseDown,
   onMouseUp,
   onContextMenu,
+  isReadOnlyMode,
 }) {
+  function handleContextMenu(e) {
+    if (isReadOnlyMode) {
+      return;
+    }
+    onContextMenu(e, id);
+  }
+
+  function handleMouseDown(e) {
+    if (isReadOnlyMode) {
+      return;
+    }
+    onMouseDown(e, id);
+  }
+  function handleMouseUp(e) {
+    if (isReadOnlyMode) {
+      return;
+    }
+    onMouseUp(e, id);
+  }
+
   return (
     <div
       key={id}
-      onContextMenu={(e) => onContextMenu(e, id)}
       className={cx("component", {
         selected: id === selectedComponentId,
       })}
-      onMouseDown={(e) => onMouseDown(e, id)}
-      onMouseUp={(e) => onMouseUp(e, id)}
       style={{ left: x + "px", top: y + "px" }}
+      onContextMenu={handleContextMenu}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
     >
       <div className="component-icon-container">
         <img src={iconPath} className="component-icon" alt={label} />

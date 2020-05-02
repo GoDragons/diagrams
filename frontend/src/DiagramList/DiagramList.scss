@@ -16,8 +16,7 @@
     width: 15rem;
     border: 1px solid #eee;
     text-decoration: none;
-    margin: 1rem;
-    padding-bottom: 1rem;
+    margin: 1rem 1rem 0;
 
     a {
       text-decoration: none;
@@ -32,38 +31,40 @@
       font-size: 0.8rem;
     }
 
-    .versions {
-      list-style-type: none;
-      padding-left: 0;
+    .version-list-container {
+      margin-top: 3rem;
 
-      .version-item {
-        font-size: 0.9rem;
-        font-weight: bold;
-        padding: 0.5rem;
+      .versions {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
 
-        border: 1px solid transparent;
+        .version-item {
+          font-size: 0.9rem;
+          font-weight: bold;
+          padding: 1rem 0.5rem;
 
-        &:not(:last-child) {
-          border-bottom-color: #f1f1f1;
-        }
+          border: 1px solid transparent;
+          border-top-color: #f1f1f1;
 
-        &:hover {
-          background-color: #f6f6f6;
-        }
+          &:hover {
+            background-color: #f6f6f6;
+          }
 
-        a {
-          color: #444;
-        }
+          a {
+            color: #444;
+          }
 
-        .version-name {
-          display: block;
-        }
+          .version-name {
+            display: block;
+          }
 
-        .last-modified {
-          display: block;
-          // font-weight: regular;
-          // color: #999;
-          font-weight: 400;
+          .last-modified {
+            display: block;
+            // font-weight: regular;
+            // color: #999;
+            font-weight: 400;
+          }
         }
       }
     }

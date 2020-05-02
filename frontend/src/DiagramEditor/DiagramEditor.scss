@@ -11,57 +11,6 @@
     user-select: none;
   }
 
-  .diagram-details {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: calc(100vw - 200px);
-    z-index: 1;
-    background-color: white;
-    border-bottom: 1px solid #f1f1f1;
-    height: 4.5rem;
-    display: flex;
-    justify-content: space-between;
-
-    .toolbar {
-      width: calc(100% - 500px);
-      text-align: right;
-
-      button {
-        display: inline-block;
-        margin-right: 1rem;
-        background-color: #eee;
-        border: unset;
-        color: #999;
-        font-weight: bold;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        outline: none;
-        transition: all 400ms;
-
-        &.on {
-          background-color: purple;
-          color: white;
-        }
-
-        &:hover {
-          transform: scale(0.9);
-          background-color: #444;
-          color: #fff;
-        }
-
-        &:active {
-          transform: scale(0.8);
-        }
-      }
-    }
-    .diagram-name {
-      width: 500px;
-      text-align: left;
-      padding-left: 2rem;
-    }
-  }
-
   .editor {
     width: calc(100% - 200px);
     height: 100%;

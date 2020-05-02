@@ -53,6 +53,7 @@ function getRESTLambdaFunction({ name, method = "GET" }) {
 module.exports = [
   getRESTLambdaFunction({ name: "create-diagram", method: "POST" }),
   getRESTLambdaFunction({ name: "delete-diagram", method: "POST" }),
+  getRESTLambdaFunction({ name: "delete-version", method: "POST" }),
   getRESTLambdaFunction({ name: "get-diagrams" }),
   getRESTLambdaFunction({ name: "save", method: "POST" }),
   getRESTLambdaFunction({ name: "create-version", method: "POST" }),
