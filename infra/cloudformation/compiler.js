@@ -1,5 +1,3 @@
-const { WEBSOCKET_API_NAME, REST_API_NAME } = require("./constants");
-
 function getParameters() {
   let parameters = {};
   try {
@@ -25,7 +23,7 @@ function getResources() {
   const fs = require("fs");
   const directoryPath = path.join(__dirname, "templates");
 
-  const FILES_TO_EXCLUDE = ["outputs", "parameters"];
+  const FILES_TO_EXCLUDE = ["outputs", "parameters", "lambda"];
 
   const resourceFiles = fs
     .readdirSync(directoryPath)
@@ -37,6 +35,16 @@ function getResources() {
     .map((fileName) => require(`./templates/${fileName}`));
 
   return resourceFiles.reduce((result, file) => ({ ...result, ...file }));
+}
+
+function getFunctions() {
+  try {
+    const functions = require("./templates/lambda.template.js");
+    return functions;
+  } catch (e) {
+    return [];
+    // it just means we have no functions declared
+  }
 }
 
 function getTemplate() {
@@ -51,67 +59,7 @@ function getTemplate() {
   };
 }
 
-const ENVIRONMENT_VARIABLES_LAMBDA = {
-  Variables: {
-    CONNECTIONS_TABLE_NAME: {
-      Ref: "ConnectionsTable",
-    },
-    DIAGRAMS_TABLE_NAME: {
-      Ref: "DiagramsTable",
-    },
-    OPEN_DIAGRAMS_TABLE_NAME: {
-      Ref: "OpenDiagramsTable",
-    },
-  },
-};
-
-function getWebsocketLambdaFunction({ name, routeKey }) {
-  const data = {
-    name,
-    apiName: WEBSOCKET_API_NAME,
-    route: {
-      RouteKey: routeKey || name.split("-").join(""),
-    },
-    isWebSocket: true,
-    Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
-    Environment: ENVIRONMENT_VARIABLES_LAMBDA,
-    CodeUri:
-      "../lambda_functions/websocket/" + name.split("-").join("").toLowerCase(),
-  };
-
-  return data;
-}
-
-function getRESTLambdaFunction({ name, method = "GET" }) {
-  const data = {
-    name,
-    apiName: REST_API_NAME,
-    route: {
-      RouteKey: `${method} /${name}`,
-    },
-    integration: {
-      PayloadFormatVersion: "2.0",
-    },
-    Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
-    Environment: ENVIRONMENT_VARIABLES_LAMBDA,
-    CodeUri:
-      "../lambda_functions/rest/" + name.split("-").join("").toLowerCase(),
-  };
-
-  return data;
-}
-
 module.exports = {
   template: getTemplate(),
-  functions: [
-    getRESTLambdaFunction({ name: "create-diagram", method: "POST" }),
-    getRESTLambdaFunction({ name: "delete-diagram", method: "POST" }),
-    getRESTLambdaFunction({ name: "get-diagrams" }),
-    getRESTLambdaFunction({ name: "save", method: "POST" }),
-    getRESTLambdaFunction({ name: "create-revision", method: "POST" }),
-    getWebsocketLambdaFunction({ name: "join-diagram" }),
-    getWebsocketLambdaFunction({ name: "send-change" }),
-    getWebsocketLambdaFunction({ name: "disconnect", routeKey: "$disconnect" }),
-    getWebsocketLambdaFunction({ name: "connect", routeKey: "$connect" }),
-  ],
+  functions: getFunctions(),
 };
