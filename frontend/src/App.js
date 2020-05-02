@@ -27,7 +27,6 @@ export class App extends React.Component {
   };
 
   createDiagram = ({ diagramName }) => {
-    const { diagrams } = this.state;
     axios
       .post(`${REST_API_URL}/create-diagram`, { diagramId: diagramName })
       .then((response) => {

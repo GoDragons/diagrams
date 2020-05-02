@@ -35,11 +35,11 @@ export default function DiagramList({ diagrams, deleteDiagram }) {
     }
 
     return diagrams.map(({ rootId, revisions }) => {
-      const lastModifiedTimestamp =
-        revisions[revisions.length - 1].lastModified;
-      const lastModifiedHumanReadable = window
-        .moment(lastModifiedTimestamp)
-        .format("DD MMM YYYY");
+      // const lastModifiedTimestamp =
+      //   revisions[revisions.length - 1].lastModified;
+      // const lastModifiedHumanReadable = window
+      //   .moment(lastModifiedTimestamp)
+      //   .format("DD MMM YYYY");
 
       return (
         <div className="diagram-item" key={rootId}>
