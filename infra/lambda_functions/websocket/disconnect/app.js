@@ -48,7 +48,6 @@ exports.handler = async (event) => {
     },
   };
 
-  console.log("openDiagramsScanParams:", openDiagramsScanParams);
   let connectionsToRemove;
   try {
     connectionsToRemove = await ddb.scan(openDiagramsScanParams).promise();

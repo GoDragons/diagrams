@@ -32,11 +32,11 @@
       font-size: 0.8rem;
     }
 
-    .revisions {
+    .versions {
       list-style-type: none;
       padding-left: 0;
 
-      .revision-item {
+      .version-item {
         font-size: 0.9rem;
         font-weight: bold;
         padding: 0.5rem;
@@ -55,7 +55,7 @@
           color: #444;
         }
 
-        .revision-name {
+        .version-name {
           display: block;
         }
 

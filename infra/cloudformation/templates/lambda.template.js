@@ -55,7 +55,7 @@ module.exports = [
   getRESTLambdaFunction({ name: "delete-diagram", method: "POST" }),
   getRESTLambdaFunction({ name: "get-diagrams" }),
   getRESTLambdaFunction({ name: "save", method: "POST" }),
-  getRESTLambdaFunction({ name: "create-revision", method: "POST" }),
+  getRESTLambdaFunction({ name: "create-version", method: "POST" }),
   getWebsocketLambdaFunction({ name: "join-diagram" }),
   getWebsocketLambdaFunction({ name: "send-change" }),
   getWebsocketLambdaFunction({ name: "disconnect", routeKey: "$disconnect" }),

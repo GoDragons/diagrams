@@ -72,7 +72,7 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: e.stack };
   }
 
-  let diagramData;
+  let messageToSendBack;
 
   try {
     const diagramResult = await ddb
@@ -83,26 +83,32 @@ exports.handler = async (event) => {
         },
       })
       .promise();
-    diagramData = diagramResult.Item;
-    console.log("diagramData:", diagramData);
+
+    if (!diagramResult.Item) {
+      throw new Error("Diagram data not found");
+    }
+    messageToSendBack = {
+      type: "diagramData",
+      diagramData: diagramResult.Item,
+    };
   } catch (e) {
     console.log("Error when reading diagram: ", e);
-    return { statusCode: 500, body: e.stack };
+    messageToSendBack = {
+      type: "diagramDataError",
+      message: "Diagram not found",
+    };
   }
 
   try {
-    console.log("Sending the diagram data to the user");
+    console.log("Sending the message to the user");
     await apigwManagementApi
       .postToConnection({
         ConnectionId: event.requestContext.connectionId,
-        Data: JSON.stringify({
-          type: "diagramData",
-          diagramData,
-        }),
+        Data: JSON.stringify(messageToSendBack),
       })
       .promise();
   } catch (e) {
-    console.log("Error when trying to post the diagram list: ", e);
+    console.log("Error when trying to post the message: ", e);
     if (e.statusCode === 410) {
       console.log(`Found stale connection, deleting ${connectionId}`);
       await ddb

@@ -1,40 +1,40 @@
 import React, { useState } from "react";
 
-import "./RevisionModal.scss";
+import "./VersionModal.scss";
 
-export default function RevisionModal({ onSubmit, onClose }) {
-  const [revisionName, setRevisionName] = useState("");
+export default function VersionModal({ onSubmit, onClose }) {
+  const [versionName, setversionName] = useState("");
 
   function isValid() {
     // TODO: use a regex for this
-    if (revisionName.includes("-") || revisionName.includes("_")) {
+    if (versionName.includes("-") || versionName.includes("_")) {
       return false;
     }
-    if (revisionName.length < 1) {
+    if (versionName.length < 1) {
       return false;
     }
     return true;
   }
 
   return (
-    <div className="revision-modal-container">
+    <div className="version-modal-container">
       <div className="modal">
         <p className="label">
-          <span>Choose a revision name</span>
+          <span>Choose a version name</span>
           <span className="explanation">
             (only numbers, letters and spaces allowed)
           </span>
         </p>
 
         <input
-          onChange={(e) => setRevisionName(e.target.value)}
+          onChange={(e) => setversionName(e.target.value)}
           placeholder="e.g. Added a new lambda function"
-          value={revisionName}
+          value={versionName}
         />
         <br />
         <button
           className={isValid() ? "enabled" : "disabled"}
-          onClick={(e) => onSubmit({ revisionName })}
+          onClick={(e) => onSubmit({ versionName })}
         >
           Submit
         </button>

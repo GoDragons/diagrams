@@ -7,11 +7,12 @@ import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
-import RevisionModal from "./RevisionModal/RevisionModal";
+import VersionModal from "./VersionModal/VersionModal";
 import ChatBox from "./ChatBox/ChatBox";
+import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
 import { withRouter, Link } from "react-router-dom";
-import cx from "classnames";
+
 import axios from "axios";
 
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
@@ -35,8 +36,9 @@ export class DiagramEditor extends React.Component {
 
   state = {
     isMaster: false,
-    isRevisionModalOpen: false,
+    isVersionModalOpen: false,
     diagramData: null,
+    error: null,
     selectedComponentId: null,
     selectedConnectionId: null,
     isDraggingComponent: false,
@@ -119,6 +121,9 @@ export class DiagramEditor extends React.Component {
       case "diagramData":
         this.setState({ diagramData: messageData.diagramData });
         break;
+      case "diagramDataError":
+        this.setState({ error: messageData.message });
+        break;
       case "connectionId":
         this.setState({ connectionId: messageData.connectionId });
         break;
@@ -165,15 +170,15 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  createRevision = ({ revisionName }) => {
+  createVersion = ({ versionName }) => {
     const { diagramData } = this.state;
-    this.setState({ isRevisionModalOpen: false });
+    this.setState({ isVersionModalOpen: false });
 
     axios
-      .post(`${REST_API_URL}/create-revision`, { diagramData, revisionName })
+      .post(`${REST_API_URL}/create-version`, { diagramData, versionName })
       .then((response) => {
         window.location = `/diagrams/${response.data.diagramId}`;
-        console.log("Revision created:", response.data);
+        console.log("Version created:", response.data);
         this.sendChange({
           operation: "newVersion",
           data: {
@@ -743,15 +748,15 @@ export class DiagramEditor extends React.Component {
     return <Connection key="new-connection" style={style} />;
   };
 
-  displayRevisionModal = () => {
-    if (!this.state.isRevisionModalOpen) {
+  displayVersionModal = () => {
+    if (!this.state.isVersionModalOpen) {
       return null;
     }
 
     return (
-      <RevisionModal
-        onSubmit={this.createRevision}
-        onClose={() => this.setState({ isRevisionModalOpen: false })}
+      <VersionModal
+        onSubmit={this.createVersion}
+        onClose={() => this.setState({ isVersionModalOpen: false })}
       />
     );
   };
@@ -763,42 +768,36 @@ export class DiagramEditor extends React.Component {
       canvasScale,
       isGridSnapActive,
       diagramData,
+      error,
       isMaster,
     } = this.state;
+    if (error) {
+      return (
+        <>
+          <p>{error}</p>
+          <Link to="/">
+            <button className="home">Home</button>
+          </Link>
+        </>
+      );
+    }
     if (!diagramData) {
       return <p>Loading...</p>;
     }
 
     return (
       <div className="diagram-editor">
-        {this.displayRevisionModal()}
+        {this.displayVersionModal()}
 
         {isMaster ? <span className="is-master">master</span> : null}
 
-        <div className="diagram-details">
-          <h3 className="diagram-name">
-            {diagramData.diagramId.split("-")[0]}
-          </h3>
-          <div className="toolbar">
-            <button
-              onClick={() =>
-                this.setState({ isGridSnapActive: !isGridSnapActive })
-              }
-              className={cx("grid-snap", { on: isGridSnapActive })}
-            >
-              Grid Snap: {isGridSnapActive ? "on" : "off"}
-            </button>
-            <button className="home">
-              <Link to="/">Home</Link>
-            </button>
-            <button
-              onClick={(e) => this.setState({ isRevisionModalOpen: true })}
-              className="create-revision"
-            >
-              Create Version
-            </button>
-          </div>
-        </div>
+        <DiagramDetails
+          {...this.state}
+          openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
+          toggleGridSnap={() =>
+            this.setState({ isGridSnapActive: !isGridSnapActive })
+          }
+        />
         <ChatBox
           messages={diagramData.messages}
           onSend={this.sendChatMessage}
