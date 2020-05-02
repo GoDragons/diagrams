@@ -14,7 +14,9 @@ export function CreateDiagram() {
     axios
       .post(`${REST_API_URL}/create-diagram`, { diagramName: diagramName })
       .then((response) => {
-        history.push(`/diagrams/${response.data.diagramId}`);
+        history.push(
+          `/diagrams/${response.data.diagramId}/${response.data.versionId}`
+        );
       })
       .catch((e) => alert(`Could not create diagram:`, e));
   }

@@ -39,7 +39,6 @@ export class DiagramEditor extends React.Component {
     isVersionModalOpen: false,
     diagramData: null,
     isReadOnlyMode: false,
-    isLatestVersion: false,
     error: null,
     selectedComponentId: null,
     selectedConnectionId: null,
@@ -72,7 +71,7 @@ export class DiagramEditor extends React.Component {
 
     this.generateAuthorId();
     this.initialiseWebSocket();
-    this.joinDiagram(this.props.match.params.diagramId);
+    this.joinDiagram();
   }
 
   componentWillUnmount() {
@@ -138,9 +137,8 @@ export class DiagramEditor extends React.Component {
   };
 
   handleNewDiagramData(diagramData) {
-    let isLatestVersion = diagramData.latestVersionId === diagramData.versionId;
-    let isReadOnlyMode = !isLatestVersion;
-    this.setState({ diagramData, isLatestVersion, isReadOnlyMode });
+    let isReadOnlyMode = !diagramData.isLatest;
+    this.setState({ diagramData, isReadOnlyMode });
   }
 
   handleChange = (change) => {
@@ -148,7 +146,7 @@ export class DiagramEditor extends React.Component {
     let newDiagramData = diagramData;
     switch (change.operation) {
       case "newVersion":
-        window.location = `/diagrams/${change.data.diagramId}`;
+        window.location = `/diagrams/${change.data.diagramId}/${change.data.versionId}`;
         return;
       case "chatMessage":
         console.log("chatMessage change = ", change, this.state.isMaster);
@@ -185,12 +183,13 @@ export class DiagramEditor extends React.Component {
     axios
       .post(`${REST_API_URL}/create-version`, { diagramData, versionName })
       .then((response) => {
-        window.location = `/diagrams/${response.data.diagramId}`;
+        window.location = `/diagrams/${response.data.diagramId}/${response.data.versionId}`;
         console.log("Version created:", response.data);
         this.sendChange({
           operation: "newVersion",
           data: {
             diagramId: response.data.diagramId,
+            versionId: response.data.versionId,
           },
         });
       })
@@ -204,12 +203,15 @@ export class DiagramEditor extends React.Component {
       .catch((e) => alert(`Could not save diagram:`, e));
   };
 
-  joinDiagram = (diagramId) => {
+  joinDiagram = () => {
+    const { diagramId, versionId } = this.props.match.params;
+
     try {
       this.socket.send(
         JSON.stringify({
           message: "joindiagram",
           diagramId,
+          versionId,
           authorId: this.authorId,
         })
       );
@@ -407,6 +409,7 @@ export class DiagramEditor extends React.Component {
 
   onComponentMouseDown = (e, componentId) => {
     const { isConnecting } = this.state;
+    console.log("component mouse down");
     if (isConnecting) {
       return;
     }
@@ -610,8 +613,8 @@ export class DiagramEditor extends React.Component {
   };
 
   displayComponents = () => {
-    const { components, isReadOnlyMode } = this.state.diagramData;
-    const { selectedComponentId } = this.state;
+    const { components } = this.state.diagramData;
+    const { selectedComponentId, isReadOnlyMode } = this.state;
     return components.map((component) => (
       <ComponentItem
         {...component}
@@ -626,8 +629,8 @@ export class DiagramEditor extends React.Component {
   };
 
   displayConnections = () => {
-    const { connections, components, isReadOnlyMode } = this.state.diagramData;
-
+    const { connections, components } = this.state.diagramData;
+    const { isReadOnlyMode } = this.state;
     return connections.map((connection) => {
       const fromComponent = components.find(
         (component) => component.id === connection.from

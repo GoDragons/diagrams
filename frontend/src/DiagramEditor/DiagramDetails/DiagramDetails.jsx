@@ -6,13 +6,13 @@ import "./DiagramDetails.scss";
 
 export default function DiagramDetails({
   diagramData,
-  isLatestVersion,
+
   isGridSnapActive,
   toggleGridSnap,
   openVersionModal,
 }) {
   function displayVersionLabel() {
-    if (isLatestVersion) {
+    if (diagramData.isLatest) {
       return <span className="version latest-version">(latest version)</span>;
     } else {
       return (

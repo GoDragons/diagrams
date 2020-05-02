@@ -21,14 +21,18 @@ exports.handler = async (event) => {
 
   console.log("event body:", body);
 
+  // see how many users are already on that diagram
   let usersOnDiagramResult;
   try {
     usersOnDiagramResult = await ddb
       .query({
         TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        KeyConditionExpression: "diagramId = :d",
+        IndexName: "versions",
+        KeyConditionExpression:
+          "diagramId = :diagramId AND versionId = :versionId",
         ExpressionAttributeValues: {
-          ":d": body.diagramId,
+          ":diagramId": body.diagramId,
+          ":versionId": body.versionId,
         },
       })
       .promise();
@@ -37,6 +41,7 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: e.stack };
   }
 
+  // if the new user is the only one on the diagram, notify them that they are master
   let newUsersIsMaster = false;
   if (usersOnDiagramResult.Items.length === 0) {
     newUsersIsMaster = true;
@@ -55,12 +60,14 @@ exports.handler = async (event) => {
     }
   }
 
+  // add user to the list of users on the diagram
   try {
     await ddb
       .put({
         TableName: OPEN_DIAGRAMS_TABLE_NAME,
         Item: {
           diagramId: body.diagramId,
+          versionId: String(body.versionId),
           connectionId: event.requestContext.connectionId,
           authorId: body.authorId,
           isMaster: newUsersIsMaster,
@@ -72,14 +79,15 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: e.stack };
   }
 
+  // retrieve the diagram data from the database
   let messageToSendBack;
-
   try {
     const diagramResult = await ddb
       .get({
         TableName: DIAGRAMS_TABLE_NAME,
         Key: {
           diagramId: body.diagramId,
+          versionId: String(body.versionId),
         },
       })
       .promise();
@@ -99,6 +107,8 @@ exports.handler = async (event) => {
     };
   }
 
+  // if retrieval was successful, send user the diagram data
+  // otherwise, notify them of the error
   try {
     console.log("Sending the message to the user");
     await apigwManagementApi

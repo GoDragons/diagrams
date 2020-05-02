@@ -40,6 +40,16 @@ const data = {
               { "Fn::GetAtt": ["ConnectionsDBTable", "Arn"] },
               { "Fn::GetAtt": ["DiagramsDBTable", "Arn"] },
               { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
+              {
+                "Fn::Join": [
+                  "/",
+                  [
+                    { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
+                    "index",
+                    "versions",
+                  ],
+                ],
+              },
             ],
           },
         ],

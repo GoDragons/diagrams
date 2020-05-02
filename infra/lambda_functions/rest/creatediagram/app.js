@@ -15,30 +15,33 @@ exports.handler = async (event) => {
   console.log("body: ", body);
   const newDiagramName = body.diagramName;
 
-  const existingDiagramResult = await ddb
-    .scan({
-      TableName: DIAGRAMS_TABLE_NAME,
-      ProjectionExpression: "diagramId",
-      FilterExpression: "diagramName = :diagramName",
-
-      ExpressionAttributeValues: {
-        ":diagramName": newDiagramName,
-      },
-    })
-    .promise();
-  if (existingDiagramResult.Items.length > 0) {
-    return {
-      statusCode: 400,
-      body: "Diagram name is already in use. Choose another one",
-    };
+  try {
+    const existingDiagramResult = await ddb
+      .scan({
+        TableName: DIAGRAMS_TABLE_NAME,
+        ProjectionExpression: "diagramId",
+        FilterExpression: "diagramName = :diagramName",
+        ExpressionAttributeValues: {
+          ":diagramName": newDiagramName,
+        },
+      })
+      .promise();
+    if (existingDiagramResult.Items.length > 0) {
+      return {
+        statusCode: 400,
+        body: "Diagram name is already in use. Choose another one",
+      };
+    }
+  } catch (e) {
+    console.log("Failed to check for existing diagrams:", e);
   }
 
-  const newRootId = newDiagramName
+  const newDiagramId = newDiagramName
     .trim()
     .toLowerCase()
     .replace(/[^a-z0-9_]/gi, "");
   const newVersionId = Date.now();
-  const newDiagramId = `${newRootId}-${newVersionId}`;
+
   const putParams = {
     TableName: process.env.DIAGRAMS_TABLE_NAME,
     Item: {
@@ -46,9 +49,8 @@ exports.handler = async (event) => {
       lastModified: Date.now(),
       diagramName: newDiagramName,
       versionName: "Current Version",
-      latestVersionId: newVersionId,
-      rootId: newRootId,
-      versionId: newVersionId,
+      isLatest: true,
+      versionId: String(newVersionId),
       previousVersionId: undefined,
       components: [],
       connections: [],
@@ -67,5 +69,5 @@ exports.handler = async (event) => {
     };
   }
 
-  return { diagramId: newDiagramId };
+  return { diagramId: newDiagramId, versionId: String(newVersionId) };
 };

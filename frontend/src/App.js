@@ -18,7 +18,7 @@ export class App extends React.Component {
           <Route exact path="/create-diagram">
             <CreateDiagram />
           </Route>
-          <Route exact path="/diagrams/:diagramId">
+          <Route exact path="/diagrams/:diagramId/:versionId">
             <DiagramEditor />
           </Route>
         </Switch>

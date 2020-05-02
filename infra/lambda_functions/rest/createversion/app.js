@@ -13,25 +13,24 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
 
-  const oldDiagramId = body.diagramData.diagramId;
-  const oldVersionId = oldDiagramId.split("-")[1];
-  const oldRootId = oldDiagramId.split("-")[0];
+  const diagramId = body.diagramData.diagramId;
+  const oldVersionId = body.diagramData.versionId;
+
   const newVersionId = Date.now();
-  const newDiagramId = `${oldRootId}-${newVersionId}`;
 
-  const lastVersionScanParams = {
+  const lastVersionQueryParams = {
     TableName: DIAGRAMS_TABLE_NAME,
-    FilterExpression: "diagramId = :diagramId",
-
+    KeyConditionExpression: "diagramId = :diagramId AND versionId = :versionId",
     ExpressionAttributeValues: {
-      ":diagramId": oldDiagramId,
+      ":diagramId": diagramId,
+      ":versionId": oldVersionId,
     },
   };
-  console.log("lastVersionScanParams:", lastVersionScanParams);
+  console.log("lastVersionQueryParams:", lastVersionQueryParams);
   let oldDiagramData;
   try {
-    let result = await ddb.scan(lastVersionScanParams).promise();
-    console.log("last version scan result: ", result);
+    let result = await ddb.query(lastVersionQueryParams).promise();
+    console.log("Last version query result: ", result);
     if (result.Items.length === 0) {
       throw new Error("Couldn't find the previous version of the diagram");
     }
@@ -40,13 +39,14 @@ exports.handler = async (event) => {
     console.log("Error when changing the previous version: ", e);
   }
 
+  console.log("oldDiagramData: ", oldDiagramData);
   try {
     await ddb
       .put({
         TableName: DIAGRAMS_TABLE_NAME,
         Item: {
-          ...oldDiagramData,
-          latestVersionId: newVersionId,
+          ...body.diagramData,
+          isLatest: false,
           versionName: body.versionName,
           lastModified: Date.now(),
         },
@@ -63,10 +63,10 @@ exports.handler = async (event) => {
         TableName: DIAGRAMS_TABLE_NAME,
         Item: {
           ...body.diagramData,
-          diagramId: newDiagramId,
-          versionId: newVersionId,
-          previousVersionId: oldVersionId,
-          latestVersionId: newVersionId,
+          diagramId,
+          versionId: String(newVersionId),
+          previousVersionId: String(oldVersionId),
+          isLatest: true,
           versionName: "Current Version",
           lastModified: Date.now(),
         },
@@ -78,6 +78,7 @@ exports.handler = async (event) => {
   }
 
   return {
-    diagramId: newDiagramId,
+    diagramId,
+    versionId: String(newVersionId),
   };
 };

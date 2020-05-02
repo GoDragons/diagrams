@@ -18,6 +18,7 @@ export function ComponentItem({
 }) {
   function handleContextMenu(e) {
     if (isReadOnlyMode) {
+      e.preventDefault();
       return;
     }
     onContextMenu(e, id);
@@ -40,7 +41,9 @@ export function ComponentItem({
     <div
       key={id}
       className={cx("component", {
-        selected: id === selectedComponentId,
+        "is-read-only-mode": isReadOnlyMode,
+        "is-interactive": !isReadOnlyMode,
+        selected: !isReadOnlyMode && id === selectedComponentId,
       })}
       style={{ left: x + "px", top: y + "px" }}
       onContextMenu={handleContextMenu}

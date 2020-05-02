@@ -18,24 +18,24 @@ exports.handler = async (event) => {
       .scan({
         TableName: DIAGRAMS_TABLE_NAME,
         ProjectionExpression:
-          "diagramId, diagramName, rootId, lastModified, versionName, versionId, latestVersionId",
+          "diagramId, diagramName, lastModified, versionName, versionId, isLatest",
       })
       .promise();
     const diagramItems = diagramsResult.Items;
-    const masterDiagramsRootIds = new Set();
+    const diagramIds = new Set();
     diagramItems.forEach((diagramItem) => {
-      masterDiagramsRootIds.add(diagramItem.rootId);
+      diagramIds.add(diagramItem.diagramId);
     });
 
-    masterDiagramsRootIds.forEach((rootId) => {
+    diagramIds.forEach((diagramId) => {
       const versions = diagramItems
-        .filter((item) => item.rootId === rootId)
+        .filter((item) => item.diagramId === diagramId)
         .sort((a, b) => (a.lastModified < b.lastModified ? 1 : -1));
       const diagramData = {
-        rootId,
         versions,
         diagramName: versions[0].diagramName,
-        diagramId: versions[versions.length - 1].diagramId,
+        diagramId: versions[0].diagramId,
+        latestVersionId: versions[0].versionId,
       };
       diagrams.push(diagramData);
     });

@@ -11,6 +11,7 @@ export function Connection({
 }) {
   function handleContextMenu(e) {
     if (isReadOnlyMode) {
+      e.preventDefault();
       return;
     }
     onContextMenu(e, id);
