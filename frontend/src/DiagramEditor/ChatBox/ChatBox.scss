@@ -7,13 +7,45 @@
   z-index: 1;
   background-color: white;
   border: 1px solid #f1f1f1;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 
   .message-list {
     height: 300px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 
     .message {
-      margin: 1rem 0;
+      margin: 1rem 0.5rem;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+
+      .message-content {
+        border-radius: 5px;
+        padding: 0.2rem 0.5rem;
+        background-color: #ddd;
+      }
+
+      .timestamp {
+        font-size: 0.8rem;
+        color: #ccc;
+        margin-left: 0.5rem;
+      }
+
+      &.ours {
+        align-self: flex-end;
+
+        .message-content {
+          background-color: #3498db;
+          color: white;
+        }
+
+        .timestamp {
+          order: -1;
+          margin-right: 0.5rem;
+        }
+      }
     }
   }
   input {

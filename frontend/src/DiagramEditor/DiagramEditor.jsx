@@ -171,9 +171,9 @@ export class DiagramEditor extends React.Component {
       diagramData: newDiagramData,
     });
 
-    if (this.state.isMaster) {
-      this.saveDiagram(newDiagramData);
-    }
+    // if (this.state.isMaster) {
+    this.saveDiagram(newDiagramData);
+    // }
   };
 
   createVersion = ({ versionName }) => {
@@ -227,13 +227,15 @@ export class DiagramEditor extends React.Component {
     if (isReadOnlyMode) {
       return;
     }
-    this.handleChange(change);
+
+    let processedChange = { ...change, authorId: this.authorId };
+    this.handleChange(processedChange);
 
     this.socket.send(
       JSON.stringify({
         message: "sendchange",
         diagramId: this.state.diagramData.diagramId,
-        change: { ...change, authorId: this.authorId },
+        change: processedChange,
       })
     );
   };
@@ -243,6 +245,8 @@ export class DiagramEditor extends React.Component {
       operation: "chatMessage",
       message: {
         content: messageContent,
+        authorId: this.authorId,
+        sendAt: Date.now(),
       },
     });
   };
@@ -777,7 +781,7 @@ export class DiagramEditor extends React.Component {
     );
   };
 
-  displayChatBox = () => {
+  displayComponentList = () => {
     const { isReadOnlyMode } = this.state;
     if (isReadOnlyMode) {
       return null;
@@ -785,27 +789,75 @@ export class DiagramEditor extends React.Component {
 
     return <ComponentList onSelect={this.addComponent} />;
   };
-  displayComponentList = () => {
+  displayChatBox = () => {
     const { isReadOnlyMode, diagramData } = this.state;
     if (isReadOnlyMode) {
       return null;
     }
 
     return (
-      <ChatBox messages={diagramData.messages} onSend={this.sendChatMessage} />
+      <ChatBox
+        messages={diagramData.messages}
+        onSend={this.sendChatMessage}
+        authorId={this.authorId}
+      />
+    );
+  };
+
+  displayDiagramDetails = () => {
+    const { isGridSnapActive } = this.state;
+    return (
+      <DiagramDetails
+        {...this.state}
+        openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
+        toggleGridSnap={() =>
+          this.setState({ isGridSnapActive: !isGridSnapActive })
+        }
+      />
+    );
+  };
+
+  displayOverlays = () => {
+    const { isMaster } = this.state;
+    return (
+      <div>
+        {this.displayVersionModal()}
+        {this.displayChatBox()}
+        {isMaster ? <span className="is-master">master</span> : null}
+      </div>
+    );
+  };
+
+  displayEditor = () => {
+    const { canvasX, canvasY, canvasScale } = this.state;
+    const canvasProps = {
+      className: "canvas",
+      style: {
+        top: canvasY + "px",
+        left: canvasX + "px",
+        transform: `scale(${canvasScale})`,
+      },
+      onWheel: this.zoom,
+      onMouseDown: this.onPanStart,
+      onMouseUp: this.onCanvasMouseUp,
+      onMouseMove: this.onCanvasMouseMove,
+    };
+
+    return (
+      <div className="editor">
+        <div {...canvasProps}>
+          {this.displayComponentContextMenu()}
+          {this.displayConnectionContextMenu()}
+          {this.displayComponents()}
+          {this.displayConnections()}
+          {this.displayConnectArrow()}
+        </div>
+      </div>
     );
   };
 
   render() {
-    const {
-      canvasX,
-      canvasY,
-      canvasScale,
-      isGridSnapActive,
-      diagramData,
-      error,
-      isMaster,
-    } = this.state;
+    const { diagramData, error } = this.state;
     if (error) {
       return (
         <>
@@ -822,40 +874,13 @@ export class DiagramEditor extends React.Component {
 
     return (
       <div className="diagram-editor">
-        {this.displayVersionModal()}
-
-        {isMaster ? <span className="is-master">master</span> : null}
-
-        <DiagramDetails
-          {...this.state}
-          openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
-          toggleGridSnap={() =>
-            this.setState({ isGridSnapActive: !isGridSnapActive })
-          }
-        />
-
-        {this.displayComponentList()}
-        {this.displayChatBox()}
-
-        <div className="editor">
-          <div
-            className="canvas"
-            style={{
-              top: canvasY + "px",
-              left: canvasX + "px",
-              transform: `scale(${canvasScale})`,
-            }}
-            onWheel={this.zoom}
-            onMouseDown={this.onPanStart}
-            onMouseUp={this.onCanvasMouseUp}
-            onMouseMove={this.onCanvasMouseMove}
-          >
-            {this.displayComponentContextMenu()}
-            {this.displayConnectionContextMenu()}
-            {this.displayComponents()}
-            {this.displayConnections()}
-            {this.displayConnectArrow()}
+        {this.displayOverlays()}
+        <div className="main-container">
+          <div className="canvas-container">
+            {this.displayDiagramDetails()}
+            {this.displayEditor()}
           </div>
+          {this.displayComponentList()}
         </div>
       </div>
     );

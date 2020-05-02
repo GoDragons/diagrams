@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 import "./ChatBox.scss";
 
-export default function ChatBox({ messages, onSend }) {
+import cx from "classnames";
+
+export default function ChatBox({ messages, onSend, authorId }) {
   const [newMessage, setNewMessage] = useState("");
 
   function onSubmit() {
@@ -16,8 +18,17 @@ export default function ChatBox({ messages, onSend }) {
     }
     return messages.map((messageItem, i) => {
       return (
-        <p className="message" key={i}>
-          {messageItem.content}
+        <p
+          className={cx("message", {
+            ours: messageItem.authorId === authorId,
+          })}
+          key={i}
+        >
+          <span className="message-content">{messageItem.content}</span>
+
+          <span className="timestamp">
+            {window.moment(messageItem.sentAt).format("HH:mm")}
+          </span>
         </p>
       );
     });
@@ -25,6 +36,7 @@ export default function ChatBox({ messages, onSend }) {
 
   return (
     <div className="chat-box">
+      <p className="title">Chat</p>
       <div className="message-list">{displayMessages()}</div>
       <input
         value={newMessage}

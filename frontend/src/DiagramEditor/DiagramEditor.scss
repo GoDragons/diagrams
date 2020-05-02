@@ -1,7 +1,8 @@
 @import "./GridDrawing";
 
+$componentListWidth: 220px;
+
 .diagram-editor {
-  position: relative;
   height: 60vh;
   width: 100vw;
   height: 100vh;
@@ -11,24 +12,38 @@
     user-select: none;
   }
 
-  .editor {
-    width: calc(100% - 200px);
-    height: 100%;
-    background-color: #fff;
-    border: 1px solid #eee;
-    position: fixed;
-    top: 4.5rem;
-    overflow: hidden;
+  .main-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
 
-    .canvas {
-      // the 'transform' property is set in the jsx code for the canvas, since it's together with the scale
-      width: 10000px;
-      height: 10000px;
-      position: absolute;
-      transform-origin: 50% 50%;
-      cursor: grab;
-      background-color: #fff;
-      @include grid-drawing;
+    .canvas-container {
+      display: flex;
+      flex-direction: column;
+      width: calc(100% - #{$componentListWidth});
+
+      .editor {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        border: 1px solid #eee;
+        overflow: hidden;
+        position: relative;
+
+        .canvas {
+          // the 'transform' property is set in the jsx code for the canvas, since it's together with the scale
+          position: absolute;
+          width: 10000px;
+          height: 10000px;
+          transform-origin: 50% 50%;
+          cursor: grab;
+          background-color: #fff;
+          @include grid-drawing;
+        }
+      }
+    }
+    .component-list {
+      width: $componentListWidth;
     }
   }
 
