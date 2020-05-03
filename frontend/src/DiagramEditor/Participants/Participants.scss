@@ -1,0 +1,27 @@
+.participants {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  background-color: white;
+  border: 1px solid #f1f1f1;
+  width: 200px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+  .participant-list {
+    height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding-left: 0;
+
+    .participant {
+      margin: 1rem 0.5rem;
+      align-self: flex-start;
+      display: flex;
+    }
+  }
+}

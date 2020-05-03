@@ -9,6 +9,7 @@ import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
 import VersionModal from "./VersionModal/VersionModal";
 import ChatBox from "./ChatBox/ChatBox";
+import Participants from "./Participants/Participants";
 import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
 import { withRouter, Link } from "react-router-dom";
@@ -38,6 +39,7 @@ export class DiagramEditor extends React.Component {
     isMaster: false,
     isVersionModalOpen: false,
     diagramData: null,
+    participants: [],
     isReadOnlyMode: false,
     error: null,
     selectedComponentId: null,
@@ -86,6 +88,12 @@ export class DiagramEditor extends React.Component {
 
   generateAuthorId = () => {
     this.authorId = Math.floor(Math.random() * 1000000000000);
+    this.setState({
+      participants: [
+        ...this.state.participants,
+        { authorId: this.authorId, label: "me" },
+      ],
+    });
     console.log("authorId:", this.authorId);
   };
 
@@ -121,6 +129,12 @@ export class DiagramEditor extends React.Component {
         break;
       case "diagramData":
         this.handleNewDiagramData(messageData.diagramData);
+        this.setState({
+          participants: [
+            ...this.state.participants,
+            ...(messageData.participants || []),
+          ],
+        });
         break;
       case "diagramDataError":
         this.setState({ error: messageData.message });
@@ -536,9 +550,9 @@ export class DiagramEditor extends React.Component {
 
       this.setState({ diagramData: newDiagramData });
     } else if (isPanning) {
-      this.setState({
-        canvasX: canvasX + deltaX,
-        canvasY: canvasY + deltaY,
+      this.applePan({
+        newX: canvasX + deltaX,
+        newY: canvasY + deltaY,
       });
     }
 
@@ -547,6 +561,20 @@ export class DiagramEditor extends React.Component {
       previousMouseY: e.clientY,
       deltaX,
       deltaY,
+    });
+  };
+
+  applyPan = ({ newX, newY }) => {
+    this.setState({
+      canvasX: newX,
+      canvasY: newY,
+    });
+    this.sendChange({
+      operation: "pan",
+      data: {
+        x: newX,
+        y: newY,
+      },
     });
   };
 
@@ -789,6 +817,7 @@ export class DiagramEditor extends React.Component {
 
     return <ComponentList onSelect={this.addComponent} />;
   };
+
   displayChatBox = () => {
     const { isReadOnlyMode, diagramData } = this.state;
     if (isReadOnlyMode) {
@@ -802,6 +831,15 @@ export class DiagramEditor extends React.Component {
         authorId={this.authorId}
       />
     );
+  };
+
+  displayParticipants = () => {
+    const { isReadOnlyMode, diagramData } = this.state;
+    if (isReadOnlyMode) {
+      return null;
+    }
+
+    return <Participants participants={this.state.participants} />;
   };
 
   displayDiagramDetails = () => {
@@ -823,6 +861,7 @@ export class DiagramEditor extends React.Component {
       <div>
         {this.displayVersionModal()}
         {this.displayChatBox()}
+        {this.displayParticipants()}
         {isMaster ? <span className="is-master">master</span> : null}
       </div>
     );

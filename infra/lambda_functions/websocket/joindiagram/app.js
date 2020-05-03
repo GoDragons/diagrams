@@ -98,6 +98,7 @@ exports.handler = async (event) => {
     messageToSendBack = {
       type: "diagramData",
       diagramData: diagramResult.Item,
+      participants: usersOnDiagramResult.Items,
     };
   } catch (e) {
     console.log("Error when reading diagram: ", e);
