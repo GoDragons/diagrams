@@ -57,6 +57,22 @@ const data = {
       PolicyName: "ManageDynamoDBDiagramTablesPolicy",
     },
   },
+  CallLambdaPolicy: {
+    Type: "AWS::IAM::Policy",
+    Properties: {
+      Roles: [{ Ref: "WebsocketLambdaFunctionRole" }],
+      PolicyDocument: {
+        Statement: [
+          {
+            Effect: "Allow",
+            Action: ["lambda:InvokeFunction"],
+            Resource: ["*"],
+          },
+        ],
+      },
+      PolicyName: "CallLambdaPolicy",
+    },
+  },
 
   WebsocketLambdaFunctionRole: {
     Type: "AWS::IAM::Role",

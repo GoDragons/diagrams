@@ -1,5 +1,7 @@
 const { WEBSOCKET_API_NAME, REST_API_NAME } = require("../constants");
 
+const { addFunction } = require("../lambda_helpers");
+
 const ENVIRONMENT_VARIABLES_LAMBDA = {
   Variables: {
     CONNECTIONS_TABLE_NAME: {
@@ -14,7 +16,7 @@ const ENVIRONMENT_VARIABLES_LAMBDA = {
   },
 };
 
-function getWebsocketLambdaFunction({ name, routeKey }) {
+function getWebSocketFunction({ name, routeKey }) {
   const data = {
     name,
     apiName: WEBSOCKET_API_NAME,
@@ -31,7 +33,7 @@ function getWebsocketLambdaFunction({ name, routeKey }) {
   return data;
 }
 
-function getRESTLambdaFunction({ name, method = "GET" }) {
+function getRESTFunction({ name, method = "GET" }) {
   const data = {
     name,
     apiName: REST_API_NAME,
@@ -50,15 +52,27 @@ function getRESTLambdaFunction({ name, method = "GET" }) {
   return data;
 }
 
+function getPrivateFunction({ name }) {
+  const data = {
+    name,
+    Role: { "Fn::GetAtt": ["WebsocketLambdaFunctionRole", "Arn"] },
+    Environment: ENVIRONMENT_VARIABLES_LAMBDA,
+    CodeUri:
+      "../lambda_functions/private/" + name.split("-").join("").toLowerCase(),
+  };
+  return data;
+}
+
 module.exports = [
-  getRESTLambdaFunction({ name: "create-diagram", method: "POST" }),
-  getRESTLambdaFunction({ name: "delete-diagram", method: "POST" }),
-  getRESTLambdaFunction({ name: "delete-version", method: "POST" }),
-  getRESTLambdaFunction({ name: "get-diagrams" }),
-  getRESTLambdaFunction({ name: "save", method: "POST" }),
-  getRESTLambdaFunction({ name: "create-version", method: "POST" }),
-  getWebsocketLambdaFunction({ name: "join-diagram" }),
-  getWebsocketLambdaFunction({ name: "send-change" }),
-  getWebsocketLambdaFunction({ name: "disconnect", routeKey: "$disconnect" }),
-  getWebsocketLambdaFunction({ name: "connect", routeKey: "$connect" }),
+  getRESTFunction({ name: "create-diagram", method: "POST" }),
+  getRESTFunction({ name: "delete-diagram", method: "POST" }),
+  getRESTFunction({ name: "delete-version", method: "POST" }),
+  getRESTFunction({ name: "get-diagrams" }),
+  getRESTFunction({ name: "save", method: "POST" }),
+  getRESTFunction({ name: "create-version", method: "POST" }),
+  getWebSocketFunction({ name: "join-diagram" }),
+  getWebSocketFunction({ name: "send-change" }),
+  getWebSocketFunction({ name: "disconnect", routeKey: "$disconnect" }),
+  getWebSocketFunction({ name: "connect", routeKey: "$connect" }),
+  getRESTFunction({ name: "choose-new-master", method: "POST" }),
 ];
