@@ -35,23 +35,16 @@ exports.handler = async (event) => {
   }
 
   console.log("Target versions:", targetVersions);
-  targetVersions.forEach(async (version) => {
-    const deleteParams = {
-      TableName: DIAGRAMS_TABLE_NAME,
-      Key: {
-        diagramId: version.diagramId,
-        versionId: version.versionId,
-      },
-    };
+  for (let i = 0; i < targetVersions.length; i++) {
+    const version = targetVersions[i];
 
-    try {
-      console.log("deleteParams:", deleteParams);
-      const result = await ddb.delete(deleteParams).promise();
-      console.log("result:", result);
-    } catch (e) {
-      console.log("error:", err);
-    }
-  });
+    await ddb
+      .delete({
+        TableName: DIAGRAMS_TABLE_NAME,
+        Key: version,
+      })
+      .promise();
+  }
 
   return { statusCode: 200, body: "Diagram deleted." };
 };
