@@ -19,15 +19,15 @@ const { OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 const MAX_TRY_COUNT = 100;
 
 exports.handler = async (event) => {
-  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+  const api = new AWS.ApiGatewayManagementApi({
     apiVersion: "2018-11-29",
     endpoint: event.domainName + "/" + event.stage,
   });
 
-  await chooseMaster(event, apigwManagementApi);
+  await chooseMaster(event, api);
 };
 
-async function chooseMaster(event, apigwManagementApi, tryCount = 0) {
+async function chooseMaster(event, api, tryCount = 0) {
   let usersOnDiagramResult;
   try {
     usersOnDiagramResult = await ddb
@@ -58,7 +58,7 @@ async function chooseMaster(event, apigwManagementApi, tryCount = 0) {
   );
   const newMasterUserData = usersOnDiagramResult.Items[newMasterIndex];
   try {
-    await apigwManagementApi
+    await api
       .postToConnection({
         ConnectionId: newMasterUserData.connectionId,
         Data: JSON.stringify({
@@ -84,7 +84,7 @@ async function chooseMaster(event, apigwManagementApi, tryCount = 0) {
     }
     if (tryCount < MAX_TRY_COUNT) {
       console.log("Trying again");
-      await chooseMaster(event, apigwManagementApi, tryCount + 1);
+      await chooseMaster(event, api, tryCount + 1);
     }
     return;
   }

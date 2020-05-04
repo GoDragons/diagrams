@@ -37,7 +37,6 @@ const data = {
               "dynamodb:UpdateItem",
             ],
             Resource: [
-              { "Fn::GetAtt": ["ConnectionsDBTable", "Arn"] },
               { "Fn::GetAtt": ["DiagramsDBTable", "Arn"] },
               { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
               {

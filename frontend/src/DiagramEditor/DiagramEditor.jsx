@@ -13,6 +13,7 @@ import Participants from "./Participants/Participants";
 import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
 import { withRouter, Link } from "react-router-dom";
+import Cookie from "js-cookie";
 
 import axios from "axios";
 
@@ -87,6 +88,12 @@ export class DiagramEditor extends React.Component {
   }
 
   generateAuthorId = () => {
+    const existingAuthorId = Cookie.get("authorId");
+    if (existingAuthorId) {
+      this.authorId = existingAuthorId;
+      return;
+    }
+
     this.authorId = Math.floor(Math.random() * 1000000000000);
     this.setState({
       participants: [
@@ -142,12 +149,36 @@ export class DiagramEditor extends React.Component {
       case "connectionId":
         this.setState({ connectionId: messageData.connectionId });
         break;
+      case "disconnectNotification":
+        this.removeParticipant(messageData.user);
+      case "joinNotification":
+        this.addParticipant(messageData.user);
       case "change":
         this.handleChange(messageData.change);
         break;
       default:
         break;
     }
+  };
+
+  addParticipant = (user) => {
+    const { participants } = this.state;
+    this.setState({
+      participants: [...participants, user],
+    });
+  };
+
+  removeParticipant = (user) => {
+    const { participants } = this.state;
+    const targetIndex = this.state.participants.findIndex(
+      (crtUser) => crtUser.authorId === user.authorId
+    );
+    this.setState({
+      participants: [
+        ...participants.slice(0, targetIndex),
+        ...participants.slice(targetIndex + 1),
+      ],
+    });
   };
 
   handleNewDiagramData(diagramData) {
@@ -237,7 +268,8 @@ export class DiagramEditor extends React.Component {
   };
 
   sendChange = (change) => {
-    const { isReadOnlyMode } = this.state;
+    const { isReadOnlyMode, diagramData } = this.state;
+    const { diagramId, versionId } = diagramData;
     if (isReadOnlyMode) {
       return;
     }
@@ -248,7 +280,8 @@ export class DiagramEditor extends React.Component {
     this.socket.send(
       JSON.stringify({
         message: "sendchange",
-        diagramId: this.state.diagramData.diagramId,
+        diagramId: diagramId,
+        versionId: versionId,
         change: processedChange,
       })
     );
@@ -834,7 +867,7 @@ export class DiagramEditor extends React.Component {
   };
 
   displayParticipants = () => {
-    const { isReadOnlyMode, diagramData } = this.state;
+    const { isReadOnlyMode } = this.state;
     if (isReadOnlyMode) {
       return null;
     }

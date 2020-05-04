@@ -10,10 +10,13 @@ const ddb = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
 });
 
+let api;
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
 
-  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+  const { connectionId } = event.requestContext;
+
+  api = new AWS.ApiGatewayManagementApi({
     apiVersion: "2018-11-29",
     endpoint:
       event.requestContext.domainName + "/" + event.requestContext.stage,
@@ -46,9 +49,9 @@ exports.handler = async (event) => {
   if (usersOnDiagramResult.Items.length === 0) {
     newUsersIsMaster = true;
     try {
-      await apigwManagementApi
+      await api
         .postToConnection({
-          ConnectionId: event.requestContext.connectionId,
+          ConnectionId: connectionId,
           Data: JSON.stringify({
             type: "master",
           }),
@@ -58,25 +61,6 @@ exports.handler = async (event) => {
       console.log("Failed to notify user they are master");
       return { statusCode: 500, body: "User dropped off" };
     }
-  }
-
-  // add user to the list of users on the diagram
-  try {
-    await ddb
-      .put({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        Item: {
-          diagramId: body.diagramId,
-          versionId: String(body.versionId),
-          connectionId: event.requestContext.connectionId,
-          authorId: body.authorId,
-          isMaster: newUsersIsMaster,
-        },
-      })
-      .promise();
-  } catch (e) {
-    console.log("Error when adding user to open diagram: ", e);
-    return { statusCode: 500, body: e.stack };
   }
 
   // retrieve the diagram data from the database
@@ -112,23 +96,62 @@ exports.handler = async (event) => {
   // otherwise, notify them of the error
   try {
     console.log("Sending the message to the user");
-    await apigwManagementApi
+    await api
       .postToConnection({
-        ConnectionId: event.requestContext.connectionId,
+        ConnectionId: connectionId,
         Data: JSON.stringify(messageToSendBack),
       })
       .promise();
+    userCanBeReached = true;
   } catch (e) {
     console.log("Error when trying to post the message: ", e);
-    if (e.statusCode === 410) {
-      console.log(`Found stale connection, deleting ${connectionId}`);
-      await ddb
-        .delete({ TableName: CONNECTIONS_TABLE_NAME, Key: { connectionId } })
-        .promise();
-    } else {
-      throw e;
-    }
+    return { statusCode: 500, body: "User dropped off" };
   }
+
+  // add user to the list of users on the diagram
+  try {
+    await ddb
+      .put({
+        TableName: OPEN_DIAGRAMS_TABLE_NAME,
+        Item: {
+          diagramId: body.diagramId,
+          versionId: String(body.versionId),
+          connectionId,
+          authorId: body.authorId,
+          isMaster: newUsersIsMaster,
+        },
+      })
+      .promise();
+  } catch (e) {
+    console.log("Error when adding user to open diagram: ", e);
+    return { statusCode: 500, body: e.stack };
+  }
+
+  await sendJoinNotification({
+    authorId: body.authorId,
+    connectionId,
+    users: usersOnDiagramResult.Items,
+  });
 
   return { statusCode: 200, body: "Connected." };
 };
+
+async function sendJoinNotification({ authorId, users }) {
+  users.forEach(async (user) => {
+    try {
+      await api
+        .postToConnection({
+          ConnectionId: user.connectionId,
+          Data: JSON.stringify({
+            type: "joinNotification",
+            user: {
+              authorId,
+            },
+          }),
+        })
+        .promise();
+    } catch (e) {
+      console.log("Error when posting to user: ", e);
+    }
+  });
+}
