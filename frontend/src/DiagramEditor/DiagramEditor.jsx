@@ -550,7 +550,7 @@ export class DiagramEditor extends React.Component {
 
       this.setState({ diagramData: newDiagramData });
     } else if (isPanning) {
-      this.applePan({
+      this.applyPan({
         newX: canvasX + deltaX,
         newY: canvasY + deltaY,
       });
