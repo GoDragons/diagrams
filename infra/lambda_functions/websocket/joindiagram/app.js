@@ -72,7 +72,6 @@ exports.handler = async (event) => {
   if (userCanBeReached) {
     try {
       await addUserToOpenDiagram(body, connectionId, newUserIsMaster);
-      console.log("before sendJoinNotification()");
       await sendJoinNotification({
         authorId: body.authorId,
         connectionId,
@@ -80,13 +79,11 @@ exports.handler = async (event) => {
         domainName,
         stage,
       });
-      console.log("after sendJoinNotification()");
     } catch (e) {
       console.log("Error when adding user to open diagram: ", e);
       return { statusCode: 500, body: e.stack };
     }
   }
-  console.log("The end.");
   return { statusCode: 200, body: "Connected." };
 };
 
@@ -206,7 +203,6 @@ async function sendJoinNotification({ authorId, users, domainName, stage }) {
 }
 
 async function disconnectAndNotifyUser({ connectionId, domainName, stage }) {
-  console.log("START disconnectAndNotifyUser() ");
   const payload = {
     connectionId,
     domainName,
@@ -222,6 +218,5 @@ async function disconnectAndNotifyUser({ connectionId, domainName, stage }) {
     Payload: JSON.stringify(payload),
   };
 
-  console.log("MIDDLE disconnectAndNotifyUser() ");
   await lambda.invoke(params).promise();
 }
