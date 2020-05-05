@@ -90,7 +90,6 @@ export class DiagramEditor extends React.Component {
 
   generateAuthorId = () => {
     const existingAuthorId = Cookie.get("authorId");
-    console.log("existingAuthorId = ", existingAuthorId);
     if (existingAuthorId) {
       this.authorId = existingAuthorId;
     } else {
@@ -474,7 +473,6 @@ export class DiagramEditor extends React.Component {
 
   onComponentMouseDown = (e, componentId) => {
     const { isConnecting } = this.state;
-    console.log("component mouse down");
     if (isConnecting) {
       return;
     }

@@ -71,7 +71,6 @@ module.exports = [
   getWebSocketFunction({ name: "join-diagram" }),
   getWebSocketFunction({ name: "send-change" }),
   getWebSocketFunction({ name: "disconnect", routeKey: "$disconnect" }),
-  getWebSocketFunction({ name: "connect", routeKey: "$connect" }),
   getPrivateFunction({ name: "choose-new-master" }),
   getPrivateFunction({ name: "handle-disconnect" }),
 ];
