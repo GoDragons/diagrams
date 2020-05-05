@@ -2,17 +2,20 @@ import React from "react";
 
 import "./Participants.scss";
 
-export default function Participants({ participants, onFollow }) {
+export default function Participants({ participants, onFollow, authorId }) {
   function displayParticipants() {
     if (!participants) {
       return null;
     }
 
     return participants.map((participant) => {
+      let label = participant.label || "";
+      if (participant.authorId === authorId) {
+        label += "(me)";
+      }
       return (
-        <li key={participant.authorId} className="participant">
-          {participant.authorId}{" "}
-          {participant.label ? `(${participant.label})` : ""}
+        <li key={participant.connectionId} className="participant">
+          {participant.authorId} {label}
         </li>
       );
     });

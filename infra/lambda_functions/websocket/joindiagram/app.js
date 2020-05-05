@@ -28,36 +28,17 @@ exports.handler = async (event) => {
   // see how many users are already on that diagram
   let usersOnDiagramResult;
   try {
-    usersOnDiagramResult = await ddb
-      .query({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        IndexName: "versions",
-        KeyConditionExpression:
-          "diagramId = :diagramId AND versionId = :versionId",
-        ExpressionAttributeValues: {
-          ":diagramId": body.diagramId,
-          ":versionId": body.versionId,
-        },
-      })
-      .promise();
+    usersOnDiagramResult = await getUsersOnDiagram(body);
   } catch (e) {
     console.log("Error when querying the users on the open diagram: ", e);
     return { statusCode: 500, body: e.stack };
   }
 
   // if the new user is the only one on the diagram, notify them that they are master
-  let newUsersIsMaster = false;
-  if (usersOnDiagramResult.Items.length === 0) {
-    newUsersIsMaster = true;
+  let newUserIsMaster = usersOnDiagramResult.Items.length === 0;
+  if (newUserIsMaster) {
     try {
-      await api
-        .postToConnection({
-          ConnectionId: connectionId,
-          Data: JSON.stringify({
-            type: "master",
-          }),
-        })
-        .promise();
+      await notifyUserTheyAreMaster(connectionId);
     } catch (e) {
       console.log("Failed to notify user they are master");
       return { statusCode: 500, body: "User dropped off" };
@@ -65,33 +46,11 @@ exports.handler = async (event) => {
   }
 
   // retrieve the diagram data from the database
-  let messageToSendBack;
-  try {
-    const diagramResult = await ddb
-      .get({
-        TableName: DIAGRAMS_TABLE_NAME,
-        Key: {
-          diagramId: body.diagramId,
-          versionId: String(body.versionId),
-        },
-      })
-      .promise();
-
-    if (!diagramResult.Item) {
-      throw new Error("Diagram data not found");
-    }
-    messageToSendBack = {
-      type: "diagramData",
-      diagramData: diagramResult.Item,
-      participants: usersOnDiagramResult.Items,
-    };
-  } catch (e) {
-    console.log("Error when reading diagram: ", e);
-    messageToSendBack = {
-      type: "diagramDataError",
-      message: "Diagram not found",
-    };
-  }
+  let messageToSendBack = await getMessageToSendBack(
+    body,
+    usersOnDiagramResult,
+    connectionId
+  );
 
   // if retrieval was successful, send user the diagram data
   // otherwise, notify them of the error
@@ -110,29 +69,107 @@ exports.handler = async (event) => {
   }
 
   // add user to the list of users on the diagram
+  if (userCanBeReached) {
+    try {
+      await addUserToOpenDiagram(body, connectionId, newUserIsMaster);
+      console.log("before sendJoinNotification()");
+      await sendJoinNotification({
+        authorId: body.authorId,
+        connectionId,
+        users: usersOnDiagramResult.Items,
+        domainName,
+        stage,
+      });
+      console.log("after sendJoinNotification()");
+    } catch (e) {
+      console.log("Error when adding user to open diagram: ", e);
+      return { statusCode: 500, body: e.stack };
+    }
+  }
+  console.log("The end.");
+  return { statusCode: 200, body: "Connected." };
+};
+
+async function addUserToOpenDiagram(body, connectionId, isMaster) {
+  await ddb
+    .put({
+      TableName: OPEN_DIAGRAMS_TABLE_NAME,
+      Item: {
+        diagramId: body.diagramId,
+        versionId: String(body.versionId),
+        connectionId,
+        authorId: body.authorId,
+        isMaster,
+      },
+    })
+    .promise();
+}
+
+async function getMessageToSendBack(body, usersOnDiagramResult, connectionId) {
   try {
-    await ddb
-      .put({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        Item: {
+    const diagramResult = await ddb
+      .get({
+        TableName: DIAGRAMS_TABLE_NAME,
+        Key: {
           diagramId: body.diagramId,
           versionId: String(body.versionId),
-          connectionId,
-          authorId: body.authorId,
-          isMaster: newUsersIsMaster,
         },
       })
       .promise();
-  } catch (e) {
-    console.log("Error when adding user to open diagram: ", e);
-    return { statusCode: 500, body: e.stack };
-  }
 
-  // if the user is already logged in, send that client a notification
-  usersOnDiagramResult.Items.forEach(async (user) => {
-    console.log("user on diagram:", user.authorId, body.authorId);
-    if (user.authorId === body.authorId) {
-      console.log("There is already a user with authorId", body.authorId);
+    if (!diagramResult.Item) {
+      throw new Error("Diagram data not found");
+    }
+    messageToSendBack = {
+      type: "diagramData",
+      diagramData: diagramResult.Item,
+      participants: [
+        ...usersOnDiagramResult.Items,
+        { connectionId, authorId: body.authorId },
+      ],
+    };
+  } catch (e) {
+    console.log("Error when reading diagram: ", e);
+    messageToSendBack = {
+      type: "diagramDataError",
+      message: "Diagram not found",
+    };
+  }
+  return messageToSendBack;
+}
+
+async function notifyUserTheyAreMaster(connectionId) {
+  return api
+    .postToConnection({
+      ConnectionId: connectionId,
+      Data: JSON.stringify({
+        type: "master",
+      }),
+    })
+    .promise();
+}
+
+async function getUsersOnDiagram(body) {
+  return ddb
+    .query({
+      TableName: OPEN_DIAGRAMS_TABLE_NAME,
+      IndexName: "versions",
+      KeyConditionExpression:
+        "diagramId = :diagramId AND versionId = :versionId",
+      ExpressionAttributeValues: {
+        ":diagramId": body.diagramId,
+        ":versionId": body.versionId,
+      },
+    })
+    .promise();
+}
+
+async function sendJoinNotification({ authorId, users, domainName, stage }) {
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
+    console.log("Sending notification to:", user);
+    if (user.authorId === authorId) {
+      console.log("There is already a user with authorId", authorId);
       console.log("Calling disconnect function");
       await disconnectAndNotifyUser({
         connectionId: user.connectionId,
@@ -140,24 +177,9 @@ exports.handler = async (event) => {
         stage,
       });
       console.log("Called disconnect function");
-    }
-  });
-
-  await sendJoinNotification({
-    authorId: body.authorId,
-    connectionId,
-    users: usersOnDiagramResult.Items,
-  });
-
-  return { statusCode: 200, body: "Connected." };
-};
-
-async function sendJoinNotification({ authorId, users }) {
-  users
-    .filter((user) => user.authorId !== authorId)
-    .forEach(async (user) => {
-      console.log("Sending notification to:", user);
+    } else {
       try {
+        console.log("Notifying user", user.connectionId);
         await api
           .postToConnection({
             ConnectionId: user.connectionId,
@@ -169,13 +191,22 @@ async function sendJoinNotification({ authorId, users }) {
             }),
           })
           .promise();
+        console.log("User notified");
       } catch (e) {
-        console.log("Error when posting to user: ", e);
+        if (e.statusCode === 410) {
+          console.log("User is gone");
+        } else {
+          console.log("Error when posting to user: ", e);
+        }
       }
-    });
+    }
+  }
+
+  return;
 }
 
 async function disconnectAndNotifyUser({ connectionId, domainName, stage }) {
+  console.log("START disconnectAndNotifyUser() ");
   const payload = {
     connectionId,
     domainName,
@@ -191,5 +222,6 @@ async function disconnectAndNotifyUser({ connectionId, domainName, stage }) {
     Payload: JSON.stringify(payload),
   };
 
+  console.log("MIDDLE disconnectAndNotifyUser() ");
   await lambda.invoke(params).promise();
 }

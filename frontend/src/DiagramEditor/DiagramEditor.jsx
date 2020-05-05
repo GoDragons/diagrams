@@ -98,12 +98,6 @@ export class DiagramEditor extends React.Component {
       Cookie.set("authorId", this.authorId);
     }
 
-    this.setState({
-      participants: [
-        ...this.state.participants,
-        { authorId: this.authorId, label: "me" },
-      ],
-    });
     console.log("authorId:", this.authorId);
   };
 
@@ -127,7 +121,7 @@ export class DiagramEditor extends React.Component {
   onSocketClosed = () => {
     console.log("connection has been closed, reopening");
     this.initialiseWebSocket();
-    this.joinDiagram(this.props.match.params.diagramId);
+    this.joinDiagram();
   };
 
   onMessageReceived = (event) => {
@@ -169,10 +163,16 @@ export class DiagramEditor extends React.Component {
     }
   };
 
+  rejoinDiagram = () => {
+    this.setState({ isLoggedInSomewhereElse: false });
+    this.initialiseWebSocket();
+    this.joinDiagram();
+  };
+
   handleLoginSomewhereElse = () => {
     this.socket.removeEventListener("close", this.onSocketClosed);
     this.socket.close();
-    this.setState({ isLoggedInSomewhereElse: true });
+    this.setState({ isLoggedInSomewhereElse: true, isMaster: false });
   };
 
   addParticipant = (user) => {
@@ -276,7 +276,7 @@ export class DiagramEditor extends React.Component {
       );
     } catch (e) {
       setTimeout(() => {
-        this.joinDiagram(diagramId);
+        this.joinDiagram();
       }, 300);
     }
   };
@@ -886,7 +886,12 @@ export class DiagramEditor extends React.Component {
       return null;
     }
 
-    return <Participants participants={this.state.participants} />;
+    return (
+      <Participants
+        participants={this.state.participants}
+        authorId={this.authorId}
+      />
+    );
   };
 
   displayDiagramDetails = () => {
@@ -925,7 +930,7 @@ export class DiagramEditor extends React.Component {
         <h2 className="title">
           You have been disconnected because you have logged in somewhere else
         </h2>
-        <button>Use app here</button>
+        <button onClick={this.rejoinDiagram}>Use app here</button>
       </div>
     );
   };

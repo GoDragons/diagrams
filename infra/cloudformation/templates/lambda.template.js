@@ -67,6 +67,7 @@ module.exports = [
   getRESTFunction({ name: "get-diagrams" }),
   getRESTFunction({ name: "save", method: "POST" }),
   getRESTFunction({ name: "create-version", method: "POST" }),
+  getRESTFunction({ name: "test", method: "POST" }),
   getWebSocketFunction({ name: "join-diagram" }),
   getWebSocketFunction({ name: "send-change" }),
   getWebSocketFunction({ name: "disconnect", routeKey: "$disconnect" }),
