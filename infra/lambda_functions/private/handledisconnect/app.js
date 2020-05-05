@@ -20,18 +20,40 @@ let api;
 
 exports.handler = async (event) => {
   console.log("event = ", event);
-  const { domainName, stage } = event;
+  const { domainName, stage, connectionId, loggedInSomewhereElse } = event;
   api = new AWS.ApiGatewayManagementApi({
     apiVersion: "2018-11-29",
     endpoint: domainName + "/" + stage,
   });
 
-  const user = await deleteUserFromDatabase(event.connectionId);
+  console.log("START Deleting user", connectionId);
+
+  if (loggedInSomewhereElse) {
+    await notifyLoggedInSomewhereElse(connectionId);
+  }
+
+  const user = await deleteUserFromDatabase(connectionId);
+  console.log("FINISH deleting user", connectionId);
   if (user) {
     chooseNewMaster({ domainName, stage, user });
     sendDisconnectNotification(user);
   }
+  return "ok";
 };
+
+async function notifyLoggedInSomewhereElse(connectionId) {
+  console.log("notifyLoggedInSomewhereElse:", connectionId);
+  try {
+    await api
+      .postToConnection({
+        ConnectionId: connectionId,
+        Data: JSON.stringify({
+          type: "loggedInSomewhereElse",
+        }),
+      })
+      .promise();
+  } catch (e) {}
+}
 
 async function deleteUserFromDatabase(connectionId) {
   // get the user data
@@ -79,12 +101,11 @@ function chooseNewMaster({ domainName, stage, user }) {
 
   console.log("We are about to check if we need a new master for:", user);
 
-  if (user.isMaster) {
-    console.log("we need to choose a new master");
-    chooseNewMaster(event, user);
-  } else {
+  if (!user.isMaster) {
     console.log("We do not a new master");
+    return;
   }
+  console.log("we need to choose a new master");
 
   var params = {
     FunctionName: "ChooseNewMaster",

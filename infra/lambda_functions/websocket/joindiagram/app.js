@@ -5,6 +5,8 @@ const AWS = require("aws-sdk");
 
 const { DIAGRAMS_TABLE_NAME, OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 
+const lambda = new AWS.Lambda();
+
 const ddb = new AWS.DynamoDB.DocumentClient({
   apiVersion: "2012-08-10",
   region: process.env.AWS_REGION,
@@ -14,12 +16,11 @@ let api;
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
 
-  const { connectionId } = event.requestContext;
+  const { domainName, stage, connectionId } = event.requestContext;
 
   api = new AWS.ApiGatewayManagementApi({
     apiVersion: "2018-11-29",
-    endpoint:
-      event.requestContext.domainName + "/" + event.requestContext.stage,
+    endpoint: domainName + "/" + stage,
   });
 
   console.log("event body:", body);
@@ -127,6 +128,21 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: e.stack };
   }
 
+  // if the user is already logged in, send that client a notification
+  usersOnDiagramResult.Items.forEach(async (user) => {
+    console.log("user on diagram:", user.authorId, body.authorId);
+    if (user.authorId === body.authorId) {
+      console.log("There is already a user with authorId", body.authorId);
+      console.log("Calling disconnect function");
+      await disconnectAndNotifyUser({
+        connectionId: user.connectionId,
+        domainName,
+        stage,
+      });
+      console.log("Called disconnect function");
+    }
+  });
+
   await sendJoinNotification({
     authorId: body.authorId,
     connectionId,
@@ -137,21 +153,43 @@ exports.handler = async (event) => {
 };
 
 async function sendJoinNotification({ authorId, users }) {
-  users.forEach(async (user) => {
-    try {
-      await api
-        .postToConnection({
-          ConnectionId: user.connectionId,
-          Data: JSON.stringify({
-            type: "joinNotification",
-            user: {
-              authorId,
-            },
-          }),
-        })
-        .promise();
-    } catch (e) {
-      console.log("Error when posting to user: ", e);
-    }
-  });
+  users
+    .filter((user) => user.authorId !== authorId)
+    .forEach(async (user) => {
+      console.log("Sending notification to:", user);
+      try {
+        await api
+          .postToConnection({
+            ConnectionId: user.connectionId,
+            Data: JSON.stringify({
+              type: "joinNotification",
+              user: {
+                authorId,
+              },
+            }),
+          })
+          .promise();
+      } catch (e) {
+        console.log("Error when posting to user: ", e);
+      }
+    });
+}
+
+async function disconnectAndNotifyUser({ connectionId, domainName, stage }) {
+  const payload = {
+    connectionId,
+    domainName,
+    stage,
+    loggedInSomewhereElse: true,
+    myId: Math.floor(Math.random() * 10000),
+  };
+
+  var params = {
+    FunctionName: "HandleDisconnect",
+    InvocationType: "RequestResponse",
+    LogType: "Tail",
+    Payload: JSON.stringify(payload),
+  };
+
+  await lambda.invoke(params).promise();
 }

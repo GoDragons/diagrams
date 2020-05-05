@@ -47,6 +47,27 @@ $componentListWidth: 220px;
     }
   }
 
+  .logged-in-somewhere-else {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    display: block;
+    z-index: 3;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+      background-color: white;
+      transform: scale(1.3);
+    }
+  }
+
   .is-master {
     position: fixed;
     top: 0;

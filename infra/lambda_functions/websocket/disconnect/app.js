@@ -13,19 +13,21 @@ const lambda = new AWS.Lambda();
 
 exports.handler = async (event) => {
   const { connectionId, domainName, stage } = event.requestContext;
+  const payload = {
+    connectionId,
+    domainName,
+    stage,
+    myId: Math.floor(Math.random() * 10000),
+  };
 
   var params = {
     FunctionName: "HandleDisconnect",
-    InvocationType: "Event",
+    InvocationType: "RequestResponse",
     LogType: "Tail",
-    Payload: JSON.stringify({
-      connectionId,
-      domainName,
-      stage,
-    }),
+    Payload: JSON.stringify(payload),
   };
 
-  lambda.invoke(params).promise();
+  await lambda.invoke(params).promise();
 
   return { statusCode: 200, body: "Disconnected." };
 };

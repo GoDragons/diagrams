@@ -40,6 +40,7 @@ export class DiagramEditor extends React.Component {
     isMaster: false,
     isVersionModalOpen: false,
     diagramData: null,
+    isLoggedInSomewhereElse: false,
     participants: [],
     isReadOnlyMode: false,
     error: null,
@@ -89,12 +90,14 @@ export class DiagramEditor extends React.Component {
 
   generateAuthorId = () => {
     const existingAuthorId = Cookie.get("authorId");
+    console.log("existingAuthorId = ", existingAuthorId);
     if (existingAuthorId) {
       this.authorId = existingAuthorId;
-      return;
+    } else {
+      this.authorId = Math.floor(Math.random() * 1000000000000);
+      Cookie.set("authorId", this.authorId);
     }
 
-    this.authorId = Math.floor(Math.random() * 1000000000000);
     this.setState({
       participants: [
         ...this.state.participants,
@@ -151,14 +154,25 @@ export class DiagramEditor extends React.Component {
         break;
       case "disconnectNotification":
         this.removeParticipant(messageData.user);
+        break;
       case "joinNotification":
         this.addParticipant(messageData.user);
+        break;
+      case "loggedInSomewhereElse":
+        this.handleLoginSomewhereElse();
+        break;
       case "change":
         this.handleChange(messageData.change);
         break;
       default:
         break;
     }
+  };
+
+  handleLoginSomewhereElse = () => {
+    this.socket.removeEventListener("close", this.onSocketClosed);
+    this.socket.close();
+    this.setState({ isLoggedInSomewhereElse: true });
   };
 
   addParticipant = (user) => {
@@ -895,7 +909,23 @@ export class DiagramEditor extends React.Component {
         {this.displayVersionModal()}
         {this.displayChatBox()}
         {this.displayParticipants()}
+        {this.displayLoggedInSomewhereElse()}
+
         {isMaster ? <span className="is-master">master</span> : null}
+      </div>
+    );
+  };
+
+  displayLoggedInSomewhereElse = () => {
+    if (!this.state.isLoggedInSomewhereElse) {
+      return null;
+    }
+    return (
+      <div className="logged-in-somewhere-else">
+        <h2 className="title">
+          You have been disconnected because you have logged in somewhere else
+        </h2>
+        <button>Use app here</button>
       </div>
     );
   };
