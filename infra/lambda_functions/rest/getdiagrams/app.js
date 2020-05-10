@@ -17,30 +17,25 @@ exports.handler = async (event) => {
     const diagramsResult = await ddb
       .scan({
         TableName: DIAGRAMS_TABLE_NAME,
-        ProjectionExpression: "diagramId, lastModified, revisionName",
+        ProjectionExpression:
+          "diagramId, diagramName, lastModified, versionName, versionId, isLatest",
       })
       .promise();
     const diagramItems = diagramsResult.Items;
-    const masterDiagramsRootIDs = new Set();
+    const diagramIds = new Set();
     diagramItems.forEach((diagramItem) => {
-      const rootID = diagramItem.diagramId.split("-")[0];
-      masterDiagramsRootIDs.add(rootID);
+      diagramIds.add(diagramItem.diagramId);
     });
 
-    masterDiagramsRootIDs.forEach((rootId) => {
+    diagramIds.forEach((diagramId) => {
+      const versions = diagramItems
+        .filter((item) => item.diagramId === diagramId)
+        .sort((a, b) => (a.lastModified < b.lastModified ? 1 : -1));
       const diagramData = {
-        rootId,
-        revisions: diagramItems
-          .filter((item) => item.diagramId.includes(rootId))
-          .map((item) => {
-            console.log("item = ", item);
-            const { diagramId, ...restOfDetails } = item;
-            return {
-              ...restOfDetails,
-              revisionId: diagramId.split("-")[1],
-            };
-          })
-          .sort((a, b) => (a.lastModified < b.lastModified ? 1 : -1)),
+        versions,
+        diagramName: versions[0].diagramName,
+        diagramId: versions[0].diagramId,
+        latestVersionId: versions[0].versionId,
       };
       diagrams.push(diagramData);
     });

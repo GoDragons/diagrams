@@ -3,6 +3,8 @@
 
 const AWS = require("aws-sdk");
 
+const { DIAGRAMS_TABLE_NAME } = process.env;
+
 const ddb = new AWS.DynamoDB.DocumentClient({
   apiVersion: "2012-08-10",
   region: process.env.AWS_REGION,
@@ -10,19 +12,38 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
-  const deleteParams = {
-    TableName: process.env.DIAGRAMS_TABLE_NAME,
-    Key: body,
+  console.log("body = ", body);
+
+  let targetVersions = [];
+  const queryParams = {
+    TableName: DIAGRAMS_TABLE_NAME,
+    ProjectionExpression: "diagramId, versionId",
+    KeyConditionExpression: "diagramId = :diagramId",
+    ExpressionAttributeValues: {
+      ":diagramId": body.diagramId,
+    },
   };
 
   try {
-    await ddb.delete(deleteParams).promise();
-  } catch (err) {
-    console.log("error:", err);
-    return {
-      statusCode: 500,
-      body: "Failed to delete diagram: " + JSON.stringify(err),
-    };
+    const queryResult = await ddb.query(queryParams).promise();
+    targetVersions = queryResult.Items;
+  } catch (e) {
+    console.log(
+      `Error when getting the versions for diagramId = ${body.diagramId}`,
+      e
+    );
+  }
+
+  console.log("Target versions:", targetVersions);
+  for (let i = 0; i < targetVersions.length; i++) {
+    const version = targetVersions[i];
+
+    await ddb
+      .delete({
+        TableName: DIAGRAMS_TABLE_NAME,
+        Key: version,
+      })
+      .promise();
   }
 
   return { statusCode: 200, body: "Diagram deleted." };

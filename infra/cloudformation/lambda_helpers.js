@@ -69,44 +69,6 @@ function addIntegration({ template, functionDetails }) {
   template.Resources[`${functionNameCamelCase}Integ`] = data;
 }
 
-function addFunction({ template, functionDetails }) {
-  const {
-    apiName,
-    name,
-    route,
-    integration,
-    isWebSocket,
-    ...functionProperties
-  } = functionDetails;
-  const functionNameCamelCase = makeNameCamelCase({
-    name: functionDetails.name,
-    firstWordLowerCase: false,
-  });
-
-  const data = {
-    Type: "AWS::Serverless::Function",
-    Properties: {
-      FunctionName: functionNameCamelCase,
-      Handler: "app.handler",
-      MemorySize: 128,
-      Runtime: "nodejs12.x",
-      ...functionProperties,
-    },
-  };
-
-  template.Resources[`${functionNameCamelCase}Function`] = data;
-
-  if (isWebSocket && template.Resources.WebsocketDeployment) {
-    template.Resources.WebsocketDeployment.DependsOn.push(
-      `${functionNameCamelCase}Route`
-    );
-  } else if (!isWebSocket && template.Resources.RESTDeployment) {
-    template.Resources.RESTDeployment.DependsOn.push(
-      `${functionNameCamelCase}Route`
-    );
-  }
-}
-
 function addLogGroup({ template, functionDetails }) {
   const functionNameCamelCase = makeNameCamelCase({
     name: functionDetails.name,
@@ -151,12 +113,55 @@ function addPermission({ template, functionDetails }) {
   template.Resources[`${functionNameCamelCase}Permission`] = data;
 }
 
+function addFunction({ template, functionDetails }) {
+  const {
+    apiName,
+    name,
+    route,
+    integration,
+    isWebSocket,
+    ...functionProperties
+  } = functionDetails;
+  const functionNameCamelCase = makeNameCamelCase({
+    name: functionDetails.name,
+    firstWordLowerCase: false,
+  });
+
+  const data = {
+    Type: "AWS::Serverless::Function",
+    Properties: {
+      FunctionName: functionNameCamelCase,
+      Handler: "app.handler",
+      MemorySize: 128,
+      Runtime: "nodejs12.x",
+      ...functionProperties,
+    },
+  };
+
+  template.Resources[`${functionNameCamelCase}Function`] = data;
+
+  if (apiName) {
+    if (isWebSocket && template.Resources.WebsocketDeployment) {
+      template.Resources.WebsocketDeployment.DependsOn.push(
+        `${functionNameCamelCase}Route`
+      );
+    } else if (!isWebSocket && template.Resources.RESTDeployment) {
+      template.Resources.RESTDeployment.DependsOn.push(
+        `${functionNameCamelCase}Route`
+      );
+    }
+  }
+}
+
 function addFunctions({ template, functions }) {
   functions.forEach((functionDetails) => {
-    addRoute({ template, functionDetails });
-    addIntegration({ template, functionDetails });
+    if (functionDetails.apiName) {
+      addRoute({ template, functionDetails });
+      addIntegration({ template, functionDetails });
+      addPermission({ template, functionDetails });
+    } else {
+    }
     addFunction({ template, functionDetails });
-    addPermission({ template, functionDetails });
     // addLogGroup({template, functionDetails});
   });
 }
@@ -166,4 +171,4 @@ function addLambdaResources({ template, functions }) {
   return template;
 }
 
-module.exports = { addLambdaResources };
+module.exports = { addLambdaResources, addFunction };

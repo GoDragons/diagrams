@@ -1,29 +1,64 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+
+import { REST_API_URL } from "common/constants";
 
 import "./DiagramList.scss";
 
-export default function DiagramList({ diagrams, deleteDiagram }) {
-  function displayRevisions({ rootId, revisions }) {
-    return revisions.map((revision) => {
-      const diagramId = `${rootId}-${revision.revisionId}`;
+export default function DiagramList() {
+  const [diagrams, setDiagrams] = useState();
+  useEffect(() => {
+    getDiagrams();
+  }, []);
+
+  function getDiagrams() {
+    axios
+      .get(`${REST_API_URL}/get-diagrams`)
+      .then((response) => setDiagrams(response.data))
+      .catch((e) => console.log(`Could not get diagrams:`, e));
+  }
+
+  function deleteVersion(diagramId, versionId) {
+    axios
+      .post(`${REST_API_URL}/delete-version`, { diagramId, versionId })
+      .then(getDiagrams)
+      .catch((e) => console.log(`Could not delete version:`, e.response.data));
+  }
+  function deleteDiagram(diagramId) {
+    axios
+      .post(`${REST_API_URL}/delete-diagram`, { diagramId })
+      .then(getDiagrams)
+      .catch((e) => console.log(`Could not delete diagram:`, e.response.data));
+  }
+
+  function displayVersions(versions) {
+    if (!versions || versions.length === 1) {
+      return null;
+    }
+    const versionElements = versions.slice(1).map((version) => {
+      const { diagramId, versionId, versionName, lastModified } = version;
       return (
-        <li key={diagramId} className="revision-item">
-          <Link to={`/diagrams/${rootId}-${revision.revisionId}`}>
-            <span className="revision-name">{revision.revisionName}</span>
+        <li key={`${diagramId}-${versionId}`} className="version-item">
+          <Link to={`/diagrams/${diagramId}/${versionId}`}>
+            <span className="version-name">{versionName}</span>
             <span className="last-modified">
-              {window
-                .moment(revision.lastModified)
-                .format("DD MMM YYYY - HH:mm:ss")}
+              {window.moment(lastModified).format("DD MMM YYYY - HH:mm:ss")}
             </span>
           </Link>
-          <button onClick={(e) => deleteDiagram(diagramId)}>
-            Delete revision
+          <button onClick={(e) => deleteVersion(diagramId, versionId)}>
+            Delete version
           </button>
         </li>
       );
     });
+
+    return (
+      <div className="version-list-container">
+        <p className="version-id">Versions: </p>
+        <ul className="versions">{versionElements}</ul>
+      </div>
+    );
   }
 
   function displayDiagramList() {
@@ -34,26 +69,31 @@ export default function DiagramList({ diagrams, deleteDiagram }) {
       return <p>There are no diagrams. Create one now!</p>;
     }
 
-    return diagrams.map(({ rootId, revisions }) => {
-      const lastModifiedTimestamp =
-        revisions[revisions.length - 1].lastModified;
-      const lastModifiedHumanReadable = window
-        .moment(lastModifiedTimestamp)
-        .format("DD MMM YYYY");
+    return diagrams.map(
+      ({ diagramId, latestVersionId, diagramName, versions }) => {
+        const lastModifiedTimestamp =
+          versions[versions.length - 1].lastModified;
+        const lastModifiedHumanReadable = window
+          .moment(lastModifiedTimestamp)
+          .format("DD MMM YYYY");
 
-      return (
-        <div className="diagram-item" key={rootId}>
-          <Link to={`/diagrams/${rootId}-${revisions[0].revisionId}`}>
-            <h3 className="title">{rootId}</h3>
-          </Link>
+        return (
+          <div className="diagram-item" key={diagramId}>
+            <Link to={`/diagrams/${diagramId}/${latestVersionId}`}>
+              <h3 className="title">{diagramName}</h3>
+            </Link>
+            <p className="last-modified">
+              Last modified:{lastModifiedHumanReadable}
+            </p>
+            <button onClick={(e) => deleteDiagram(diagramId)}>
+              Delete diagram
+            </button>
 
-          <p className="revision-id">Revisions: </p>
-          <ul className="revisions">
-            {displayRevisions({ rootId, revisions })}
-          </ul>
-        </div>
-      );
-    });
+            {displayVersions(versions)}
+          </div>
+        );
+      }
+    );
   }
 
   return (

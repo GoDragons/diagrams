@@ -42,7 +42,10 @@ exports.handler = async (event) => {
     change: body.change,
   };
 
-  const postCalls = usersOnDiagramResult.Items.map(async ({ connectionId }) => {
+  const postCalls = usersOnDiagramResult.Items.filter(
+    // we do not want to propagate changes back to their author
+    (user) => user.authorId !== body.change.authorId
+  ).map(async ({ connectionId }) => {
     try {
       await apigwManagementApi
         .postToConnection({

@@ -1,0 +1,65 @@
+.diagram-details {
+  width: 100%;
+  z-index: 1;
+  background-color: white;
+  border-bottom: 1px solid #f1f1f1;
+  height: 4.5rem;
+  display: flex;
+  justify-content: space-between;
+
+  .diagram-name {
+    width: 500px;
+    text-align: left;
+    padding-left: 2rem;
+
+    .version {
+      font-size: 0.8rem;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 1rem;
+      font-weight: 400;
+
+      &.latest-version {
+        color: rgb(47, 194, 47);
+      }
+
+      &.old-version {
+        // color: rgb(185, 54, 54);
+        color: gray;
+      }
+    }
+  }
+
+  .toolbar {
+    width: calc(100% - 500px);
+    text-align: right;
+
+    button {
+      display: inline-block;
+      margin-right: 1rem;
+      background-color: #eee;
+      border: unset;
+      color: #999;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 400ms;
+
+      &.on {
+        background-color: purple;
+        color: white;
+      }
+
+      &:hover {
+        transform: scale(0.9);
+        background-color: #444;
+        color: #fff;
+      }
+
+      &:active {
+        transform: scale(0.8);
+      }
+    }
+  }
+}

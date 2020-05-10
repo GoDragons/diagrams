@@ -7,10 +7,12 @@ import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
-import RevisionModal from "./RevisionModal/RevisionModal";
+import VersionModal from "./VersionModal/VersionModal";
+import ChatBox from "./ChatBox/ChatBox";
+import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
 import { withRouter, Link } from "react-router-dom";
-import cx from "classnames";
+
 import axios from "axios";
 
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
@@ -34,8 +36,10 @@ export class DiagramEditor extends React.Component {
 
   state = {
     isMaster: false,
-    isRevisionModalOpen: false,
+    isVersionModalOpen: false,
     diagramData: null,
+    isReadOnlyMode: false,
+    error: null,
     selectedComponentId: null,
     selectedConnectionId: null,
     isDraggingComponent: false,
@@ -67,8 +71,7 @@ export class DiagramEditor extends React.Component {
 
     this.generateAuthorId();
     this.initialiseWebSocket();
-
-    this.joinDiagram(this.props.match.params.diagramId);
+    this.joinDiagram();
   }
 
   componentWillUnmount() {
@@ -76,6 +79,9 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("keydown", this.onKeyDown);
     window.removeEventListener("mouseup", this.onWindowMouseUp);
     window.removeEventListener("mousemove", this.onWindowMouseMove);
+
+    this.socket.removeEventListener("close", this.onSocketClosed);
+    this.socket.close();
   }
 
   generateAuthorId = () => {
@@ -94,9 +100,16 @@ export class DiagramEditor extends React.Component {
     newSocket.addEventListener("open", (event) => {
       console.log("connection open");
     });
+    newSocket.addEventListener("close", this.onSocketClosed);
 
     // Listen for messages
     newSocket.addEventListener("message", this.onMessageReceived);
+  };
+
+  onSocketClosed = () => {
+    console.log("connection has been closed, reopening");
+    this.initialiseWebSocket();
+    this.joinDiagram(this.props.match.params.diagramId);
   };
 
   onMessageReceived = (event) => {
@@ -107,43 +120,80 @@ export class DiagramEditor extends React.Component {
         this.setState({ isMaster: true });
         break;
       case "diagramData":
-        this.setState({ diagramData: messageData.diagramData });
+        this.handleNewDiagramData(messageData.diagramData);
+        break;
+      case "diagramDataError":
+        this.setState({ error: messageData.message });
         break;
       case "connectionId":
         this.setState({ connectionId: messageData.connectionId });
         break;
       case "change":
-        this.handleChange(messageData);
+        this.handleChange(messageData.change);
         break;
       default:
         break;
     }
   };
 
-  handleChange = (messageData) => {
-    const newDiagramData = applyChangeToDiagramData({
-      change: messageData.change,
-      diagramData: this.state.diagramData,
-    });
+  handleNewDiagramData(diagramData) {
+    let isReadOnlyMode = !diagramData.isLatest;
+    this.setState({ diagramData, isReadOnlyMode });
+  }
+
+  handleChange = (change) => {
+    const { diagramData } = this.state;
+    let newDiagramData = diagramData;
+    switch (change.operation) {
+      case "newVersion":
+        window.location = `/diagrams/${change.data.diagramId}/${change.data.versionId}`;
+        return;
+      case "chatMessage":
+        console.log("chatMessage change = ", change, this.state.isMaster);
+        newDiagramData = {
+          ...diagramData,
+          messages: !diagramData.messages
+            ? [change.message]
+            : [...diagramData.messages, change.message],
+        };
+        break;
+
+      default:
+        newDiagramData = applyChangeToDiagramData({
+          change,
+          diagramData: this.state.diagramData,
+        });
+
+        break;
+    }
+
     this.setState({
       diagramData: newDiagramData,
     });
-    if (this.state.isMaster) {
-      this.saveDiagram(newDiagramData);
-    }
+
+    // if (this.state.isMaster) {
+    this.saveDiagram(newDiagramData);
+    // }
   };
 
-  createRevision = ({ revisionName }) => {
+  createVersion = ({ versionName }) => {
     const { diagramData } = this.state;
-    this.setState({ isRevisionModalOpen: false });
+    this.setState({ isVersionModalOpen: false });
 
     axios
-      .post(`${REST_API_URL}/create-revision`, { diagramData, revisionName })
+      .post(`${REST_API_URL}/create-version`, { diagramData, versionName })
       .then((response) => {
-        window.location = `/diagrams/${response.data.diagramId}`;
-        console.log("Revision created:", response.data);
+        window.location = `/diagrams/${response.data.diagramId}/${response.data.versionId}`;
+        console.log("Version created:", response.data);
+        this.sendChange({
+          operation: "newVersion",
+          data: {
+            diagramId: response.data.diagramId,
+            versionId: response.data.versionId,
+          },
+        });
       })
-      .catch((e) => alert(`Could not create revision:`, e));
+      .catch((e) => alert(`Could not create version:`, e));
   };
 
   saveDiagram = (diagramData) => {
@@ -153,12 +203,15 @@ export class DiagramEditor extends React.Component {
       .catch((e) => alert(`Could not save diagram:`, e));
   };
 
-  joinDiagram = (diagramId) => {
+  joinDiagram = () => {
+    const { diagramId, versionId } = this.props.match.params;
+
     try {
       this.socket.send(
         JSON.stringify({
           message: "joindiagram",
           diagramId,
+          versionId,
           authorId: this.authorId,
         })
       );
@@ -169,14 +222,33 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  sendChange = (changeData) => {
+  sendChange = (change) => {
+    const { isReadOnlyMode } = this.state;
+    if (isReadOnlyMode) {
+      return;
+    }
+
+    let processedChange = { ...change, authorId: this.authorId };
+    this.handleChange(processedChange);
+
     this.socket.send(
       JSON.stringify({
         message: "sendchange",
         diagramId: this.state.diagramData.diagramId,
-        change: changeData,
+        change: processedChange,
       })
     );
+  };
+
+  sendChatMessage = (messageContent) => {
+    this.sendChange({
+      operation: "chatMessage",
+      message: {
+        content: messageContent,
+        authorId: this.authorId,
+        sendAt: Date.now(),
+      },
+    });
   };
 
   getSelectedComponent = () => {
@@ -341,6 +413,7 @@ export class DiagramEditor extends React.Component {
 
   onComponentMouseDown = (e, componentId) => {
     const { isConnecting } = this.state;
+    console.log("component mouse down");
     if (isConnecting) {
       return;
     }
@@ -499,7 +572,6 @@ export class DiagramEditor extends React.Component {
     }
 
     const selectedComponent = this.getSelectedComponent();
-
     this.sendChange({
       operation: "moveComponent",
       data: {
@@ -546,10 +618,11 @@ export class DiagramEditor extends React.Component {
 
   displayComponents = () => {
     const { components } = this.state.diagramData;
-    const { selectedComponentId } = this.state;
+    const { selectedComponentId, isReadOnlyMode } = this.state;
     return components.map((component) => (
       <ComponentItem
         {...component}
+        isReadOnlyMode={isReadOnlyMode}
         onMouseDown={this.onComponentMouseDown}
         onMouseUp={this.onComponentMouseUp}
         onContextMenu={this.onComponentContextMenu}
@@ -561,7 +634,7 @@ export class DiagramEditor extends React.Component {
 
   displayConnections = () => {
     const { connections, components } = this.state.diagramData;
-
+    const { isReadOnlyMode } = this.state;
     return connections.map((connection) => {
       const fromComponent = components.find(
         (component) => component.id === connection.from
@@ -593,6 +666,7 @@ export class DiagramEditor extends React.Component {
           style={style}
           onMouseDown={this.onConnectionMouseDown}
           onContextMenu={this.onConnectionContextMenu}
+          isReadOnlyMode={isReadOnlyMode}
         />
       );
     });
@@ -694,72 +768,119 @@ export class DiagramEditor extends React.Component {
     return <Connection key="new-connection" style={style} />;
   };
 
-  displayRevisionModal = () => {
-    if (!this.state.isRevisionModalOpen) {
+  displayVersionModal = () => {
+    if (!this.state.isVersionModalOpen) {
       return null;
     }
 
     return (
-      <RevisionModal
-        onSubmit={this.createRevision}
-        onClose={() => this.setState({ isRevisionModalOpen: false })}
+      <VersionModal
+        onSubmit={this.createVersion}
+        onClose={() => this.setState({ isVersionModalOpen: false })}
       />
     );
   };
 
+  displayComponentList = () => {
+    const { isReadOnlyMode } = this.state;
+    if (isReadOnlyMode) {
+      return null;
+    }
+
+    return <ComponentList onSelect={this.addComponent} />;
+  };
+  displayChatBox = () => {
+    const { isReadOnlyMode, diagramData } = this.state;
+    if (isReadOnlyMode) {
+      return null;
+    }
+
+    return (
+      <ChatBox
+        messages={diagramData.messages}
+        onSend={this.sendChatMessage}
+        authorId={this.authorId}
+      />
+    );
+  };
+
+  displayDiagramDetails = () => {
+    const { isGridSnapActive } = this.state;
+    return (
+      <DiagramDetails
+        {...this.state}
+        openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
+        toggleGridSnap={() =>
+          this.setState({ isGridSnapActive: !isGridSnapActive })
+        }
+      />
+    );
+  };
+
+  displayOverlays = () => {
+    const { isMaster } = this.state;
+    return (
+      <div>
+        {this.displayVersionModal()}
+        {this.displayChatBox()}
+        {isMaster ? <span className="is-master">master</span> : null}
+      </div>
+    );
+  };
+
+  displayEditor = () => {
+    const { canvasX, canvasY, canvasScale } = this.state;
+    const canvasProps = {
+      className: "canvas",
+      style: {
+        top: canvasY + "px",
+        left: canvasX + "px",
+        transform: `scale(${canvasScale})`,
+      },
+      onWheel: this.zoom,
+      onMouseDown: this.onPanStart,
+      onMouseUp: this.onCanvasMouseUp,
+      onMouseMove: this.onCanvasMouseMove,
+    };
+
+    return (
+      <div className="editor">
+        <div {...canvasProps}>
+          {this.displayComponentContextMenu()}
+          {this.displayConnectionContextMenu()}
+          {this.displayComponents()}
+          {this.displayConnections()}
+          {this.displayConnectArrow()}
+        </div>
+      </div>
+    );
+  };
+
   render() {
-    const {
-      canvasX,
-      canvasY,
-      canvasScale,
-      isGridSnapActive,
-      diagramData,
-      isMaster,
-    } = this.state;
+    const { diagramData, error } = this.state;
+    if (error) {
+      return (
+        <>
+          <p>{error}</p>
+          <Link to="/">
+            <button className="home">Home</button>
+          </Link>
+        </>
+      );
+    }
     if (!diagramData) {
       return <p>Loading...</p>;
     }
 
     return (
       <div className="diagram-editor">
-        {this.displayRevisionModal()}
-        <button
-          onClick={(e) => this.setState({ isRevisionModalOpen: true })}
-          className="create-revision"
-        >
-          Create Revision
-        </button>
-        {isMaster ? <span className="is-master">master</span> : null}
-        <button
-          onClick={() => this.setState({ isGridSnapActive: !isGridSnapActive })}
-          className={cx("grid-snap", { on: isGridSnapActive })}
-        >
-          Grid Snap: {isGridSnapActive ? "on" : "off"}
-        </button>
-        <button className="home">
-          <Link to="/">Home</Link>
-        </button>
-        <ComponentList onSelect={this.addComponent} />
-
-        <div className="editor">
-          <div
-            className="canvas"
-            style={{
-              top: canvasY + "px",
-              left: canvasX + "px",
-              transform: `scale(${canvasScale})`,
-            }}
-            onWheel={this.zoom}
-            onMouseDown={this.onPanStart}
-            onMouseUp={this.onCanvasMouseUp}
-            onMouseMove={this.onCanvasMouseMove}
-          >
-            {this.displayComponentContextMenu()}
-            {this.displayConnectionContextMenu()}
-            {this.displayComponents()}
-            {this.displayConnections()}
-            {this.displayConnectArrow()}
+        {this.displayOverlays()}
+        <div className="main-container">
+          <div className="canvas-container">
+            {this.displayDiagramDetails()}
+            {this.displayEditor()}
           </div>
+          {this.displayComponentList()}
         </div>
       </div>
     );

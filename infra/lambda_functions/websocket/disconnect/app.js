@@ -17,145 +17,96 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 const { CONNECTIONS_TABLE_NAME, OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 
 exports.handler = async (event) => {
-  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
-    apiVersion: "2018-11-29",
-    endpoint:
-      event.requestContext.domainName + "/" + event.requestContext.stage,
-  });
+  const { connectionId } = event.requestContext;
 
   // delete item from connections data
-  const deleteParamsConnection = {
-    TableName: CONNECTIONS_TABLE_NAME,
-    Key: {
-      connectionId: event.requestContext.connectionId,
-    },
-  };
-
   try {
-    await ddb.delete(deleteParamsConnection).promise();
+    await ddb
+      .delete({
+        TableName: CONNECTIONS_TABLE_NAME,
+        Key: {
+          connectionId,
+        },
+      })
+      .promise();
   } catch (e) {
     console.log("Error when deleting connection:", e);
   }
 
   // get the user data
-  const openDiagramsScanParams = {
-    TableName: OPEN_DIAGRAMS_TABLE_NAME,
-    ProjectionExpression: "connectionId, diagramId, isMaster",
-    FilterExpression: "connectionId = :target",
-
-    ExpressionAttributeValues: {
-      ":target": event.requestContext.connectionId,
-    },
-  };
-
-  console.log("openDiagramsScanParams:", openDiagramsScanParams);
-  let connectionsToRemove;
+  let userConnectionData;
   try {
-    connectionsToRemove = await ddb.scan(openDiagramsScanParams).promise();
-    console.log("connectionsToRemove: ", connectionsToRemove);
+    const userQueryResult = await ddb
+      .get({
+        TableName: OPEN_DIAGRAMS_TABLE_NAME,
+        Key: {
+          connectionId,
+        },
+      })
+      .promise();
+    userConnectionData = userQueryResult.Item;
   } catch (e) {
-    console.log("Error when deleting connection: ", e);
-    // return {
-    //   statusCode: 500,
-    //   body: "Failed to disconnect: " + JSON.stringify(e),
-    // };
+    console.log("Could not retrieve user data: ", e);
+    throw e;
   }
 
-  const connectionToRemove = connectionsToRemove.Items[0];
-  if (!connectionToRemove) {
+  if (!userConnectionData) {
     console.log("No connection to remove from open diagrams table");
-    // return {
-    //   statusCode: 200,
-    //   body: "Disconnected",
-    // };
+    return;
   }
-  console.log("Attempting to remove connection:", connectionToRemove);
+  console.log("Attempting to remove connection:", userConnectionData);
 
-  const deleteParamsOpenDiagramConnection = {
-    TableName: OPEN_DIAGRAMS_TABLE_NAME,
-    Key: {
-      connectionId: connectionToRemove.connectionId,
-      diagramId: connectionToRemove.diagramId,
-    },
-  };
   try {
-    console.log("deleteParamsConnection:", deleteParamsOpenDiagramConnection);
-    await ddb.delete(deleteParamsOpenDiagramConnection).promise();
-    console.log("Successfully deleted connection:", connectionToRemove);
+    await ddb
+      .delete({
+        TableName: OPEN_DIAGRAMS_TABLE_NAME,
+        Key: {
+          connectionId,
+        },
+      })
+      .promise();
+    console.log("Successfully deleted connection:", userConnectionData);
   } catch (e) {
     console.log("Error when deleting connection: ", e);
   }
 
   console.log(
     "We are about to check if we need a new master for:",
-    connectionToRemove
+    userConnectionData
   );
 
-  if (connectionToRemove.isMaster) {
+  if (userConnectionData.isMaster) {
     console.log("we need to choose a new master");
-    await chooseMaster(ddb, connectionToRemove.diagramId, apigwManagementApi);
+    chooseNewMaster(event, userConnectionData);
   } else {
     console.log("We do not a new master");
   }
 
-  // return { statusCode: 200, body: "Disconnected." };
+  return { statusCode: 200, body: "Disconnected." };
 };
 
-async function chooseMaster(ddb, diagramId, apigwManagementApi) {
-  /* 
-  TODO: if the newly-chosen master can't be reached, 
-   it needs to be deleted and this function should retry
-  */
-  let usersOnDiagramResult;
-  try {
-    usersOnDiagramResult = await ddb
-      .query({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        KeyConditionExpression: "diagramId = :d",
-        ExpressionAttributeValues: {
-          ":d": diagramId,
-        },
-      })
-      .promise();
-  } catch (e) {
-    console.log("Error when querying the users on the open diagram: ", e);
-    // return { statusCode: 500, body: e.stack };
-  }
+function chooseNewMaster(event, userConnectionData) {
+  const lambda = new AWS.Lambda();
 
-  if (usersOnDiagramResult.Items.length === 0) {
-    return;
-  }
+  var params = {
+    FunctionName: "ChooseNewMaster", // the lambda function we are going to invoke
+    InvocationType: "Event",
+    LogType: "Tail",
+    Payload: JSON.stringify({
+      domainName: event.requestContext.domainName,
+      stage: event.requestContext.stage,
+      diagramId: userConnectionData.diagramId,
+      versionId: userConnectionData.versionId,
+    }),
+  };
 
-  const newMasterIndex = Math.floor(
-    Math.random() * usersOnDiagramResult.Items.length
-  );
-  const newMasterUserData = usersOnDiagramResult.Items[newMasterIndex];
-  try {
-    await apigwManagementApi
-      .postToConnection({
-        ConnectionId: newMasterUserData.connectionId,
-        Data: JSON.stringify({
-          type: "master",
-        }),
-      })
-      .promise();
-  } catch (e) {
-    console.log("Failed to notify user they are master");
-    // return { statusCode: 500, body: "User dropped off" };
-  }
+  lambda.invoke(params).promise();
 
-  try {
-    await ddb
-      .put({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        Item: {
-          ...newMasterUserData,
-          isMaster: true,
-        },
-      })
-      .promise();
-  } catch (e) {
-    console.log("Error when adding user to open diagram: ", e);
-    // return { statusCode: 500, body: e.stack };
-  }
+  // lambda.invoke(params, function (err, data) {
+  //   if (err) {
+  //     context.fail(err);
+  //   } else {
+  //     context.succeed("Lambda_B said " + data.Payload);
+  //   }
+  // });
 }

@@ -1,21 +1,27 @@
 import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { REST_API_URL } from "common/constants";
 
 import "./CreateDiagram.scss";
 
-export default function CreateDiagram({ onSubmit }) {
+export function CreateDiagram() {
   const [diagramName, setDiagramName] = useState("");
+  let history = useHistory();
 
-  function submit() {
-    onSubmit({ diagramName });
+  function createDiagram() {
+    axios
+      .post(`${REST_API_URL}/create-diagram`, { diagramName: diagramName })
+      .then((response) => {
+        history.push(
+          `/diagrams/${response.data.diagramId}/${response.data.versionId}`
+        );
+      })
+      .catch((e) => alert(`Could not create diagram:`, e));
   }
 
   function isValid() {
-    // TODO: use a regex for this
-    if (diagramName.includes("-")) {
-      return false;
-    }
     if (diagramName.length < 1) {
       return false;
     }
@@ -23,7 +29,7 @@ export default function CreateDiagram({ onSubmit }) {
   }
 
   function onDiagramNameChange(e) {
-    const newText = e.target.value.replace(/[^a-z0-9_]/gi, "");
+    const newText = e.target.value;
     setDiagramName(newText);
   }
 
@@ -44,9 +50,15 @@ export default function CreateDiagram({ onSubmit }) {
       </p>
       <input value={diagramName} onChange={onDiagramNameChange} />
 
-      <button onClick={submit} className={isValid() ? "enabled" : "disabled"}>
+      <button
+        onClick={createDiagram}
+        className={isValid() ? "enabled" : "disabled"}
+      >
         Create
       </button>
     </div>
   );
 }
+
+// export default withRouter(CreateDiagram);
+export default CreateDiagram;

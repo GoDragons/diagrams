@@ -40,11 +40,37 @@ const data = {
               { "Fn::GetAtt": ["ConnectionsDBTable", "Arn"] },
               { "Fn::GetAtt": ["DiagramsDBTable", "Arn"] },
               { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
+              {
+                "Fn::Join": [
+                  "/",
+                  [
+                    { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
+                    "index",
+                    "versions",
+                  ],
+                ],
+              },
             ],
           },
         ],
       },
       PolicyName: "ManageDynamoDBDiagramTablesPolicy",
+    },
+  },
+  CallLambdaPolicy: {
+    Type: "AWS::IAM::Policy",
+    Properties: {
+      Roles: [{ Ref: "WebsocketLambdaFunctionRole" }],
+      PolicyDocument: {
+        Statement: [
+          {
+            Effect: "Allow",
+            Action: ["lambda:InvokeFunction"],
+            Resource: ["*"],
+          },
+        ],
+      },
+      PolicyName: "CallLambdaPolicy",
     },
   },
 

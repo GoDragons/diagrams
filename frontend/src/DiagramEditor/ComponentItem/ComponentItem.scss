@@ -3,7 +3,6 @@
   width: 6rem;
   border: 1px solid transparent;
   color: #fff;
-  cursor: pointer;
   transition: background-color 400ms, border-color 400ms;
   text-align: center;
   padding: 0.5rem;
@@ -39,15 +38,17 @@
     }
   }
 
-  &:hover,
-  &.selected {
-    background-color: #fafafa;
-    border-color: #aaa;
-  }
+  &.is-interactive {
+    cursor: pointer;
 
-  &:hover {
-    .component-icon {
-      transform: scale(0.9);
+    &:hover,
+    &.selected {
+      background-color: #fafafa;
+      border-color: #aaa;
+
+      .component-icon {
+        transform: scale(0.9);
+      }
     }
   }
 }

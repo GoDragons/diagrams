@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import "./ComponentList.scss";
 import componentListData from "../data/componentListData.jsx";
+const MAX_COMPONENTS_DISPLAYED = 20;
 
 function ComponentList({ onSelect }) {
   const [filterValue, setFilterValue] = useState("");
@@ -24,13 +25,17 @@ function ComponentList({ onSelect }) {
     filteredComponentList = componentListData;
   }
 
-  const partitionIndex = Math.floor(filteredComponentList.length / 2) || 1;
+  const trimmedComponentList = filteredComponentList.slice(
+    0,
+    MAX_COMPONENTS_DISPLAYED
+  );
+  const partitionIndex = Math.floor(trimmedComponentList.length / 2) || 1;
 
   const componentElementsLeft = displayIconColumn(
-    filteredComponentList.slice(0, partitionIndex)
+    trimmedComponentList.slice(0, partitionIndex)
   );
   const componentElementsRight = displayIconColumn(
-    filteredComponentList.slice(partitionIndex)
+    trimmedComponentList.slice(partitionIndex)
   );
 
   return (

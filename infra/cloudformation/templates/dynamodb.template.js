@@ -33,11 +33,19 @@ const data = {
           AttributeName: "diagramId",
           AttributeType: "S",
         },
+        {
+          AttributeName: "versionId",
+          AttributeType: "S",
+        },
       ],
       KeySchema: [
         {
           AttributeName: "diagramId",
           KeyType: "HASH",
+        },
+        {
+          AttributeName: "versionId",
+          KeyType: "RANGE",
         },
       ],
       SSESpecification: {
@@ -59,18 +67,36 @@ const data = {
           AttributeType: "S",
         },
         {
+          AttributeName: "versionId",
+          AttributeType: "S",
+        },
+        {
           AttributeName: "connectionId",
           AttributeType: "S",
         },
       ],
       KeySchema: [
         {
-          AttributeName: "diagramId",
+          AttributeName: "connectionId",
           KeyType: "HASH",
         },
+      ],
+      GlobalSecondaryIndexes: [
         {
-          AttributeName: "connectionId",
-          KeyType: "RANGE",
+          IndexName: "versions",
+          Projection: {
+            ProjectionType: "ALL",
+          },
+          KeySchema: [
+            {
+              AttributeName: "diagramId",
+              KeyType: "HASH",
+            },
+            {
+              AttributeName: "versionId",
+              KeyType: "RANGE",
+            },
+          ],
         },
       ],
 
