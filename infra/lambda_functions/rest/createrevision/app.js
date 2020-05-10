@@ -13,11 +13,21 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
 
+  const oldDiagramId = body.diagramData.diagramId;
+  const oldRootId = oldDiagramId.split("-")[0];
+  const newRevisionId = Date.now();
+  const newDiagramId = `${oldRootId}-${newRevisionId}`;
+
   try {
     await ddb
       .put({
         TableName: DIAGRAMS_TABLE_NAME,
-        Item: { ...body.diagramData, lastModified: Date.now() },
+        Item: {
+          ...body.diagramData,
+          diagramId: newDiagramId,
+          revisionName: body.revisionName,
+          lastModified: Date.now(),
+        },
       })
       .promise();
   } catch (e) {
@@ -25,5 +35,7 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: e.stack };
   }
 
-  return { statusCode: 200, body: "Connected." };
+  return {
+    diagramId: newDiagramId,
+  };
 };

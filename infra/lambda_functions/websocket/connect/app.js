@@ -9,14 +9,18 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
-  console.log("aaa");
   const putParams = {
     TableName: process.env.CONNECTIONS_TABLE_NAME,
     Item: {
       connectionId: event.requestContext.connectionId,
     },
   };
-  console.log("putParams: ", putParams);
+
+  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+    apiVersion: "2018-11-29",
+    endpoint:
+      event.requestContext.domainName + "/" + event.requestContext.stage,
+  });
 
   try {
     await ddb.put(putParams).promise();

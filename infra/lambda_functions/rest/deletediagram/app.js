@@ -9,11 +9,10 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
+  const body = JSON.parse(event.body);
   const deleteParams = {
     TableName: process.env.DIAGRAMS_TABLE_NAME,
-    Key: {
-      diagramId: JSON.parse(event.body).diagramId,
-    },
+    Key: body,
   };
 
   try {

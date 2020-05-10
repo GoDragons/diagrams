@@ -1,0 +1,22 @@
+.app {
+  text-align: center;
+
+  button {
+    border: 1px solid #f1f1f1;
+    padding: 0.2rem 0.5rem;
+    display: block;
+    margin: 1rem auto 0;
+    background-color: transparent;
+    cursor: pointer;
+
+    &.enabled {
+      background-color: blue;
+      color: white;
+    }
+    &.disabled {
+      background-color: #f1f1f1;
+      pointer-events: none;
+      color: #444;
+    }
+  }
+}

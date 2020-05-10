@@ -1,0 +1,26 @@
+.create-diagram {
+  padding-top: 2rem;
+
+  .label {
+    margin: 0;
+    margin-top: 2rem;
+
+    .explanation {
+      font-size: 0.9rem;
+      display: block;
+      color: #999;
+      margin-bottom: 0;
+    }
+  }
+
+  input {
+    display: block;
+    width: 15rem;
+    margin: 1rem auto;
+    text-align: center;
+
+    &::placeholder {
+      color: #ccc;
+    }
+  }
+}

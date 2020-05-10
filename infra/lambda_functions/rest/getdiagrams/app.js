@@ -11,16 +11,39 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 });
 
 exports.handler = async (event) => {
-  let diagrams;
+  let diagrams = [];
 
   try {
     const diagramsResult = await ddb
       .scan({
         TableName: DIAGRAMS_TABLE_NAME,
-        ProjectionExpression: "diagramId",
+        ProjectionExpression: "diagramId, lastModified, revisionName",
       })
       .promise();
-    diagrams = diagramsResult.Items.map(({ diagramId }) => diagramId);
+    const diagramItems = diagramsResult.Items;
+    const masterDiagramsRootIDs = new Set();
+    diagramItems.forEach((diagramItem) => {
+      const rootID = diagramItem.diagramId.split("-")[0];
+      masterDiagramsRootIDs.add(rootID);
+    });
+
+    masterDiagramsRootIDs.forEach((rootId) => {
+      const diagramData = {
+        rootId,
+        revisions: diagramItems
+          .filter((item) => item.diagramId.includes(rootId))
+          .map((item) => {
+            console.log("item = ", item);
+            const { diagramId, ...restOfDetails } = item;
+            return {
+              ...restOfDetails,
+              revisionId: diagramId.split("-")[1],
+            };
+          })
+          .sort((a, b) => (a.lastModified < b.lastModified ? 1 : -1)),
+      };
+      diagrams.push(diagramData);
+    });
   } catch (e) {
     console.log("Error when reading diagrams: ", e);
     return { statusCode: 500, body: e.stack };

@@ -73,6 +73,7 @@ const data = {
           KeyType: "RANGE",
         },
       ],
+
       SSESpecification: {
         SSEEnabled: true,
       },

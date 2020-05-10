@@ -4,7 +4,7 @@ import "./ComponentItem.scss";
 
 import cx from "classnames";
 
-export default function ComponentItem({
+export function ComponentItem({
   id,
   x,
   y,
@@ -33,3 +33,5 @@ export default function ComponentItem({
     </div>
   );
 }
+
+export default React.memo(ComponentItem);

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Connection.scss";
 
-export default function Connection({ style, id, onContextMenu, onMouseDown }) {
+export function Connection({ style, id, onContextMenu, onMouseDown }) {
   return (
     <div
       className="connection"
@@ -16,3 +16,5 @@ export default function Connection({ style, id, onContextMenu, onMouseDown }) {
     </div>
   );
 }
+
+export default React.memo(Connection);
