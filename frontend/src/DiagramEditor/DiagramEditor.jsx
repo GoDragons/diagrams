@@ -9,9 +9,11 @@ import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
 import VersionModal from "./VersionModal/VersionModal";
 import ChatBox from "./ChatBox/ChatBox";
+import Participants from "./Participants/Participants";
 import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
 import { withRouter, Link } from "react-router-dom";
+import Cookie from "js-cookie";
 
 import axios from "axios";
 
@@ -38,6 +40,8 @@ export class DiagramEditor extends React.Component {
     isMaster: false,
     isVersionModalOpen: false,
     diagramData: null,
+    isLoggedInSomewhereElse: false,
+    participants: [],
     isReadOnlyMode: false,
     error: null,
     selectedComponentId: null,
@@ -85,7 +89,14 @@ export class DiagramEditor extends React.Component {
   }
 
   generateAuthorId = () => {
-    this.authorId = Math.floor(Math.random() * 1000000000000);
+    const existingAuthorId = Cookie.get("authorId");
+    if (existingAuthorId) {
+      this.authorId = existingAuthorId;
+    } else {
+      this.authorId = Math.floor(Math.random() * 1000000000000);
+      Cookie.set("authorId", this.authorId);
+    }
+
     console.log("authorId:", this.authorId);
   };
 
@@ -109,7 +120,7 @@ export class DiagramEditor extends React.Component {
   onSocketClosed = () => {
     console.log("connection has been closed, reopening");
     this.initialiseWebSocket();
-    this.joinDiagram(this.props.match.params.diagramId);
+    this.joinDiagram();
   };
 
   onMessageReceived = (event) => {
@@ -121,6 +132,12 @@ export class DiagramEditor extends React.Component {
         break;
       case "diagramData":
         this.handleNewDiagramData(messageData.diagramData);
+        this.setState({
+          participants: [
+            ...this.state.participants,
+            ...(messageData.participants || []),
+          ],
+        });
         break;
       case "diagramDataError":
         this.setState({ error: messageData.message });
@@ -128,12 +145,53 @@ export class DiagramEditor extends React.Component {
       case "connectionId":
         this.setState({ connectionId: messageData.connectionId });
         break;
+      case "disconnectNotification":
+        this.removeParticipant(messageData.user);
+        break;
+      case "joinNotification":
+        this.addParticipant(messageData.user);
+        break;
+      case "loggedInSomewhereElse":
+        this.handleLoginSomewhereElse();
+        break;
       case "change":
         this.handleChange(messageData.change);
         break;
       default:
         break;
     }
+  };
+
+  rejoinDiagram = () => {
+    this.setState({ isLoggedInSomewhereElse: false });
+    this.initialiseWebSocket();
+    this.joinDiagram();
+  };
+
+  handleLoginSomewhereElse = () => {
+    this.socket.removeEventListener("close", this.onSocketClosed);
+    this.socket.close();
+    this.setState({ isLoggedInSomewhereElse: true, isMaster: false });
+  };
+
+  addParticipant = (user) => {
+    const { participants } = this.state;
+    this.setState({
+      participants: [...participants, user],
+    });
+  };
+
+  removeParticipant = (user) => {
+    const { participants } = this.state;
+    const targetIndex = this.state.participants.findIndex(
+      (crtUser) => crtUser.authorId === user.authorId
+    );
+    this.setState({
+      participants: [
+        ...participants.slice(0, targetIndex),
+        ...participants.slice(targetIndex + 1),
+      ],
+    });
   };
 
   handleNewDiagramData(diagramData) {
@@ -217,13 +275,14 @@ export class DiagramEditor extends React.Component {
       );
     } catch (e) {
       setTimeout(() => {
-        this.joinDiagram(diagramId);
+        this.joinDiagram();
       }, 300);
     }
   };
 
   sendChange = (change) => {
-    const { isReadOnlyMode } = this.state;
+    const { isReadOnlyMode, diagramData } = this.state;
+    const { diagramId, versionId } = diagramData;
     if (isReadOnlyMode) {
       return;
     }
@@ -234,7 +293,8 @@ export class DiagramEditor extends React.Component {
     this.socket.send(
       JSON.stringify({
         message: "sendchange",
-        diagramId: this.state.diagramData.diagramId,
+        diagramId: diagramId,
+        versionId: versionId,
         change: processedChange,
       })
     );
@@ -413,7 +473,6 @@ export class DiagramEditor extends React.Component {
 
   onComponentMouseDown = (e, componentId) => {
     const { isConnecting } = this.state;
-    console.log("component mouse down");
     if (isConnecting) {
       return;
     }
@@ -536,9 +595,9 @@ export class DiagramEditor extends React.Component {
 
       this.setState({ diagramData: newDiagramData });
     } else if (isPanning) {
-      this.setState({
-        canvasX: canvasX + deltaX,
-        canvasY: canvasY + deltaY,
+      this.applyPan({
+        newX: canvasX + deltaX,
+        newY: canvasY + deltaY,
       });
     }
 
@@ -547,6 +606,20 @@ export class DiagramEditor extends React.Component {
       previousMouseY: e.clientY,
       deltaX,
       deltaY,
+    });
+  };
+
+  applyPan = ({ newX, newY }) => {
+    this.setState({
+      canvasX: newX,
+      canvasY: newY,
+    });
+    this.sendChange({
+      operation: "pan",
+      data: {
+        x: newX,
+        y: newY,
+      },
     });
   };
 
@@ -789,6 +862,7 @@ export class DiagramEditor extends React.Component {
 
     return <ComponentList onSelect={this.addComponent} />;
   };
+
   displayChatBox = () => {
     const { isReadOnlyMode, diagramData } = this.state;
     if (isReadOnlyMode) {
@@ -799,6 +873,20 @@ export class DiagramEditor extends React.Component {
       <ChatBox
         messages={diagramData.messages}
         onSend={this.sendChatMessage}
+        authorId={this.authorId}
+      />
+    );
+  };
+
+  displayParticipants = () => {
+    const { isReadOnlyMode } = this.state;
+    if (isReadOnlyMode) {
+      return null;
+    }
+
+    return (
+      <Participants
+        participants={this.state.participants}
         authorId={this.authorId}
       />
     );
@@ -823,7 +911,24 @@ export class DiagramEditor extends React.Component {
       <div>
         {this.displayVersionModal()}
         {this.displayChatBox()}
+        {this.displayParticipants()}
+        {this.displayLoggedInSomewhereElse()}
+
         {isMaster ? <span className="is-master">master</span> : null}
+      </div>
+    );
+  };
+
+  displayLoggedInSomewhereElse = () => {
+    if (!this.state.isLoggedInSomewhereElse) {
+      return null;
+    }
+    return (
+      <div className="logged-in-somewhere-else">
+        <h2 className="title">
+          You have been disconnected because you have logged in somewhere else
+        </h2>
+        <button onClick={this.rejoinDiagram}>Use app here</button>
       </div>
     );
   };

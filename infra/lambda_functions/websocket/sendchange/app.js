@@ -15,14 +15,17 @@ exports.handler = async (event) => {
   let usersOnDiagramResult;
 
   const diagramId = body.diagramId;
+  const versionId = body.versionId;
 
   try {
     usersOnDiagramResult = await ddb
       .query({
         TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        KeyConditionExpression: "diagramId = :d",
+        KeyConditionExpression:
+          "diagramId = :diagramId AND versionId = :versionId",
         ExpressionAttributeValues: {
-          ":d": diagramId,
+          ":diagramId": diagramId,
+          ":versionId": versionId,
         },
       })
       .promise();
@@ -31,7 +34,7 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: e.stack };
   }
 
-  const apigwManagementApi = new AWS.ApiGatewayManagementApi({
+  const api = new AWS.ApiGatewayManagementApi({
     apiVersion: "2018-11-29",
     endpoint:
       event.requestContext.domainName + "/" + event.requestContext.stage,
@@ -47,7 +50,7 @@ exports.handler = async (event) => {
     (user) => user.authorId !== body.change.authorId
   ).map(async ({ connectionId }) => {
     try {
-      await apigwManagementApi
+      await api
         .postToConnection({
           ConnectionId: connectionId,
           Data: JSON.stringify(postData),
@@ -56,16 +59,7 @@ exports.handler = async (event) => {
     } catch (e) {
       if (e.statusCode === 410) {
         console.log(`Found stale connection, deleting ${connectionId}`);
-        try {
-          await ddb
-            .delete({
-              TableName: OPEN_DIAGRAMS_TABLE_NAME,
-              Key: { diagramId, connectionId },
-            })
-            .promise();
-        } catch (e) {
-          console.log("Error while trying to delete connection:", e);
-        }
+        handleDisconnect({ connectionId, event });
       } else {
         throw e;
       }
@@ -80,3 +74,20 @@ exports.handler = async (event) => {
 
   return { statusCode: 200, body: "Data sent." };
 };
+
+function handleDisconnect({ connectionId, event }) {
+  const { domainName, stage } = event.requestContext;
+
+  var params = {
+    FunctionName: "HandleDisconnect",
+    InvocationType: "Event",
+    LogType: "Tail",
+    Payload: JSON.stringify({
+      connectionId,
+      domainName,
+      stage,
+    }),
+  };
+
+  lambda.invoke(params).promise();
+}

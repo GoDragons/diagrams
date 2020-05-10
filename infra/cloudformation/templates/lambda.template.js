@@ -4,9 +4,6 @@ const { addFunction } = require("../lambda_helpers");
 
 const ENVIRONMENT_VARIABLES_LAMBDA = {
   Variables: {
-    CONNECTIONS_TABLE_NAME: {
-      Ref: "ConnectionsTable",
-    },
     DIAGRAMS_TABLE_NAME: {
       Ref: "DiagramsTable",
     },
@@ -70,9 +67,10 @@ module.exports = [
   getRESTFunction({ name: "get-diagrams" }),
   getRESTFunction({ name: "save", method: "POST" }),
   getRESTFunction({ name: "create-version", method: "POST" }),
+  getRESTFunction({ name: "test", method: "POST" }),
   getWebSocketFunction({ name: "join-diagram" }),
   getWebSocketFunction({ name: "send-change" }),
   getWebSocketFunction({ name: "disconnect", routeKey: "$disconnect" }),
-  getWebSocketFunction({ name: "connect", routeKey: "$connect" }),
-  getRESTFunction({ name: "choose-new-master", method: "POST" }),
+  getPrivateFunction({ name: "choose-new-master" }),
+  getPrivateFunction({ name: "handle-disconnect" }),
 ];

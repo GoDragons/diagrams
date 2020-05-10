@@ -80,6 +80,11 @@ const helpers = {
       ],
     };
   },
+
+  pan: ({ changeData, diagramData }) => {
+    // console.log('pan');
+    return diagramData;
+  },
 };
 
 module.exports = {
