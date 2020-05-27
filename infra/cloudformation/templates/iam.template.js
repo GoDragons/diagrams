@@ -7,19 +7,16 @@ const data = {
         Statement: [
           {
             Effect: "Allow",
-            Action: ["execute-api:ManageConnections"],
-            Resource: [
-              {
-                "Fn::Sub": `arn:aws:execute-api:*`,
-              },
-            ],
+            Action: ["execute-api:*"],
+            Resource: "*",
           },
         ],
       },
       PolicyName: "ManageConnectionsPolicy",
     },
   },
-  ManageDynamoDBDiagramTablesPolicy: {
+
+  ManageDynamoDBPolicy: {
     Type: "AWS::IAM::Policy",
     Properties: {
       Roles: [{ Ref: "WebsocketLambdaFunctionRole" }],
@@ -35,25 +32,16 @@ const data = {
               "dynamodb:Scan",
               "dynamodb:Query",
               "dynamodb:UpdateItem",
+              "dynamodb:DescribeStream",
+              "dynamodb:GetRecords",
+              "dynamodb:GetShardIterator",
+              "dynamodb:ListStreams",
             ],
-            Resource: [
-              { "Fn::GetAtt": ["DiagramsDBTable", "Arn"] },
-              { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
-              {
-                "Fn::Join": [
-                  "/",
-                  [
-                    { "Fn::GetAtt": ["OpenDiagramsDBTable", "Arn"] },
-                    "index",
-                    "versions",
-                  ],
-                ],
-              },
-            ],
+            Resource: "*",
           },
         ],
       },
-      PolicyName: "ManageDynamoDBDiagramTablesPolicy",
+      PolicyName: "ManageDynamoDBPolicy",
     },
   },
   CallLambdaPolicy: {

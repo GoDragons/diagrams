@@ -1,6 +1,3 @@
-// Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
-
 const AWS = require("aws-sdk");
 
 const { DIAGRAMS_TABLE_NAME } = process.env;

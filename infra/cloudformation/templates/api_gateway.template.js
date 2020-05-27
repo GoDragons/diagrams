@@ -31,6 +31,17 @@ function getWebSocketApi() {
         },
       },
     },
+    ProdWebsocketDomainName: {
+      Type: "AWS::ApiGateway::DomainName",
+      Properties: {
+        DomainName: "ws-diagrams.godragons.com",
+        RegionalCertificateArn:
+          "arn:aws:acm:eu-west-2:994541973446:certificate/b67e9782-a0a3-4e20-ab98-3a8cdc52faab",
+        EndpointConfiguration: {
+          Types: ["REGIONAL"],
+        },
+      },
+    },
   };
 }
 
@@ -69,6 +80,33 @@ function getRESTApi() {
         },
       },
     },
+    ProdRESTCustomDomainName: {
+      Type: "AWS::ApiGatewayV2::DomainName",
+      Properties: {
+        DomainName: "rest-diagrams.godragons.com",
+        DomainNameConfigurations: [
+          {
+            CertificateArn:
+              "arn:aws:acm:eu-west-2:994541973446:certificate/b67e9782-a0a3-4e20-ab98-3a8cdc52faab",
+            CertificateName: "*.godragons.com",
+            EndpointType: "REGIONAL",
+          },
+        ],
+      },
+    },
+    // ProdRESTCustomMapping: {
+    //   Type: "AWS::ApiGatewayV2::ApiMapping",
+    //   DependsOn: "ProdRESTCustomDomainName",
+    //   Properties: {
+    //     ApiId: {
+    //       Ref: REST_API_NAME,
+    //     },
+    //     DomainName: "rest-diagrams.godragons.com",
+    //     Stage: {
+    //       Ref: "RESTProdStage",
+    //     },
+    //   },
+    // },
   };
 }
 

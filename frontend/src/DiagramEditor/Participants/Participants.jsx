@@ -14,7 +14,7 @@ export default function Participants({ participants, onFollow, authorId }) {
         label += "(me)";
       }
       return (
-        <li key={participant.connectionId} className="participant">
+        <li key={participant.authorId} className="participant">
           {participant.authorId} {label}
         </li>
       );

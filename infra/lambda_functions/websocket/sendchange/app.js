@@ -1,6 +1,3 @@
-// Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
-
 const AWS = require("aws-sdk");
 
 const ddb = new AWS.DynamoDB.DocumentClient({
@@ -8,44 +5,27 @@ const ddb = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
 });
 
-const { OPEN_DIAGRAMS_TABLE_NAME } = process.env;
+const { OPEN_DIAGRAMS_TABLE_NAME, WEBSOCKET_API_ENDPOINT } = process.env;
 
+const api = new AWS.ApiGatewayManagementApi({
+  apiVersion: "2018-11-29",
+  endpoint: WEBSOCKET_API_ENDPOINT,
+});
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
-  let usersOnDiagramResult;
+  console.log("body:", body);
 
   const diagramId = body.diagramId;
   const versionId = body.versionId;
 
-  try {
-    usersOnDiagramResult = await ddb
-      .query({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        KeyConditionExpression:
-          "diagramId = :diagramId AND versionId = :versionId",
-        ExpressionAttributeValues: {
-          ":diagramId": diagramId,
-          ":versionId": versionId,
-        },
-      })
-      .promise();
-  } catch (e) {
-    console.log("Error when trying to get users for open diagram:", e);
-    return { statusCode: 500, body: e.stack };
-  }
-
-  const api = new AWS.ApiGatewayManagementApi({
-    apiVersion: "2018-11-29",
-    endpoint:
-      event.requestContext.domainName + "/" + event.requestContext.stage,
-  });
+  const users = await getUsersOnDiagram({ diagramId, versionId });
 
   const postData = {
     type: "change",
     change: body.change,
   };
 
-  const postCalls = usersOnDiagramResult.Items.filter(
+  const postCalls = users.Items.filter(
     // we do not want to propagate changes back to their author
     (user) => user.authorId !== body.change.authorId
   ).map(async ({ connectionId }) => {
@@ -59,7 +39,7 @@ exports.handler = async (event) => {
     } catch (e) {
       if (e.statusCode === 410) {
         console.log(`Found stale connection, deleting ${connectionId}`);
-        handleDisconnect({ connectionId, event });
+        deleteUserFromDatabase(connectionId);
       } else {
         throw e;
       }
@@ -75,19 +55,35 @@ exports.handler = async (event) => {
   return { statusCode: 200, body: "Data sent." };
 };
 
-function handleDisconnect({ connectionId, event }) {
-  const { domainName, stage } = event.requestContext;
+async function getUsersOnDiagram({ diagramId, versionId }) {
+  return ddb
+    .query({
+      TableName: OPEN_DIAGRAMS_TABLE_NAME,
+      IndexName: "versions",
+      KeyConditionExpression:
+        "diagramId = :diagramId AND versionId = :versionId",
+      ExpressionAttributeValues: {
+        ":diagramId": diagramId,
+        ":versionId": versionId,
+      },
+    })
+    .promise();
+}
 
-  var params = {
-    FunctionName: "HandleDisconnect",
-    InvocationType: "Event",
-    LogType: "Tail",
-    Payload: JSON.stringify({
-      connectionId,
-      domainName,
-      stage,
-    }),
-  };
+async function deleteUserFromDatabase(connectionId) {
+  console.log("Attempting to remove connection:", connectionId);
 
-  lambda.invoke(params).promise();
+  try {
+    await ddb
+      .delete({
+        TableName: OPEN_DIAGRAMS_TABLE_NAME,
+        Key: {
+          connectionId,
+        },
+      })
+      .promise();
+    console.log("Successfully deleted connection:", connectionId);
+  } catch (e) {
+    console.log("Error when deleting connection: ", e);
+  }
 }

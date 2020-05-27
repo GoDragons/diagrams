@@ -1,12 +1,3 @@
-// Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
-
-// https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-route-keys-connect-disconnect.html
-// The $disconnect route is executed after the connection is closed.
-// The connection can be closed by the server or by the client. As the connection is already closed when it is executed,
-// $disconnect is a best-effort event.
-// API Gateway will try its best to deliver the $disconnect event to your integration, but it cannot guarantee delivery.
-
 const AWS = require("aws-sdk");
 
 const ddb = new AWS.DynamoDB.DocumentClient({
@@ -14,17 +5,16 @@ const ddb = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
 });
 
-const { OPEN_DIAGRAMS_TABLE_NAME } = process.env;
+const { OPEN_DIAGRAMS_TABLE_NAME, WEBSOCKET_API_ENDPOINT } = process.env;
 
-let api;
+const api = new AWS.ApiGatewayManagementApi({
+  apiVersion: "2018-11-29",
+  endpoint: WEBSOCKET_API_ENDPOINT,
+});
 
 exports.handler = async (event) => {
   console.log("event = ", event);
-  const { domainName, stage, connectionId, loggedInSomewhereElse } = event;
-  api = new AWS.ApiGatewayManagementApi({
-    apiVersion: "2018-11-29",
-    endpoint: domainName + "/" + stage,
-  });
+  const { connectionId, loggedInSomewhereElse } = event;
 
   console.log("START Deleting user", connectionId);
 
@@ -35,7 +25,7 @@ exports.handler = async (event) => {
   const user = await deleteUserFromDatabase(connectionId);
   console.log("FINISH deleting user", connectionId);
   if (user) {
-    chooseNewMaster({ domainName, stage, user });
+    // chooseNewMaster({ domainName, stage, user });
     sendDisconnectNotification(user);
   }
   return "ok";
@@ -56,27 +46,6 @@ async function notifyLoggedInSomewhereElse(connectionId) {
 }
 
 async function deleteUserFromDatabase(connectionId) {
-  // get the user data
-  let user;
-  try {
-    const userQueryResult = await ddb
-      .get({
-        TableName: OPEN_DIAGRAMS_TABLE_NAME,
-        Key: {
-          connectionId,
-        },
-      })
-      .promise();
-    user = userQueryResult.Item;
-  } catch (e) {
-    console.log("Could not retrieve user data: ", e);
-    throw e;
-  }
-
-  if (!user) {
-    console.log("No connection to remove from open diagrams table");
-    return;
-  }
   console.log("Attempting to remove connection:", user);
 
   try {

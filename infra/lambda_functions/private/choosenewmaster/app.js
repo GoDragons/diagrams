@@ -1,12 +1,3 @@
-// Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: MIT-0
-
-// https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-route-keys-connect-disconnect.html
-// The $disconnect route is executed after the connection is closed.
-// The connection can be closed by the server or by the client. As the connection is already closed when it is executed,
-// $disconnect is a best-effort event.
-// API Gateway will try its best to deliver the $disconnect event to your integration, but it cannot guarantee delivery.
-
 const AWS = require("aws-sdk");
 
 const ddb = new AWS.DynamoDB.DocumentClient({
@@ -14,20 +5,18 @@ const ddb = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
 });
 
-const { OPEN_DIAGRAMS_TABLE_NAME } = process.env;
+const { WEBSOCKET_API_ENDPOINT, OPEN_DIAGRAMS_TABLE_NAME } = process.env;
 
-const MAX_TRY_COUNT = 100;
+const api = new AWS.ApiGatewayManagementApi({
+  apiVersion: "2018-11-29",
+  endpoint: WEBSOCKET_API_ENDPOINT,
+});
 
 exports.handler = async (event) => {
-  const api = new AWS.ApiGatewayManagementApi({
-    apiVersion: "2018-11-29",
-    endpoint: event.domainName + "/" + event.stage,
-  });
-
-  await chooseMaster(event, api);
+  await chooseMaster(event);
 };
 
-async function chooseMaster(event, api, tryCount = 0) {
+async function chooseMaster(event, tryCount = 0) {
   let usersOnDiagramResult;
   try {
     usersOnDiagramResult = await ddb
@@ -50,6 +39,7 @@ async function chooseMaster(event, api, tryCount = 0) {
   console.log("Users on diagram:", usersOnDiagramResult.Items.length);
 
   if (usersOnDiagramResult.Items.length === 0) {
+    console.log("There are no users left on this diagram");
     return;
   }
 
@@ -82,7 +72,7 @@ async function chooseMaster(event, api, tryCount = 0) {
     } catch (e) {
       console.log("Error when deleting connection: ", e);
     }
-    if (tryCount < MAX_TRY_COUNT) {
+    if (tryCount < usersOnDiagramResult.Items.length) {
       console.log("Trying again");
       await chooseMaster(event, api, tryCount + 1);
     }

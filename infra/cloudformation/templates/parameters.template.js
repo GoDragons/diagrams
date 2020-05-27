@@ -21,6 +21,17 @@ const data = {
     ConstraintDescription:
       "Required. Can be characters and underscore only. No numbers or special characters allowed.",
   },
+  DiagramMastersTable: {
+    Type: "String",
+    Default: "diagrams_app_masters",
+    Description:
+      "(Required) The name of the new DynamoDB to store masters for each open diagram version. Minimum 3 characters",
+    MinLength: 3,
+    MaxLength: 50,
+    AllowedPattern: "^[A-Za-z_]+$",
+    ConstraintDescription:
+      "Required. Can be characters and underscore only. No numbers or special characters allowed.",
+  },
   OpenDiagramsTable: {
     Type: "String",
     Default: "diagrams_app_open_diagrams",

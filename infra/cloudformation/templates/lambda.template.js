@@ -1,7 +1,5 @@
 const { WEBSOCKET_API_NAME, REST_API_NAME } = require("../constants");
 
-const { addFunction } = require("../lambda_helpers");
-
 const ENVIRONMENT_VARIABLES_LAMBDA = {
   Variables: {
     DIAGRAMS_TABLE_NAME: {
@@ -10,6 +8,11 @@ const ENVIRONMENT_VARIABLES_LAMBDA = {
     OPEN_DIAGRAMS_TABLE_NAME: {
       Ref: "OpenDiagramsTable",
     },
+    DIAGRAM_MASTERS_TABLE_NAME: {
+      Ref: "DiagramMastersTable",
+    },
+    WEBSOCKET_API_ENDPOINT:
+      "https://jyoqxojbfh.execute-api.eu-west-2.amazonaws.com/Prod",
   },
 };
 
@@ -71,6 +74,9 @@ module.exports = [
   getWebSocketFunction({ name: "join-diagram" }),
   getWebSocketFunction({ name: "send-change" }),
   getWebSocketFunction({ name: "disconnect", routeKey: "$disconnect" }),
-  getPrivateFunction({ name: "choose-new-master" }),
-  getPrivateFunction({ name: "handle-disconnect" }),
+  getWebSocketFunction({ name: "connect", routeKey: "$connect" }),
+  // getPrivateFunction({ name: "choose-new-master" }),
+  // getPrivateFunction({ name: "handle-disconnect" }),
+  getPrivateFunction({ name: "stream-open-diagrams" }),
+  getPrivateFunction({ name: "stream-masters" }),
 ];

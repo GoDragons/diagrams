@@ -19,11 +19,11 @@ import axios from "axios";
 
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
 
-import { getCloudFormationOuputByName } from "common/outputParser.js";
+// import { getCloudFormationOuputByName } from "common/outputParser.js";
 
-import { REST_API_URL } from "common/constants";
+import { REST_API_URL, WEBSOCKET_API_URL } from "common/constants";
 
-const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
+// const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
 
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
@@ -31,10 +31,12 @@ const TRIM_CONNECTION_END_AMOUNT = 70; // this is so we can see the end of the c
 const GRID_CELL_SIZE = 20; // for snapping to the grid when moving components
 const COMPONENT_WIDTH = 100;
 const COMPONENT_HEIGHT = 100;
+const MAX_CONNECTION_RETRY_COUNT = 2;
 
 export class DiagramEditor extends React.Component {
   socket = undefined;
   authorId = null;
+  connectionRetryCount = 0;
 
   state = {
     isMaster: false,
@@ -84,8 +86,8 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("mouseup", this.onWindowMouseUp);
     window.removeEventListener("mousemove", this.onWindowMouseMove);
 
-    this.socket.removeEventListener("close", this.onSocketClosed);
-    this.socket.close();
+    // this.socket.removeEventListener("close", this.onSocketClosed);
+    // this.socket.close();
   }
 
   generateAuthorId = () => {
@@ -93,7 +95,7 @@ export class DiagramEditor extends React.Component {
     if (existingAuthorId) {
       this.authorId = existingAuthorId;
     } else {
-      this.authorId = Math.floor(Math.random() * 1000000000000);
+      this.authorId = String(Math.floor(Math.random() * 1000000000000));
       Cookie.set("authorId", this.authorId);
     }
 
@@ -101,9 +103,7 @@ export class DiagramEditor extends React.Component {
   };
 
   initialiseWebSocket = () => {
-    const newSocket = new WebSocket(
-      `wss://${WEBSOCKET_API_ID}.execute-api.eu-west-2.amazonaws.com/Prod`
-    );
+    const newSocket = new WebSocket(WEBSOCKET_API_URL);
 
     this.socket = newSocket;
 
@@ -118,9 +118,16 @@ export class DiagramEditor extends React.Component {
   };
 
   onSocketClosed = () => {
-    console.log("connection has been closed, reopening");
-    this.initialiseWebSocket();
-    this.joinDiagram();
+    if (this.connectionRetryCount < MAX_CONNECTION_RETRY_COUNT) {
+      this.connectionRetryCount++;
+      setTimeout(() => {
+        console.log("connection has been closed, reopening");
+        this.initialiseWebSocket();
+        this.joinDiagram();
+      }, 1000);
+    } else {
+      console.log("Reached retry connection limit");
+    }
   };
 
   onMessageReceived = (event) => {
@@ -133,10 +140,7 @@ export class DiagramEditor extends React.Component {
       case "diagramData":
         this.handleNewDiagramData(messageData.diagramData);
         this.setState({
-          participants: [
-            ...this.state.participants,
-            ...(messageData.participants || []),
-          ],
+          participants: messageData.participants || [],
         });
         break;
       case "diagramDataError":
@@ -170,7 +174,7 @@ export class DiagramEditor extends React.Component {
 
   handleLoginSomewhereElse = () => {
     this.socket.removeEventListener("close", this.onSocketClosed);
-    this.socket.close();
+    // this.socket.close();
     this.setState({ isLoggedInSomewhereElse: true, isMaster: false });
   };
 
@@ -183,14 +187,9 @@ export class DiagramEditor extends React.Component {
 
   removeParticipant = (user) => {
     const { participants } = this.state;
-    const targetIndex = this.state.participants.findIndex(
-      (crtUser) => crtUser.authorId === user.authorId
-    );
+
     this.setState({
-      participants: [
-        ...participants.slice(0, targetIndex),
-        ...participants.slice(targetIndex + 1),
-      ],
+      participants: participants.filter((x) => x.authorId !== user.authorId),
     });
   };
 
@@ -229,9 +228,9 @@ export class DiagramEditor extends React.Component {
       diagramData: newDiagramData,
     });
 
-    // if (this.state.isMaster) {
-    this.saveDiagram(newDiagramData);
-    // }
+    if (this.state.isMaster) {
+      this.saveDiagram(newDiagramData);
+    }
   };
 
   createVersion = ({ versionName }) => {
@@ -281,6 +280,7 @@ export class DiagramEditor extends React.Component {
   };
 
   sendChange = (change) => {
+    console.log("sendChange() change = ", change);
     const { isReadOnlyMode, diagramData } = this.state;
     const { diagramId, versionId } = diagramData;
     if (isReadOnlyMode) {
@@ -502,6 +502,7 @@ export class DiagramEditor extends React.Component {
       isConnecting: false,
     });
 
+    console.log("onComponentMouseUp()");
     if (isConnecting) {
       if (selectedComponentId !== componentId) {
         this.sendChange({
@@ -518,9 +519,11 @@ export class DiagramEditor extends React.Component {
     }
 
     if (isDraggingComponent) {
+      console.log("A");
       const selectedComponent = this.getSelectedComponent();
 
       if (selectedComponent) {
+        console.log("B");
         const wholeDeltaX = e.clientX - (this.state.initialMouseX || 0);
         const wholeDeltaY = e.clientY - (this.state.initialMouseY || 0);
 
@@ -536,6 +539,7 @@ export class DiagramEditor extends React.Component {
           initialMouseY: null,
         });
 
+        console.log("C");
         this.sendChange({
           operation: "moveComponent",
           data: {
@@ -573,7 +577,7 @@ export class DiagramEditor extends React.Component {
     const deltaY = e.clientY - previousMouseY;
 
     const newX = e.clientX - canvasX - COMPONENT_WIDTH / 2;
-    const newY = e.clientY - canvasY - COMPONENT_HEIGHT / 2;
+    const newY = e.clientY - canvasY - COMPONENT_HEIGHT;
 
     const gridSnapNewX = Math.ceil(newX / GRID_CELL_SIZE) * GRID_CELL_SIZE;
     const gridSnapNewY = Math.ceil(newY / GRID_CELL_SIZE) * GRID_CELL_SIZE;
