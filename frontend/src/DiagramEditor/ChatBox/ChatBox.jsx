@@ -12,6 +12,13 @@ export default function ChatBox({ messages, onSend, authorId }) {
     setNewMessage("");
   }
 
+  function onKeyPress(e) {
+    console.log(e.key);
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  }
+
   function displayMessages() {
     if (!messages) {
       return <p className="message">No messages yet</p>;
@@ -41,6 +48,7 @@ export default function ChatBox({ messages, onSend, authorId }) {
       <input
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
+        onKeyPress={onKeyPress}
       />
       <button onClick={onSubmit}>Send</button>
     </div>

@@ -222,31 +222,34 @@ export class DiagramEditor extends React.Component {
   }
 
   handleChange = (change) => {
-    // console.log("change:", change);
+    console.log("change:", change);
     const { diagramData } = this.state;
     let newDiagramData = diagramData;
     switch (change.operation) {
       case "newVersion":
         window.location = `/diagrams/${change.data.diagramId}/${change.data.versionId}`;
         return;
+
       case "follow-start":
         this.setState({
           followers: [...this.state.followers, change.authorId],
         });
         return;
+
       case "follow-end":
         this.setState({
           followers: this.state.followers.filter((x) => x !== change.authorId),
         });
         return;
+
       case "stop-following":
         this.setState({
           participantWeFollow: undefined,
         });
         return;
+
       case "pan":
         const deltaTime = change.timestamp - this.state.lastFollowEvent;
-
         if (deltaTime > 0) {
           this.setState({
             followCanvasX: change.data.x,
@@ -261,7 +264,6 @@ export class DiagramEditor extends React.Component {
           change,
           diagramData: this.state.diagramData,
         });
-
         break;
     }
 
@@ -363,9 +365,10 @@ export class DiagramEditor extends React.Component {
   };
 
   sendChatMessage = (messageContent) => {
+    console.log("messageContent", messageContent);
     this.sendChange({
       operation: "chatMessage",
-      message: {
+      data: {
         content: messageContent,
         authorId: this.authorId,
         sendAt: Date.now(),
