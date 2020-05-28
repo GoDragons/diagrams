@@ -230,15 +230,18 @@ export class DiagramEditor extends React.Component {
         window.location = `/diagrams/${change.data.diagramId}/${change.data.versionId}`;
         return;
       case "follow-start":
-        console.log("follow-start");
         this.setState({
           followers: [...this.state.followers, change.authorId],
         });
         return;
       case "follow-end":
-        console.log("follow-end");
         this.setState({
           followers: this.state.followers.filter((x) => x !== change.authorId),
+        });
+        return;
+      case "stop-following":
+        this.setState({
+          participantWeFollow: undefined,
         });
         return;
       case "pan":
@@ -774,6 +777,15 @@ export class DiagramEditor extends React.Component {
 
   followParticipant = (participant) => {
     console.log("follow", participant);
+    const { participantWeFollow } = this.state;
+
+    if (participantWeFollow) {
+      this.sendChange(
+        { operation: "follow-end" },
+        { recipients: [participantWeFollow] }
+      );
+    }
+
     this.setState({ participantWeFollow: participant.authorId });
     this.sendChange(
       { operation: "follow-start" },
@@ -786,6 +798,19 @@ export class DiagramEditor extends React.Component {
     this.setState({ participantWeFollow: null });
     this.sendChange(
       { operation: "follow-end" },
+      { recipients: [participant.authorId] }
+    );
+  };
+
+  removeFollower = (participant) => {
+    console.log("removeFollower", participant);
+    this.setState({
+      followers: this.state.followers.filter(
+        (follower) => follower !== participant.authorId
+      ),
+    });
+    this.sendChange(
+      { operation: "stop-following" },
       { recipients: [participant.authorId] }
     );
   };
@@ -975,6 +1000,7 @@ export class DiagramEditor extends React.Component {
         authorId={this.authorId}
         onFollow={this.followParticipant}
         onUnFollow={this.unFollowParticipant}
+        onRemoveFollower={this.removeFollower}
         followers={this.state.followers}
         participantWeFollow={this.state.participantWeFollow}
       />

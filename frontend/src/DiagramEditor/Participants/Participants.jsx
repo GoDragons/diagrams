@@ -8,6 +8,7 @@ export default function Participants({
   participants,
   onFollow,
   onUnFollow,
+  onRemoveFollower,
   authorId,
   followers,
   participantWeFollow,
@@ -40,9 +41,16 @@ export default function Participants({
       return null;
     }
 
+    const isFollower = followers.includes(participant.authorId);
+
     const contextMenuProps = {};
     if (participant.authorId === participantWeFollow) {
       contextMenuProps.onUnFollow = (e) => onUnFollow(selectedParticipant);
+    } else if (isFollower) {
+      contextMenuProps.onFollow = (e) => {
+        onRemoveFollower(selectedParticipant);
+        onFollow(selectedParticipant);
+      };
     } else {
       contextMenuProps.onFollow = (e) => onFollow(selectedParticipant);
     }
