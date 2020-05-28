@@ -222,7 +222,7 @@ export class DiagramEditor extends React.Component {
   }
 
   handleChange = (change) => {
-    console.log("change:", change);
+    // console.log("change:", change);
     const { diagramData } = this.state;
     let newDiagramData = diagramData;
     switch (change.operation) {
@@ -567,7 +567,6 @@ export class DiagramEditor extends React.Component {
       isConnecting: false,
     });
 
-    console.log("onComponentMouseUp()");
     if (isConnecting) {
       if (selectedComponentId !== componentId) {
         this.sendChange({
@@ -584,11 +583,9 @@ export class DiagramEditor extends React.Component {
     }
 
     if (isDraggingComponent) {
-      console.log("A");
       const selectedComponent = this.getSelectedComponent();
 
       if (selectedComponent) {
-        console.log("B");
         const wholeDeltaX = e.clientX - (this.state.initialMouseX || 0);
         const wholeDeltaY = e.clientY - (this.state.initialMouseY || 0);
 
@@ -604,7 +601,6 @@ export class DiagramEditor extends React.Component {
           initialMouseY: null,
         });
 
-        console.log("C");
         this.sendChange({
           operation: "moveComponent",
           data: {
@@ -779,7 +775,6 @@ export class DiagramEditor extends React.Component {
   };
 
   followParticipant = (participant) => {
-    console.log("follow", participant);
     const { participantWeFollow } = this.state;
 
     if (participantWeFollow) {
@@ -797,7 +792,6 @@ export class DiagramEditor extends React.Component {
   };
 
   unFollowParticipant = (participant) => {
-    console.log("unfollow", participant);
     this.setState({ participantWeFollow: null });
     this.sendChange(
       { operation: "follow-end" },
@@ -806,7 +800,6 @@ export class DiagramEditor extends React.Component {
   };
 
   removeFollower = (participant) => {
-    console.log("removeFollower", participant);
     this.setState({
       followers: this.state.followers.filter(
         (follower) => follower !== participant.authorId
