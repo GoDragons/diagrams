@@ -6,7 +6,6 @@ import "./DiagramDetails.scss";
 
 export default function DiagramDetails({
   diagramData,
-
   isGridSnapActive,
   toggleGridSnap,
   openVersionModal,

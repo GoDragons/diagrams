@@ -51,6 +51,8 @@ export default function Participants({
         onRemoveFollower(selectedParticipant);
         onFollow(selectedParticipant);
       };
+    } else if (participant.authorId === authorId) {
+      // we cannot follow ourselves
     } else {
       contextMenuProps.onFollow = (e) => onFollow(selectedParticipant);
     }
@@ -97,7 +99,7 @@ export default function Participants({
   }
   return (
     <div className="participants">
-      <p className="title">Participants</p>
+      <p className="title">Participants ({participants.length})</p>
       <ul className="participant-list">{displayParticipants()}</ul>
     </div>
   );

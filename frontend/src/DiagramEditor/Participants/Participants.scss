@@ -19,19 +19,28 @@
     padding-left: 0;
 
     .participant {
-      margin: 1rem 0.5rem;
+      margin: 0.2rem 0.5rem;
       align-self: flex-start;
       display: flex;
       position: relative;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
+      padding: 0.5rem 0.5rem;
+      border-left: 3px solid transparent;
+
+      &:hover {
+        border-left-color: #12cbc4;
+        // border-left-color: #b53471;
+        background-color: #f9f9f9;
+      }
 
       .fas {
         margin-left: 0.7rem;
       }
 
       .we-follow {
-        color: #a3cb38;
+        color: #12cbc4;
       }
 
       .follower {
