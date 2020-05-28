@@ -33,18 +33,22 @@ export default function DiagramDetails({
         {displayVersionLabel()}
       </h3>
       <div className="toolbar">
-        <button
-          onClick={toggleGridSnap}
-          className={cx("grid-snap", { on: isGridSnapActive })}
-        >
-          Grid Snap: {isGridSnapActive ? "on" : "off"}
-        </button>
         <Link to="/">
           <button className="home">Home</button>
         </Link>
-        <button onClick={openVersionModal} className="create-version">
-          Create Version
-        </button>
+        {diagramData.isLatest ? (
+          <button onClick={openVersionModal} className="create-version">
+            Create Version
+          </button>
+        ) : null}
+        {diagramData.isLatest ? (
+          <button
+            onClick={toggleGridSnap}
+            className={cx("grid-snap", { on: isGridSnapActive })}
+          >
+            Grid Snap: {isGridSnapActive ? "on" : "off"}
+          </button>
+        ) : null}
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import { REST_API_URL } from "common/constants";
 
 import "./DiagramList.scss";
 
+import DiagramItem from "./DiagramItem/DiagramItem";
+
 export default function DiagramList() {
   const [diagrams, setDiagrams] = useState();
   useEffect(() => {
@@ -19,48 +21,6 @@ export default function DiagramList() {
       .catch((e) => console.log(`Could not get diagrams:`, e));
   }
 
-  function deleteVersion(diagramId, versionId) {
-    axios
-      .post(`${REST_API_URL}/delete-version`, { diagramId, versionId })
-      .then(getDiagrams)
-      .catch((e) => console.log(`Could not delete version:`, e.response.data));
-  }
-  function deleteDiagram(diagramId) {
-    axios
-      .post(`${REST_API_URL}/delete-diagram`, { diagramId })
-      .then(getDiagrams)
-      .catch((e) => console.log(`Could not delete diagram:`, e.response.data));
-  }
-
-  function displayVersions(versions) {
-    if (!versions || versions.length === 1) {
-      return null;
-    }
-    const versionElements = versions.slice(1).map((version) => {
-      const { diagramId, versionId, versionName, lastModified } = version;
-      return (
-        <li key={`${diagramId}-${versionId}`} className="version-item">
-          <Link to={`/diagrams/${diagramId}/${versionId}`}>
-            <span className="version-name">{versionName}</span>
-            <span className="last-modified">
-              {window.moment(lastModified).format("DD MMM YYYY - HH:mm:ss")}
-            </span>
-          </Link>
-          <button onClick={(e) => deleteVersion(diagramId, versionId)}>
-            Delete version
-          </button>
-        </li>
-      );
-    });
-
-    return (
-      <div className="version-list-container">
-        <p className="version-id">Versions: </p>
-        <ul className="versions">{versionElements}</ul>
-      </div>
-    );
-  }
-
   function displayDiagramList() {
     if (!diagrams) {
       return <p>Loading diagrams...</p>;
@@ -69,31 +29,13 @@ export default function DiagramList() {
       return <p>There are no diagrams. Create one now!</p>;
     }
 
-    return diagrams.map(
-      ({ diagramId, latestVersionId, diagramName, versions }) => {
-        const lastModifiedTimestamp =
-          versions[versions.length - 1].lastModified;
-        const lastModifiedHumanReadable = window
-          .moment(lastModifiedTimestamp)
-          .format("DD MMM YYYY");
-
-        return (
-          <div className="diagram-item" key={diagramId}>
-            <Link to={`/diagrams/${diagramId}/${latestVersionId}`}>
-              <h3 className="title">{diagramName}</h3>
-            </Link>
-            <p className="last-modified">
-              Last modified:{lastModifiedHumanReadable}
-            </p>
-            <button onClick={(e) => deleteDiagram(diagramId)}>
-              Delete diagram
-            </button>
-
-            {displayVersions(versions)}
-          </div>
-        );
-      }
-    );
+    return diagrams.map((diagramData) => (
+      <DiagramItem
+        key={diagramData.diagramId}
+        {...diagramData}
+        refreshList={getDiagrams}
+      />
+    ));
   }
 
   return (

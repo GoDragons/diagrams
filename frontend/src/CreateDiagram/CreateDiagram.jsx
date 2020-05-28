@@ -8,9 +8,12 @@ import "./CreateDiagram.scss";
 
 export function CreateDiagram() {
   const [diagramName, setDiagramName] = useState("");
+  const [isLoading, setIsLoading] = useState("");
   let history = useHistory();
 
   function createDiagram() {
+    setDiagramName("");
+    setIsLoading(true);
     axios
       .post(`${REST_API_URL}/create-diagram`, { diagramName: diagramName })
       .then((response) => {
@@ -33,11 +36,14 @@ export function CreateDiagram() {
     setDiagramName(newText);
   }
 
+  function onKeyPress(e) {
+    if (e.key === "Enter") {
+      createDiagram();
+    }
+  }
+
   return (
-    <div
-      className="create-diagram
-    "
-    >
+    <div className="create-diagram">
       <Link to="/">
         <button className="home">Home</button>
       </Link>
@@ -48,13 +54,17 @@ export function CreateDiagram() {
           (only numbers, letters and underscores allowed)
         </span>
       </p>
-      <input value={diagramName} onChange={onDiagramNameChange} />
+      <input
+        value={diagramName}
+        onChange={onDiagramNameChange}
+        onKeyPress={onKeyPress}
+      />
 
       <button
         onClick={createDiagram}
         className={isValid() ? "enabled" : "disabled"}
       >
-        Create
+        {isLoading ? "Submitting..." : "Create"}
       </button>
     </div>
   );
