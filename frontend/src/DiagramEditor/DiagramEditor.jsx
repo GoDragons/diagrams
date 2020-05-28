@@ -145,6 +145,7 @@ export class DiagramEditor extends React.Component {
     switch (messageData.type) {
       case "master":
         this.setState({ isMaster: true });
+        this.saveDiagram(this.state.diagramData);
         break;
       case "diagramData":
         this.handleNewDiagramData(messageData.diagramData);
