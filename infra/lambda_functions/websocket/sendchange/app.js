@@ -15,10 +15,16 @@ exports.handler = async (event) => {
   const body = JSON.parse(event.body);
   console.log("body:", body);
 
-  const diagramId = body.diagramId;
-  const versionId = body.versionId;
+  const { diagramId, versionId, recipients } = body;
 
-  const users = await getUsersOnDiagram({ diagramId, versionId });
+  let users = await getUsersOnDiagram({ diagramId, versionId });
+
+  // sometimes, we want to send a message only to a subset of users, e.g when following someone
+  if (recipients) {
+    users.Items = users.Items.filter((user) =>
+      recipients.includes(user.authorId)
+    );
+  }
 
   const postData = {
     type: "change",

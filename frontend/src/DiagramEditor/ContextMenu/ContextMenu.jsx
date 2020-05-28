@@ -1,85 +1,52 @@
 import React from "react";
 
 import "./ContextMenu.scss";
+import cx from "classnames";
 
-export default function ContextMenu({
-  target,
-  onConnect,
-  onClone,
-  onDelete,
-  onRename,
-  onHide,
-  onReverse,
-}) {
-  if (!target) {
-    return null;
+export default function ContextMenu({ target, ...props }) {
+  const options = [
+    { label: "Connect", callback: "onConnect", icon: "fa-arrow-right" },
+    { label: "Clone", callback: "onClone", icon: "fa-clone" },
+    { label: "Rename", callback: "onRename", icon: "fa-pencil-alt" },
+    { label: "Reverse", callback: "onReverse", icon: "fa-arrows-alt-h" },
+    { label: "Delete", callback: "onDelete", icon: "fa-trash" },
+    { label: "Follow", callback: "onFollow", icon: "fa-binoculars" },
+    { label: "Unfollow", callback: "onUnFollow", icon: "fa-times" },
+  ];
+
+  function displayOptions() {
+    return options
+      .filter(({ callback }) => typeof props[callback] === "function")
+      .map((option) => {
+        return (
+          <li
+            key={option.label}
+            onClick={(e) => {
+              e.stopPropagation();
+
+              props[option.callback](e);
+              props.onHide(e);
+            }}
+          >
+            <i className={`icon connect fas ${option.icon}`}></i>
+            <span className="label">{option.label}</span>
+          </li>
+        );
+      });
   }
 
-  const style = { top: target.y - 50 + "px", left: target.x + 50 + "px" };
-
-  function handleMouseUp(e) {
-    e.stopPropagation();
-    onHide(e);
+  let style = {};
+  if (target) {
+    style = {
+      top: target.y - 50 + "px",
+      left: target.x + 50 + "px",
+      position: "absolute",
+    };
   }
 
   return (
-    <ul className="context-menu" style={style} onMouseUp={handleMouseUp}>
-      {onConnect ? (
-        <li
-          onClick={(e) => {
-            e.stopPropagation();
-            onConnect(e);
-          }}
-        >
-          <i className="icon connect fas fa-arrow-right"></i>
-          <span className="label">Connect</span>
-        </li>
-      ) : null}
-      {onClone ? (
-        <li
-          onClick={(e) => {
-            e.stopPropagation();
-            onClone(e);
-          }}
-        >
-          <i className="icon clone far fa-clone"></i>
-          <span className="label">Clone</span>
-        </li>
-      ) : null}
-      {onRename ? (
-        <li
-          onClick={(e) => {
-            e.stopPropagation();
-            onRename(e);
-          }}
-        >
-          <i className="icon rename fas fa-pencil-alt"></i>
-          <span className="label">Rename</span>
-        </li>
-      ) : null}
-      {onReverse ? (
-        <li
-          onClick={(e) => {
-            e.stopPropagation();
-            onReverse(e);
-          }}
-        >
-          <i className="icon reverse fas fa-arrows-alt-h"></i>
-          <span className="label">Reverse</span>
-        </li>
-      ) : null}
-      {onDelete ? (
-        <li
-          onClick={(e) => {
-            e.stopPropagation();
-
-            onDelete(e);
-          }}
-        >
-          <i className="icon delete fas fa-trash"></i>
-          <span className="label">Delete</span>
-        </li>
-      ) : null}
+    <ul className={cx("context-menu", props.className)} style={style}>
+      {displayOptions()}
     </ul>
   );
 }

@@ -22,6 +22,25 @@
       margin: 1rem 0.5rem;
       align-self: flex-start;
       display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+
+      .fas {
+        margin-left: 0.7rem;
+      }
+
+      .we-follow {
+        color: #a3cb38;
+      }
+
+      .follower {
+        color: #ddd;
+      }
+
+      .me {
+        color: #ed4c67;
+      }
     }
   }
 }

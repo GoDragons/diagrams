@@ -39,7 +39,6 @@ export function ComponentItem({
 
   return (
     <div
-      key={id}
       className={cx("component", {
         "is-read-only-mode": isReadOnlyMode,
         "is-interactive": !isReadOnlyMode,

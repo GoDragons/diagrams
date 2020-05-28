@@ -14,76 +14,46 @@ const helpers = {
   },
 
   updateConnection: ({ changeData, diagramData }) => {
-    const { connections } = diagramData;
-    const targetIndex = connections.findIndex(
-      (element) => element.id === changeData.id
-    );
-
     return {
       ...diagramData,
-      connections: [
-        ...connections.slice(0, targetIndex),
-        changeData,
-        ...connections.slice(targetIndex + 1),
-      ],
+      connections: diagramData.connections.map((connection) =>
+        connection.id === changeData.id ? changeData : connection
+      ),
     };
   },
 
   moveComponent: ({ changeData, diagramData }) => {
-    const { components } = diagramData;
-    const targetIndex = components.findIndex(
-      (element) => element.id === changeData.id
-    );
-
-    let updatedElement = {
-      ...components[targetIndex],
-      x: changeData.x,
-      y: changeData.y,
-    };
-
     return {
       ...diagramData,
-      components: [
-        ...components.slice(0, targetIndex),
-        updatedElement,
-        ...components.slice(targetIndex + 1),
-      ],
+      components: diagramData.components.map((component) =>
+        component.id === changeData.id
+          ? { ...component, x: changeData.x, y: changeData.y }
+          : component
+      ),
     };
   },
 
   deleteComponent: ({ changeData, diagramData }) => {
-    const { components } = diagramData;
-    const targetIndex = components.findIndex(
-      (element) => element.id === changeData.id
-    );
-
     return {
       ...diagramData,
-      components: [
-        ...components.slice(0, targetIndex),
-        ...components.slice(targetIndex + 1),
-      ],
+      components: diagramData.components.filter((x) => x.id !== changeData.id),
     };
   },
 
   deleteConnection: ({ changeData, diagramData }) => {
-    const { connections } = diagramData;
-    const targetIndex = connections.findIndex(
-      (element) => element.id === changeData.id
-    );
-
     return {
       ...diagramData,
-      connections: [
-        ...connections.slice(0, targetIndex),
-        ...connections.slice(targetIndex + 1),
-      ],
+      connections: diagramData.connections.filter(
+        (x) => x.id !== changeData.id
+      ),
     };
   },
 
-  pan: ({ changeData, diagramData }) => {
-    // console.log('pan');
-    return diagramData;
+  chatMessage: ({ changeData, diagramData }) => {
+    return {
+      ...diagramData,
+      messages: [...(diagramData.messages || []), changeData.message],
+    };
   },
 };
 

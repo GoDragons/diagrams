@@ -15,15 +15,13 @@ import DiagramDetails from "./DiagramDetails/DiagramDetails";
 import { withRouter, Link } from "react-router-dom";
 import Cookie from "js-cookie";
 
+import _ from "lodash";
+
 import axios from "axios";
 
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
 
-// import { getCloudFormationOuputByName } from "common/outputParser.js";
-
 import { REST_API_URL, WEBSOCKET_API_URL } from "common/constants";
-
-// const WEBSOCKET_API_ID = getCloudFormationOuputByName("WebSocketApiId");
 
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
@@ -36,22 +34,25 @@ const MAX_CONNECTION_RETRY_COUNT = 2;
 export class DiagramEditor extends React.Component {
   socket = undefined;
   authorId = null;
+  peerId = null;
   connectionRetryCount = 0;
 
   state = {
+    diagramData: null,
     isMaster: false,
     isVersionModalOpen: false,
-    diagramData: null,
-    isLoggedInSomewhereElse: false,
-    participants: [],
-    isReadOnlyMode: false,
-    error: null,
-    selectedComponentId: null,
-    selectedConnectionId: null,
     isDraggingComponent: false,
+    isLoggedInSomewhereElse: false,
+    isReadOnlyMode: false,
     isPanning: false,
     isConnecting: false,
     isGridSnapActive: true,
+    isComponentContextMenuShowing: false,
+    isConnectionContextMenuShowing: false,
+    participants: [],
+    error: null,
+    selectedComponentId: null,
+    selectedConnectionId: null,
     previousMouseX: null,
     previousMouseY: null,
     mouseCanvasX: null,
@@ -64,9 +65,12 @@ export class DiagramEditor extends React.Component {
     deltaY: null,
     canvasX: -5000,
     canvasY: -5000,
+    participantWeFollow: null,
+    followers: [],
+    followCanvasX: 0,
+    followCanvasY: 0,
+    lastFollowEvent: Date.now(),
     canvasScale: 1,
-    isComponentContextMenuShowing: false,
-    isConnectionContextMenuShowing: false,
   };
 
   componentDidMount() {
@@ -86,8 +90,8 @@ export class DiagramEditor extends React.Component {
     window.removeEventListener("mouseup", this.onWindowMouseUp);
     window.removeEventListener("mousemove", this.onWindowMouseMove);
 
-    // this.socket.removeEventListener("close", this.onSocketClosed);
-    // this.socket.close();
+    this.socket.removeEventListener("close", this.onSocketClosed);
+    this.socket.close();
   }
 
   generateAuthorId = () => {
@@ -107,9 +111,14 @@ export class DiagramEditor extends React.Component {
 
     this.socket = newSocket;
 
+    this.socket.sendThrottled = _.throttle(this.socket.send, 60, {
+      trailing: false,
+    });
+
     // Connection opened
     newSocket.addEventListener("open", (event) => {
       console.log("connection open");
+      this.connectionRetryCount = 0;
     });
     newSocket.addEventListener("close", this.onSocketClosed);
 
@@ -132,7 +141,7 @@ export class DiagramEditor extends React.Component {
 
   onMessageReceived = (event) => {
     const messageData = JSON.parse(event.data);
-    console.log("message:", messageData);
+    // console.log("message:", messageData);
     switch (messageData.type) {
       case "master":
         this.setState({ isMaster: true });
@@ -174,22 +183,35 @@ export class DiagramEditor extends React.Component {
 
   handleLoginSomewhereElse = () => {
     this.socket.removeEventListener("close", this.onSocketClosed);
-    // this.socket.close();
+    this.socket.close();
     this.setState({ isLoggedInSomewhereElse: true, isMaster: false });
   };
 
   addParticipant = (user) => {
     const { participants } = this.state;
-    this.setState({
-      participants: [...participants, user],
-    });
+    const participantAlreadyExists = participants.find(
+      (x) => x.authorId === user.authorId
+    );
+
+    if (participantAlreadyExists) {
+      this.setState({
+        participants: participants.map((x) => (x.authorId === user ? user : x)),
+      });
+    } else {
+      this.setState({
+        participants: [...participants, user],
+      });
+    }
   };
 
   removeParticipant = (user) => {
-    const { participants } = this.state;
+    const { participants, followers, participantWeFollow } = this.state;
 
     this.setState({
       participants: participants.filter((x) => x.authorId !== user.authorId),
+      participantWeFollow:
+        user.authorId === participantWeFollow ? null : participantWeFollow,
+      followers: followers.filter((x) => x !== user.authorId),
     });
   };
 
@@ -199,21 +221,36 @@ export class DiagramEditor extends React.Component {
   }
 
   handleChange = (change) => {
+    // console.log("change:", change);
     const { diagramData } = this.state;
     let newDiagramData = diagramData;
     switch (change.operation) {
       case "newVersion":
         window.location = `/diagrams/${change.data.diagramId}/${change.data.versionId}`;
         return;
-      case "chatMessage":
-        console.log("chatMessage change = ", change, this.state.isMaster);
-        newDiagramData = {
-          ...diagramData,
-          messages: !diagramData.messages
-            ? [change.message]
-            : [...diagramData.messages, change.message],
-        };
-        break;
+      case "follow-start":
+        console.log("follow-start");
+        this.setState({
+          followers: [...this.state.followers, change.authorId],
+        });
+        return;
+      case "follow-end":
+        console.log("follow-end");
+        this.setState({
+          followers: this.state.followers.filter((x) => x !== change.authorId),
+        });
+        return;
+      case "pan":
+        const deltaTime = change.timestamp - this.state.lastFollowEvent;
+
+        if (deltaTime > 0) {
+          this.setState({
+            followCanvasX: change.data.x,
+            followCanvasY: change.data.y,
+            lastFollowEvent: change.timestamp,
+          });
+        }
+        return;
 
       default:
         newDiagramData = applyChangeToDiagramData({
@@ -279,25 +316,46 @@ export class DiagramEditor extends React.Component {
     }
   };
 
-  sendChange = (change) => {
-    console.log("sendChange() change = ", change);
+  sendChange = (change, options = {}) => {
+    // console.log("sendChange() change = ", change, "options = ", options);
     const { isReadOnlyMode, diagramData } = this.state;
     const { diagramId, versionId } = diagramData;
     if (isReadOnlyMode) {
       return;
     }
 
-    let processedChange = { ...change, authorId: this.authorId };
-    this.handleChange(processedChange);
+    const IGNORED_CHANGES = ["follow-start"]; // changes we don't want to apply on ourselves
 
-    this.socket.send(
-      JSON.stringify({
-        message: "sendchange",
-        diagramId: diagramId,
-        versionId: versionId,
-        change: processedChange,
-      })
-    );
+    let processedChange = {
+      ...change,
+      authorId: this.authorId,
+      timestamp: Date.now(),
+    };
+
+    const messageToSend = {
+      message: "sendchange",
+      diagramId: diagramId,
+      versionId: versionId,
+      change: processedChange,
+    };
+
+    if (options.recipients) {
+      messageToSend.recipients = options.recipients;
+    }
+
+    if (!IGNORED_CHANGES.includes(change.operation)) {
+      this.handleChange(processedChange);
+    }
+
+    if (messageToSend.recipients && messageToSend.recipients.length === 0) {
+      return;
+    }
+
+    if (options.throttled) {
+      this.socket.sendThrottled(JSON.stringify(messageToSend));
+    } else {
+      this.socket.send(JSON.stringify(messageToSend));
+    }
   };
 
   sendChatMessage = (messageContent) => {
@@ -618,13 +676,17 @@ export class DiagramEditor extends React.Component {
       canvasX: newX,
       canvasY: newY,
     });
-    this.sendChange({
-      operation: "pan",
-      data: {
-        x: newX,
-        y: newY,
+
+    this.sendChange(
+      {
+        operation: "pan",
+        data: {
+          x: newX,
+          y: newY,
+        },
       },
-    });
+      { recipients: this.state.followers, throttled: true }
+    );
   };
 
   onKeyUp = (e) => {
@@ -707,6 +769,24 @@ export class DiagramEditor extends React.Component {
         key={component.id}
       />
     ));
+  };
+
+  followParticipant = (participant) => {
+    console.log("follow", participant);
+    this.setState({ participantWeFollow: participant.authorId });
+    this.sendChange(
+      { operation: "follow-start" },
+      { recipients: [participant.authorId] }
+    );
+  };
+
+  unFollowParticipant = (participant) => {
+    console.log("unfollow", participant);
+    this.setState({ participantWeFollow: null });
+    this.sendChange(
+      { operation: "follow-end" },
+      { recipients: [participant.authorId] }
+    );
   };
 
   displayConnections = () => {
@@ -892,6 +972,10 @@ export class DiagramEditor extends React.Component {
       <Participants
         participants={this.state.participants}
         authorId={this.authorId}
+        onFollow={this.followParticipant}
+        onUnFollow={this.unFollowParticipant}
+        followers={this.state.followers}
+        participantWeFollow={this.state.participantWeFollow}
       />
     );
   };
@@ -938,12 +1022,21 @@ export class DiagramEditor extends React.Component {
   };
 
   displayEditor = () => {
-    const { canvasX, canvasY, canvasScale } = this.state;
+    const {
+      canvasX,
+      canvasY,
+      canvasScale,
+      followCanvasX,
+      followCanvasY,
+    } = this.state;
+
+    const chosenCanvasX = followCanvasX !== null ? followCanvasX : canvasX;
+    const chosenCanvasY = followCanvasY !== null ? followCanvasY : canvasY;
     const canvasProps = {
       className: "canvas",
       style: {
-        top: canvasY + "px",
-        left: canvasX + "px",
+        top: chosenCanvasY + "px",
+        left: chosenCanvasX + "px",
         transform: `scale(${canvasScale})`,
       },
       onWheel: this.zoom,
@@ -957,6 +1050,7 @@ export class DiagramEditor extends React.Component {
         <div {...canvasProps}>
           {this.displayComponentContextMenu()}
           {this.displayConnectionContextMenu()}
+
           {this.displayComponents()}
           {this.displayConnections()}
           {this.displayConnectArrow()}
