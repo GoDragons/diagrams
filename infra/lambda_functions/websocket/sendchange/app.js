@@ -150,7 +150,7 @@ async function removeMaster({ diagramId, versionId, connectionId }) {
     };
     console.log("Delete Params:", deleteParams);
     await ddb.delete(deleteParams).promise();
-    console.log("Successfully removed master:", connectionId.S);
+    console.log("Successfully removed master:", connectionId);
   } catch (e) {
     if (e.code === "ConditionalCheckFailedException") {
       console.log("The user was not master");
