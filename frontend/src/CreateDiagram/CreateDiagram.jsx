@@ -14,10 +14,13 @@ export function CreateDiagram({ userCredentials }) {
   function createDiagram() {
     setDiagramName("");
     setIsLoading(true);
+    console.log("userCredentials:", userCredentials);
+    const authorId = userCredentials.accessToken.payload.username;
+    console.log("authorId = ", authorId);
     axios
       .post(
         `${REST_API_URL}/create-diagram`,
-        { diagramName: diagramName },
+        { diagramName: diagramName, authorId },
         {
           headers: {
             Authorization: userCredentials.accessToken.jwtToken,

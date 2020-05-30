@@ -13,6 +13,10 @@ const data = {
           AttributeName: "versionId",
           AttributeType: "S",
         },
+        {
+          AttributeName: "authorId",
+          AttributeType: "S",
+        },
       ],
       KeySchema: [
         {
@@ -24,6 +28,21 @@ const data = {
           KeyType: "RANGE",
         },
       ],
+      GlobalSecondaryIndexes: [
+        {
+          IndexName: "authors",
+          Projection: {
+            ProjectionType: "ALL",
+          },
+          KeySchema: [
+            {
+              AttributeName: "authorId",
+              KeyType: "HASH",
+            },
+          ],
+        },
+      ],
+
       SSESpecification: {
         SSEEnabled: true,
       },

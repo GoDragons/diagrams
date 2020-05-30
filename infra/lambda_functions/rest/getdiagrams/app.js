@@ -9,37 +9,42 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 
 exports.handler = async (event) => {
   let diagrams = [];
+  console.log("event = ", JSON.stringify(event, null, 2));
+  const authorId = "";
+  const username = event.requestContext.authorizer.jwt.claims.username;
 
-  try {
-    const diagramsResult = await ddb
-      .scan({
-        TableName: DIAGRAMS_TABLE_NAME,
-        ProjectionExpression:
-          "diagramId, diagramName, lastModified, versionName, versionId, isLatest",
-      })
-      .promise();
-    const diagramItems = diagramsResult.Items;
-    const diagramIds = new Set();
-    diagramItems.forEach((diagramItem) => {
-      diagramIds.add(diagramItem.diagramId);
-    });
+  const diagramsForAuthor = await getDiagramsForAuthor(username);
 
-    diagramIds.forEach((diagramId) => {
-      const versions = diagramItems
-        .filter((item) => item.diagramId === diagramId)
-        .sort((a, b) => (a.lastModified < b.lastModified ? 1 : -1));
-      const diagramData = {
-        versions,
-        diagramName: versions[0].diagramName,
-        diagramId: versions[0].diagramId,
-        latestVersionId: versions[0].versionId,
-      };
-      diagrams.push(diagramData);
-    });
-  } catch (e) {
-    console.log("Error when reading diagrams: ", e);
-    return { statusCode: 500, body: e.stack };
-  }
+  const diagramIds = new Set();
+  diagramsForAuthor.Items.forEach((diagram) => {
+    diagramIds.add(diagram.diagramId);
+  });
+
+  diagramIds.forEach((diagramId) => {
+    const versions = diagramsForAuthor.Items.filter(
+      (item) => item.diagramId === diagramId
+    ).sort((a, b) => (a.lastModified < b.lastModified ? 1 : -1));
+    const diagramData = {
+      versions,
+      diagramName: versions[0].diagramName,
+      diagramId: versions[0].diagramId,
+      latestVersionId: versions[0].versionId,
+    };
+    diagrams.push(diagramData);
+  });
 
   return diagrams;
 };
+
+async function getDiagramsForAuthor(authorId) {
+  return ddb
+    .query({
+      TableName: DIAGRAMS_TABLE_NAME,
+      IndexName: "authors",
+      KeyConditionExpression: "authorId = :authorId",
+      ExpressionAttributeValues: {
+        ":authorId": authorId,
+      },
+    })
+    .promise();
+}
