@@ -6,7 +6,7 @@ import { REST_API_URL } from "common/constants";
 
 import "./CreateDiagram.scss";
 
-export function CreateDiagram() {
+export function CreateDiagram({ userCredentials }) {
   const [diagramName, setDiagramName] = useState("");
   const [isLoading, setIsLoading] = useState("");
   let history = useHistory();
@@ -15,7 +15,15 @@ export function CreateDiagram() {
     setDiagramName("");
     setIsLoading(true);
     axios
-      .post(`${REST_API_URL}/create-diagram`, { diagramName: diagramName })
+      .post(
+        `${REST_API_URL}/create-diagram`,
+        { diagramName: diagramName },
+        {
+          headers: {
+            Authorization: userCredentials.accessToken.jwtToken,
+          },
+        }
+      )
       .then((response) => {
         history.push(
           `/diagrams/${response.data.diagramId}/${response.data.versionId}`

@@ -14,31 +14,30 @@ import Sidebar from "Sidebar/Sidebar";
 export class App extends React.Component {
   state = {
     userData: null,
-    creds: null,
+    userCredentials: null,
   };
 
   async componentDidMount() {
     const userData = await Auth.currentUserInfo();
-    const creds = await Auth.currentSession();
-    console.log("creds:", creds);
-    this.setState({ userData, creds });
+    const userCredentials = await Auth.currentSession();
+    console.log("userCredentials:", userCredentials);
+    this.setState({ userData, userCredentials });
     console.log("userData = ", userData);
   }
 
   render() {
-    const { userData, creds } = this.state;
     return (
       <div className="app">
-        <Sidebar userData={userData} creds={creds} />
+        <Sidebar {...this.state} />
         <Switch>
           <Route exact path="/">
-            <DiagramList userData={userData} creds={creds} />
+            <DiagramList {...this.state} />
           </Route>
           <Route exact path="/create-diagram">
-            <CreateDiagram />
+            <CreateDiagram {...this.state} />
           </Route>
           <Route exact path="/diagrams/:diagramId/:versionId">
-            <DiagramEditor />
+            <DiagramEditor {...this.state} />
           </Route>
         </Switch>
       </div>

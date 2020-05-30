@@ -8,20 +8,20 @@ import "./DiagramList.scss";
 
 import DiagramItem from "./DiagramItem/DiagramItem";
 
-export default function DiagramList({ creds }) {
+export default function DiagramList({ userCredentials }) {
   const [diagrams, setDiagrams] = useState();
   useEffect(() => {
-    if (creds) {
+    if (userCredentials) {
       getDiagrams();
     }
-  }, [creds]);
+  }, [userCredentials]);
 
   function getDiagrams() {
-    console.log("getDiagrams() creds = ", creds);
+    console.log("getDiagrams() userCredentials = ", userCredentials);
     axios
       .get(`${REST_API_URL}/get-diagrams`, {
         headers: {
-          Authorization: creds.accessToken.jwtToken,
+          Authorization: userCredentials.accessToken.jwtToken,
         },
       })
       .then((response) => setDiagrams(response.data))

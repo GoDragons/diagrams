@@ -281,7 +281,15 @@ export class DiagramEditor extends React.Component {
     this.setState({ isVersionModalOpen: false });
 
     axios
-      .post(`${REST_API_URL}/create-version`, { diagramData, versionName })
+      .post(
+        `${REST_API_URL}/create-version`,
+        { diagramData, versionName },
+        {
+          headers: {
+            Authorization: this.props.userCredentials.accessToken.jwtToken,
+          },
+        }
+      )
       .then((response) => {
         window.location = `/diagrams/${response.data.diagramId}/${response.data.versionId}`;
         console.log("Version created:", response.data);
@@ -298,7 +306,15 @@ export class DiagramEditor extends React.Component {
 
   saveDiagram = (diagramData) => {
     axios
-      .post(`${REST_API_URL}/save`, { diagramData })
+      .post(
+        `${REST_API_URL}/save`,
+        { diagramData },
+        {
+          headers: {
+            Authorization: this.props.userCredentials.accessToken.jwtToken,
+          },
+        }
+      )
       .then(() => {})
       .catch((e) => alert(`Could not save diagram:`, e));
   };
