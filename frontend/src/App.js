@@ -26,6 +26,10 @@ export class App extends React.Component {
   }
 
   render() {
+    const { userData } = this.state;
+    if (!userData) {
+      return <p>Loading...</p>;
+    }
     return (
       <div className="app">
         <Sidebar {...this.state} />

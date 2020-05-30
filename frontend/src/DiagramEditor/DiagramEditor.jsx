@@ -79,9 +79,9 @@ export class DiagramEditor extends React.Component {
     window.addEventListener("mouseup", this.onWindowMouseUp);
     window.addEventListener("mousemove", this.onWindowMouseMove);
 
-    this.generateAuthorId();
     this.initialiseWebSocket();
     this.joinDiagram();
+    this.authorId = this.props.userData.username;
   }
 
   componentWillUnmount() {
@@ -93,18 +93,6 @@ export class DiagramEditor extends React.Component {
     this.socket.removeEventListener("close", this.onSocketClosed);
     this.socket.close();
   }
-
-  generateAuthorId = () => {
-    const existingAuthorId = Cookie.get("authorId");
-    if (existingAuthorId) {
-      this.authorId = existingAuthorId;
-    } else {
-      this.authorId = String(Math.floor(Math.random() * 1000000000000));
-      Cookie.set("authorId", this.authorId);
-    }
-
-    console.log("authorId:", this.authorId);
-  };
 
   initialiseWebSocket = () => {
     const newSocket = new WebSocket(WEBSOCKET_API_URL);

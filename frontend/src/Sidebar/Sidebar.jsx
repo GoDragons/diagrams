@@ -33,7 +33,7 @@ export default function Sidebar({ userData }) {
 
   return (
     <div className="sidebar">
-      {displayUserData()}
+      {/* {displayUserData()} */}
       <button onClick={signOut}>Sign out</button>
     </div>
   );
