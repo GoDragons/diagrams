@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./VersionModal.scss";
 
 export default function VersionModal({ onSubmit, onClose }) {
-  const [versionName, setversionName] = useState("");
+  const [versionName, setVersionName] = useState("");
 
   function isValid() {
     // TODO: use a regex for this
@@ -14,6 +14,12 @@ export default function VersionModal({ onSubmit, onClose }) {
       return false;
     }
     return true;
+  }
+
+  function onKeyPress(e) {
+    if (e.key === "Enter") {
+      onSubmit({ versionName });
+    }
   }
 
   return (
@@ -27,7 +33,8 @@ export default function VersionModal({ onSubmit, onClose }) {
         </p>
 
         <input
-          onChange={(e) => setversionName(e.target.value)}
+          onChange={(e) => setVersionName(e.target.value)}
+          onKeyPress={onKeyPress}
           placeholder="e.g. Added a new lambda function"
           value={versionName}
         />

@@ -1,9 +1,9 @@
 const data = {
-  ConnectionsTable: {
+  UsersTable: {
     Type: "String",
-    Default: "diagrams_app_connections",
+    Default: "diagrams_app_users",
     Description:
-      "(Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters",
+      "(Required) The name of the new DynamoDB to store users. Minimum 3 characters",
     MinLength: 3,
     MaxLength: 50,
     AllowedPattern: "^[A-Za-z_]+$",

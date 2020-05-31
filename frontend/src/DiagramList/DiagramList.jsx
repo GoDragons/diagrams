@@ -9,7 +9,10 @@ import "./DiagramList.scss";
 import DiagramItem from "./DiagramItem/DiagramItem";
 
 export default function DiagramList({ userCredentials }) {
-  const [diagrams, setDiagrams] = useState();
+  const [loaded, setLoaded] = useState(false);
+  const [ownDiagrams, setOwnDiagrams] = useState();
+  const [invitedDiagrams, setInvitedDiagrams] = useState();
+
   useEffect(() => {
     if (userCredentials) {
       getDiagrams();
@@ -24,11 +27,15 @@ export default function DiagramList({ userCredentials }) {
           Authorization: userCredentials.accessToken.jwtToken,
         },
       })
-      .then((response) => setDiagrams(response.data))
+      .then((response) => {
+        setOwnDiagrams(response.data.ownDiagrams);
+        setInvitedDiagrams(response.data.invitedDiagrams);
+        setLoaded(true);
+      })
       .catch((e) => console.log(`Could not get diagrams:`, e));
   }
 
-  function displayDiagramList() {
+  function displayDiagramList(diagrams) {
     if (!diagrams) {
       return <p>Loading diagrams...</p>;
     }
@@ -45,13 +52,25 @@ export default function DiagramList({ userCredentials }) {
     ));
   }
 
+  if (!loaded) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="diagram-list-container">
       <Link to="/create-diagram">
         <button className="create-diagram">Create Diagram</button>
       </Link>
-      <h1>Diagram List:</h1>
-      <div className="diagram-list">{displayDiagramList()}</div>
+      <h1>My Diagrams:</h1>
+      <div className="diagram-list">{displayDiagramList(ownDiagrams)}</div>
+      {invitedDiagrams.length ? (
+        <>
+          <h1>Shared with me:</h1>
+          <div className="diagram-list">
+            {displayDiagramList(invitedDiagrams)}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

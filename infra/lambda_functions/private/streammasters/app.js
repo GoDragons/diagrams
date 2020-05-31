@@ -66,13 +66,22 @@ async function handleRemove({ diagramId, versionId }) {
   const newMasterIndex = Math.floor(Math.random() * users.Items.length);
   const newMasterUserData = users.Items[newMasterIndex];
 
+  await addMaster({
+    diagramId,
+    versionId,
+    connectionId: newMasterUserData.connectionId,
+    authorId: newMasterUserData.authorId,
+  });
+}
+
+async function addMaster({ diagramId, versionId, connectionId, authorId }) {
   const putParams = {
     TableName: DIAGRAM_MASTERS_TABLE_NAME,
     Item: {
-      diagramId: diagramId.S,
-      versionId: versionId.S,
-      connectionId: newMasterUserData.connectionId,
-      authorId: newMasterUserData.authorId,
+      diagramId: diagramId,
+      versionId: versionId,
+      connectionId: connectionId,
+      authorId: authorId,
     },
     ConditionExpression:
       "attribute_not_exists(diagramId) and attribute_not_exists(versionId)",

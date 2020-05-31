@@ -9,6 +9,8 @@ export default function DiagramDetails({
   isGridSnapActive,
   toggleGridSnap,
   openVersionModal,
+  save,
+  openShareModal,
 }) {
   function displayVersionLabel() {
     if (diagramData.isLatest) {
@@ -36,6 +38,10 @@ export default function DiagramDetails({
         <Link to="/">
           <button className="home">Home</button>
         </Link>
+        <button onClick={openShareModal} className="share">
+          Share
+        </button>
+
         {diagramData.isLatest ? (
           <button onClick={openVersionModal} className="create-version">
             Create Version
@@ -47,6 +53,11 @@ export default function DiagramDetails({
             className={cx("grid-snap", { on: isGridSnapActive })}
           >
             Grid Snap: {isGridSnapActive ? "on" : "off"}
+          </button>
+        ) : null}
+        {diagramData.isLatest ? (
+          <button onClick={save} className={cx("save")}>
+            Save
           </button>
         ) : null}
       </div>

@@ -11,6 +11,9 @@ const ENVIRONMENT_VARIABLES_LAMBDA = {
     DIAGRAM_MASTERS_TABLE_NAME: {
       Ref: "DiagramMastersTable",
     },
+    USERS_TABLE_NAME: {
+      Ref: "UsersTable",
+    },
     WEBSOCKET_API_ENDPOINT:
       "https://jyoqxojbfh.execute-api.eu-west-2.amazonaws.com/Prod",
   },
@@ -70,6 +73,7 @@ module.exports = [
   getRESTFunction({ name: "get-diagrams" }),
   getRESTFunction({ name: "save", method: "POST" }),
   getRESTFunction({ name: "create-version", method: "POST" }),
+  getRESTFunction({ name: "invite-to-diagram", method: "POST" }),
   getRESTFunction({ name: "test", method: "POST" }),
   getWebSocketFunction({ name: "join-diagram" }),
   getWebSocketFunction({ name: "send-change" }),

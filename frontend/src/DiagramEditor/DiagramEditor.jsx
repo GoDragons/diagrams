@@ -8,12 +8,12 @@ import ComponentItem from "./ComponentItem/ComponentItem";
 import ContextMenu from "./ContextMenu/ContextMenu";
 import Connection from "./Connection/Connection";
 import VersionModal from "./VersionModal/VersionModal";
+import ShareModal from "./ShareModal/ShareModal";
 import ChatBox from "./ChatBox/ChatBox";
 import Participants from "./Participants/Participants";
 import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
 import { withRouter, Link } from "react-router-dom";
-import Cookie from "js-cookie";
 
 import _ from "lodash";
 
@@ -41,6 +41,7 @@ export class DiagramEditor extends React.Component {
     diagramData: null,
     isMaster: false,
     isVersionModalOpen: false,
+    isShareModalOpen: false,
     isDraggingComponent: false,
     isLoggedInSomewhereElse: false,
     isReadOnlyMode: false,
@@ -67,8 +68,8 @@ export class DiagramEditor extends React.Component {
     canvasY: -5000,
     participantWeFollow: null,
     followers: [],
-    followCanvasX: 0,
-    followCanvasY: 0,
+    followCanvasX: null,
+    followCanvasY: null,
     lastFollowEvent: Date.now(),
     canvasScale: 1,
   };
@@ -264,6 +265,26 @@ export class DiagramEditor extends React.Component {
     }
   };
 
+  share = ({ recipient }) => {
+    const { diagramData } = this.state;
+    this.setState({ isShareModalOpen: false });
+
+    axios
+      .post(
+        `${REST_API_URL}/invite-to-diagram`,
+        { inviter: this.authorId, recipient, diagramId: diagramData.diagramId },
+        {
+          headers: {
+            Authorization: this.props.userCredentials.accessToken.jwtToken,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("shared:", response.data);
+      })
+      .catch((e) => alert(`Could not create version:`, e));
+  };
+
   createVersion = ({ versionName }) => {
     const { diagramData } = this.state;
     this.setState({ isVersionModalOpen: false });
@@ -293,6 +314,10 @@ export class DiagramEditor extends React.Component {
   };
 
   saveDiagram = (diagramData) => {
+    if (!diagramData) {
+      // we do not want to enable saving if we do not yet have the diagram data
+      return;
+    }
     axios
       .post(
         `${REST_API_URL}/save`,
@@ -964,6 +989,19 @@ export class DiagramEditor extends React.Component {
     );
   };
 
+  displayShareModal = () => {
+    if (!this.state.isShareModalOpen) {
+      return null;
+    }
+
+    return (
+      <ShareModal
+        onSubmit={this.share}
+        onClose={() => this.setState({ isShareModalOpen: false })}
+      />
+    );
+  };
+
   displayComponentList = () => {
     const { isReadOnlyMode } = this.state;
     if (isReadOnlyMode) {
@@ -1008,11 +1046,13 @@ export class DiagramEditor extends React.Component {
   };
 
   displayDiagramDetails = () => {
-    const { isGridSnapActive } = this.state;
+    const { isGridSnapActive, diagramData } = this.state;
     return (
       <DiagramDetails
         {...this.state}
+        save={() => this.saveDiagram(diagramData)}
         openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
+        openShareModal={() => this.setState({ isShareModalOpen: true })}
         toggleGridSnap={() =>
           this.setState({ isGridSnapActive: !isGridSnapActive })
         }
@@ -1025,6 +1065,7 @@ export class DiagramEditor extends React.Component {
     return (
       <div>
         {this.displayVersionModal()}
+        {this.displayShareModal()}
         {this.displayChatBox()}
         {this.displayParticipants()}
         {this.displayLoggedInSomewhereElse()}
