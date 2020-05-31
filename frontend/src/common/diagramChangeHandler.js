@@ -58,7 +58,7 @@ const helpers = {
 };
 
 export function applyChangeToDiagramData({ change, diagramData }) {
-  console.log("apply change:", change);
+  // console.log("apply change:", change);
   const targetHelper = helpers[change.operation];
   if (!targetHelper) {
     throw new Error(`Unknown operation ${change.operation}`);

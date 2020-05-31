@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { Auth } from "aws-amplify";
@@ -19,17 +19,17 @@ export default function Sidebar({ userData }) {
     }
   }
 
-  function displayUserData() {
-    if (!userData) {
-      return null;
-    }
-    return (
-      <div className="user-data">
-        <p>username: {userData.username}</p>
-        <p>email: {userData.attributes.email}</p>
-      </div>
-    );
-  }
+  // function displayUserData() {
+  //   if (!userData) {
+  //     return null;
+  //   }
+  //   return (
+  //     <div className="user-data">
+  //       <p>username: {userData.username}</p>
+  //       <p>email: {userData.attributes.email}</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="sidebar">

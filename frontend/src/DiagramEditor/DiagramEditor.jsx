@@ -62,6 +62,8 @@ export class DiagramEditor extends React.Component {
     mouseCanvasYOnOpenContextMenu: null,
     initialMouseX: null,
     initialMouseY: null,
+    initialComponentX: null,
+    initialComponentY: null,
     deltaX: null,
     deltaY: null,
     canvasX: -5000,
@@ -70,9 +72,18 @@ export class DiagramEditor extends React.Component {
     followers: [],
     followCanvasX: null,
     followCanvasY: null,
-    lastFollowEvent: Date.now(),
+    followCursorX: null,
+    followCursorY: null,
+    lastComponentMoveEvent: Date.now(),
+    lastFollowCursorEvent: Date.now(),
     canvasScale: 1,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.canvasRef = React.createRef();
+  }
 
   componentDidMount() {
     window.addEventListener("keyup", this.onKeyUp);
@@ -100,7 +111,7 @@ export class DiagramEditor extends React.Component {
 
     this.socket = newSocket;
 
-    this.socket.sendThrottled = _.throttle(this.socket.send, 60, {
+    this.socket.sendThrottled = _.throttle(this.socket.send, 40, {
       trailing: false,
     });
 
@@ -214,6 +225,9 @@ export class DiagramEditor extends React.Component {
     // console.log("change:", change);
     const { diagramData } = this.state;
     let newDiagramData = diagramData;
+
+    let deltaTime;
+
     switch (change.operation) {
       case "newVersion":
         window.location = `/diagrams/${change.data.diagramId}/${change.data.versionId}`;
@@ -234,16 +248,35 @@ export class DiagramEditor extends React.Component {
       case "stop-following":
         this.setState({
           participantWeFollow: undefined,
+          followCanvasX: null,
+          followCanvasY: null,
+          followCursorX: null,
+          followCursorY: null,
+          canvasX: this.state.followCanvasX,
+          canvasY: this.state.followCanvasY,
         });
         return;
 
-      case "pan":
-        const deltaTime = change.timestamp - this.state.lastFollowEvent;
+      // case "pan":
+      //   deltaTime = change.timestamp - this.state.lastFollowPanEvent;
+      //   if (deltaTime > 0) {
+      //     this.setState({
+      //       followCanvasX: change.data.x,
+      //       followCanvasY: change.data.y,
+      //       lastFollowPanEvent: change.timestamp,
+      //     });
+      //   }
+      //   return;
+
+      case "cursorMove":
+        deltaTime = change.timestamp - this.state.lastFollowCursorEvent;
         if (deltaTime > 0) {
           this.setState({
-            followCanvasX: change.data.x,
-            followCanvasY: change.data.y,
-            lastFollowEvent: change.timestamp,
+            followCursorX: change.data.cursorX,
+            followCursorY: change.data.cursorY,
+            followCanvasX: change.data.canvasX,
+            followCanvasY: change.data.canvasY,
+            lastFollowCursorEvent: change.timestamp,
           });
         }
         return;
@@ -359,7 +392,7 @@ export class DiagramEditor extends React.Component {
       return;
     }
 
-    const IGNORED_CHANGES = ["follow-start"]; // changes we don't want to apply on ourselves
+    const IGNORED_CHANGES = ["follow-start", "cursorMove"]; // changes we don't want to apply on ourselves
 
     let processedChange = {
       ...change,
@@ -421,7 +454,44 @@ export class DiagramEditor extends React.Component {
     );
   };
 
-  onCanvasMouseMove = (e) => {};
+  getPosition = (e) => {
+    var rect = e.target.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    return {
+      x,
+      y,
+    };
+  };
+
+  onCanvasMouseMove = (e) => {
+    // console.log(e.target);
+    const canvasBoundingRect = this.canvasRef.current.getBoundingClientRect();
+
+    const { canvasX, canvasY } = this.state;
+    const cursorX = -canvasBoundingRect.x + e.pageX;
+    const cursorY = -canvasBoundingRect.y + e.pageY;
+
+    // this.setState({
+    //   followCursorX: cursorX,
+    //   followCursorY: cursorY,
+    // });
+
+    if (this.state.followers && this.state.followers.length > 0) {
+      this.sendChange(
+        {
+          operation: "cursorMove",
+          data: {
+            cursorX,
+            cursorY,
+            canvasX,
+            canvasY,
+          },
+        },
+        { recipients: this.state.followers, throttled: true }
+      );
+    }
+  };
 
   onKeyDown = (e) => {
     if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
@@ -430,21 +500,57 @@ export class DiagramEditor extends React.Component {
   };
 
   onCanvasMouseUp = (e) => {
-    const { isConnecting } = this.state;
-
-    if (!isConnecting) {
-      this.setState({ selectedComponentId: null });
-    }
+    // const { isConnecting } = this.state;
+    // if (!isConnecting) {
+    //   this.setState({ selectedComponentId: null });
+    // }
   };
 
   onWindowMouseUp = (e) => {
+    const { isConnecting, isDraggingComponent } = this.state;
+
     this.setState({
       isDraggingComponent: false,
       isPanning: false,
       isConnecting: false,
       isComponentContextMenuShowing: false,
       isConnectionContextMenuShowing: false,
+      initialComponentX: null,
+      initialComponentY: null,
     });
+    const selectedComponent = this.getSelectedComponent();
+
+    if (!isConnecting) {
+      this.setState({ selectedComponentId: null });
+    }
+
+    if (isDraggingComponent) {
+      if (selectedComponent) {
+        const wholeDeltaX = e.clientX - (this.state.initialMouseX || 0);
+        const wholeDeltaY = e.clientY - (this.state.initialMouseY || 0);
+
+        if (!wholeDeltaX && !wholeDeltaY) {
+          console.log("onComponentMouseUp: we have no mouse move delta");
+          return;
+        }
+
+        this.setState({
+          deltaX: null,
+          deltaY: null,
+          initialMouseX: null,
+          initialMouseY: null,
+        });
+
+        this.sendChange({
+          operation: "moveComponent",
+          data: {
+            x: selectedComponent.x,
+            y: selectedComponent.y,
+            id: selectedComponent.id,
+          },
+        });
+      }
+    }
   };
 
   renameSelectedItem = () => {
@@ -571,6 +677,10 @@ export class DiagramEditor extends React.Component {
       return;
     }
 
+    const selectedComponent = this.state.diagramData.components.find(
+      ({ id }) => id === componentId
+    );
+
     this.setState({
       selectedComponentId: componentId,
       isDraggingComponent: true,
@@ -578,21 +688,19 @@ export class DiagramEditor extends React.Component {
       previousMouseY: e.clientY,
       initialMouseX: e.clientX,
       initialMouseY: e.clientY,
+      initialComponentX: selectedComponent.x,
+      initialComponentY: selectedComponent.y,
     });
   };
 
   onComponentMouseUp = (e, componentId) => {
-    e.stopPropagation();
+    // e.stopPropagation();
 
-    const {
-      isConnecting,
-      selectedComponentId,
-      isDraggingComponent,
-    } = this.state;
+    const { isConnecting, selectedComponentId } = this.state;
 
     this.setState({
-      isDraggingComponent: false,
-      isPanning: false,
+      // isDraggingComponent: false,
+      // isPanning: false,
       isConnecting: false,
     });
 
@@ -610,36 +718,6 @@ export class DiagramEditor extends React.Component {
     } else {
       this.setState({ selectedComponentId: componentId });
     }
-
-    if (isDraggingComponent) {
-      const selectedComponent = this.getSelectedComponent();
-
-      if (selectedComponent) {
-        const wholeDeltaX = e.clientX - (this.state.initialMouseX || 0);
-        const wholeDeltaY = e.clientY - (this.state.initialMouseY || 0);
-
-        if (!wholeDeltaX && !wholeDeltaY) {
-          console.log("onComponentMouseUp: we have no mouse move delta");
-          return;
-        }
-
-        this.setState({
-          deltaX: null,
-          deltaY: null,
-          initialMouseX: null,
-          initialMouseY: null,
-        });
-
-        this.sendChange({
-          operation: "moveComponent",
-          data: {
-            x: selectedComponent.x,
-            y: selectedComponent.y,
-            id: selectedComponent.id,
-          },
-        });
-      }
-    }
   };
 
   onWindowMouseMove = (e) => {
@@ -653,7 +731,11 @@ export class DiagramEditor extends React.Component {
       canvasY,
       previousMouseX,
       previousMouseY,
+      initialMouseX,
+      initialMouseY,
       isGridSnapActive,
+      initialComponentX,
+      initialComponentY,
     } = this.state;
     if (
       isComponentContextMenuShowing ||
@@ -666,24 +748,32 @@ export class DiagramEditor extends React.Component {
     const deltaX = e.clientX - previousMouseX;
     const deltaY = e.clientY - previousMouseY;
 
-    const newX = e.clientX - canvasX - COMPONENT_WIDTH / 2;
-    const newY = e.clientY - canvasY - COMPONENT_HEIGHT;
-
-    const gridSnapNewX = Math.ceil(newX / GRID_CELL_SIZE) * GRID_CELL_SIZE;
-    const gridSnapNewY = Math.ceil(newY / GRID_CELL_SIZE) * GRID_CELL_SIZE;
-
     if (isDraggingComponent) {
       const selectedComponent = this.getSelectedComponent();
 
-      const newDiagramData = applyChangeToDiagramData({
-        change: {
-          operation: "moveComponent",
-          data: {
-            x: isGridSnapActive ? gridSnapNewX : newX,
-            y: isGridSnapActive ? gridSnapNewY : newY,
-            id: selectedComponent.id,
-          },
+      const overallDeltaX = e.clientX - initialMouseX;
+      const overallDeltaY = e.clientY - initialMouseY;
+
+      const newX = initialComponentX + overallDeltaX;
+      const newY = initialComponentY + overallDeltaY;
+
+      const gridSnapNewX = Math.ceil(newX / GRID_CELL_SIZE) * GRID_CELL_SIZE;
+      const gridSnapNewY = Math.ceil(newY / GRID_CELL_SIZE) * GRID_CELL_SIZE;
+
+      const changeParams = {
+        operation: "moveComponent",
+        data: {
+          x: isGridSnapActive ? gridSnapNewX : newX,
+          y: isGridSnapActive ? gridSnapNewY : newY,
+          id: selectedComponent.id,
         },
+      };
+      if (this.state.followers && this.state.followers.length > 0) {
+        // this.sendChange(changeParams);
+      }
+
+      const newDiagramData = applyChangeToDiagramData({
+        change: changeParams,
         diagramData: this.state.diagramData,
       });
 
@@ -709,16 +799,16 @@ export class DiagramEditor extends React.Component {
       canvasY: newY,
     });
 
-    this.sendChange(
-      {
-        operation: "pan",
-        data: {
-          x: newX,
-          y: newY,
-        },
-      },
-      { recipients: this.state.followers, throttled: true }
-    );
+    // this.sendChange(
+    //   {
+    //     operation: "pan",
+    //     data: {
+    //       x: newX,
+    //       y: newY,
+    //     },
+    //   },
+    //   { recipients: this.state.followers, throttled: true }
+    // );
   };
 
   onKeyUp = (e) => {
@@ -821,7 +911,15 @@ export class DiagramEditor extends React.Component {
   };
 
   unFollowParticipant = (participant) => {
-    this.setState({ participantWeFollow: null });
+    this.setState({
+      participantWeFollow: null,
+      followCanvasX: null,
+      followCanvasY: null,
+      followCursorX: null,
+      followCursorY: null,
+      canvasX: this.state.followCanvasX,
+      canvasY: this.state.followCanvasY,
+    });
     this.sendChange(
       { operation: "follow-end" },
       { recipients: [participant.authorId] }
@@ -1089,6 +1187,22 @@ export class DiagramEditor extends React.Component {
     );
   };
 
+  displayFollowCursor = () => {
+    const { followCursorX, followCursorY } = this.state;
+    if (!followCursorX || !followCursorY) {
+      return null;
+    }
+
+    const cursorStyle = {
+      top: followCursorY + "px",
+      left: followCursorX + "px",
+    };
+
+    return (
+      <i className="fas fa-mouse-pointer follow-cursor" style={cursorStyle} />
+    );
+  };
+
   displayEditor = () => {
     const {
       canvasX,
@@ -1096,12 +1210,19 @@ export class DiagramEditor extends React.Component {
       canvasScale,
       followCanvasX,
       followCanvasY,
+      participantWeFollow,
     } = this.state;
 
-    const chosenCanvasX = followCanvasX !== null ? followCanvasX : canvasX;
-    const chosenCanvasY = followCanvasY !== null ? followCanvasY : canvasY;
+    let chosenCanvasX = canvasX;
+    let chosenCanvasY = canvasY;
+    if (participantWeFollow && followCanvasX && followCanvasY) {
+      chosenCanvasX = followCanvasX;
+      chosenCanvasY = followCanvasY;
+    }
+
     const canvasProps = {
       className: "canvas",
+      ref: this.canvasRef,
       style: {
         top: chosenCanvasY + "px",
         left: chosenCanvasX + "px",
@@ -1122,6 +1243,7 @@ export class DiagramEditor extends React.Component {
           {this.displayComponents()}
           {this.displayConnections()}
           {this.displayConnectArrow()}
+          {this.displayFollowCursor()}
         </div>
       </div>
     );
