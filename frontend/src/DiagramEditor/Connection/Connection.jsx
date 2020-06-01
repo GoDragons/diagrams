@@ -14,14 +14,19 @@ export function Connection({
       e.preventDefault();
       return;
     }
-    onContextMenu(e, id);
+
+    if (typeof onContextMenu === "function") {
+      onContextMenu(e, id);
+    }
   }
 
   function handleMouseDown(e) {
     if (isReadOnlyMode) {
       return;
     }
-    onMouseDown(e, id);
+    if (typeof onMouseDown === "function") {
+      onMouseDown(e, id);
+    }
   }
 
   return (
