@@ -62,10 +62,10 @@ export class DiagramEditor extends React.Component {
     mouseCanvasYOnOpenContextMenu: null,
     initialMouseX: null,
     initialMouseY: null,
+    initialCanvasX: null,
+    initialCanvasY: null,
     initialComponentX: null,
     initialComponentY: null,
-    deltaX: null,
-    deltaY: null,
     canvasX: -5000,
     canvasY: -5000,
     participantWeFollow: null,
@@ -77,6 +77,8 @@ export class DiagramEditor extends React.Component {
     lastComponentMoveEvent: Date.now(),
     lastFollowCursorEvent: Date.now(),
     canvasScale: 1,
+    canvasCursorX: null,
+    canvasCursorY: null,
   };
 
   constructor(props) {
@@ -464,26 +466,63 @@ export class DiagramEditor extends React.Component {
     };
   };
 
-  onCanvasMouseMove = (e) => {
-    // console.log(e.target);
+  getCanvasPositionFromEvent = (e) => {
     const canvasBoundingRect = this.canvasRef.current.getBoundingClientRect();
+    return {
+      x: -canvasBoundingRect.x + e.pageX,
+      y: -canvasBoundingRect.y + e.pageY,
+    };
+  };
 
-    const { canvasX, canvasY } = this.state;
-    const cursorX = -canvasBoundingRect.x + e.pageX;
-    const cursorY = -canvasBoundingRect.y + e.pageY;
+  getPagePositionFromEvent = (e) => {
+    return {
+      x: e.pageX,
+      y: e.pageY,
+    };
+  };
 
-    // this.setState({
-    //   followCursorX: cursorX,
-    //   followCursorY: cursorY,
-    // });
+  onCanvasMouseMove = (e) => {
+    const {
+      canvasX,
+      canvasY,
+      initialCanvasX,
+      initialCanvasY,
+      initialMouseX,
+      initialMouseY,
+      isPanning,
+      isConnecting,
+    } = this.state;
+    const cursorPosition = this.getPagePositionFromEvent(e);
+
+    const deltaX = initialMouseX - cursorPosition.x;
+    const deltaY = initialMouseY - cursorPosition.y;
+
+    if (isPanning) {
+      console.log("isPanning!");
+
+      this.setState({
+        canvasX: initialCanvasX - deltaX,
+        canvasY: initialCanvasY - deltaY,
+      });
+    }
+
+    if (isConnecting) {
+      const cursorCanvasPosition = this.getCanvasPositionFromEvent(e);
+      this.setState({
+        canvasCursorX: cursorCanvasPosition.x,
+        canvasCursorY: cursorCanvasPosition.y,
+      });
+    }
+
+    const canvasCursorPosition = this.getCanvasPositionFromEvent(e);
 
     if (this.state.followers && this.state.followers.length > 0) {
       this.sendChange(
         {
           operation: "cursorMove",
           data: {
-            cursorX,
-            cursorY,
+            cursorX: canvasCursorPosition.x,
+            cursorY: canvasCursorPosition.y,
             canvasX,
             canvasY,
           },
@@ -507,7 +546,12 @@ export class DiagramEditor extends React.Component {
   };
 
   onWindowMouseUp = (e) => {
-    const { isConnecting, isDraggingComponent } = this.state;
+    const {
+      isConnecting,
+      isDraggingComponent,
+      initialMouseX,
+      initialMouseY,
+    } = this.state;
 
     this.setState({
       isDraggingComponent: false,
@@ -526,20 +570,14 @@ export class DiagramEditor extends React.Component {
 
     if (isDraggingComponent) {
       if (selectedComponent) {
-        const wholeDeltaX = e.clientX - (this.state.initialMouseX || 0);
-        const wholeDeltaY = e.clientY - (this.state.initialMouseY || 0);
+        const cursorPosition = this.getPagePositionFromEvent(e);
+        const deltaX = cursorPosition.x - initialMouseX;
+        const deltaY = cursorPosition.y - initialMouseY;
 
-        if (!wholeDeltaX && !wholeDeltaY) {
+        if (!deltaX && !deltaY) {
           console.log("onComponentMouseUp: we have no mouse move delta");
           return;
         }
-
-        this.setState({
-          deltaX: null,
-          deltaY: null,
-          initialMouseX: null,
-          initialMouseY: null,
-        });
 
         this.sendChange({
           operation: "moveComponent",
@@ -557,8 +595,17 @@ export class DiagramEditor extends React.Component {
     this.setState({ isComponentContextMenuShowing: false });
   };
 
-  startConnect = () => {
-    this.setState({ isConnecting: true, isComponentContextMenuShowing: false });
+  startConnect = (e) => {
+    console.log("startConnect");
+
+    const cursorCanvasPosition = this.getCanvasPositionFromEvent(e);
+
+    this.setState({
+      isConnecting: true,
+      isComponentContextMenuShowing: false,
+      canvasCursorX: cursorCanvasPosition.x,
+      canvasCursorY: cursorCanvasPosition.y,
+    });
   };
 
   cloneSelectedItem = () => {
@@ -629,15 +676,6 @@ export class DiagramEditor extends React.Component {
     const { canvasScale } = this.state;
     const deltaScale = -e.deltaY / 30000;
 
-    // const targetXPercent = e.nativeEvent.offsetX / VIEWPORT_WIDTH;
-    // const targetYPercent = e.nativeEvent.offsetY / VIEWPORT_HEIGHT;
-
-    // const offsetX = targetXPercent - 0.5;
-    // const offsetY = targetYPercent - 0.5;
-
-    // const newCanvasX = canvasX + targetXPercent * offsetX;
-    // const newCanvasY = canvasY + targetYPercent * offsetY;
-
     let computedScale = canvasScale + deltaScale;
     let newScale = Math.min(
       Math.max(computedScale, MIN_CANVAS_SCALE),
@@ -647,21 +685,21 @@ export class DiagramEditor extends React.Component {
     if (newScale !== canvasScale) {
       this.setState({ canvasScale: newScale });
     }
-
-    // this.setState({
-    // canvasScale: canvasScale + deltaScale,
-    // canvasX: newCanvasX,
-    // canvasY: newCanvasY,
-    // });
   };
 
   onPanStart = (e) => {
+    const { canvasX, canvasY } = this.state;
+
+    const cursorPosition = this.getPagePositionFromEvent(e);
+    console.log("onPanStart()");
     this.setState({
       isPanning: true,
-      previousMouseX: e.clientX,
-      previousMouseY: e.clientY,
-      initialMouseX: e.clientX,
-      initialMouseY: e.clientY,
+      previousMouseX: cursorPosition.x,
+      previousMouseY: cursorPosition.y,
+      initialMouseX: cursorPosition.x,
+      initialMouseY: cursorPosition.y,
+      initialCanvasX: canvasX,
+      initialCanvasY: canvasY,
     });
   };
 
@@ -672,6 +710,7 @@ export class DiagramEditor extends React.Component {
   };
 
   onComponentMouseDown = (e, componentId) => {
+    e.stopPropagation();
     const { isConnecting } = this.state;
     if (isConnecting) {
       return;
@@ -681,13 +720,15 @@ export class DiagramEditor extends React.Component {
       ({ id }) => id === componentId
     );
 
+    const cursorPosition = this.getPagePositionFromEvent(e);
+    console.log("onComponentMouseDown()");
     this.setState({
       selectedComponentId: componentId,
       isDraggingComponent: true,
-      previousMouseX: e.clientX,
-      previousMouseY: e.clientY,
-      initialMouseX: e.clientX,
-      initialMouseY: e.clientY,
+      previousMouseX: cursorPosition.x,
+      previousMouseY: cursorPosition.y,
+      initialMouseX: cursorPosition.x,
+      initialMouseY: cursorPosition.y,
       initialComponentX: selectedComponent.x,
       initialComponentY: selectedComponent.y,
     });
@@ -727,10 +768,6 @@ export class DiagramEditor extends React.Component {
       isDraggingComponent,
       isPanning,
       isConnecting,
-      canvasX,
-      canvasY,
-      previousMouseX,
-      previousMouseY,
       initialMouseX,
       initialMouseY,
       isGridSnapActive,
@@ -745,14 +782,13 @@ export class DiagramEditor extends React.Component {
       return;
     }
 
-    const deltaX = e.clientX - previousMouseX;
-    const deltaY = e.clientY - previousMouseY;
+    const cursorPosition = this.getPagePositionFromEvent(e);
 
     if (isDraggingComponent) {
       const selectedComponent = this.getSelectedComponent();
 
-      const overallDeltaX = e.clientX - initialMouseX;
-      const overallDeltaY = e.clientY - initialMouseY;
+      const overallDeltaX = cursorPosition.x - initialMouseX;
+      const overallDeltaY = cursorPosition.y - initialMouseY;
 
       const newX = initialComponentX + overallDeltaX;
       const newY = initialComponentY + overallDeltaY;
@@ -778,37 +814,12 @@ export class DiagramEditor extends React.Component {
       });
 
       this.setState({ diagramData: newDiagramData });
-    } else if (isPanning) {
-      this.applyPan({
-        newX: canvasX + deltaX,
-        newY: canvasY + deltaY,
-      });
     }
 
     this.setState({
-      previousMouseX: e.clientX,
-      previousMouseY: e.clientY,
-      deltaX,
-      deltaY,
+      previousMouseX: cursorPosition.x,
+      previousMouseY: cursorPosition.y,
     });
-  };
-
-  applyPan = ({ newX, newY }) => {
-    this.setState({
-      canvasX: newX,
-      canvasY: newY,
-    });
-
-    // this.sendChange(
-    //   {
-    //     operation: "pan",
-    //     data: {
-    //       x: newX,
-    //       y: newY,
-    //     },
-    //   },
-    //   { recipients: this.state.followers, throttled: true }
-    // );
   };
 
   onKeyUp = (e) => {
@@ -958,13 +969,13 @@ export class DiagramEditor extends React.Component {
         return null;
       }
 
-      const style = this.getConnectionStyle(
-        fromComponent.x + COMPONENT_WIDTH / 2,
-        fromComponent.y + COMPONENT_HEIGHT / 2,
-        toComponent.x + COMPONENT_WIDTH / 2,
-        toComponent.y + COMPONENT_HEIGHT / 2,
-        TRIM_CONNECTION_END_AMOUNT
-      );
+      const style = this.getConnectionStyle({
+        fromX: fromComponent.x + COMPONENT_WIDTH / 2,
+        fromY: fromComponent.y + COMPONENT_HEIGHT / 2,
+        toX: toComponent.x + COMPONENT_WIDTH / 2,
+        toY: toComponent.y + COMPONENT_HEIGHT / 2,
+        trimEndAmount: TRIM_CONNECTION_END_AMOUNT,
+      });
       return (
         <Connection
           key={connection.id}
@@ -1035,7 +1046,7 @@ export class DiagramEditor extends React.Component {
     );
   };
 
-  getConnectionStyle = (fromX, fromY, toX, toY, trimEndAmount = 0) => {
+  getConnectionStyle = ({ fromX, fromY, toX, toY, trimEndAmount = 0 }) => {
     var distanceX = fromX - toX;
     var distanceY = fromY - toY;
 
@@ -1063,14 +1074,14 @@ export class DiagramEditor extends React.Component {
       return null;
     }
 
-    const { previousMouseX, previousMouseY, canvasX, canvasY } = this.state;
+    const { canvasCursorX, canvasCursorY } = this.state;
 
-    const style = this.getConnectionStyle(
-      selectedComponent.x,
-      selectedComponent.y,
-      previousMouseX - canvasX,
-      previousMouseY - canvasY
-    );
+    const style = this.getConnectionStyle({
+      fromX: selectedComponent.x + COMPONENT_WIDTH / 2,
+      fromY: selectedComponent.y + COMPONENT_HEIGHT / 2,
+      toX: canvasCursorX,
+      toY: canvasCursorY,
+    });
     return <Connection key="new-connection" style={style} />;
   };
 

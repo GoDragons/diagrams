@@ -21,7 +21,8 @@ export default function ContextMenu({ target, ...props }) {
         return (
           <li
             key={option.label}
-            onClick={(e) => {
+            onMouseUp={(e) => {
+              console.log("context click");
               e.stopPropagation();
 
               props[option.callback](e);

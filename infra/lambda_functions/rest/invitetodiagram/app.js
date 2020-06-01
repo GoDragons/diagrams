@@ -23,11 +23,12 @@ async function addInvite({ inviter, recipient, diagramId }) {
   console.log("recipient = ", recipient);
   console.log("diagramId = ", diagramId);
   const userRecord = await getUserRecord({ username: recipient });
+  console.log("userRecord = ", userRecord);
   let invites = [];
   if (!userRecord.Item) {
     console.log("There is no user record, creating one now");
   } else {
-    invites = userRecord.invites;
+    invites = userRecord.Item.invites;
   }
   const inviteAlreadyExists = invites.some((x) => x.S === diagramId);
   if (!inviteAlreadyExists) {
