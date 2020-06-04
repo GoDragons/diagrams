@@ -36,12 +36,12 @@ function getWebSocketFunction({ name, routeKey }) {
   return data;
 }
 
-function getRESTFunction({ name, method = "GET" }) {
+function getRESTFunction({ name, method = "GET", routeKey }) {
   const data = {
     name,
     apiName: REST_API_NAME,
     route: {
-      RouteKey: `${method} /${name}`,
+      RouteKey: routeKey || `${method} /${name}`,
     },
     integration: {
       PayloadFormatVersion: "2.0",
@@ -69,6 +69,10 @@ function getPrivateFunction({ name }) {
 module.exports = [
   getRESTFunction({ name: "get-user" }),
   getRESTFunction({ name: "get-diagrams" }),
+  getRESTFunction({
+    name: "get-diagram",
+    routeKey: "GET /get-diagram/{diagramId}/{versionId}",
+  }),
   getRESTFunction({ name: "create-diagram", method: "POST" }),
   getRESTFunction({ name: "delete-diagram", method: "POST" }),
   getRESTFunction({ name: "delete-version", method: "POST" }),

@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import {
   Empty,
   List,
-  Space,
   Row,
   Col,
   Button,
   Input,
   Typography,
   Spin,
-  Avatar,
   Timeline,
 } from "antd";
-import { Link } from "react-router-dom";
-import AvatarList from "AvatarList/AvatarList";
+
 import {
   FileAddOutlined,
   PlusCircleOutlined,

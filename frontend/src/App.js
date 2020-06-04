@@ -4,7 +4,8 @@ import { Auth } from "aws-amplify";
 import { Route, Switch } from "react-router-dom";
 import { Row, Col } from "antd";
 
-import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
+import DiagramEditor from "DiagramEditor/DiagramEditor";
+import DiagramDetails from "DiagramDetails/DiagramDetails";
 import HomePage from "HomePage/HomePage";
 import MainBar from "MainBar/MainBar";
 
@@ -42,7 +43,7 @@ export class App extends React.Component {
             <DiagramEditor {...this.state} />
           </Route>
           <Route exact path="/diagrams/:diagramId/:versionId/details">
-            Diagram Details
+            <DiagramDetails {...this.state} />
           </Route>
         </Switch>
       </div>
