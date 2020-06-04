@@ -1,7 +1,9 @@
 import React from "react";
-import "./DiagramEditor.scss";
-
+import axios from "axios";
+import _ from "lodash";
+import { withRouter, Link } from "react-router-dom";
 import RandomWords from "random-words";
+import { Form, Radio, Checkbox, Modal, Button, Input } from "antd";
 
 import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
@@ -13,16 +15,10 @@ import ChatBox from "./ChatBox/ChatBox";
 import Participants from "./Participants/Participants";
 import DiagramDetails from "./DiagramDetails/DiagramDetails";
 
-import { withRouter, Link } from "react-router-dom";
-
-import _ from "lodash";
-
-import axios from "axios";
-
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
-
 import { REST_API_URL, WEBSOCKET_API_URL } from "common/constants";
 
+import "./DiagramEditor.scss";
 const MIN_CANVAS_SCALE = 0.4;
 const MAX_CANVAS_SCALE = 2;
 const TRIM_CONNECTION_END_AMOUNT = 70; // this is so we can see the end of the connection arrow
@@ -298,54 +294,6 @@ export class DiagramEditor extends React.Component {
     if (this.state.isMaster) {
       this.saveDiagram(newDiagramData);
     }
-  };
-
-  share = ({ recipient }) => {
-    const { diagramData } = this.state;
-    this.setState({ isShareModalOpen: false });
-
-    axios
-      .post(
-        `${REST_API_URL}/invite-to-diagram`,
-        { inviter: this.authorId, recipient, diagramId: diagramData.diagramId },
-        {
-          headers: {
-            Authorization: this.props.userCredentials.accessToken.jwtToken,
-          },
-        }
-      )
-      .then((response) => {
-        console.log("shared:", response.data);
-      })
-      .catch((e) => alert(`Could not create version:`, e));
-  };
-
-  createVersion = ({ versionName }) => {
-    const { diagramData } = this.state;
-    this.setState({ isVersionModalOpen: false });
-
-    axios
-      .post(
-        `${REST_API_URL}/create-version`,
-        { diagramData, versionName },
-        {
-          headers: {
-            Authorization: this.props.userCredentials.accessToken.jwtToken,
-          },
-        }
-      )
-      .then((response) => {
-        window.location = `/diagrams/${response.data.diagramId}/${response.data.versionId}`;
-        console.log("Version created:", response.data);
-        this.sendChange({
-          operation: "newVersion",
-          data: {
-            diagramId: response.data.diagramId,
-            versionId: response.data.versionId,
-          },
-        });
-      })
-      .catch((e) => alert(`Could not create version:`, e));
   };
 
   saveDiagram = (diagramData) => {
@@ -1085,30 +1033,8 @@ export class DiagramEditor extends React.Component {
     return <Connection key="new-connection" style={style} />;
   };
 
-  displayVersionModal = () => {
-    if (!this.state.isVersionModalOpen) {
-      return null;
-    }
-
-    return (
-      <VersionModal
-        onSubmit={this.createVersion}
-        onClose={() => this.setState({ isVersionModalOpen: false })}
-      />
-    );
-  };
-
-  displayShareModal = () => {
-    if (!this.state.isShareModalOpen) {
-      return null;
-    }
-
-    return (
-      <ShareModal
-        onSubmit={this.share}
-        onClose={() => this.setState({ isShareModalOpen: false })}
-      />
-    );
+  hideShareModal = () => {
+    this.setState({ isShareModalOpen: false });
   };
 
   displayComponentList = () => {
@@ -1170,11 +1096,24 @@ export class DiagramEditor extends React.Component {
   };
 
   displayOverlays = () => {
-    const { isMaster } = this.state;
+    const { isMaster, diagramData } = this.state;
     return (
       <div>
-        {this.displayVersionModal()}
-        {this.displayShareModal()}
+        <VersionModal
+          visible={this.state.isVersionModalOpen}
+          authorId={this.authorId}
+          diagramData={diagramData}
+          sendChange={this.sendChange}
+          onClose={() => this.setState({ isVersionModalOpen: false })}
+          authToken={this.props.userCredentials.accessToken.jwtToken}
+        />
+        <ShareModal
+          visible={this.state.isShareModalOpen}
+          onClose={() => this.setState({ isShareModalOpen: false })}
+          authorId={this.authorId}
+          diagramData={diagramData}
+          authToken={this.props.userCredentials.accessToken.jwtToken}
+        />
         {this.displayChatBox()}
         {this.displayParticipants()}
         {this.displayLoggedInSomewhereElse()}

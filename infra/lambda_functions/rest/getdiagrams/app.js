@@ -12,14 +12,18 @@ exports.handler = async (event) => {
 
   const username = event.requestContext.authorizer.jwt.claims.username;
 
-  const diagramsForAuthor = await getDiagramsForAuthor(username);
-  const invitesForAuthor = await getInvitesForAuthor(username);
+  const diagramsForAuthorRaw = await getDiagramsForAuthor(username);
+  const invitesForAuthorRaw = await getInvitesForAuthor(username);
+  const publicDiagramsRaw = await getPublicDiagrams();
 
-  const ownDiagrams = groupVersions(diagramsForAuthor);
-  const invitedDiagrams = groupVersions(invitesForAuthor);
+  const ownDiagrams = groupVersions(diagramsForAuthorRaw);
+  const invitedDiagrams = groupVersions(invitesForAuthorRaw);
+  const publicDiagrams = groupVersions(publicDiagramsRaw);
+
   return {
     ownDiagrams,
     invitedDiagrams,
+    publicDiagrams,
   };
 };
 
@@ -39,6 +43,8 @@ function groupVersions(versionList) {
     ).sort((a, b) => (a.versionId < b.versionId ? 1 : -1));
     const diagramData = {
       versions,
+      description: versions[0].description,
+      authorId: versions[0].authorId,
       diagramName: versions[0].diagramName,
       diagramId: versions[0].diagramId,
       latestVersionId: versions[0].versionId,
@@ -62,6 +68,20 @@ async function getDiagramsForAuthor(authorId) {
   // const invites = await getInvitesForAuthor(authorId);
 }
 
+async function getPublicDiagrams() {
+  const scanParams = {
+    TableName: DIAGRAMS_TABLE_NAME,
+    FilterExpression: "visibility = :visibility",
+    ExpressionAttributeValues: {
+      ":visibility": "public",
+    },
+  };
+
+  console.log("scanParams = ", scanParams);
+
+  return await ddb.scan(scanParams).promise();
+}
+
 async function getInvitesForAuthor(authorId) {
   const userRecord = await getUserRecord({ username: authorId });
 
@@ -69,6 +89,10 @@ async function getInvitesForAuthor(authorId) {
     return [];
   }
   const invites = userRecord.Item.invites;
+
+  if (!invites || invites.length === 0) {
+    return [];
+  }
 
   const expressionAttributeValues = {};
   const inviteParams = invites

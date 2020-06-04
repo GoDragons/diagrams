@@ -1,0 +1,67 @@
+@import "../Variables";
+
+.home-page {
+  background-color: $neutralLight;
+  height: 100%;
+  overflow-y: auto;
+
+  h4.ant-typography {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .main-content {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+
+  .empty-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .my-diagrams-title {
+    margin-top: 1rem;
+
+    button.create-new {
+      margin-left: 1rem;
+    }
+  }
+
+  .section {
+    padding: 0 2rem;
+  }
+
+  .own-diagrams-section {
+    margin-bottom: 4rem;
+
+    .own-diagrams-empty {
+      margin-bottom: 6rem;
+    }
+  }
+  .public-section {
+    .public-diagram-list {
+      text-align: left;
+
+      .ant-list-item {
+        border-bottom-color: $neutral;
+      }
+    }
+
+    .public-search {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .activity-section {
+    .ant-timeline-item-content {
+      text-align: left;
+    }
+    .ant-timeline-item-head-custom {
+      background-color: $neutralLight;
+    }
+  }
+}

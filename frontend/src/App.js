@@ -1,15 +1,15 @@
 import React from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { Auth } from "aws-amplify";
+import { Route, Switch } from "react-router-dom";
+import { Row, Col } from "antd";
+
+import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
+import HomePage from "HomePage/HomePage";
+import MainBar from "MainBar/MainBar";
 
 import "App.scss";
-import DiagramEditor from "./DiagramEditor/DiagramEditor.jsx";
-
-import { Route, Switch } from "react-router-dom";
-
-import CreateDiagram from "CreateDiagram/CreateDiagram";
-import DiagramList from "DiagramList/DiagramList";
-import Sidebar from "Sidebar/Sidebar";
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 
 export class App extends React.Component {
   state = {
@@ -32,16 +32,17 @@ export class App extends React.Component {
     }
     return (
       <div className="app">
-        <Sidebar {...this.state} />
+        <MainBar {...this.state} />
+
         <Switch>
           <Route exact path="/">
-            <DiagramList {...this.state} />
+            <HomePage {...this.state} />
           </Route>
-          <Route exact path="/create-diagram">
-            <CreateDiagram {...this.state} />
-          </Route>
-          <Route exact path="/diagrams/:diagramId/:versionId">
+          <Route exact path="/diagrams/:diagramId/:versionId/edit">
             <DiagramEditor {...this.state} />
+          </Route>
+          <Route exact path="/diagrams/:diagramId/:versionId/details">
+            Diagram Details
           </Route>
         </Switch>
       </div>

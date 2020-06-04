@@ -44,7 +44,7 @@ export default function DiagramDetails({
 
         {diagramData.isLatest ? (
           <button onClick={openVersionModal} className="create-version">
-            Create Version
+            Commit
           </button>
         ) : null}
         {diagramData.isLatest ? (

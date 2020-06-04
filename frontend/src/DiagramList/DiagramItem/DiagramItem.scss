@@ -1,0 +1,19 @@
+@import "../../Variables";
+
+.diagram-item {
+  &.ant-col-6 {
+    max-width: 25rem;
+  }
+
+  .ant-card {
+    text-align: left;
+    border: unset;
+    box-shadow: 0px 0px 15px $neutral;
+
+    .name {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+  }
+}

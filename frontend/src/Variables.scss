@@ -1,0 +1,10 @@
+$color1: #0092ff;
+$color1Light: lighten($color1, 20);
+
+$black: #111;
+$dark: #2f3c63;
+$white: #ffffff;
+// $neutral: #f0f0f0;
+// $neutralLight: rgba(60, 90, 100, 0.04);
+$neutralLight: #f5f9fb;
+$neutral: darken($neutralLight, 5);

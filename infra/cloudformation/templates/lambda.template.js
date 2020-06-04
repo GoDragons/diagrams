@@ -67,10 +67,11 @@ function getPrivateFunction({ name }) {
 }
 
 module.exports = [
+  getRESTFunction({ name: "get-user" }),
+  getRESTFunction({ name: "get-diagrams" }),
   getRESTFunction({ name: "create-diagram", method: "POST" }),
   getRESTFunction({ name: "delete-diagram", method: "POST" }),
   getRESTFunction({ name: "delete-version", method: "POST" }),
-  getRESTFunction({ name: "get-diagrams" }),
   getRESTFunction({ name: "save", method: "POST" }),
   getRESTFunction({ name: "create-version", method: "POST" }),
   getRESTFunction({ name: "invite-to-diagram", method: "POST" }),
@@ -79,8 +80,9 @@ module.exports = [
   getWebSocketFunction({ name: "send-change" }),
   getWebSocketFunction({ name: "disconnect", routeKey: "$disconnect" }),
   getWebSocketFunction({ name: "connect", routeKey: "$connect" }),
-  // getPrivateFunction({ name: "choose-new-master" }),
-  // getPrivateFunction({ name: "handle-disconnect" }),
   getPrivateFunction({ name: "stream-open-diagrams" }),
   getPrivateFunction({ name: "stream-masters" }),
+  getPrivateFunction({ name: "record-activity" }),
+  // getPrivateFunction({ name: "handle-disconnect" }),
+  // getPrivateFunction({ name: "choose-new-master" }),
 ];

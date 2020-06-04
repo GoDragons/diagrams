@@ -1,22 +1,18 @@
+@import "./Variables";
+
 .app {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 
-  button {
-    border: 1px solid #f1f1f1;
-    padding: 0.2rem 0.5rem;
-    display: block;
-    margin: 1rem auto 0;
-    background-color: transparent;
-    cursor: pointer;
-
-    &.enabled {
-      background-color: blue;
-      color: white;
-    }
-    &.disabled {
-      background-color: #f1f1f1;
-      pointer-events: none;
-      color: #444;
-    }
+  h1.ant-typography,
+  h2.ant-typography,
+  h3.ant-typography,
+  h4.ant-typography,
+  h5.ant-typography,
+  h6.ant-typography,
+  p.ant-typography {
+    color: $dark;
   }
 }

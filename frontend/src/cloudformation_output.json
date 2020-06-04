@@ -3,7 +3,7 @@
         {
             "StackId": "arn:aws:cloudformation:eu-west-2:994541973446:stack/diagrams/6425f400-8e9d-11ea-b5ad-0ab68d74e79c",
             "StackName": "diagrams",
-            "ChangeSetId": "arn:aws:cloudformation:eu-west-2:994541973446:changeSet/samcli-deploy1590945273/392825eb-b6df-4df8-8028-be0ef23f5641",
+            "ChangeSetId": "arn:aws:cloudformation:eu-west-2:994541973446:changeSet/samcli-deploy1591260509/0f7c28bb-4f36-4cfa-87f0-fa130d861215",
             "Description": "API for an online collaboration tool used to build system design diagrams",
             "Parameters": [
                 {
@@ -23,8 +23,8 @@
                     "ParameterValue": "diagrams_app_users"
                 }
             ],
-            "CreationTime": "2020-05-05T06:55:23.057Z",
-            "LastUpdatedTime": "2020-05-31T17:14:48.979Z",
+            "CreationTime": "2020-05-05T06:55:23.057000+00:00",
+            "LastUpdatedTime": "2020-06-04T08:48:55.788000+00:00",
             "RollbackConfiguration": {},
             "StackStatus": "UPDATE_COMPLETE",
             "DisableRollback": false,
@@ -43,7 +43,10 @@
                 }
             ],
             "Tags": [],
-            "EnableTerminationProtection": false
+            "EnableTerminationProtection": false,
+            "DriftInformation": {
+                "StackDriftStatus": "NOT_CHECKED"
+            }
         }
     ]
 }

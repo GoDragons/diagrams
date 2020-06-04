@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-
+import React from "react";
+import { Button, Space, Card, Typography, Col } from "antd";
+// import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -12,53 +13,65 @@ export default function DiagramItem({
   diagramName,
   versions,
   refreshList,
+  userCredentials,
 }) {
-  const [shouldDisplayVersions, setShouldDisplayVersions] = useState(false);
-
   function deleteVersion(versionId) {
     axios
-      .post(`${REST_API_URL}/delete-version`, { diagramId, versionId })
+      .post(
+        `${REST_API_URL}/delete-version`,
+        { diagramId, versionId },
+        {
+          headers: {
+            Authorization: userCredentials.accessToken.jwtToken,
+          },
+        }
+      )
       .then(refreshList)
       .catch((e) => console.log(`Could not delete version:`, e.response.data));
   }
   function deleteDiagram() {
     axios
-      .post(`${REST_API_URL}/delete-diagram`, { diagramId })
+      .post(
+        `${REST_API_URL}/delete-diagram`,
+        { diagramId },
+        {
+          headers: {
+            Authorization: userCredentials.accessToken.jwtToken,
+          },
+        }
+      )
       .then(refreshList)
       .catch((e) => console.log(`Could not delete diagram:`, e.response.data));
   }
 
-  function displayVersions(versions) {
-    if (!shouldDisplayVersions) {
-      return null;
-    }
-    if (!versions || versions.length === 1) {
-      return null;
-    }
-    const versionElements = versions.slice(1).map((version) => {
-      const { versionId, versionName, lastModified } = version;
-      return (
-        <li key={`${diagramId}-${versionId}`} className="version-item">
-          <Link to={`/diagrams/${diagramId}/${versionId}`}>
-            <span className="version-name">{versionName}</span>
-            <span className="last-modified">
-              {window.moment(lastModified).format("DD MMM YYYY - HH:mm:ss")}
-            </span>
-          </Link>
-          <button onClick={(e) => deleteVersion(versionId)}>
-            Delete version
-          </button>
-        </li>
-      );
-    });
+  // function displayVersions(versions) {
+  //   if (!versions || versions.length === 1) {
+  //     return null;
+  //   }
+  //   const versionElements = versions.slice(1).map((version) => {
+  //     const { versionId, versionName, lastModified } = version;
+  //     return (
+  //       <li key={`${diagramId}-${versionId}`} className="version-item">
+  //         <Link to={`/diagrams/${diagramId}/${versionId}`}>
+  //           <span className="version-name">{versionName}</span>
+  //           <span className="last-modified">
+  //             {window.moment(lastModified).format("DD MMM YYYY - HH:mm:ss")}
+  //           </span>
+  //         </Link>
+  //         <button onClick={(e) => deleteVersion(versionId)}>
+  //           Delete version
+  //         </button>
+  //       </li>
+  //     );
+  //   });
 
-    return (
-      <div className="version-list-container">
-        <p className="version-id">Versions: </p>
-        <ul className="versions">{versionElements}</ul>
-      </div>
-    );
-  }
+  //   return (
+  //     <div className="version-list-container">
+  //       <p className="version-id">Versions: </p>
+  //       <ul className="versions">{versionElements}</ul>
+  //     </div>
+  //   );
+  // }
 
   const lastModifiedTimestamp = versions[versions.length - 1].lastModified;
   const lastModifiedHumanReadable = window
@@ -66,17 +79,29 @@ export default function DiagramItem({
     .format("DD MMM YYYY");
 
   return (
-    <div className="diagram-item" key={diagramId}>
-      <Link to={`/diagrams/${diagramId}/${latestVersionId}`}>
+    <Col span={24} className="diagram-item">
+      <Card key={diagramId} bordered={false}>
+        {/* <Link to={`/diagrams/${diagramId}/${latestVersionId}`}>
         <h3 className="title">{diagramName}</h3>
-      </Link>
-      <p className="last-modified">Last modified:{lastModifiedHumanReadable}</p>
-      <button onClick={deleteDiagram}>Delete diagram</button>
-      <button onClick={(e) => setShouldDisplayVersions(!shouldDisplayVersions)}>
-        {shouldDisplayVersions ? "Hide" : "Show"} history
-      </button>
-
-      {displayVersions(versions)}
-    </div>
+      </Link> */}
+        <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
+          <Typography.Paragraph className="name">
+            {diagramName}
+          </Typography.Paragraph>
+        </Link>
+        <Typography.Paragraph className="last-modified">
+          Last modified: {lastModifiedHumanReadable}
+        </Typography.Paragraph>
+        {/* <button onClick={deleteDiagram}>Delete diagram</button> */}
+        <Space>
+          <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
+            <Button type="primary">Edit</Button>
+          </Link>
+          <Link to={`/diagrams/${diagramId}/${latestVersionId}/details`}>
+            <Button type="secondary">Details</Button>
+          </Link>
+        </Space>
+      </Card>
+    </Col>
   );
 }

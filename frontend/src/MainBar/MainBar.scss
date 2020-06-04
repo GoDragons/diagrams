@@ -1,0 +1,22 @@
+@import "../Variables";
+
+.main-bar {
+  padding: 1rem;
+  color: $white;
+  border-bottom: 1px solid $neutral;
+
+  .logo {
+    color: $dark;
+    font-size: 25px;
+  }
+
+  .user-column {
+    text-align: right;
+  }
+
+  .avatar {
+    background-color: #fff;
+    border: 1px solid $neutral;
+    color: $color1;
+  }
+}

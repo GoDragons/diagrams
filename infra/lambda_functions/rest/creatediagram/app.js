@@ -10,7 +10,7 @@ const { DIAGRAMS_TABLE_NAME } = process.env;
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
   console.log("body: ", body);
-  const { diagramName, authorId } = body;
+  const { diagramName, authorId, description, visibility } = body;
 
   // try {
   //   const existingDiagramResult = await ddb
@@ -47,6 +47,8 @@ exports.handler = async (event) => {
       lastModified: Date.now(),
       diagramName,
       authorId,
+      description,
+      visibility,
       versionName: "Current Version",
       isLatest: true,
       versionId: String(newVersionId),

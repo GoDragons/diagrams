@@ -1,40 +1,11 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-
-import { REST_API_URL } from "common/constants";
-
-import "./DiagramList.scss";
+import React from "react";
+import { Row } from "antd";
 
 import DiagramItem from "./DiagramItem/DiagramItem";
 
-export default function DiagramList({ userCredentials }) {
-  const [loaded, setLoaded] = useState(false);
-  const [ownDiagrams, setOwnDiagrams] = useState();
-  const [invitedDiagrams, setInvitedDiagrams] = useState();
+import "./DiagramList.scss";
 
-  useEffect(() => {
-    if (userCredentials) {
-      getDiagrams();
-    }
-  }, [userCredentials]);
-
-  function getDiagrams() {
-    console.log("getDiagrams() userCredentials = ", userCredentials);
-    axios
-      .get(`${REST_API_URL}/get-diagrams`, {
-        headers: {
-          Authorization: userCredentials.accessToken.jwtToken,
-        },
-      })
-      .then((response) => {
-        setOwnDiagrams(response.data.ownDiagrams);
-        setInvitedDiagrams(response.data.invitedDiagrams);
-        setLoaded(true);
-      })
-      .catch((e) => console.log(`Could not get diagrams:`, e));
-  }
-
+export default function DiagramList({ diagrams, onRefresh, userCredentials }) {
   function displayDiagramList(diagrams) {
     if (!diagrams) {
       return <p>Loading diagrams...</p>;
@@ -47,30 +18,25 @@ export default function DiagramList({ userCredentials }) {
       <DiagramItem
         key={diagramData.diagramId}
         {...diagramData}
-        refreshList={getDiagrams}
+        refreshList={onRefresh}
+        userCredentials={userCredentials}
       />
     ));
   }
 
-  if (!loaded) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <div className="diagram-list-container">
-      <Link to="/create-diagram">
-        <button className="create-diagram">Create Diagram</button>
-      </Link>
-      <h1>My Diagrams:</h1>
-      <div className="diagram-list">{displayDiagramList(ownDiagrams)}</div>
-      {invitedDiagrams.length ? (
+      <Row className="diagram-list" gutter={[16, 24]} justify="center">
+        {displayDiagramList(diagrams)}
+      </Row>
+      {/* {invitedDiagrams.length ? (
         <>
           <h1>Shared with me:</h1>
           <div className="diagram-list">
             {displayDiagramList(invitedDiagrams)}
           </div>
         </>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

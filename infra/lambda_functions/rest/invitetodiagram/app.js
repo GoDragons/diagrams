@@ -10,13 +10,41 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
   console.log("body = ", body);
-  const { inviter, recipient, diagramId } = body;
+  const { inviter, recipient, diagramId, diagramName } = body;
 
   await addInvite({ inviter, recipient, diagramId });
-
-  // const username = event.requestContext.authorizer.jwt.claims.username;
+  await recordActivity({
+    user: inviter,
+    activityItem: {
+      name: `<b>You</b> invited <b>${recipient}</b> to diagram <b>${diagramName}</b>`,
+      type: "invite",
+    },
+  });
+  await recordActivity({
+    user: recipient,
+    activityItem: {
+      name: `<b>You</b> were invited by <b>${inviter}</b> to diagram <b>${diagramName}</b>`,
+      type: "invite",
+    },
+  });
   return "ok";
 };
+
+async function recordActivity({ user, activityItem }) {
+  const lambda = new AWS.Lambda();
+
+  await lambda
+    .invoke({
+      FunctionName: "RecordActivity",
+      InvocationType: "Event",
+      LogType: "Tail",
+      Payload: JSON.stringify({
+        user,
+        activityItem,
+      }),
+    })
+    .promise();
+}
 
 async function addInvite({ inviter, recipient, diagramId }) {
   console.log("inviter = ", inviter);
