@@ -117,9 +117,11 @@ async function addInviteToRecipient({ inviter, recipient, diagramId }) {
     invites = userRecord.Item.invites;
   }
   const inviteAlreadyExists = invites.some((x) => x.S === diagramId);
-  if (!inviteAlreadyExists) {
-    invites.push(diagramId);
+  if (inviteAlreadyExists) {
+    console.log("Invite already exists");
     return true;
+  } else {
+    invites.push(diagramId);
   }
 
   const putParams = {
