@@ -76,9 +76,7 @@ export default function DiagramItem({
   // }
 
   const lastModifiedTimestamp = versions[versions.length - 1].lastModified;
-  const lastModifiedHumanReadable = window
-    .moment(lastModifiedTimestamp)
-    .format("DD MMM YYYY");
+  const createdTimestamp = parseInt(versions[0].versionId);
 
   return (
     <Col span={24} className="diagram-item">
@@ -92,7 +90,10 @@ export default function DiagramItem({
           </Typography.Paragraph>
         </Link>
         <Typography.Paragraph className="last-modified">
-          Last modified: {lastModifiedHumanReadable}
+          Created {window.moment(createdTimestamp).fromNow()}
+        </Typography.Paragraph>
+        <Typography.Paragraph className="last-modified">
+          Last modified {window.moment(lastModifiedTimestamp).fromNow()}
         </Typography.Paragraph>
         {/* <button onClick={deleteDiagram}>Delete diagram</button> */}
         <Row>

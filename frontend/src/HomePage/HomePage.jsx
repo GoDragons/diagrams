@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import AvatarList from "AvatarList/AvatarList";
 import {
+  FileAddOutlined,
   PlusCircleOutlined,
   RocketTwoTone,
   ShareAltOutlined,
@@ -120,7 +121,7 @@ export default function HomePage({ userData, userCredentials }) {
           ) : (
             <DiagramList
               userCredentials={userCredentials}
-              diagrams={ownDiagrams.slice(0, 3)}
+              diagrams={ownDiagrams}
               onRefresh={getDiagrams}
             />
           )}
@@ -221,6 +222,9 @@ export default function HomePage({ userData, userCredentials }) {
                   break;
                 case "account":
                   icon = <RocketTwoTone />;
+                  break;
+                case "create-diagram":
+                  icon = <FileAddOutlined />;
                   break;
               }
 

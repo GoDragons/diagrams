@@ -16,7 +16,9 @@ exports.handler = async (event) => {
   const invitesForAuthorRaw = await getInvitesForAuthor(username);
   const publicDiagramsRaw = await getPublicDiagrams();
 
-  const ownDiagrams = groupVersions(diagramsForAuthorRaw);
+  const ownDiagrams = groupVersions(diagramsForAuthorRaw).sort(
+    (a, b) => b.versions[0].versionId - a.versions[0].versionId
+  );
   const invitedDiagrams = groupVersions(invitesForAuthorRaw);
   const publicDiagrams = groupVersions(publicDiagramsRaw);
 

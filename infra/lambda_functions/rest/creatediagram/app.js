@@ -71,5 +71,29 @@ exports.handler = async (event) => {
     };
   }
 
+  await recordActivity({
+    user: authorId,
+    activityItem: {
+      name: `<b>You</b> created a diagram called <b>${diagramName}</b>`,
+      type: "create-diagram",
+    },
+  });
+
   return { diagramId: newDiagramId, versionId: String(newVersionId) };
 };
+
+async function recordActivity({ user, activityItem }) {
+  const lambda = new AWS.Lambda();
+
+  await lambda
+    .invoke({
+      FunctionName: "RecordActivity",
+      InvocationType: "Event",
+      LogType: "Tail",
+      Payload: JSON.stringify({
+        user,
+        activityItem,
+      }),
+    })
+    .promise();
+}
