@@ -57,6 +57,12 @@
   }
 
   .activity-section {
+    .ago {
+      margin-top: -1rem;
+      color: #bcc2c4;
+      color: desaturate(darken($neutral, 15), 20);
+      font-size: 0.8rem;
+    }
     .ant-timeline-item-content {
       text-align: left;
     }

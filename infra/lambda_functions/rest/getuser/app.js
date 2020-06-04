@@ -28,12 +28,14 @@ exports.handler = async (event) => {
 };
 
 async function addFirstActivity({ userRecord }) {
+  firstActivity.timestamp = Date.now();
+
   await ddb
     .put({
       TableName: USERS_TABLE_NAME,
       Item: {
         ...userRecord,
-        activity: [...userRecord.activity, firstActivity],
+        activity: [firstActivity],
       },
     })
     .promise();
@@ -41,6 +43,8 @@ async function addFirstActivity({ userRecord }) {
 }
 
 async function createUserRecord({ username }) {
+  firstActivity.timestamp = Date.now();
+
   const userRecord = {
     username,
     invites: [],

@@ -34,7 +34,10 @@ exports.handler = async (event) => {
       TableName: USERS_TABLE_NAME,
       Item: {
         ...existingUserData.Item,
-        activity: [activityItem, ...(existingUserData.Item.activity || [])],
+        activity: [
+          { ...activityItem, timestamp: Date.now() },
+          ...(existingUserData.Item.activity || []),
+        ],
       },
     })
     .promise();

@@ -212,6 +212,8 @@ export default function HomePage({ userData, userCredentials }) {
         ) : (
           <Timeline className="activity-timeline">
             {userDetails.activity.map((item, index) => {
+              const ago = window.moment(item.timestamp).fromNow();
+
               let icon = undefined;
               switch (item.type) {
                 case "invite":
@@ -225,6 +227,7 @@ export default function HomePage({ userData, userCredentials }) {
               return (
                 <Timeline.Item key={index} dot={icon}>
                   <p dangerouslySetInnerHTML={{ __html: item.name }} />
+                  <p className="ago">{ago}</p>
                 </Timeline.Item>
               );
             })}
