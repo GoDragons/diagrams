@@ -89,7 +89,7 @@ export default function DiagramItem({
             {diagramName}
           </Typography.Paragraph>
         </Link>
-        <Typography.Paragraph className="last-modified">
+        <Typography.Paragraph className="created">
           Created {window.moment(createdTimestamp).fromNow()}
         </Typography.Paragraph>
         <Typography.Paragraph className="last-modified">
