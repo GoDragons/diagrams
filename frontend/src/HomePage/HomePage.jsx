@@ -135,7 +135,11 @@ export default function HomePage({ userData, userCredentials }) {
           {invitedDiagrams.length === 0 ? (
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description="You don't have any invites yet"
+              description={
+                <Typography.Text className="empty-invites">
+                  You don't have any invites yet
+                </Typography.Text>
+              }
             />
           ) : (
             <DiagramList

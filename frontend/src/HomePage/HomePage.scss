@@ -41,6 +41,13 @@
       margin-bottom: 6rem;
     }
   }
+
+  .invited-diagrams-section {
+    .empty-invites {
+      color: $neutralDark;
+    }
+  }
+
   .public-section {
     .public-diagram-list {
       text-align: left;
@@ -59,8 +66,8 @@
   .activity-section {
     .ago {
       margin-top: -1rem;
-      color: #bcc2c4;
-      color: desaturate(darken($neutral, 15), 20);
+
+      color: $neutralDark;
       font-size: 0.8rem;
     }
     .ant-timeline-item-content {

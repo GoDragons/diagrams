@@ -8,3 +8,4 @@ $white: #ffffff;
 // $neutralLight: rgba(60, 90, 100, 0.04);
 $neutralLight: #f5f9fb;
 $neutral: darken($neutralLight, 5);
+$neutralDark: desaturate(darken($neutral, 15), 20);
