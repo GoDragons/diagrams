@@ -13,6 +13,7 @@ export default function DiagramItem({
   latestVersionId,
   diagramName,
   versions,
+  participants,
   refreshList,
   userCredentials,
 }) {
@@ -106,7 +107,7 @@ export default function DiagramItem({
             </Space>
           </Col>
           <Col span={12}>
-            <AvatarList users={["xdragosy", "marc", "ioana"]} />
+            <AvatarList users={participants} />
           </Col>
         </Row>
       </Card>

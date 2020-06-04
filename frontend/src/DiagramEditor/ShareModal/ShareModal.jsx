@@ -10,7 +10,6 @@ export default function ShareModal({
   visible,
   authorId,
   diagramData,
-
   authToken,
 }) {
   if (!visible) {
@@ -26,6 +25,7 @@ export default function ShareModal({
           recipient,
           access,
           diagramId: diagramData.diagramId,
+          versionId: diagramData.versionId,
           diagramName: diagramData.diagramName,
         },
         {

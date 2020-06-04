@@ -13,6 +13,7 @@ import {
   Timeline,
 } from "antd";
 import { Link } from "react-router-dom";
+import AvatarList from "AvatarList/AvatarList";
 import {
   PlusCircleOutlined,
   RocketTwoTone,
@@ -209,8 +210,8 @@ export default function HomePage({ userData, userCredentials }) {
             description="You don't have any activity yet"
           />
         ) : (
-          <Timeline>
-            {userDetails.activity.map((item) => {
+          <Timeline className="activity-timeline">
+            {userDetails.activity.map((item, index) => {
               let icon = undefined;
               switch (item.type) {
                 case "invite":
@@ -222,7 +223,7 @@ export default function HomePage({ userData, userCredentials }) {
               }
 
               return (
-                <Timeline.Item key={item.name} dot={icon}>
+                <Timeline.Item key={index} dot={icon}>
                   <p dangerouslySetInnerHTML={{ __html: item.name }} />
                 </Timeline.Item>
               );

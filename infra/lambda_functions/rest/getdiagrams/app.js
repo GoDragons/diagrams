@@ -43,6 +43,7 @@ function groupVersions(versionList) {
     ).sort((a, b) => (a.versionId < b.versionId ? 1 : -1));
     const diagramData = {
       versions,
+      participants: versions[0].participants,
       description: versions[0].description,
       authorId: versions[0].authorId,
       diagramName: versions[0].diagramName,
