@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import {
   Button,
-  Avatar,
   Typography,
   Space,
   Dropdown,
@@ -12,8 +11,10 @@ import {
   Col,
   Badge,
 } from "antd";
-import { UserOutlined, DownOutlined, GatewayOutlined } from "@ant-design/icons";
+import { DownOutlined, GatewayOutlined } from "@ant-design/icons";
 import { Auth } from "aws-amplify";
+
+import Avatar from "Avatar/Avatar";
 
 import "./MainBar.scss";
 
@@ -70,7 +71,7 @@ export default function MainBar({ userData }) {
               onClick={(e) => e.preventDefault()}
             >
               <Space>
-                <Avatar size="32" className="avatar" icon={<UserOutlined />} />
+                <Avatar username={userData.username} />
 
                 {userData.username}
                 <DownOutlined style={{ fontSize: 12 }} />

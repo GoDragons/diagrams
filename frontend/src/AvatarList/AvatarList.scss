@@ -1,0 +1,9 @@
+@import "../Variables";
+
+.avatar-list {
+  text-align: right;
+
+  .avatar:not(:last-child) {
+    margin-right: -0.5rem;
+  }
+}

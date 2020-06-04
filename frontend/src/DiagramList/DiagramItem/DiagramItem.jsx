@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, Space, Card, Typography, Col } from "antd";
-// import { DeleteOutlined } from "@ant-design/icons";
+import { Button, Space, Card, Typography, Row, Col } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import AvatarList from "AvatarList/AvatarList";
 import { REST_API_URL } from "common/constants";
+
 import "./DiagramItem.scss";
 
 export default function DiagramItem({
@@ -93,14 +94,21 @@ export default function DiagramItem({
           Last modified: {lastModifiedHumanReadable}
         </Typography.Paragraph>
         {/* <button onClick={deleteDiagram}>Delete diagram</button> */}
-        <Space>
-          <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
-            <Button type="primary">Edit</Button>
-          </Link>
-          <Link to={`/diagrams/${diagramId}/${latestVersionId}/details`}>
-            <Button type="secondary">Details</Button>
-          </Link>
-        </Space>
+        <Row>
+          <Col span={12}>
+            <Space>
+              <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
+                <Button type="primary">Edit</Button>
+              </Link>
+              <Link to={`/diagrams/${diagramId}/${latestVersionId}/details`}>
+                <Button type="secondary">Details</Button>
+              </Link>
+            </Space>
+          </Col>
+          <Col span={12}>
+            <AvatarList users={["xdragosy", "marc", "ioana"]} />
+          </Col>
+        </Row>
       </Card>
     </Col>
   );

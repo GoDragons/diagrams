@@ -1,0 +1,19 @@
+@import "../Variables";
+
+.avatar {
+  // background-color: $color1;
+  color: white;
+  width: 2.4rem;
+  height: 2.4rem;
+  text-align: center;
+  line-height: 2.1rem;
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+  border: 3px solid white;
+
+  .avatar-initials {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+}
