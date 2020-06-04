@@ -3,17 +3,17 @@
 .avatar {
   // background-color: $color1;
   color: white;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.2rem;
+  height: 2.2rem;
   text-align: center;
-  line-height: 2.1rem;
+  line-height: 1.8rem;
   border-radius: 50%;
   position: relative;
   display: inline-block;
   border: 3px solid white;
 
   .avatar-initials {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
   }
 }
