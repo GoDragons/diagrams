@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import {
   Button,
@@ -62,7 +62,9 @@ export default function MainBar({ userData }) {
     <div className="main-bar">
       <Row>
         <Col span={1}>
-          <GatewayOutlined className="logo" />
+          <Link to="/">
+            <GatewayOutlined className="logo" />
+          </Link>
         </Col>
         <Col span={23} className="user-column">
           <Dropdown overlay={userMenu}>
