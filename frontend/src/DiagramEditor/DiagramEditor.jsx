@@ -3,7 +3,10 @@ import axios from "axios";
 import _ from "lodash";
 import { withRouter, Link } from "react-router-dom";
 import RandomWords from "random-words";
-import { Form, Radio, Checkbox, Modal, Button, Input } from "antd";
+import { Button, Row, Col, Space } from "antd";
+import cx from "classnames";
+
+import Card from "Card/Card";
 
 import ComponentList from "../ComponentList/ComponentList";
 import ComponentItem from "./ComponentItem/ComponentItem";
@@ -13,7 +16,7 @@ import VersionModal from "./VersionModal/VersionModal";
 import ShareModal from "./ShareModal/ShareModal";
 import ChatBox from "./ChatBox/ChatBox";
 import Participants from "./Participants/Participants";
-import DiagramDetails from "./DiagramDetails/DiagramDetails";
+import Toolbar from "./Toolbar/Toolbar";
 
 import { applyChangeToDiagramData } from "common/diagramChangeHandler.js";
 import { REST_API_URL, WEBSOCKET_API_URL } from "common/constants";
@@ -35,6 +38,7 @@ export class DiagramEditor extends React.Component {
 
   state = {
     diagramData: null,
+    isGridEnabled: true,
     isMaster: false,
     isVersionModalOpen: false,
     isShareModalOpen: false,
@@ -1080,11 +1084,13 @@ export class DiagramEditor extends React.Component {
     );
   };
 
-  displayDiagramDetails = () => {
+  displayToolbar = () => {
     const { isGridSnapActive, diagramData } = this.state;
     return (
-      <DiagramDetails
+      <Toolbar
         {...this.state}
+        hideGrid={() => this.setState({ isGridEnabled: false })}
+        showGrid={() => this.setState({ isGridEnabled: true })}
         save={() => this.saveDiagram(diagramData)}
         openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
         openShareModal={() => this.setState({ isShareModalOpen: true })}
@@ -1098,7 +1104,7 @@ export class DiagramEditor extends React.Component {
   displayOverlays = () => {
     const { isMaster, diagramData } = this.state;
     return (
-      <div>
+      <div className="overlays">
         <VersionModal
           visible={this.state.isVersionModalOpen}
           authorId={this.authorId}
@@ -1114,9 +1120,9 @@ export class DiagramEditor extends React.Component {
           diagramData={diagramData}
           authToken={this.props.userCredentials.accessToken.jwtToken}
         />
-        {this.displayChatBox()}
+        {/* {this.displayChatBox()}
         {this.displayParticipants()}
-        {this.displayLoggedInSomewhereElse()}
+        {this.displayLoggedInSomewhereElse()} */}
 
         {isMaster ? <span className="is-master">master</span> : null}
       </div>
@@ -1161,6 +1167,7 @@ export class DiagramEditor extends React.Component {
       followCanvasX,
       followCanvasY,
       participantWeFollow,
+      isGridEnabled,
     } = this.state;
 
     let chosenCanvasX = canvasX;
@@ -1171,7 +1178,9 @@ export class DiagramEditor extends React.Component {
     }
 
     const canvasProps = {
-      className: "canvas",
+      className: cx("canvas", {
+        "with-grid": isGridEnabled,
+      }),
       ref: this.canvasRef,
       style: {
         top: chosenCanvasY + "px",
@@ -1216,16 +1225,18 @@ export class DiagramEditor extends React.Component {
     }
 
     return (
-      <div className="diagram-editor">
-        {this.displayOverlays()}
-        <div className="main-container">
-          <div className="canvas-container">
-            {this.displayDiagramDetails()}
-            {this.displayEditor()}
-          </div>
-          {this.displayComponentList()}
+      <>
+        <div className="diagram-editor">
+          {/* <Space> */}
+          {this.displayToolbar()}
+          <Row gutter={16} className="main-row">
+            <Col span={18}>{this.displayEditor()}</Col>
+            <Col span={6}>{this.displayComponentList()}</Col>
+          </Row>
+          {/* </Space> */}
         </div>
-      </div>
+        {this.displayOverlays()}
+      </>
     );
   }
 }

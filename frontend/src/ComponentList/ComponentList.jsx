@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
-import "./ComponentList.scss";
-import componentListData from "../data/componentListData.jsx";
-const MAX_COMPONENTS_DISPLAYED = 20;
+import { Button, Row, Col, Space, Card } from "antd";
 
+import componentListData from "../data/componentListData.jsx";
+import "./ComponentList.scss";
+
+const MAX_COMPONENTS_DISPLAYED = 20;
 function ComponentList({ onSelect }) {
   const [filterValue, setFilterValue] = useState("");
 
@@ -39,7 +41,7 @@ function ComponentList({ onSelect }) {
   );
 
   return (
-    <div className="component-list">
+    <Card className="component-list">
       <input
         className="filter"
         value={filterValue}
@@ -52,7 +54,7 @@ function ComponentList({ onSelect }) {
           <div className="column column-right">{componentElementsRight}</div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 

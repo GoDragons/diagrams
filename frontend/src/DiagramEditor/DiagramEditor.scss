@@ -1,12 +1,27 @@
 @import "./GridDrawing";
+@import "../Variables";
 
 $componentListWidth: 220px;
 
 .diagram-editor {
-  height: 60vh;
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
+  background-color: $neutralLight;
+  padding: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  // overflow-y: hidden;
+  // height: 60vh;
+  // width: 100vw;
+  // height: 100vh;
+  // margin: 0 auto;
+
+  .main-row {
+    height: 100%;
+
+    .ant-col {
+      height: 100%;
+    }
+  }
 
   .follow-cursor {
     position: absolute;
@@ -19,39 +34,31 @@ $componentListWidth: 220px;
     user-select: none;
   }
 
-  .main-container {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
+  .editor {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #eee;
+    overflow: hidden;
+    position: relative;
 
-    .canvas-container {
-      display: flex;
-      flex-direction: column;
-      width: calc(100% - #{$componentListWidth});
+    .canvas {
+      // the 'transform' property is set in the jsx code for the canvas, since it's together with the scale
+      position: absolute;
+      width: 10000px;
+      height: 10000px;
+      transform-origin: 50% 50%;
+      cursor: grab;
+      background-color: #fff;
 
-      .editor {
-        width: 100%;
-        height: 100%;
-        background-color: #fff;
-        border: 1px solid #eee;
-        overflow: hidden;
-        position: relative;
-
-        .canvas {
-          // the 'transform' property is set in the jsx code for the canvas, since it's together with the scale
-          position: absolute;
-          width: 10000px;
-          height: 10000px;
-          transform-origin: 50% 50%;
-          cursor: grab;
-          background-color: #fff;
-          @include grid-drawing;
-        }
+      &.with-grid {
+        @include grid-drawing;
       }
     }
-    .component-list {
-      width: $componentListWidth;
-    }
+  }
+
+  .component-list {
+    // width: $componentListWidth;
   }
 
   .logged-in-somewhere-else {
@@ -85,4 +92,10 @@ $componentListWidth: 220px;
     z-index: 2;
     color: red;
   }
+}
+
+.overlays {
+  position: fixed;
+  top: 0;
+  left: 0;
 }
