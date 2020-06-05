@@ -29,7 +29,7 @@ export default function VersionModal({
       )
       .then((response) => {
         onClose();
-        window.location = `/diagrams/${response.data.diagramId}/${response.data.versionId}`;
+        window.location = `/diagrams/${response.data.diagramId}/${response.data.versionId}/edit`;
         console.log("Version created:", response.data);
         sendChange({
           operation: "newVersion",

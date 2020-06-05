@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiagramItem component contains 'created' 1`] = `
+<Paragraph
+  className="created"
+>
+  Created 
+  56789_ago
+</Paragraph>
+`;
+
+exports[`DiagramItem component contains 'last modified' 1`] = `
+<Paragraph
+  className="last-modified"
+>
+  Last modified 
+  9876_ago
+</Paragraph>
+`;
+
+exports[`DiagramItem component contains the correct link to the 'edit' page in the diagram name 1`] = `
+<Link
+  className="diagram-name"
+  to="/diagrams/1234/abcd/edit"
+>
+  Test diagram
+</Link>
+`;

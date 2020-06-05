@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   Empty,
   List,
@@ -14,6 +15,7 @@ import {
   Typography,
   Spin,
   Timeline,
+  Statistic,
 } from "antd";
 import { REST_API_URL } from "common/constants";
 import { withRouter } from "react-router-dom";
@@ -87,7 +89,11 @@ export function DiagramDetails({ userCredentials, userData, match }) {
           </Col>
           <Col span={8} className="main-actions">
             <Space>
-              <Button type="secondary">Edit</Button>
+              <Link
+                to={`/diagrams/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}/edit`}
+              >
+                <Button type="secondary">Edit</Button>
+              </Link>
               {/* <Button type="primary">Download</Button> */}
               <Dropdown.Button overlay={downloadOptions} type="primary">
                 Download
@@ -95,18 +101,65 @@ export function DiagramDetails({ userCredentials, userData, match }) {
             </Space>
           </Col>
         </Row>
-        <Card>
-          <Row>
-            <Col span={8}>
-              {diagramDetails.participants.length + 1} participant
-              {diagramDetails.participants.length === 0 ? "" : "s"}
-            </Col>
-            <Col span={8}>
-              {/* {diagramDetails.versions.length + 1} version */}
-              {/* {diagramDetails.versions.length === 0 ? "" : "s"} */}
-            </Col>
-          </Row>
-        </Card>
+
+        <Row gutter={[16, 24]}>
+          <Col span={6}>
+            <Card>
+              <Statistic
+                title={`participant${
+                  diagramDetails.participants.length === 0 ? "" : "s"
+                }`}
+                value={diagramDetails.participants.length + 1}
+              />
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card>
+              <Statistic
+                title={`version${
+                  diagramDetails.versions.length === 1 ? "" : "s"
+                }`}
+                value={diagramDetails.versions.length}
+              />
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card>
+              <Statistic
+                title={`component${
+                  diagramDetails.componentCount === 1 ? "" : "s"
+                }`}
+                value={diagramDetails.componentCount}
+              />
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card>
+              <Statistic
+                title={`connection${
+                  diagramDetails.connectionCount === 1 ? "" : "s"
+                }`}
+                value={diagramDetails.connectionCount}
+              />
+            </Card>
+          </Col>
+          {/* <Col span={6}>
+            <Card>
+              <Statistic
+                title={`last modified`}
+                value={window.moment(diagramDetails.lastModified).fromNow()}
+              />
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card>
+              <Statistic
+                title={`created`}
+                value={window.moment(diagramDetails.created).fromNow()}
+              />
+            </Card>
+          </Col> */}
+        </Row>
       </div>
     );
   }

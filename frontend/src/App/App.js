@@ -9,7 +9,7 @@ import DiagramDetails from "DiagramDetails/DiagramDetails";
 import HomePage from "HomePage/HomePage";
 import MainBar from "MainBar/MainBar";
 
-import "App.scss";
+import "./App.scss";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 
 export class App extends React.Component {
@@ -42,7 +42,7 @@ export class App extends React.Component {
           <Route exact path="/diagrams/:diagramId/:versionId/edit">
             <DiagramEditor {...this.state} />
           </Route>
-          <Route exact path="/diagrams/:diagramId/:versionId/details">
+          <Route exact path="/diagrams/:diagramId/details">
             <DiagramDetails {...this.state} />
           </Route>
         </Switch>

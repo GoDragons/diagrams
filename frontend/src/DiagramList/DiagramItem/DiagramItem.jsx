@@ -18,17 +18,18 @@ export default function DiagramItem({
   let createdTimestamp;
 
   if (versions) {
-    lastModifiedTimestamp = versions[versions.length - 1].lastModified;
-    createdTimestamp = parseInt(versions[0].versionId);
+    lastModifiedTimestamp = versions[0].lastModified;
+    createdTimestamp = parseInt(versions[versions.length - 1].versionId);
   }
 
   return (
     <Col span={24} className="diagram-item">
       <Card>
-        <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
-          <Typography.Paragraph className="name">
-            {diagramName}
-          </Typography.Paragraph>
+        <Link
+          to={`/diagrams/${diagramId}/${latestVersionId}/edit`}
+          className="diagram-name"
+        >
+          {diagramName}
         </Link>
         <Typography.Paragraph className="created">
           Created {window.moment(createdTimestamp).fromNow()}
@@ -43,7 +44,7 @@ export default function DiagramItem({
               <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
                 <Button type="primary">Edit</Button>
               </Link>
-              <Link to={`/diagrams/${diagramId}/${latestVersionId}/details`}>
+              <Link to={`/diagrams/${diagramId}/details`}>
                 <Button type="secondary">Details</Button>
               </Link>
             </Space>

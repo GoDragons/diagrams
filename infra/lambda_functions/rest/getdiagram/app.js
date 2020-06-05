@@ -49,6 +49,7 @@ function groupVersions(versionList) {
     const diagramData = {
       ...lastVersion,
       versions,
+      created: versions[versions.length - 1].versionId,
       componentCount: lastVersion.components.length,
       groupCount: lastVersion.groups.length,
       connectionCount: lastVersion.connections.length,

@@ -12,6 +12,7 @@
     "aws-amplify": "^3.0.13",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
+    "jest-enzyme": "^7.1.2",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
@@ -44,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "react-test-renderer": "^16.13.1"
   }
 }
