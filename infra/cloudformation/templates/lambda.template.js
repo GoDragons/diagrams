@@ -71,7 +71,7 @@ module.exports = [
   getRESTFunction({ name: "get-diagrams" }),
   getRESTFunction({
     name: "get-diagram",
-    routeKey: "GET /get-diagram/{diagramId}/{versionId}",
+    routeKey: "GET /get-diagram/{diagramId}",
   }),
   getRESTFunction({ name: "create-diagram", method: "POST" }),
   getRESTFunction({ name: "delete-diagram", method: "POST" }),
