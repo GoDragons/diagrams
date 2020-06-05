@@ -1,4 +1,19 @@
 @import "../Variables";
 
-.diagram-details {
+.diagram-details-page {
+  background-color: $neutralLight;
+  height: 100%;
+  overflow-y: auto;
+
+  .main-content {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+
+  .empty-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
