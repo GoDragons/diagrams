@@ -25,7 +25,12 @@ import Card from "Card/Card";
 
 import "./DiagramDetails.scss";
 
-export function DiagramDetails({ userCredentials, userData, match }) {
+export function DiagramDetails({
+  userCredentials,
+  userData,
+  setPageTitle,
+  match,
+}) {
   const [infoRequested, setInfoRequested] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [diagramDetails, setDiagramDetails] = useState();
@@ -48,6 +53,8 @@ export function DiagramDetails({ userCredentials, userData, match }) {
       })
       .then((response) => {
         setDiagramDetails(response.data);
+        setPageTitle(response.data.diagramName);
+
         setLoaded(true);
         console.log("diagramDetails:", response.data);
       })

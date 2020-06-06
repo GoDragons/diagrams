@@ -20,7 +20,7 @@ import Avatar from "Avatar/Avatar";
 
 import "./MainBar.scss";
 
-export default function MainBar({ userData }) {
+export default function MainBar({ userData, pageTitle = "" }) {
   let history = useHistory();
 
   async function signOut() {
@@ -68,7 +68,12 @@ export default function MainBar({ userData }) {
             <GatewayOutlined className="logo" />
           </Link>
         </Col>
-        <Col span={23} className="user-column">
+        <Col span={20}>
+          <Typography.Title level={4} className="page-title">
+            {pageTitle}
+          </Typography.Title>
+        </Col>
+        <Col span={3} className="user-column">
           <Dropdown overlay={userMenu}>
             <a
               className="ant-dropdown-link"

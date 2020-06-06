@@ -28,7 +28,7 @@ import "./HomePage.scss";
 const { Search } = Input;
 const { Title } = Typography;
 
-export default function HomePage({ userData, userCredentials }) {
+export default function HomePage({ userData, userCredentials, setPageTitle }) {
   const [infoRequested, setInfoRequested] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [ownDiagrams, setOwnDiagrams] = useState();
@@ -42,6 +42,7 @@ export default function HomePage({ userData, userCredentials }) {
   useEffect(() => {
     if (!infoRequested) {
       setInfoRequested(true);
+      setPageTitle("");
       async function getData() {
         await getDiagrams();
         await getUserData();

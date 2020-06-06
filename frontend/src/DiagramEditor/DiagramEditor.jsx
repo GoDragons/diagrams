@@ -141,6 +141,29 @@ export class DiagramEditor extends React.Component {
     }
   };
 
+  sendPageTitle = (diagramData) => {
+    let versionLabel = null;
+    if (diagramData.isLatest) {
+      versionLabel = (
+        <span className="version latest-version">(latest version)</span>
+      );
+    } else {
+      versionLabel = (
+        <span className="version old-version">
+          (old version - read-only mode)
+        </span>
+      );
+    }
+
+    let content = (
+      <>
+        {diagramData.diagramName} {versionLabel}
+      </>
+    );
+
+    this.props.setPageTitle(content);
+  };
+
   onMessageReceived = (event) => {
     const messageData = JSON.parse(event.data);
     // console.log("message:", messageData);
@@ -150,6 +173,7 @@ export class DiagramEditor extends React.Component {
         this.saveDiagram(this.state.diagramData);
         break;
       case "diagramData":
+        this.sendPageTitle(messageData.diagramData);
         this.handleNewDiagramData(messageData.diagramData);
         this.setState({
           participants: messageData.participants || [],
@@ -1227,14 +1251,11 @@ export class DiagramEditor extends React.Component {
     return (
       <>
         <div className="diagram-editor">
-          {/* <Space> */}
-
           <Row gutter={16} className="main-row">
             <Col span={2}>{this.displayToolbar()}</Col>
             <Col span={19}>{this.displayEditor()}</Col>
             <Col span={3}>{this.displayComponentList()}</Col>
           </Row>
-          {/* </Space> */}
         </div>
         {this.displayOverlays()}
       </>

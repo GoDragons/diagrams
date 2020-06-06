@@ -17,6 +17,29 @@
     }
   }
 
+  .page-title {
+    text-align: center;
+    margin: 0;
+
+    .version {
+      font-size: 0.8rem;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 0.2rem;
+      font-weight: 400;
+      position: relative;
+      top: -1px;
+
+      &.latest-version {
+        color: #12cbc4;
+      }
+
+      &.old-version {
+        color: gray;
+      }
+    }
+  }
+
   .user-column {
     text-align: right;
   }

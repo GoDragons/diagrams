@@ -16,6 +16,7 @@ export class App extends React.Component {
   state = {
     userData: null,
     userCredentials: null,
+    pageTitle: "",
   };
 
   async componentDidMount() {
@@ -25,6 +26,10 @@ export class App extends React.Component {
     this.setState({ userData, userCredentials });
     console.log("userData = ", userData);
   }
+
+  setPageTitle = (pageTitle) => {
+    this.setState({ pageTitle });
+  };
 
   render() {
     const { userData } = this.state;
@@ -37,13 +42,13 @@ export class App extends React.Component {
 
         <Switch>
           <Route exact path="/">
-            <HomePage {...this.state} />
+            <HomePage {...this.state} setPageTitle={this.setPageTitle} />
           </Route>
           <Route exact path="/diagrams/:diagramId/:versionId/edit">
-            <DiagramEditor {...this.state} />
+            <DiagramEditor {...this.state} setPageTitle={this.setPageTitle} />
           </Route>
           <Route exact path="/diagrams/:diagramId/details">
-            <DiagramDetails {...this.state} />
+            <DiagramDetails {...this.state} setPageTitle={this.setPageTitle} />
           </Route>
         </Switch>
       </div>
