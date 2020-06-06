@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-import { Button, Row, Col, Space, Card } from "antd";
+import { Button, Input, Row, Col, List, Space, Typography } from "antd";
 
+import Card from "Card/Card";
 import componentListData from "../data/componentListData.jsx";
 import "./ComponentList.scss";
 
@@ -10,12 +11,19 @@ function ComponentList({ onSelect }) {
   const [filterValue, setFilterValue] = useState("");
 
   function displayIconColumn(list) {
-    return list.map((item) => (
-      <div className="item" key={item.type} onClick={(e) => onSelect(item)}>
-        <img src={item.iconImport} alt={item.type} />
-        <p className="label">{item.type}</p>
-      </div>
-    ));
+    return (
+      <List
+        dataSource={list}
+        renderItem={(item) => (
+          <div className="item" key={item.type} onClick={(e) => onSelect(item)}>
+            <img src={item.iconImport} alt={item.type} />
+            <Typography.Paragraph className="label">
+              {item.type}
+            </Typography.Paragraph>
+          </div>
+        )}
+      />
+    );
   }
 
   let filteredComponentList;
@@ -31,30 +39,21 @@ function ComponentList({ onSelect }) {
     0,
     MAX_COMPONENTS_DISPLAYED
   );
-  const partitionIndex = Math.floor(trimmedComponentList.length / 2) || 1;
 
-  const componentElementsLeft = displayIconColumn(
-    trimmedComponentList.slice(0, partitionIndex)
-  );
-  const componentElementsRight = displayIconColumn(
-    trimmedComponentList.slice(partitionIndex)
-  );
+  const componentElements = displayIconColumn(trimmedComponentList);
 
   return (
-    <Card className="component-list">
-      <input
+    <div className="component-list">
+      <Input
         className="filter"
         value={filterValue}
         onChange={(e) => setFilterValue(e.target.value)}
         placeholder="Service name..."
-      ></input>
-      <div className="scrollable-container">
-        <div className="actual-list">
-          <div className="column column-left">{componentElementsLeft}</div>
-          <div className="column column-right">{componentElementsRight}</div>
-        </div>
-      </div>
-    </Card>
+      />
+      <Card className="scrollable-container">
+        <div className="actual-list">{componentElements}</div>
+      </Card>
+    </div>
   );
 }
 

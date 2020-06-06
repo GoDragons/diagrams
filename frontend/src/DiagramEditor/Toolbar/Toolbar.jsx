@@ -1,7 +1,15 @@
 import React from "react";
 import cx from "classnames";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, notification, Space, Card } from "antd";
+import { Row, Col, Button, notification, Space, Typography } from "antd";
+import {
+  DownloadOutlined,
+  ShareAltOutlined,
+  SubnodeOutlined,
+  BorderlessTableOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
+import Card from "Card/Card";
 import html2canvas from "html2canvas";
 
 import "./Toolbar.scss";
@@ -57,53 +65,46 @@ export default function Toolbar({
 
   return (
     <Card className="toolbar">
-      <Row>
-        <Col span={12}>
-          <h3 className="diagram-name">
-            {diagramData.diagramName}
-            {displayVersionLabel()}
-          </h3>
-        </Col>
-        <Col span={12} className="actions">
-          <Space>
-            <Button type="primary" onClick={createSnapshot}>
-              Snapshot
-            </Button>
-            <Link to="/">
-              <Button type="primary" className="home">
-                Home
-              </Button>
-            </Link>
-            <Button type="primary" onClick={openShareModal} className="share">
-              Share
-            </Button>
+      <Space direction="vertical">
+        <div className="item">
+          <DownloadOutlined type="primary" onClick={createSnapshot} />
+          <Typography.Text>Download</Typography.Text>
+        </div>
 
-            {diagramData.isLatest ? (
-              <Button
+        <div className="item">
+          <ShareAltOutlined
+            type="primary"
+            onClick={openShareModal}
+            className="share"
+          />
+          <Typography.Text>Share</Typography.Text>
+        </div>
+
+        {diagramData.isLatest ? (
+          <>
+            <div className="item">
+              <SubnodeOutlined
                 type="primary"
                 onClick={openVersionModal}
                 className="create-version"
-              >
-                Commit
-              </Button>
-            ) : null}
-            {diagramData.isLatest ? (
-              <Button
+              />
+              <Typography.Text>Commit</Typography.Text>
+            </div>
+            <div className="item">
+              <BorderlessTableOutlined
                 type="primary"
                 onClick={toggleGridSnap}
                 className={cx("grid-snap", { on: isGridSnapActive })}
-              >
-                Grid Snap: {isGridSnapActive ? "on" : "off"}
-              </Button>
-            ) : null}
-            {diagramData.isLatest ? (
-              <Button type="primary" onClick={save} className={cx("save")}>
-                Save
-              </Button>
-            ) : null}
-          </Space>
-        </Col>
-      </Row>
+              />
+              <Typography.Text>Snap</Typography.Text>
+            </div>
+            <div className="item">
+              <SaveOutlined type="primary" onClick={save} className={"save"} />
+              <Typography.Text>Save</Typography.Text>
+            </div>
+          </>
+        ) : null}
+      </Space>
     </Card>
   );
 }

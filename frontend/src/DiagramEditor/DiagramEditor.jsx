@@ -1228,10 +1228,11 @@ export class DiagramEditor extends React.Component {
       <>
         <div className="diagram-editor">
           {/* <Space> */}
-          {this.displayToolbar()}
+
           <Row gutter={16} className="main-row">
-            <Col span={18}>{this.displayEditor()}</Col>
-            <Col span={6}>{this.displayComponentList()}</Col>
+            <Col span={2}>{this.displayToolbar()}</Col>
+            <Col span={19}>{this.displayEditor()}</Col>
+            <Col span={3}>{this.displayComponentList()}</Col>
           </Row>
           {/* </Space> */}
         </div>

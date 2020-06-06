@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
+import Card from "Card/Card";
+
 import {
   Button,
   Typography,
@@ -59,9 +61,9 @@ export default function MainBar({ userData }) {
   );
 
   return (
-    <div className="main-bar">
+    <Card className="main-bar">
       <Row>
-        <Col span={1}>
+        <Col span={1} className="logo-container">
           <Link to="/">
             <GatewayOutlined className="logo" />
           </Link>
@@ -82,6 +84,6 @@ export default function MainBar({ userData }) {
           </Dropdown>
         </Col>
       </Row>
-    </div>
+    </Card>
   );
 }

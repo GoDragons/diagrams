@@ -1,11 +1,54 @@
+@import "../../Variables";
+
 .toolbar {
   width: 100%;
-  background-color: white;
   display: flex;
   justify-content: space-between;
+  height: 100%;
+  text-align: center;
 
   &.ant-card {
     margin-bottom: 1rem;
+    // background-color: $color1;
+
+    .ant-card-body {
+      width: 100%;
+    }
+  }
+
+  .ant-space-vertical {
+    width: 100%;
+  }
+
+  .item {
+    border-bottom: 1px solid $neutral;
+    padding: 1rem 0;
+
+    .anticon {
+      display: block;
+      color: $dark;
+      color: $color1;
+      font-size: 1.5rem;
+    }
+
+    .ant-typography {
+      color: $dark;
+      opacity: 0.7;
+    }
+  }
+
+  button {
+    // width: 100%;
+    // text-align: left;
+    // display: flex;
+    // background-color: white;
+    color: $color1;
+    background-color: $white;
+
+    .anticon {
+      // padding: 1rem;
+      font-size: 1.6rem;
+    }
   }
 
   .diagram-name {
