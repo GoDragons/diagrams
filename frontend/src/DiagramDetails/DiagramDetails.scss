@@ -1,27 +1,19 @@
 @import "../Variables";
 
 .diagram-details-page {
-  background-color: $neutralLight;
   height: 100%;
   overflow-y: auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
+  max-width: $max-page-width;
+  width: 100%;
+  margin: 0 auto;
 
-  .diagram-name {
-    text-align: left;
-    margin-bottom: 2rem;
+  .main-actions-row {
+    margin-bottom: 1rem;
 
-    .anticon {
-      margin-right: 0.5rem;
+    .main-actions {
+      text-align: right;
     }
-  }
-
-  .main-content {
-    max-width: 1700px;
-    margin: 0 auto;
-  }
-
-  .main-actions {
-    text-align: right;
   }
 
   .ant-statistic-content {

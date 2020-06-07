@@ -19,7 +19,13 @@ import {
 } from "antd";
 import { REST_API_URL } from "common/constants";
 import { withRouter } from "react-router-dom";
-import { FileTwoTone, FilePdfOutlined } from "@ant-design/icons";
+import {
+  FileTwoTone,
+  SettingOutlined,
+  EditOutlined,
+  DownloadOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 import Card from "Card/Card";
 
@@ -53,9 +59,14 @@ export function DiagramDetails({
       })
       .then((response) => {
         setDiagramDetails(response.data);
-        setPageTitle(response.data.diagramName);
 
         setLoaded(true);
+        setPageTitle(
+          <span className="diagram-name">
+            <FileTwoTone />
+            {response.data.authorId}/{response.data.diagramName}
+          </span>
+        );
         console.log("diagramDetails:", response.data);
       })
       .catch((e) => console.log(`Could not get diagrams:`, e));
@@ -86,25 +97,22 @@ export function DiagramDetails({
     );
 
     return (
-      <div>
-        <Row>
-          <Col span={16}>
-            <Typography.Title level={4} className="diagram-name">
-              <FileTwoTone />
-              {diagramDetails.authorId}/{diagramDetails.diagramName}
-            </Typography.Title>
-          </Col>
+      <div className="diagram-details">
+        <Row className="main-actions-row">
+          <Col span={16}></Col>
           <Col span={8} className="main-actions">
             <Space>
+              {/* <Button icon={<SettingOutlined />}>Settings</Button> */}
               <Link
                 to={`/diagrams/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}/edit`}
               >
-                <Button type="secondary">Edit</Button>
+                <Button icon={<EditOutlined />}>Edit</Button>
               </Link>
-              {/* <Button type="primary">Download</Button> */}
-              <Dropdown.Button overlay={downloadOptions} type="primary">
-                Download
-              </Dropdown.Button>
+              <Dropdown overlay={downloadOptions}>
+                <Button type="primary" icon={<DownloadOutlined />}>
+                  Download <DownOutlined />
+                </Button>
+              </Dropdown>
             </Space>
           </Col>
         </Row>
@@ -113,19 +121,15 @@ export function DiagramDetails({
           <Col span={6}>
             <Card>
               <Statistic
-                title={`participant${
-                  diagramDetails.participants.length === 0 ? "" : "s"
-                }`}
-                value={diagramDetails.participants.length + 1}
+                title="participants"
+                value={(diagramDetails.participants || []).length + 1}
               />
             </Card>
           </Col>
           <Col span={6}>
             <Card>
               <Statistic
-                title={`version${
-                  diagramDetails.versions.length === 1 ? "" : "s"
-                }`}
+                title="versions"
                 value={diagramDetails.versions.length}
               />
             </Card>
@@ -133,9 +137,7 @@ export function DiagramDetails({
           <Col span={6}>
             <Card>
               <Statistic
-                title={`component${
-                  diagramDetails.componentCount === 1 ? "" : "s"
-                }`}
+                title="components"
                 value={diagramDetails.componentCount}
               />
             </Card>
@@ -143,9 +145,7 @@ export function DiagramDetails({
           <Col span={6}>
             <Card>
               <Statistic
-                title={`connection${
-                  diagramDetails.connectionCount === 1 ? "" : "s"
-                }`}
+                title="connections"
                 value={diagramDetails.connectionCount}
               />
             </Card>

@@ -4,15 +4,12 @@
   background-color: $neutralLight;
   height: 100%;
   overflow-y: auto;
+  max-width: $max-page-width;
+  margin: 0 auto;
 
   h4.ant-typography {
     margin-top: 2rem;
     margin-bottom: 2rem;
-  }
-
-  .main-content {
-    max-width: 1700px;
-    margin: 0 auto;
   }
 
   .empty-page {

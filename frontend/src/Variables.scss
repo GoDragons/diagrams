@@ -9,3 +9,5 @@ $white: #ffffff;
 $neutralLight: #f5f9fb;
 $neutral: darken($neutralLight, 5);
 $neutralDark: desaturate(darken($neutral, 15), 20);
+
+$max-page-width: 1500px;

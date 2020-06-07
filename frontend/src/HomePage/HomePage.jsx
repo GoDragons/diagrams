@@ -11,6 +11,8 @@ import {
   Timeline,
 } from "antd";
 
+import { Link } from "react-router-dom";
+
 import {
   FileAddOutlined,
   PlusCircleOutlined,
@@ -166,19 +168,9 @@ export default function HomePage({ userData, userCredentials, setPageTitle }) {
 
         {publicDiagrams.length === 0 ? (
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-            imageStyle={{
-              height: 100,
-            }}
-            description="You don't have any diagrams yet"
-          >
-            <Button
-              type="primary"
-              onClick={() => setIsCreateDiagramModalOpen(true)}
-            >
-              Create one now
-            </Button>
-          </Empty>
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description="There are no public diagrams available"
+          ></Empty>
         ) : (
           <List
             size="large"
@@ -187,10 +179,12 @@ export default function HomePage({ userData, userCredentials, setPageTitle }) {
             className="public-diagram-list"
             renderItem={(item) => (
               <List.Item>
-                <List.Item.Meta
-                  title={`${item.authorId}/${item.diagramName}`}
-                  description={item.description}
-                />
+                <Link to={`/diagrams/${item.diagramId}/details`}>
+                  <List.Item.Meta
+                    title={`${item.authorId}/${item.diagramName}`}
+                    description={item.description}
+                  />
+                </Link>
               </List.Item>
             )}
           />
