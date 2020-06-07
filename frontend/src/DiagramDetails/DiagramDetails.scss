@@ -11,6 +11,33 @@
   .main-actions-row {
     margin-bottom: 1rem;
 
+    .diagram-name-container {
+      text-align: left;
+
+      .diagram-name {
+        display: inline-block;
+
+        .anticon {
+          margin-right: 0.5rem;
+        }
+
+        .ant-typography-edit-content {
+          display: inline-block;
+          margin-left: 1rem;
+          position: relative;
+          top: 0.3rem;
+          margin-bottom: -0.5rem;
+          width: 40rem;
+
+          textarea {
+            padding-right: 2rem;
+            font-size: 1rem;
+            width: 100%;
+          }
+        }
+      }
+    }
+
     .main-actions {
       text-align: right;
     }

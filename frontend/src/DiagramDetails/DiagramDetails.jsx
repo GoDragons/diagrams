@@ -48,6 +48,7 @@ export function DiagramDetails({
   const [readme, setReadme] = useState("");
   const [diagramName, setDiagramName] = useState("");
   const [readmeNeedsSaving, setReadmeNeedsSaving] = useState(false);
+  const [diagramNameNeedsSaving, setDiagramNameNeedsSaving] = useState(false);
 
   useEffect(() => {
     if (!infoRequested) {
@@ -68,12 +69,7 @@ export function DiagramDetails({
         setReadme(response.data.readme || "");
         setDiagramName(response.data.diagramName || "");
         setLoaded(true);
-        setPageTitle(
-          <span className="diagram-name">
-            <FileTwoTone />
-            {response.data.authorId}/{response.data.diagramName}
-          </span>
-        );
+        setPageTitle("Project details");
         console.log("diagramDetails:", response.data);
       })
       .catch((e) => console.log(`Could not get diagrams:`, e));
@@ -93,6 +89,27 @@ export function DiagramDetails({
         setReadmeNeedsSaving(true);
         notification.error({
           message: "We couldn't save the readme",
+          description: "Our team has been notified. Please try again later",
+          duration: 0, // we do not want to auto-hide error messages
+        });
+      }
+    );
+  }
+
+  function saveDiagramName() {
+    setDiagramNameNeedsSaving(false);
+
+    putDiagram().then(
+      () => {
+        notification.success({
+          message: "Diagram name successfully saved",
+          duration: 2,
+        });
+      },
+      () => {
+        setDiagramNameNeedsSaving(true);
+        notification.error({
+          message: "We couldn't save the diagram name",
           description: "Our team has been notified. Please try again later",
           duration: 0, // we do not want to auto-hide error messages
         });
@@ -129,6 +146,12 @@ export function DiagramDetails({
     }
   }
 
+  function onDiagramNameChange(newDiagramName) {
+    setDiagramName(newDiagramName);
+    setDiagramNameNeedsSaving(true);
+    saveDiagramName();
+  }
+
   function displayContent() {
     if (!loaded) {
       return (
@@ -156,7 +179,19 @@ export function DiagramDetails({
     return (
       <div className="diagram-details">
         <Row className="main-actions-row">
-          <Col span={16}></Col>
+          <Col span={16} className="diagram-name-container">
+            <Typography.Title level={4} className="diagram-name">
+              <FileTwoTone />
+              {diagramDetails.authorId}/
+              <Typography.Text
+                editable={{
+                  onChange: onDiagramNameChange,
+                }}
+              >
+                {diagramName}
+              </Typography.Text>
+            </Typography.Title>
+          </Col>
           <Col span={8} className="main-actions"></Col>
         </Row>
 
