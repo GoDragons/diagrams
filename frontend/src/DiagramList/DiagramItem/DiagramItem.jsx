@@ -25,10 +25,7 @@ export default function DiagramItem({
   return (
     <Col span={24} className="diagram-item">
       <Card>
-        <Link
-          to={`/diagrams/${diagramId}/${latestVersionId}/edit`}
-          className="diagram-name"
-        >
+        <Link to={`/diagrams/${diagramId}/details`} className="diagram-name">
           {diagramName}
         </Link>
         <Typography.Paragraph className="created">
@@ -42,10 +39,10 @@ export default function DiagramItem({
           <Col span={12}>
             <Space>
               <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
-                <Button type="primary">Edit</Button>
+                <Button type="secondary">Edit</Button>
               </Link>
               <Link to={`/diagrams/${diagramId}/details`}>
-                <Button type="secondary">Details</Button>
+                <Button type="primary">Details</Button>
               </Link>
             </Space>
           </Col>

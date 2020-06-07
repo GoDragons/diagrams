@@ -182,50 +182,50 @@ export function DiagramDetails({
 
     return (
       <div className="diagram-details">
-        <Row className="main-actions-row">
-          <Col span={16} className="diagram-name-container">
-            <Typography.Title level={4} className="diagram-name-and-author">
-              <FileTwoTone />
-              {diagramDetails.authorId} /{" "}
-              <Typography.Text
-                editable={{
-                  onChange: onDiagramNameChange,
-                }}
-                className="diagram-name"
+        <Card>
+          <Row className="main-actions-row">
+            <Col span={16} className="diagram-name-container">
+              <Typography.Title level={4} className="diagram-name-and-author">
+                <FileTwoTone />
+                {diagramDetails.authorId} /{" "}
+                <Typography.Text
+                  editable={{
+                    onChange: onDiagramNameChange,
+                  }}
+                  className="diagram-name"
+                >
+                  {diagramName}
+                </Typography.Text>
+                <Typography.Text className="last-updated">
+                  (last updated{" "}
+                  {window.moment(diagramDetails.lastUpdatedDate).fromNow()})
+                </Typography.Text>
+              </Typography.Title>
+              <Typography.Paragraph
+                editable={{ onChange: onDescriptionChange }}
+                className="description"
               >
-                {diagramName}
-              </Typography.Text>
-            </Typography.Title>
-          </Col>
-          <Col span={8} className="main-actions"></Col>
-        </Row>
-
-        <Typography.Paragraph
-          editable={{ onChange: onDescriptionChange }}
-          className="description"
-        >
-          {description}
-        </Typography.Paragraph>
-
-        <Card className="stats">
-          <Typography.Paragraph className="stat-item">
-            {(diagramDetails.participants || []).length} participants
-          </Typography.Paragraph>
-          <Divider type="vertical" />
-          <Typography.Paragraph className="stat-item">
-            {(diagramDetails.versions || []).length} versions
-          </Typography.Paragraph>
-          <Divider type="vertical" />
-          <Typography.Paragraph className="stat-item">
-            {diagramDetails.componentCount} components
-          </Typography.Paragraph>
-          <Divider type="vertical" />
-          <Typography.Paragraph className="stat-item">
-            {diagramDetails.connectionCount} connections
-          </Typography.Paragraph>
+                {description}
+              </Typography.Paragraph>
+            </Col>
+            <Col span={8} className="main-actions stats">
+              <Statistic
+                value={(diagramDetails.participants || []).length}
+                title="participants"
+              />
+              <Statistic
+                value={(diagramDetails.versions || []).length}
+                title="versions"
+              />
+              <Statistic
+                value={diagramDetails.componentCount}
+                title="components"
+              />
+            </Col>
+          </Row>
         </Card>
 
-        <div className="image-and-description">
+        <div className="snapshot-and-readme">
           <Row gutter={[16, 16]}>
             <Col span={12}>
               <Space>
@@ -280,7 +280,7 @@ export function DiagramDetails({
               </Card>
             </Col>
             <Col span={12}>
-              <Card className="description-container">
+              <Card className="readme-container">
                 {isEditingReadme ? (
                   <Input.TextArea
                     value={readme}

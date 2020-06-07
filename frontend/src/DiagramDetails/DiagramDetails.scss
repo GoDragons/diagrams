@@ -10,15 +10,12 @@
 
   .description {
     text-align: left;
-    margin-top: -0.5rem;
-    margin-bottom: 2rem;
-    color: $dark;
-
+    color: desaturate(lighten($dark, 30), 20);
     font-size: 1rem;
   }
 
   .main-actions-row {
-    margin-bottom: 1rem;
+    padding: 1rem 1rem 0;
 
     .diagram-name-container {
       text-align: left;
@@ -26,14 +23,20 @@
       .diagram-name-and-author {
         display: inline-block;
         font-weight: normal;
-
         color: darken($color1, 10);
 
         .diagram-name {
           color: $color1;
           color: darken($color1, 10);
           font-weight: bold;
-          // margin-left: 0.5rem;
+        }
+
+        .last-updated {
+          font-size: 0.8rem;
+          margin-left: 1rem;
+          position: relative;
+          top: -2px;
+          color: desaturate(lighten($dark, 30), 20);
         }
 
         .anticon {
@@ -63,27 +66,24 @@
   }
 
   .stats {
-    .ant-card-body {
-      display: flex;
-      justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 
-      .ant-statistic {
-        width: 100%;
-        text-align: center;
-      }
+    .ant-statistic {
+      text-align: center;
+    }
 
-      .stat-item {
-        width: 100%;
-        margin: 0;
-        text-align: center;
-        color: $dark;
-      }
+    .stat-item {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+      color: $dark;
+    }
 
-      .ant-divider-vertical {
-        height: 1.4rem;
-        border-width: 2px;
-        border-color: $neutral;
-      }
+    .ant-divider-vertical {
+      height: 1.4rem;
+      border-width: 2px;
+      border-color: $neutral;
     }
   }
 
@@ -99,14 +99,16 @@
     justify-content: center;
   }
 
-  .image-and-description {
+  .snapshot-and-readme {
     margin-top: 2rem;
 
     .snapshot-image {
       max-width: 100%;
     }
-    .description-container {
+
+    .readme-container {
       height: 100%;
+
       .ant-card-body {
         padding: 2rem;
         height: 100%;

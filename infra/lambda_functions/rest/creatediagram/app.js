@@ -60,7 +60,7 @@ exports.handler = async (event) => {
       connections: [],
       groups: [],
       messages: [],
-      participants: [],
+      participants: [authorId],
     },
   };
 
