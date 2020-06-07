@@ -17,13 +17,15 @@ import {
   Spin,
   Timeline,
   Statistic,
+  notification,
 } from "antd";
 import MarkDown from "react-markdown";
 import { REST_API_URL } from "common/constants";
 import { withRouter } from "react-router-dom";
 import {
   FileTwoTone,
-  SettingOutlined,
+  EyeOutlined,
+  SaveOutlined,
   EditOutlined,
   DownloadOutlined,
   DownOutlined,
@@ -42,11 +44,12 @@ export function DiagramDetails({
   const [infoRequested, setInfoRequested] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [diagramDetails, setDiagramDetails] = useState();
+  const [isEditingReadme, setIsEditingReadme] = useState(false);
+  const [readme, setReadme] = useState("");
+  const [readmeNeedsSaving, setReadmeNeedsSaving] = useState(false);
 
-  console.log("loaded");
   useEffect(() => {
     if (!infoRequested) {
-      console.log("here");
       setInfoRequested(true);
       getDiagramDetails();
     }
@@ -74,6 +77,28 @@ export function DiagramDetails({
       .catch((e) => console.log(`Could not get diagrams:`, e));
   }
 
+  function saveReadme() {
+    setReadmeNeedsSaving(false);
+    setIsEditingReadme(false);
+    notification.success({
+      message: "Readme successfully saved",
+      duration: 2,
+    });
+  }
+
+  function onReadmeChange(e) {
+    setReadme(e.target.value);
+    if (!readmeNeedsSaving) {
+      setReadmeNeedsSaving(true);
+    }
+  }
+
+  function onReadmeKeyUp(e) {
+    if (e.key === "Escape") {
+      setIsEditingReadme(false);
+    }
+  }
+
   function displayContent() {
     if (!loaded) {
       return (
@@ -98,28 +123,14 @@ export function DiagramDetails({
       </Menu>
     );
 
-    const description = `## This is a tool for creating system architecture designs. \n ----- \n It is all serverless, with a React front-end and a back-end deployed on API Gateway and Lambda, using DynamoDB for data storage. \n\n (more details will come soon)
-      `;
+    // const description = `## This is a tool for creating system architecture designs. \n ----- \n It is all serverless, with a React front-end and a back-end deployed on API Gateway and Lambda, using DynamoDB for data storage. \n\n (more details will come soon)
+    // `;
 
     return (
       <div className="diagram-details">
         <Row className="main-actions-row">
           <Col span={16}></Col>
-          <Col span={8} className="main-actions">
-            <Space>
-              {/* <Button icon={<SettingOutlined />}>Settings</Button> */}
-              <Link
-                to={`/diagrams/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}/edit`}
-              >
-                <Button icon={<EditOutlined />}>Edit</Button>
-              </Link>
-              <Dropdown overlay={downloadOptions}>
-                <Button type="primary" icon={<DownloadOutlined />}>
-                  Download <DownOutlined />
-                </Button>
-              </Dropdown>
-            </Space>
-          </Col>
+          <Col span={8} className="main-actions"></Col>
         </Row>
 
         <Card className="stats">
@@ -143,6 +154,50 @@ export function DiagramDetails({
         <div className="image-and-description">
           <Row gutter={[16, 16]}>
             <Col span={12}>
+              <Space>
+                <Link
+                  to={`/diagrams/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}/edit`}
+                >
+                  <Button icon={<EditOutlined />}>Edit Diagram</Button>
+                </Link>
+                <Dropdown overlay={downloadOptions}>
+                  <Button type="primary" icon={<DownloadOutlined />}>
+                    Download <DownOutlined />
+                  </Button>
+                </Dropdown>
+              </Space>
+            </Col>
+            <Col span={12}>
+              <Space>
+                <>
+                  {isEditingReadme ? (
+                    <Button
+                      icon={<EyeOutlined />}
+                      onClick={(e) => setIsEditingReadme(false)}
+                    >
+                      Preview
+                    </Button>
+                  ) : (
+                    <Button
+                      icon={<EditOutlined />}
+                      onClick={(e) => setIsEditingReadme(true)}
+                    >
+                      Edit Readme
+                    </Button>
+                  )}
+                  {readmeNeedsSaving ? (
+                    <Button
+                      type="primary"
+                      icon={<SaveOutlined />}
+                      onClick={(e) => saveReadme()}
+                    >
+                      Save Readme
+                    </Button>
+                  ) : null}
+                </>
+              </Space>
+            </Col>
+            <Col span={12}>
               <Card className="snapshot-container">
                 <img
                   className="snapshot-image"
@@ -152,7 +207,16 @@ export function DiagramDetails({
             </Col>
             <Col span={12}>
               <Card className="description-container">
-                <MarkDown source={description} />
+                {isEditingReadme ? (
+                  <Input.TextArea
+                    value={readme}
+                    className="readme-input"
+                    onKeyDown={onReadmeKeyUp}
+                    onChange={onReadmeChange}
+                  />
+                ) : (
+                  <MarkDown source={readme} />
+                )}
               </Card>
             </Col>
           </Row>
