@@ -45,6 +45,8 @@ exports.handler = async (event) => {
     Item: {
       diagramId: newDiagramId,
       lastModified: Date.now(),
+      readme:
+        '### Add a Readme \n ---- \n It will help others understand more about your system. \n\n You can do that by using the "Edit Readme" button above.',
       diagramName,
       authorId,
       description,

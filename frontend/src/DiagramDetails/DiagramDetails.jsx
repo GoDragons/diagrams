@@ -46,6 +46,7 @@ export function DiagramDetails({
   const [diagramDetails, setDiagramDetails] = useState();
   const [isEditingReadme, setIsEditingReadme] = useState(false);
   const [readme, setReadme] = useState("");
+  const [diagramName, setDiagramName] = useState("");
   const [readmeNeedsSaving, setReadmeNeedsSaving] = useState(false);
 
   useEffect(() => {
@@ -64,7 +65,8 @@ export function DiagramDetails({
       })
       .then((response) => {
         setDiagramDetails(response.data);
-
+        setReadme(response.data.readme || "");
+        setDiagramName(response.data.diagramName || "");
         setLoaded(true);
         setPageTitle(
           <span className="diagram-name">
@@ -80,10 +82,38 @@ export function DiagramDetails({
   function saveReadme() {
     setReadmeNeedsSaving(false);
     setIsEditingReadme(false);
-    notification.success({
-      message: "Readme successfully saved",
-      duration: 2,
-    });
+    putDiagram().then(
+      () => {
+        notification.success({
+          message: "Readme successfully saved",
+          duration: 2,
+        });
+      },
+      () => {
+        setReadmeNeedsSaving(true);
+        notification.error({
+          message: "We couldn't save the readme",
+          description: "Our team has been notified. Please try again later",
+          duration: 0, // we do not want to auto-hide error messages
+        });
+      }
+    );
+  }
+
+  function putDiagram() {
+    const putParams = {
+      diagramName,
+      readme,
+    };
+    return axios.put(
+      `${REST_API_URL}/diagram/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}`,
+      putParams,
+      {
+        headers: {
+          Authorization: userCredentials.accessToken.jwtToken,
+        },
+      }
+    );
   }
 
   function onReadmeChange(e) {
@@ -122,9 +152,6 @@ export function DiagramDetails({
         <Menu.Item key="link">Get Link</Menu.Item>
       </Menu>
     );
-
-    // const description = `## This is a tool for creating system architecture designs. \n ----- \n It is all serverless, with a React front-end and a back-end deployed on API Gateway and Lambda, using DynamoDB for data storage. \n\n (more details will come soon)
-    // `;
 
     return (
       <div className="diagram-details">
