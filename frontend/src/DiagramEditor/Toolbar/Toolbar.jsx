@@ -8,6 +8,8 @@ import {
   SubnodeOutlined,
   BorderlessTableOutlined,
   SaveOutlined,
+  InfoCircleOutlined,
+  LeftOutlined,
 } from "@ant-design/icons";
 import Card from "Card/Card";
 import html2canvas from "html2canvas";
@@ -67,16 +69,12 @@ export default function Toolbar({
     <Card className="toolbar">
       <Space direction="vertical">
         <div className="item">
-          <DownloadOutlined type="primary" onClick={createSnapshot} />
+          <DownloadOutlined onClick={createSnapshot} />
           <Typography.Text>Download</Typography.Text>
         </div>
 
         <div className="item">
-          <ShareAltOutlined
-            type="primary"
-            onClick={openShareModal}
-            className="share"
-          />
+          <ShareAltOutlined onClick={openShareModal} className="share" />
           <Typography.Text>Share</Typography.Text>
         </div>
 
@@ -84,7 +82,6 @@ export default function Toolbar({
           <>
             <div className="item">
               <SubnodeOutlined
-                type="primary"
                 onClick={openVersionModal}
                 className="create-version"
               />
@@ -92,14 +89,13 @@ export default function Toolbar({
             </div>
             <div className="item">
               <BorderlessTableOutlined
-                type="primary"
                 onClick={toggleGridSnap}
                 className={cx("grid-snap", { on: isGridSnapActive })}
               />
               <Typography.Text>Snap</Typography.Text>
             </div>
             <div className="item">
-              <SaveOutlined type="primary" onClick={save} className={"save"} />
+              <SaveOutlined onClick={save} className={"save"} />
               <Typography.Text>Save</Typography.Text>
             </div>
           </>

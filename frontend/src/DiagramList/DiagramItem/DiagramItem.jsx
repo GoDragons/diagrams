@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Space, Typography, Row, Col } from "antd";
+import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import Card from "Card/Card";
 import { Link } from "react-router-dom";
 
@@ -39,10 +40,14 @@ export default function DiagramItem({
           <Col span={12}>
             <Space>
               <Link to={`/diagrams/${diagramId}/${latestVersionId}/edit`}>
-                <Button type="secondary">Edit</Button>
+                <Button type="secondary" icon={<EditOutlined />}>
+                  Edit
+                </Button>
               </Link>
               <Link to={`/diagrams/${diagramId}/details`}>
-                <Button type="primary">Details</Button>
+                <Button type="primary" icon={<InfoCircleOutlined />}>
+                  Details
+                </Button>
               </Link>
             </Space>
           </Col>

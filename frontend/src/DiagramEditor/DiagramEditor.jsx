@@ -3,7 +3,9 @@ import axios from "axios";
 import _ from "lodash";
 import { withRouter, Link } from "react-router-dom";
 import RandomWords from "random-words";
-import { Button, Row, Col, Space } from "antd";
+import { Button, Spin, Row, Col } from "antd";
+import { LeftOutlined } from "@ant-design/icons";
+
 import cx from "classnames";
 
 import Card from "Card/Card";
@@ -1111,17 +1113,27 @@ export class DiagramEditor extends React.Component {
   displayToolbar = () => {
     const { isGridSnapActive, diagramData } = this.state;
     return (
-      <Toolbar
-        {...this.state}
-        hideGrid={() => this.setState({ isGridEnabled: false })}
-        showGrid={() => this.setState({ isGridEnabled: true })}
-        save={() => this.saveDiagram(diagramData)}
-        openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
-        openShareModal={() => this.setState({ isShareModalOpen: true })}
-        toggleGridSnap={() =>
-          this.setState({ isGridSnapActive: !isGridSnapActive })
-        }
-      />
+      <>
+        <Link
+          to={`/diagrams/${diagramData.diagramId}/details`}
+          className="back-to-project"
+        >
+          <Button icon={<LeftOutlined />} type="secondary">
+            Back
+          </Button>
+        </Link>
+        <Toolbar
+          {...this.state}
+          hideGrid={() => this.setState({ isGridEnabled: false })}
+          showGrid={() => this.setState({ isGridEnabled: true })}
+          save={() => this.saveDiagram(diagramData)}
+          openVersionModal={(e) => this.setState({ isVersionModalOpen: true })}
+          openShareModal={() => this.setState({ isShareModalOpen: true })}
+          toggleGridSnap={() =>
+            this.setState({ isGridSnapActive: !isGridSnapActive })
+          }
+        />
+      </>
     );
   };
 
@@ -1245,7 +1257,11 @@ export class DiagramEditor extends React.Component {
       );
     }
     if (!diagramData) {
-      return <p>Loading...</p>;
+      return (
+        <div className="empty-page">
+          <Spin />
+        </div>
+      );
     }
 
     return (

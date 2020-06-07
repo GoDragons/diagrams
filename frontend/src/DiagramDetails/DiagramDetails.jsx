@@ -24,6 +24,7 @@ import { REST_API_URL } from "common/constants";
 import { withRouter } from "react-router-dom";
 import {
   FileTwoTone,
+  FileOutlined,
   EyeOutlined,
   SaveOutlined,
   EditOutlined,
@@ -182,124 +183,162 @@ export function DiagramDetails({
 
     return (
       <div className="diagram-details">
-        <Card>
-          <Row className="main-actions-row">
-            <Col span={16} className="diagram-name-container">
-              <Typography.Title level={4} className="diagram-name-and-author">
-                <FileTwoTone />
-                {diagramDetails.authorId} /{" "}
-                <Typography.Text
-                  editable={{
-                    onChange: onDiagramNameChange,
-                  }}
-                  className="diagram-name"
+        <div className="main-content">
+          <Card>
+            <Row className="main-actions-row">
+              <Col span={16} className="diagram-name-container">
+                <Typography.Title level={4} className="diagram-name-and-author">
+                  <FileTwoTone />
+                  {diagramDetails.authorId} /{" "}
+                  <Typography.Text
+                    editable={{
+                      onChange: onDiagramNameChange,
+                    }}
+                    className="diagram-name"
+                  >
+                    {diagramName}
+                  </Typography.Text>
+                  <Typography.Text className="last-updated">
+                    (last updated{" "}
+                    {window.moment(diagramDetails.lastUpdatedDate).fromNow()})
+                  </Typography.Text>
+                </Typography.Title>
+                <Typography.Paragraph
+                  editable={{ onChange: onDescriptionChange }}
+                  className="description"
                 >
-                  {diagramName}
-                </Typography.Text>
-                <Typography.Text className="last-updated">
-                  (last updated{" "}
-                  {window.moment(diagramDetails.lastUpdatedDate).fromNow()})
-                </Typography.Text>
-              </Typography.Title>
-              <Typography.Paragraph
-                editable={{ onChange: onDescriptionChange }}
-                className="description"
-              >
-                {description}
-              </Typography.Paragraph>
-            </Col>
-            <Col span={8} className="main-actions stats">
-              <Statistic
-                value={(diagramDetails.participants || []).length}
-                title="participants"
-              />
-              <Statistic
-                value={(diagramDetails.versions || []).length}
-                title="versions"
-              />
-              <Statistic
-                value={diagramDetails.componentCount}
-                title="components"
-              />
-            </Col>
-          </Row>
-        </Card>
-
-        <div className="snapshot-and-readme">
-          <Row gutter={[16, 16]}>
-            <Col span={12}>
-              <Space>
-                <Link
-                  to={`/diagrams/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}/edit`}
-                >
-                  <Button icon={<EditOutlined />}>Edit Diagram</Button>
-                </Link>
-                <Dropdown overlay={downloadOptions}>
-                  <Button type="primary" icon={<DownloadOutlined />}>
-                    Download <DownOutlined />
-                  </Button>
-                </Dropdown>
-              </Space>
-            </Col>
-            <Col span={12}>
-              <Space>
-                <>
-                  {isEditingReadme ? (
-                    <Button
-                      icon={<EyeOutlined />}
-                      onClick={(e) => setIsEditingReadme(false)}
-                    >
-                      Preview
-                    </Button>
-                  ) : (
-                    <Button
-                      icon={<EditOutlined />}
-                      onClick={(e) => setIsEditingReadme(true)}
-                    >
-                      Edit Readme
-                    </Button>
-                  )}
-                  {readmeNeedsSaving ? (
-                    <Button
-                      type="primary"
-                      icon={<SaveOutlined />}
-                      onClick={saveReadme}
-                    >
-                      Save Readme
-                    </Button>
-                  ) : null}
-                </>
-              </Space>
-            </Col>
-            <Col span={12}>
-              <Card className="snapshot-container">
-                <img
-                  className="snapshot-image"
-                  src="https://d2908q01vomqb2.cloudfront.net/cb4e5208b4cd87268b208e49452ed6e89a68e0b8/2017/11/03/AWS-Network-Diagram-Page-1-1024x678.png"
+                  {description}
+                </Typography.Paragraph>
+              </Col>
+              <Col span={8} className="main-actions stats">
+                <Statistic
+                  value={(diagramDetails.participants || []).length}
+                  title="participants"
                 />
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card className="readme-container">
-                {isEditingReadme ? (
-                  <Input.TextArea
-                    value={readme}
-                    className="readme-input"
-                    onKeyDown={onReadmeKeyUp}
-                    onChange={onReadmeChange}
-                  />
-                ) : (
-                  <MarkDown source={readme} />
-                )}
-              </Card>
-            </Col>
-          </Row>
-        </div>
+                <Statistic
+                  value={(diagramDetails.versions || []).length}
+                  title="versions"
+                />
+                <Statistic
+                  value={diagramDetails.componentCount}
+                  title="components"
+                />
+              </Col>
+            </Row>
+          </Card>
 
-        <div className="settings">
-          <Typography.Title level={4} className="settings-title">
-            Project settings
-          </Typography.Title>
+          <div className="snapshot-and-readme">
+            <Row gutter={[16, 16]}>
+              <Col span={12}>
+                <Space>
+                  <Link
+                    to={`/diagrams/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}/edit`}
+                  >
+                    <Button icon={<EditOutlined />}>Edit Diagram</Button>
+                  </Link>
+                  <Dropdown overlay={downloadOptions}>
+                    <Button type="primary" icon={<DownloadOutlined />}>
+                      Download <DownOutlined />
+                    </Button>
+                  </Dropdown>
+                </Space>
+              </Col>
+              <Col span={12}>
+                <Space>
+                  <>
+                    {isEditingReadme ? (
+                      <Button
+                        icon={<EyeOutlined />}
+                        onClick={(e) => setIsEditingReadme(false)}
+                      >
+                        Preview
+                      </Button>
+                    ) : (
+                      <Button
+                        icon={<EditOutlined />}
+                        onClick={(e) => setIsEditingReadme(true)}
+                      >
+                        Edit Readme
+                      </Button>
+                    )}
+                    {readmeNeedsSaving ? (
+                      <Button
+                        type="primary"
+                        icon={<SaveOutlined />}
+                        onClick={saveReadme}
+                      >
+                        Save Readme
+                      </Button>
+                    ) : null}
+                  </>
+                </Space>
+              </Col>
+              <Col span={12}>
+                <Card className="snapshot-container">
+                  <img
+                    className="snapshot-image"
+                    src="https://d2908q01vomqb2.cloudfront.net/cb4e5208b4cd87268b208e49452ed6e89a68e0b8/2017/11/03/AWS-Network-Diagram-Page-1-1024x678.png"
+                  />
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card className="readme-container">
+                  {isEditingReadme ? (
+                    <Input.TextArea
+                      value={readme}
+                      className="readme-input"
+                      onKeyDown={onReadmeKeyUp}
+                      onChange={onReadmeChange}
+                    />
+                  ) : (
+                    <MarkDown source={readme} />
+                  )}
+                </Card>
+              </Col>
+            </Row>
+          </div>
+
+          <div className="versions">
+            <Typography.Title level={4} className="versions-title">
+              Version history
+            </Typography.Title>
+            <Card>
+              <List
+                dataSource={diagramDetails.versions}
+                renderItem={(item) => (
+                  <List.Item>
+                    <Row className="version-row">
+                      <Col span={12} className="version-name-container">
+                        <FileTwoTone />
+                        <Typography.Text className="version-name">
+                          {item.versionName}
+                        </Typography.Text>{" "}
+                        -{" "}
+                        <Typography.Text>
+                          Created{" "}
+                          {window.moment(parseInt(item.versionId)).fromNow()}
+                        </Typography.Text>
+                      </Col>
+                      <Col span={12} className="version-actions">
+                        <Space>
+                          <Link
+                            to={`/diagrams/${item.diagramId}/${item.versionId}/edit`}
+                          >
+                            <Button icon={<EyeOutlined />}>View</Button>
+                          </Link>
+                          <Dropdown overlay={downloadOptions}>
+                            <Button icon={<DownloadOutlined />} type="primary">
+                              Download <DownOutlined />
+                            </Button>
+                          </Dropdown>
+                        </Space>
+                      </Col>
+                    </Row>
+                  </List.Item>
+                )}
+              />
+            </Card>
+          </div>
         </div>
       </div>
     );

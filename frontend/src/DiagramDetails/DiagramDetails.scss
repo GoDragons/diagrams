@@ -2,11 +2,15 @@
 
 .diagram-details-page {
   height: 100%;
-  overflow-y: auto;
   padding: 1rem 2rem;
-  max-width: $max-page-width;
   width: 100%;
-  margin: 0 auto;
+  overflow-y: auto;
+
+  .main-content {
+    max-width: $max-page-width;
+    width: 100%;
+    margin: 0 auto;
+  }
 
   .description {
     text-align: left;
@@ -120,7 +124,30 @@
     }
   }
 
-  .settings {
-    margin-top: 1rem;
+  .versions {
+    margin-top: 2rem;
+
+    .versions-title {
+      margin-bottom: 1rem;
+    }
+
+    .version-row {
+      width: 100%;
+
+      .version-name-container {
+        .anticon {
+          margin-right: 0.5rem;
+          color: $color1;
+        }
+
+        .version-name {
+          font-weight: bold;
+        }
+      }
+
+      .version-actions {
+        text-align: right;
+      }
+    }
   }
 }
