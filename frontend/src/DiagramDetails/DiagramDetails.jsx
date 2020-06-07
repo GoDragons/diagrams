@@ -47,8 +47,8 @@ export function DiagramDetails({
   const [isEditingReadme, setIsEditingReadme] = useState(false);
   const [readme, setReadme] = useState("");
   const [diagramName, setDiagramName] = useState("");
+  const [description, setDescription] = useState("");
   const [readmeNeedsSaving, setReadmeNeedsSaving] = useState(false);
-  const [diagramNameNeedsSaving, setDiagramNameNeedsSaving] = useState(false);
 
   useEffect(() => {
     if (!infoRequested) {
@@ -68,6 +68,7 @@ export function DiagramDetails({
         setDiagramDetails(response.data);
         setReadme(response.data.readme || "");
         setDiagramName(response.data.diagramName || "");
+        setDescription(response.data.description || "");
         setLoaded(true);
         setPageTitle("Project details");
         console.log("diagramDetails:", response.data);
@@ -96,20 +97,17 @@ export function DiagramDetails({
     );
   }
 
-  function saveDiagramName() {
-    setDiagramNameNeedsSaving(false);
-
-    putDiagram().then(
+  function saveProperty({ messageProperty, ...values }) {
+    putDiagram(values).then(
       () => {
         notification.success({
-          message: "Diagram name successfully saved",
+          message: `Successfully updated ${messageProperty}`,
           duration: 2,
         });
       },
       () => {
-        setDiagramNameNeedsSaving(true);
         notification.error({
-          message: "We couldn't save the diagram name",
+          message: `We couldn't save the ${messageProperty}`,
           description: "Our team has been notified. Please try again later",
           duration: 0, // we do not want to auto-hide error messages
         });
@@ -117,14 +115,10 @@ export function DiagramDetails({
     );
   }
 
-  function putDiagram() {
-    const putParams = {
-      diagramName,
-      readme,
-    };
+  function putDiagram(values) {
     return axios.put(
       `${REST_API_URL}/diagram/${diagramDetails.diagramId}/${diagramDetails.latestVersionId}`,
-      putParams,
+      values,
       {
         headers: {
           Authorization: userCredentials.accessToken.jwtToken,
@@ -148,8 +142,18 @@ export function DiagramDetails({
 
   function onDiagramNameChange(newDiagramName) {
     setDiagramName(newDiagramName);
-    setDiagramNameNeedsSaving(true);
-    saveDiagramName();
+    saveProperty({
+      messageProperty: "diagram name",
+      diagramName: newDiagramName,
+    });
+  }
+
+  function onDescriptionChange(newDescription) {
+    setDescription(newDescription);
+    saveProperty({
+      messageProperty: "diagram description",
+      description: newDescription,
+    });
   }
 
   function displayContent() {
@@ -180,13 +184,14 @@ export function DiagramDetails({
       <div className="diagram-details">
         <Row className="main-actions-row">
           <Col span={16} className="diagram-name-container">
-            <Typography.Title level={4} className="diagram-name">
+            <Typography.Title level={4} className="diagram-name-and-author">
               <FileTwoTone />
-              {diagramDetails.authorId}/
+              {diagramDetails.authorId} /{" "}
               <Typography.Text
                 editable={{
                   onChange: onDiagramNameChange,
                 }}
+                className="diagram-name"
               >
                 {diagramName}
               </Typography.Text>
@@ -194,6 +199,13 @@ export function DiagramDetails({
           </Col>
           <Col span={8} className="main-actions"></Col>
         </Row>
+
+        <Typography.Paragraph
+          editable={{ onChange: onDescriptionChange }}
+          className="description"
+        >
+          {description}
+        </Typography.Paragraph>
 
         <Card className="stats">
           <Typography.Paragraph className="stat-item">

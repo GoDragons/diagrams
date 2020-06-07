@@ -10,7 +10,7 @@ const { DIAGRAMS_TABLE_NAME } = process.env;
 exports.handler = async (event) => {
   const body = JSON.parse(event.body);
   console.log("body: ", body);
-  const { diagramName, authorId, description, visibility } = body;
+  const { diagramName, authorId, description, visibility, readme } = body;
 
   // try {
   //   const existingDiagramResult = await ddb
@@ -46,10 +46,11 @@ exports.handler = async (event) => {
       diagramId: newDiagramId,
       lastModified: Date.now(),
       readme:
+        readme ||
         '### Add a Readme \n ---- \n It will help others understand more about your system. \n\n You can do that by using the "Edit Readme" button above.',
       diagramName,
       authorId,
-      description,
+      description: description || "No description provided.",
       visibility,
       versionName: "Current Version",
       isLatest: true,
