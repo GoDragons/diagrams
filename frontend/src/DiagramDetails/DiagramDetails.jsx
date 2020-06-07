@@ -79,7 +79,7 @@ export function DiagramDetails({
   function saveReadme() {
     setReadmeNeedsSaving(false);
     setIsEditingReadme(false);
-    putDiagram().then(
+    putDiagram({ readme }).then(
       () => {
         notification.success({
           message: "Readme successfully saved",
@@ -263,7 +263,7 @@ export function DiagramDetails({
                     <Button
                       type="primary"
                       icon={<SaveOutlined />}
-                      onClick={(e) => saveReadme()}
+                      onClick={saveReadme}
                     >
                       Save Readme
                     </Button>
