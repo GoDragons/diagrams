@@ -135,6 +135,9 @@
       width: 100%;
 
       .version-name-container {
+        position: relative;
+        top: 4px;
+
         .anticon {
           margin-right: 0.5rem;
           color: $color1;
@@ -145,8 +148,37 @@
         }
       }
 
+      button.delete {
+        background-color: #e74c3c;
+        color: $white;
+        border: unset;
+      }
+
       .version-actions {
         text-align: right;
+      }
+    }
+  }
+
+  .participant-section {
+    margin-top: 2rem;
+
+    .participant-row {
+      width: 100%;
+    }
+
+    .avatar {
+      margin-right: 0.5rem;
+    }
+
+    .participant-actions {
+      text-align: right;
+    }
+
+    .participants-title {
+      margin-bottom: 1rem;
+      button {
+        margin-left: 0.5rem;
       }
     }
   }

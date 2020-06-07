@@ -24,15 +24,17 @@ import { REST_API_URL } from "common/constants";
 import { withRouter } from "react-router-dom";
 import {
   FileTwoTone,
-  FileOutlined,
+  PlusOutlined,
   EyeOutlined,
   SaveOutlined,
   EditOutlined,
   DownloadOutlined,
   DownOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 
 import Card from "Card/Card";
+import Avatar from "Avatar/Avatar";
 
 import "./DiagramDetails.scss";
 
@@ -304,7 +306,7 @@ export function DiagramDetails({
             </Typography.Title>
             <Card>
               <List
-                dataSource={diagramDetails.versions}
+                dataSource={diagramDetails.versions.slice(1)}
                 renderItem={(item) => (
                   <List.Item>
                     <Row className="version-row">
@@ -331,6 +333,41 @@ export function DiagramDetails({
                               Download <DownOutlined />
                             </Button>
                           </Dropdown>
+                          <Button
+                            icon={<DeleteOutlined />}
+                            className="delete"
+                          ></Button>
+                        </Space>
+                      </Col>
+                    </Row>
+                  </List.Item>
+                )}
+              />
+            </Card>
+          </div>
+
+          <div className="participant-section">
+            <Typography.Title level={4} className="participants-title">
+              Participants{" "}
+              <Button type="primary" icon={<PlusOutlined />}>
+                Add
+              </Button>
+            </Typography.Title>
+            <Card>
+              <List
+                dataSource={diagramDetails.participants}
+                renderItem={(item) => (
+                  <List.Item>
+                    <Row className="participant-row">
+                      <Col span={12} className="participant-name-container">
+                        <Avatar username={item} />
+                        <Typography.Text className="participant-name">
+                          {item}
+                        </Typography.Text>{" "}
+                      </Col>
+                      <Col span={12} className="participant-actions">
+                        <Space>
+                          <Button icon={<DeleteOutlined />}>Remove</Button>
                         </Space>
                       </Col>
                     </Row>
