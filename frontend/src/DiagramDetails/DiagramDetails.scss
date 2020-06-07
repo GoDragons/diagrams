@@ -52,4 +52,22 @@
     flex-direction: column;
     justify-content: center;
   }
+
+  .image-and-description {
+    margin-top: 2rem;
+
+    .snapshot-image {
+      max-width: 100%;
+    }
+    .description-container {
+      height: 100%;
+      .ant-card-body {
+        padding: 2rem;
+      }
+    }
+  }
+
+  .settings {
+    margin-top: 1rem;
+  }
 }

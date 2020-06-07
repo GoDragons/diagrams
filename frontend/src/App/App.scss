@@ -13,7 +13,22 @@
   h4.ant-typography,
   h5.ant-typography,
   h6.ant-typography,
-  p.ant-typography {
+  p.ant-typography,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
     color: $dark;
+  }
+
+  hr {
+    border: unset;
+    height: 1px;
+    background-color: $neutral;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 }

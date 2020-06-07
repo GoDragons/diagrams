@@ -18,6 +18,7 @@ import {
   Timeline,
   Statistic,
 } from "antd";
+import MarkDown from "react-markdown";
 import { REST_API_URL } from "common/constants";
 import { withRouter } from "react-router-dom";
 import {
@@ -97,6 +98,9 @@ export function DiagramDetails({
       </Menu>
     );
 
+    const description = `## This is a tool for creating system architecture designs. \n ----- \n It is all serverless, with a React front-end and a back-end deployed on API Gateway and Lambda, using DynamoDB for data storage. \n\n (more details will come soon)
+      `;
+
     return (
       <div className="diagram-details">
         <Row className="main-actions-row">
@@ -135,6 +139,30 @@ export function DiagramDetails({
             {diagramDetails.connectionCount} connections
           </Typography.Paragraph>
         </Card>
+
+        <div className="image-and-description">
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Card className="snapshot-container">
+                <img
+                  className="snapshot-image"
+                  src="https://d2908q01vomqb2.cloudfront.net/cb4e5208b4cd87268b208e49452ed6e89a68e0b8/2017/11/03/AWS-Network-Diagram-Page-1-1024x678.png"
+                />
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card className="description-container">
+                <MarkDown source={description} />
+              </Card>
+            </Col>
+          </Row>
+        </div>
+
+        <div className="settings">
+          <Typography.Title level={4} className="settings-title">
+            Project settings
+          </Typography.Title>
+        </div>
       </div>
     );
   }
