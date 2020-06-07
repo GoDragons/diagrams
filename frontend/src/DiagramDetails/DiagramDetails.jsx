@@ -12,6 +12,7 @@ import {
   Input,
   Menu,
   Space,
+  Divider,
   Typography,
   Spin,
   Timeline,
@@ -117,56 +118,23 @@ export function DiagramDetails({
           </Col>
         </Row>
 
-        <Row gutter={[16, 24]}>
-          <Col span={6}>
-            <Card>
-              <Statistic
-                title="participants"
-                value={(diagramDetails.participants || []).length + 1}
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card>
-              <Statistic
-                title="versions"
-                value={diagramDetails.versions.length}
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card>
-              <Statistic
-                title="components"
-                value={diagramDetails.componentCount}
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card>
-              <Statistic
-                title="connections"
-                value={diagramDetails.connectionCount}
-              />
-            </Card>
-          </Col>
-          {/* <Col span={6}>
-            <Card>
-              <Statistic
-                title={`last modified`}
-                value={window.moment(diagramDetails.lastModified).fromNow()}
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card>
-              <Statistic
-                title={`created`}
-                value={window.moment(diagramDetails.created).fromNow()}
-              />
-            </Card>
-          </Col> */}
-        </Row>
+        <Card className="stats">
+          <Typography.Paragraph className="stat-item">
+            {(diagramDetails.participants || []).length} participants
+          </Typography.Paragraph>
+          <Divider type="vertical" />
+          <Typography.Paragraph className="stat-item">
+            {(diagramDetails.versions || []).length} versions
+          </Typography.Paragraph>
+          <Divider type="vertical" />
+          <Typography.Paragraph className="stat-item">
+            {diagramDetails.componentCount} components
+          </Typography.Paragraph>
+          <Divider type="vertical" />
+          <Typography.Paragraph className="stat-item">
+            {diagramDetails.connectionCount} connections
+          </Typography.Paragraph>
+        </Card>
       </div>
     );
   }

@@ -16,6 +16,31 @@
     }
   }
 
+  .stats {
+    .ant-card-body {
+      display: flex;
+      justify-content: space-between;
+
+      .ant-statistic {
+        width: 100%;
+        text-align: center;
+      }
+
+      .stat-item {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        color: $dark;
+      }
+
+      .ant-divider-vertical {
+        height: 1.4rem;
+        border-width: 2px;
+        border-color: $neutral;
+      }
+    }
+  }
+
   .ant-statistic-content {
     font-weight: bold;
     color: $dark;
